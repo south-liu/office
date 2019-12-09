@@ -27,4 +27,13 @@ public class PublicController {
         return "public/login";
     }
 
+    /**
+     * 欢迎界面
+     * @return
+     */
+    @RequestMapping("/welcome")
+    public String welcome(){
+        return "public/welcome";
+    }
+
 }

@@ -21,4 +21,6 @@ public interface MajorService {
     public List<CollegeDeptVO> AllCollege();
     //查询系名称
     public MajorVO AllMajor(int majorid);
+
+    public List<MajorVO> allMajor();
 }
