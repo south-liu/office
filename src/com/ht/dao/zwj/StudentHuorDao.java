@@ -40,4 +40,6 @@ public interface StudentHuorDao {
     void updateStudentHuor(StudentHuorVO studentHuor);
 
     void delete(StudentHuorVO studentHuorById);
+
+    List<StudentHuorVO> allData();
 }

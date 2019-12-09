@@ -9,6 +9,8 @@ import java.util.Map;
 public interface StudentHuorService {
     List<Map<String,Object>> allData(Integer page, Integer limit);
 
+    List<StudentHuorVO> allData();
+
     long getTotality();
 
     int add(StudentHuorVO studentHuorVO);

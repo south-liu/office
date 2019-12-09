@@ -31,6 +31,18 @@ public class StudentHuorDaoImpl implements StudentHuorDao {
     }
 
     @Override
+    public List<StudentHuorVO> allData() {
+        Session session = sessionFactory.openSession();
+
+        SQLQuery sqlQuery = session.createSQLQuery("select * from " + currentTableName + " order by " + getCurrentTableId + " asc");
+        sqlQuery.addEntity(StudentHuorVO.class);
+        List<StudentHuorVO> list = sqlQuery.list();// 执行查询
+
+        session.close();
+        return list;
+    }
+
+    @Override
     public long getTotality() {
         Session session = sessionFactory.openSession();
 
