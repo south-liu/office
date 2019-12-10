@@ -2,7 +2,9 @@ package com.ht.controller.llb;
 
 import com.alibaba.fastjson.JSONArray;
 import com.ht.service.llb.IDeptService;
+import com.ht.service.llb.IEmpService;
 import com.ht.vo.DeptVO;
+import com.ht.vo.EmpVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,8 @@ public class DeptController {
 
     @Resource
     private IDeptService deptService;
+    @Resource
+    private IEmpService empService;
 
     @RequestMapping("/toDeptList")
     public String toDeptList(){
@@ -29,8 +33,21 @@ public class DeptController {
     @RequestMapping("/toAdd")
     public String toAdd(Model model){
         List<DeptVO> list = deptService.allHeadDept();
+        List<EmpVO> allEmp = empService.allEmp();
+        model.addAttribute("emps",allEmp);
         model.addAttribute("headDept",list);
         return "llb/dept/dept_add";
+    }
+
+    @RequestMapping("/toUpd")
+    public String toUpd(Model model,Integer deptId){
+        DeptVO d =  deptService.selById(deptId);
+        List<DeptVO> headDept = deptService.allHeadDept();
+        List<EmpVO> allEmp = empService.allEmp();
+        model.addAttribute("headDept",headDept);
+        model.addAttribute("dept",d);
+        model.addAttribute("emps",allEmp);
+        return "llb/dept/dept_upd";
     }
 
     @RequestMapping("/allDept")
@@ -41,7 +58,7 @@ public class DeptController {
         List<DeptVO> headDepts = new ArrayList<>();
         for (DeptVO deptVO : allDept) {
             if (deptVO.getParentId()==0||deptVO.getParentId()==null) {
-               headDepts.add(deptVO);
+                headDepts.add(deptVO);
             }
         }
 
@@ -85,9 +102,9 @@ public class DeptController {
     @RequestMapping("/updDept")
     @ResponseBody
     public String updDept(DeptVO deptVO){
-        DeptVO d =  deptService.selById(deptVO.getDeptId());
-        d.setDeptName(deptVO.getDeptName());
-        deptService.updateDept(d);
+        //DeptVO d =  deptService.selById(deptVO.getDeptId());
+        //d.setDeptName(deptVO.getDeptName());
+        deptService.updateDept(deptVO);
         return "success";
     }
 }

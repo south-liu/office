@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>部门列表</title>
+    <title>调整宿舍</title>
     <jsp:include page="../../public/head.jsp"></jsp:include>
 </head>
 <body style="padding: 20px">
@@ -17,7 +17,7 @@
     <button type="button" class="layui-btn layui-btn-sm" onclick="addDept();">添加部门</button>
 </div>
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-    <legend>宏图软件部门</legend>
+    <legend>调整宿舍</legend>
 </fieldset>
 <div id="tree"></div>
 
