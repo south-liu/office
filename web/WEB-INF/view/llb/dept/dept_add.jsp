@@ -57,7 +57,7 @@
         <label class="layui-form-label">上级部门名称：</label>
         <div class="layui-input-block">
             <select name="parentId" lay-filter="parentId">
-                <option value="0"selected>无</option>
+                <option value="0"selected>宏图软件</option>
                 <c:forEach items="${headDept}" var="hd">
                     <option value="${hd.deptId}">${hd.deptName}</option>
                 </c:forEach>
@@ -69,10 +69,9 @@
         <label class="layui-form-label">部门负责人：</label>
         <div class="layui-input-block">
             <select name="chairman" lay-filter="chairman">
-                <option value="老刘" selected>老刘</option>
-                <option value="老刘">老刘</option>
-                <option value="老刘">老刘</option>
-                <option value="老刘">老刘</option>
+                <c:forEach items="${emps}" var="emp">
+                    <option value="${emp.empName}">${emp.empName}</option>
+                </c:forEach>
             </select>
         </div>
     </div>

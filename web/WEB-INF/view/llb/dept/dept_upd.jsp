@@ -9,8 +9,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>添加部门</title>
-    <jsp:include page="../public/head.jsp"></jsp:include>
+    <title>修改部门</title>
+    <jsp:include page="../../public/head.jsp"></jsp:include>
 </head>
 <style type="text/css">
     .layui-input-block {
@@ -34,11 +34,12 @@
     }
 </style>
 <body style="padding: 30px;">
-<form class="layui-form" action="">
+<form class="layui-form" action="" lay-filter="ff">
+    <input type="hidden" name="deptId">
     <div class="layui-form-item">
         <label class="layui-form-label">部门名称：</label>
         <div class="layui-input-inline">
-            <input type="text" name="deptName" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+            <input type="text" name="deptName" lay-verify="required" placeholder="请输入" class="layui-input">
         </div>
     </div>
 
@@ -57,9 +58,11 @@
         <label class="layui-form-label">上级部门名称：</label>
         <div class="layui-input-block">
             <select name="parentId" lay-filter="parentId">
-                <option value="0"selected>无</option>
+                <option value="0"selected>宏图软件</option>
                 <c:forEach items="${headDept}" var="hd">
-                    <option value="${hd.deptId}">${hd.deptName}</option>
+                    <c:if test="${dept.deptId != hd.deptId}">
+                        <option value="${hd.deptId}">${hd.deptName}</option>
+                    </c:if>
                 </c:forEach>
             </select>
         </div>
@@ -69,10 +72,9 @@
         <label class="layui-form-label">部门负责人：</label>
         <div class="layui-input-block">
             <select name="chairman" lay-filter="chairman">
-                <option value="老刘" selected>老刘</option>
-                <option value="老刘">老刘</option>
-                <option value="老刘">老刘</option>
-                <option value="老刘">老刘</option>
+                <c:forEach items="${emps}" var="emp">
+                    <option value="${emp.empName}">${emp.empName}</option>
+                </c:forEach>
             </select>
         </div>
     </div>
@@ -104,11 +106,12 @@
             var lod = layer.load();
             //部门数据
             $.ajax({
-                url: "${pageContext.request.contextPath}/dept/addDept",
+                url: "${pageContext.request.contextPath}/dept/updDept",
                 type: "post",
                 async:true,
                 dataType: "json",
                 data:{
+                    deptId:fd.deptId,
                     deptName:fd.deptName,
                     deptType:fd.deptType,
                     parentId:fd.parentId,
@@ -117,7 +120,7 @@
                 },
                 success: function (data) {
                     layer.close(lod);
-                    layer.msg('添加成功',{
+                    layer.msg('修改成功',{
                         time:1000
                     },function () {
                         //var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
@@ -131,6 +134,15 @@
                 }
             });
             return false;
+        });
+
+        form.val('ff',{
+            deptId:${dept.deptId},
+            deptName:'${dept.deptName}',
+            deptType:'${dept.deptType}',
+            parentId:${dept.parentId},
+            chairman:'${dept.chairman}',
+            remark:'${dept.remark}'
         });
 
     });
