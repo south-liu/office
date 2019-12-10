@@ -11,6 +11,8 @@ public interface StudentHuorService {
 
     List<StudentHuorVO> allData();
 
+    List<StudentHuorVO> allDataAndFloorNameByFloorId(Integer floorId);
+
     long getTotality();
 
     int add(StudentHuorVO studentHuorVO);

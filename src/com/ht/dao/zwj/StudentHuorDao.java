@@ -42,4 +42,6 @@ public interface StudentHuorDao {
     void delete(StudentHuorVO studentHuorById);
 
     List<StudentHuorVO> allData();
+
+    List<StudentHuorVO> allDataAndFloorNameByFloorId(Integer floorId);
 }
