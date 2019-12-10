@@ -140,21 +140,31 @@
 
                 case 'updHuor':
                     if (length == 1) {
-                        window.open('${pageContext.request.contextPath}/education/gotoeducationlist?empId='+checkStatus.data[0].empId,'target');
+                        layer.open({
+                            title:'调整宿舍',
+                            type:2,
+                            content:'${pageContext.request.contextPath}/student/toUpdHuor?studId='+checkStatus.data[0].studId,
+                            area: ['500px', '400px']
+                        });
                     } else {
                         layer.msg('请选择一个学生');
                     }
                     break;
                 case 'leaHuor':
                     if (length == 1) {
-                        window.open('${pageContext.request.contextPath}/education/gotoeducationlist?empId='+checkStatus.data[0].empId,'target');
+
                     } else {
                         layer.msg('请选择一个学生');
                     }
                     break;
                 case 'updClass':
                     if (length == 1) {
-                        window.open('${pageContext.request.contextPath}/education/gotoeducationlist?empId='+checkStatus.data[0].empId,'target');
+                        layer.open({
+                            title:'调整班级',
+                            type:2,
+                            content:'${pageContext.request.contextPath}/student/toUpdClass?studId='+checkStatus.data[0].studId,
+                            area: ['500px', '400px']
+                        });
                     } else {
                         layer.msg('请选择一个学生');
                     }
@@ -162,14 +172,14 @@
 
                 case 'eduInfo':
                     if (length == 1) {
-                        window.open('${pageContext.request.contextPath}/education/gotoeducationlist?empId='+checkStatus.data[0].empId,'target');
+                        window.open('${pageContext.request.contextPath}/stujef/toedu?stuId='+checkStatus.data[0].studId,'target');
                     } else {
                         layer.msg('请选择一个学生');
                     }
                     break;
                 case 'famInfo':
                     if (length == 1) {
-                        window.open('${pageContext.request.contextPath}/CJEF/tofam?empId='+checkStatus.data[0].empId,'target');
+                        window.open('${pageContext.request.contextPath}/stujef/tofam?stuId='+checkStatus.data[0].studId,'target');
                     } else {
                         layer.msg('请选择一个学生');
                     }

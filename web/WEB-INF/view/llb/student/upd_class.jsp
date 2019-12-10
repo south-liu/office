@@ -8,13 +8,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>调整宿舍</title>
+    <title>调整班级</title>
     <jsp:include page="../../public/head.jsp"></jsp:include>
 </head>
 <body style="padding: 20px">
 
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-    <legend>选择宿舍</legend>
+    <legend>选择班级</legend>
 </fieldset>
 <div id="tree"></div>
 
@@ -25,12 +25,11 @@
         //渲染
         tree.render({
             elem:'#tree',
-            data:${huors},
+            data:${stuClass},
             //showCheckbox:true,
             onlyIconControl:true,
             click:function(obj){
                 console.log(obj.data);
-
             }
         });
     });

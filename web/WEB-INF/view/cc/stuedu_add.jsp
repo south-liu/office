@@ -64,7 +64,7 @@
 </form>
 
 <script>
-    layui.use('laydate', function(){
+    /*layui.use('laydate', function(){
         var laydate = layui.laydate;
         //执行一个laydate实例
         laydate.render({
@@ -73,10 +73,19 @@
         laydate.render({
             elem:'#datas'
         });
-    });
-    layui.use(['form', 'layer'], function(){
+    });*/
+    layui.use(['form', 'layer','laydate'], function(){
+        var laydate = layui.laydate;
         var form = layui.form
-            ,layer = layui.layer
+            ,layer = layui.layer;
+
+        laydate.render({
+            elem: '#data' //指定元素
+        });
+        laydate.render({
+            elem:'#datas'
+        });
+
         //监听提交
         form.on('submit(sub)', function(data){
             console.log(data.field);

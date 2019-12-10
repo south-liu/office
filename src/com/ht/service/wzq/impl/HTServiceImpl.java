@@ -44,8 +44,8 @@ public class HTServiceImpl extends BaseDao implements HTService{
     }
 
     @Override
-    public List selfloor() {
-        return listBySql2("select * from studentFloor");
+    public List<StudentFloorVO> selfloor() {
+        return listByHql("from StudentFloorVO");
     }
 
     @Override

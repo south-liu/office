@@ -90,7 +90,7 @@
                         <dd><a href="javascript:;" title="课程类别" src="">课程类别</a></dd>
                         <dd><a href="javascript:;" title="课程管理" src="">课程管理</a></dd>
                         <dd><a href="javascript:;" title="试讲培训" src="">试讲培训</a></dd>
-                        <dd><a href="javascript:;" title="值班管理" src="">值班管理</a></dd>
+                        <dd><a href="javascript:;" title="值班管理" src="weekang/tolist">值班管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">

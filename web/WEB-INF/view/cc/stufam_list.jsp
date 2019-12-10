@@ -98,7 +98,7 @@
                             layer.close(index);
                             // location.reload();
                             table.reload('myTable', {
-                                url: '${pageContext.request.contextPath}/CJEF/famlist'
+                                url: '${pageContext.request.contextPath}/stujef/famlist'
                             });
                         });
                     },

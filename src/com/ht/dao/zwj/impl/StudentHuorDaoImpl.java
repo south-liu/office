@@ -46,7 +46,7 @@ public class StudentHuorDaoImpl implements StudentHuorDao {
     public List<StudentHuorVO> allDataByFloorId(Integer floorId) {
         Session session = sessionFactory.openSession();
 
-        SQLQuery sqlQuery = session.createSQLQuery("select h.* from " + currentTableName + " as h left join "+floorTableName+" as f on studentHuor.floorId = f.floorId order by " + getCurrentTableId + " asc");
+        SQLQuery sqlQuery = session.createSQLQuery("select h.* from " + currentTableName + " as h left join "+floorTableName+" as f on h.floorId = f.floorId where f.floorId ="+floorId+" order by " + getCurrentTableId + " asc");
         sqlQuery.addEntity(StudentHuorVO.class);
         List<StudentHuorVO> list = sqlQuery.list();// 执行查询
 

@@ -27,14 +27,14 @@ public class StujefController {
     private StujefService stus;
 
     @RequestMapping("/toedu")
-    public  String tolist(Model model){
-        model.addAttribute("stuId",2);
+    public  String tolist(Model model,Integer stuId){
+        model.addAttribute("stuId",stuId);
         return "cc/stuedu_list";
     }
 
     @RequestMapping("/toaddedu")
-    public  String toaddjob(Model model){
-        model.addAttribute("stuId",2);
+    public  String toaddjob(Model model,Integer stuId){
+        model.addAttribute("stuId",stuId);
         return "cc/stuedu_add";
     }
 
@@ -57,7 +57,7 @@ public class StujefController {
 
     @RequestMapping("/addedu")
     @ResponseBody
-    public  String add(StudentEduVO studentEduVO){
+    public String add(StudentEduVO studentEduVO){
         stus.AddEdu(studentEduVO);
         return " ";
     }
@@ -79,14 +79,14 @@ public class StujefController {
 
     //家庭背景
     @RequestMapping("/tofam")
-    public  String tofamlist(Model model){
-        model.addAttribute("stuId",2);
+    public  String tofamlist(Model model,Integer stuId){
+        model.addAttribute("stuId",stuId);
         return "cc/stufam_list";
     }
 
     @RequestMapping("/toaddfam")
-    public  String toaddfam(Model model){
-        model.addAttribute("stuId",2);
+    public  String toaddfam(Model model,Integer stuId){
+        model.addAttribute("stuId",stuId);
         return "cc/stufam_add";
     }
 
