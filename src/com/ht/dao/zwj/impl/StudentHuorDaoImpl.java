@@ -43,6 +43,18 @@ public class StudentHuorDaoImpl implements StudentHuorDao {
     }
 
     @Override
+    public List<StudentHuorVO> allDataByFloorId(Integer floorId) {
+        Session session = sessionFactory.openSession();
+
+        SQLQuery sqlQuery = session.createSQLQuery("select h.* from " + currentTableName + " as h left join "+floorTableName+" as f on studentHuor.floorId = f.floorId order by " + getCurrentTableId + " asc");
+        sqlQuery.addEntity(StudentHuorVO.class);
+        List<StudentHuorVO> list = sqlQuery.list();// 执行查询
+
+        session.close();
+        return list;
+    }
+
+    @Override
     public long getTotality() {
         Session session = sessionFactory.openSession();
 
