@@ -117,7 +117,7 @@ public class BaseDao {
         session.close();
     }
 
-    //查询对象(单个对象)
+    //查询对象
     public Object getObject(Class clazz, Integer id){
         return getSession().get(clazz, id);
     }
