@@ -51,11 +51,6 @@ public class StudentHuorServiceImpl implements StudentHuorService {
     }
 
     @Override
-    public List<StudentHuorVO> allDataAndFloorNameByFloorId(Integer floorId) {
-        return studentHuorDao.allDataAndFloorNameByFloorId(floorId);
-    }
-
-    @Override
     public long getTotality() {
         return studentHuorDao.getTotality();
     }
