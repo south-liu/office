@@ -68,7 +68,12 @@ public class EmpDaoImpl extends BaseDao implements IEmpDao {
     }
 
     @Override
-    public void updEmpStatus(EmpVO empVO) {
-        update(empVO);
+    public void updEmpStatus(Integer empId,Integer status) {
+        executeSQL("update emp set status = "+status+" where empId = "+empId);
+    }
+
+    @Override
+    public void repass(Integer empId) {
+        executeSQL("update emp set password = '123456' where empId = "+empId);
     }
 }

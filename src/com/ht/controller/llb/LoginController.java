@@ -78,7 +78,10 @@ public class LoginController {
         } else if (!empVO.getPassword().equals(dbEmp.getPassword())) {
             map.put("type","error");
             map.put("msg","密码错误");
-        }  else {
+        } else if (dbEmp.getStatus() == 0){
+            map.put("type","error");
+            map.put("msg","该账户已被停用");
+        } else {
             if (gtResult == 1) {
                 //验证成功
                 map.put("type","success");

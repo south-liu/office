@@ -26,7 +26,36 @@ public class DeptController {
     private IEmpService empService;
 
     @RequestMapping("/toDeptList")
-    public String toDeptList(){
+    public String toDeptList(Model model){
+
+        List<DeptVO> allDept = deptService.allDept();
+        JSONArray headDeptArr = new JSONArray();
+        List<DeptVO> headDepts = new ArrayList<>();
+        for (DeptVO deptVO : allDept) {
+            if (deptVO.getParentId()==0||deptVO.getParentId()==null) {
+                headDepts.add(deptVO);
+            }
+        }
+
+        for (DeptVO deptVO : headDepts) {
+            Map headMap = new HashMap();
+            headMap.put("title",deptVO.getDeptName());
+            headMap.put("id",deptVO.getDeptId());
+            JSONArray childrenDetpArr = new JSONArray();
+            for (DeptVO childDept : allDept) {
+                if (childDept.getParentId() == deptVO.getDeptId()) {
+                    Map childrenMap = new HashMap();
+                    childrenMap.put("title", childDept.getDeptName());
+                    childrenMap.put("id", childDept.getDeptId());
+                    childrenDetpArr.add(childrenMap);
+                }
+            }
+            headMap.put("children",childrenDetpArr);
+            headDeptArr.add(headMap);
+        }
+
+        model.addAttribute("allDept",headDeptArr.toJSONString());
+
         return "llb/dept/dept_list";
     }
 
@@ -102,8 +131,10 @@ public class DeptController {
     @RequestMapping("/updDept")
     @ResponseBody
     public String updDept(DeptVO deptVO){
-        //DeptVO d =  deptService.selById(deptVO.getDeptId());
-        //d.setDeptName(deptVO.getDeptName());
+        DeptVO d =  deptService.selById(deptVO.getDeptId());
+        if (d.getParentId() == 0) {
+            deptService.deleteChildDept(d.getDeptId());
+        }
         deptService.updateDept(deptVO);
         return "success";
     }

@@ -41,6 +41,10 @@
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 
+<script type="text/html" id="repassBar">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="repass">重置密码</a>
+</script>
+
 <script>
     layui.use('table', function(){
         var table = layui.table;
@@ -72,15 +76,18 @@
                 {field:'address', title:'家庭地址',align: 'center'},
                 {field:'status', title:'状态',align: 'center', templet: function(res){
                     if (res.status == 0) {
-                        return '<span class="layui-btn-llb layui-btn-normal layui-btn-mini layui-btn-disabled">已禁用</span>'
+                        return '<span onclick="qiyong(this,'+res.empId+');" class="layui-btn-llb layui-btn-normal layui-btn-mini layui-btn-disabled">已禁用</span>'
                     } else {
-                        return '<span class="layui-btn-llb layui-btn-llbb layui-btn-normal layui-btn-mini">已启用</span>';
+                        return '<span onclick="jinyong(this,'+res.empId+');" class="layui-btn-llb layui-btn-llbb layui-btn-normal layui-btn-mini">已启用</span>';
                     }
                 }},
-                {fixed: 'right', title:'操作', toolbar: '#bar',align: 'center'},
+                {title:'初始密码',toolbar: '#repassBar',align: 'center'},
+                {fixed: 'right', title:'操作', toolbar: '#bar',align: 'center',width:120}
             ]],
             page: true
         });
+
+
 
         //头工具栏事件
         table.on('toolbar(fTab)', function(obj){
@@ -195,9 +202,73 @@
                     resize:false,
                     maxmin:true
                 });
+            } else if(obj.event === 'repass'){
+                layer.confirm('确实重置密码为123456吗',function () {
+                    var lod = layer.load();
+                    $.ajax({
+                        type: "POST",
+                        dataType: "json",
+                        url: "${pageContext.request.contextPath}/emp/repass" ,
+                        data: {empId:data.empId},
+                        success: function (result) {
+                            layer.close(lod);
+                            layer.msg('重置密码成功');
+                        },
+                        error : function() {
+                            layer.close(lod);
+                            layer.msg('服务器错误');
+                        }
+                    });
+                })
             }
         });
     });
+    function qiyong(obj,empId){
+        layer.confirm('确定启用吗',function () {
+            var lod = layer.load();
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: "${pageContext.request.contextPath}/emp/updStatus" ,
+                data: {empId:empId,status:1},
+                success: function (result) {
+                    layer.close(lod);
+                    layer.msg('启用成功',{
+                        time:1000
+                    },function () {
+                        window.location.reload();
+                    });
+                },
+                error : function() {
+                    layer.close(lod);
+                    layer.msg('服务器错误');
+                }
+            });
+        })
+    };
+    function jinyong(obj,empId) {
+        layer.confirm('确定禁用吗',function () {
+            var lod = layer.load();
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: "${pageContext.request.contextPath}/emp/updStatus" ,
+                data: {empId:empId,status:0},
+                success: function (result) {
+                    layer.close(lod);
+                    layer.msg('禁用成功',{
+                        time:1000
+                    },function () {
+                        window.location.reload();
+                    });
+                },
+                error : function() {
+                    layer.close(lod);
+                    layer.msg('服务器错误');
+                }
+            });
+        })
+    }
 </script>
 </body>
 </html>

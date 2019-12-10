@@ -13,5 +13,6 @@ public interface IEmpDao {
     public List<EmpVO> pageList(int page, int limit);
     public void delEmp(String ids);
     public void updEmp(EmpVO empVO);
-    public void updEmpStatus(EmpVO empVO);
+    public void updEmpStatus(Integer empId,Integer status);
+    public void repass(Integer empId);
 }

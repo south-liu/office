@@ -14,7 +14,8 @@
 </head>
 <body style="padding: 30px 0px 30px 44px;">
 <form id="empForm" class="layui-form layui-form-pane" action="" lay-filter="fTable">
-    <input type="hidden" name="empId" value="">
+    <input type="hidden" name="empId">
+    <input type="hidden" name="status">
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">员工姓名</label>
@@ -252,6 +253,7 @@
 
         //表单赋值
         form.val('fTable', {
+            "status": "${emp.status}",
             "empId": "${emp.empId}",
             "empName": "${emp.empName}",
             "deptId": ${emp.deptId},

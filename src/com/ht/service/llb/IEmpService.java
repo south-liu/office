@@ -12,6 +12,7 @@ public interface IEmpService {
     public int countEmp();
     public void delEmp(String ids);
     public void updEmp(EmpVO empVO);
-    public void updEmpStatus(EmpVO empVO);
+    public void updEmpStatus(Integer empId,Integer status);
     public EmpVO findEmpById(Integer empId);
+    public void repass(Integer empId);
 }

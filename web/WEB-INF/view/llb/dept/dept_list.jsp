@@ -26,87 +26,107 @@
     layui.use('tree',function () {
         var tree = layui.tree;
 
-        //部门数据
+        //渲染
+        tree.render({
+            elem:'#tree',
+            id:'mytree',
+            data:[{
+                title:'宏图软件',
+                spread:true,
+                children:${allDept}
+            }],
+            // showCheckbox:true,
+            onlyIconControl:true,
+            edit:['del'],
+            click:function(obj){
+                console.log(obj.data);
+                if (obj.data.title!='宏图软件'){
+                    layer.open({
+                        title:'修改部门',
+                        type:2,
+                        content:['${pageContext.request.contextPath}/dept/toUpd?deptId='+obj.data.id,'no'],
+                        area: ['480px', '500px'],
+                        resize:false
+                    });
+                }
+            },
+            operate:function (obj) {
+                var type = obj.type; //得到操作类型：add、edit、del
+                var data = obj.data; //得到当前节点的数据
+                var elem = obj.elem; //得到当前节点元素
+                //Ajax 操作
+                var id = data.id; //得到节点索引
+                if(type === 'update'){ //修改节点
+
+                    //修改后的值
+                    var updData = elem.find('.layui-tree-txt').html();
+                    var lod = layer.load();
+                    $.ajax({
+                        url: "${pageContext.request.contextPath}/dept/updDept",
+                        type: "post",
+                        async:true,
+                        dataType: "json",
+                        data:{
+                            deptId:data.id,
+                            deptName:updData
+                        },
+                        success: function (data) {
+                            layer.close(lod);
+                            layer.msg('修改成功');
+                        },
+                        error:function () {
+                            layer.close(lod);
+                            layer.msg('服务器错误');
+                        }
+                    });
+
+                } else if(type === 'del'){ //删除节点
+                    var lod = layer.load();
+                    if (data.title != '宏图软件') {
+                        $.ajax({
+                            url: "${pageContext.request.contextPath}/dept/delDept",
+                            type: "post",
+                            async:true,
+                            dataType: "json",
+                            data:{
+                                deptId:data.id
+                            },
+                            success: function (data) {
+                                layer.close(lod);
+                                layer.msg('删除成功');
+                            },
+                            error:function () {
+                                layer.close(lod);
+                                layer.msg('服务器错误');
+                            }
+                        });
+                    } else {
+                        layer.close(lod);
+                        layer.msg('请选择其他部门',{
+                            time:2000
+                        },function () {
+                            location.reload();
+
+                        });
+                    }
+                };
+            }
+        });
+
+        /*//部门数据
         $.ajax({
             url: "${pageContext.request.contextPath}/dept/allDept",
             type: "get",
             async:true,
             dataType: "json",
             success: function (data) {
-                //渲染
-                tree.render({
-                    elem:'#tree',
-                    data:data,
-                    //showCheckbox:true,
-                    onlyIconControl:true,
-                    edit:['del'],
-                    click:function(obj){
-                        console.log(obj.data);
-                        layer.open({
-                            title:'修改部门',
-                            type:2,
-                            content:['${pageContext.request.contextPath}/dept/toUpd?deptId='+obj.data.id,'no'],
-                            area: ['480px', '500px'],
-                            resize:false
-                        });
-                    },
-                    operate:function (obj) {
-                        var type = obj.type; //得到操作类型：add、edit、del
-                        var data = obj.data; //得到当前节点的数据
-                        var elem = obj.elem; //得到当前节点元素
-                        //Ajax 操作
-                        var id = data.id; //得到节点索引
-                        if(type === 'update'){ //修改节点
 
-                          //修改后的值
-                            var updData = elem.find('.layui-tree-txt').html();
-                            var lod = layer.load();
-                            $.ajax({
-                                url: "${pageContext.request.contextPath}/dept/updDept",
-                                type: "post",
-                                async:true,
-                                dataType: "json",
-                                data:{
-                                    deptId:data.id,
-                                    deptName:updData
-                                },
-                                success: function (data) {
-                                    layer.close(lod);
-                                    layer.msg('修改成功');
-                                },
-                                error:function () {
-                                    layer.close(lod);
-                                    layer.msg('服务器错误');
-                                }
-                            });
-
-                        } else if(type === 'del'){ //删除节点
-                            var lod = layer.load();
-                            $.ajax({
-                                url: "${pageContext.request.contextPath}/dept/delDept",
-                                type: "post",
-                                async:true,
-                                dataType: "json",
-                                data:{
-                                    deptId:data.id
-                                },
-                                success: function (data) {
-                                    layer.close(lod);
-                                    layer.msg('删除成功');
-                                },
-                                error:function () {
-                                    layer.close(lod);
-                                    layer.msg('服务器错误');
-                                }
-                            });
-                        };
-                    }
-                });
             },
             error:function () {
                 layer.msg('服务器错误');
             }
-        });
+        });*/
+
     });
 
     //添加部门

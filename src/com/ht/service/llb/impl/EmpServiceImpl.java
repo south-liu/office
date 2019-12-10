@@ -50,12 +50,17 @@ public class EmpServiceImpl implements IEmpService {
     }
 
     @Override
-    public void updEmpStatus(EmpVO empVO) {
-        empDao.updEmpStatus(empVO);
+    public void updEmpStatus(Integer empId,Integer status) {
+        empDao.updEmpStatus(empId,status);
     }
 
     @Override
     public EmpVO findEmpById(Integer empId) {
         return empDao.findEmpById(empId);
+    }
+
+    @Override
+    public void repass(Integer empId) {
+        empDao.repass(empId);
     }
 }

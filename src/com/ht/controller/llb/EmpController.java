@@ -59,7 +59,8 @@ public class EmpController {
     @RequestMapping("addEmp")
     @ResponseBody
     public String addEmp(EmpVO empVO,String P1,String C1,String A1){
-        empVO.setAddress(P1+C1+A1);
+        empVO.setNation(P1+C1+A1);
+        empVO.setStatus(1);
         empService.addEmp(empVO);
         return "success";
     }
@@ -74,8 +75,22 @@ public class EmpController {
     @RequestMapping("updEmp")
     @ResponseBody
     public String updEmp(EmpVO empVO,String P1,String C1,String A1){
-        empVO.setAddress(P1+C1+A1);
+        empVO.setNation(P1+C1+A1);
         empService.updEmp(empVO);
+        return "success";
+    }
+
+    @RequestMapping("updStatus")
+    @ResponseBody
+    public String updStatus(Integer empId,Integer status){
+        empService.updEmpStatus(empId,status);
+        return "success";
+    }
+
+    @RequestMapping("repass")
+    @ResponseBody
+    public String repass(Integer empId){
+        empService.repass(empId);
         return "success";
     }
 }

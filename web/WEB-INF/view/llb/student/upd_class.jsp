@@ -29,7 +29,12 @@
             //showCheckbox:true,
             onlyIconControl:true,
             click:function(obj){
-                console.log(obj.data);
+                if (obj.data.children == undefined) {
+                    console.log(obj.data);
+                    console.log(${student.studId});
+                } else {
+                    layer.msg('请选择班级');
+                }
             }
         });
     });
