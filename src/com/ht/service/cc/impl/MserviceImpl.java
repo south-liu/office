@@ -57,4 +57,9 @@ public class MserviceImpl extends BaseDao implements MajorService {
         return (MajorVO)selectOneByHql("from MajorVO where majorId ="+majorId);
     }
 
+    @Override
+    public List<MajorVO> allMajor() {
+        return findAllByHql("from MajorVO");
+    }
+
 }

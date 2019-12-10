@@ -15,7 +15,7 @@ public class Studclsimpl extends ljyDao implements studentclassService {
 
     @Override
     public List studentclass_list() {
-        return listbysql("select * from studentClass ");
+        return listbysql("select * from studentClass");
     }
 
     @Override

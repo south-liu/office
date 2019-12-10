@@ -23,14 +23,14 @@ public class DeptController {
 
     @RequestMapping("/toDeptList")
     public String toDeptList(){
-        return "llb/dept_list";
+        return "llb/dept/dept_list";
     }
 
     @RequestMapping("/toAdd")
     public String toAdd(Model model){
         List<DeptVO> list = deptService.allHeadDept();
         model.addAttribute("headDept",list);
-        return "llb/dept_add";
+        return "llb/dept/dept_add";
     }
 
     @RequestMapping("/allDept")

@@ -64,4 +64,33 @@ public interface HTService {
     public List<StudentClassVO> selclass();
     //查询课程名称（下拉框）
     public List<CourseVO> selcourse();
+
+
+    //查询课程类别
+    public List selcoursetype(int page, int limit);
+    //查询总行数
+    public Integer selcountcoursetype();
+    //添加课程类别
+    public void addtype(CourseTypeVO courseType);
+    //删除课程类别
+    public void deltype(Integer courseTypeId);
+    //修改课程类别
+    public void updtype(CourseTypeVO courseTypeVO);
+
+
+
+    //查询课程表
+    public List selcourse(int page, int litmit);
+    //查询课程表总行数
+    public Integer selcountcourse();
+    //查询课程类别（下拉框）
+    public List<CourseTypeVO> selscourseType();
+    //添加课程
+    public void addcourse(CourseVO course);
+    //删除课程
+    public void delcourse(Integer courseId);
+    //修改课程
+    public void updcourse(CourseVO course);
+    //通过ID查询需要修改的数据
+    public CourseVO selcourseid(Integer courseId);
 }

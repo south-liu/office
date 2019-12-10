@@ -25,14 +25,14 @@ public class EmpController {
 
     @RequestMapping("/toEmpList")
     public String toDeptList(){
-        return "llb/emp_list";
+        return "llb/emp/emp_list";
     }
 
     @RequestMapping("/toAdd")
     public String toAdd(Model model){
         List<DeptVO> list = deptService.allDept();
         model.addAttribute("depts",list);
-        return "llb/emp_add";
+        return "llb/emp/emp_add";
     }
 
     @RequestMapping("/toEdit")
@@ -41,7 +41,7 @@ public class EmpController {
         EmpVO empVO = empService.findEmpById(empId);
         model.addAttribute("depts",list);
         model.addAttribute("emp",empVO);
-        return "llb/emp_edit";
+        return "llb/emp/emp_edit";
     }
 
     @RequestMapping("/pageList")
