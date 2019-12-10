@@ -128,7 +128,8 @@
     </div>
 
     <div class="layui-body">
-        <iframe src="${pageContext.request.contextPath}/public/welcome" frameborder="0" id="_iframe" style="width:100%;height:100%;"></iframe>
+        <iframe src="${pageContext.request.contextPath}/public/welcome" frameborder="0" id="_iframe"
+                style="width:100%;height:100%;"></iframe>
     </div>
 
     <div class="layui-footer">
@@ -138,12 +139,12 @@
 </div>
 <script>
     //JavaScript代码区域
-    layui.use(['element','layer'], function () {
+    layui.use(['element', 'layer'], function () {
         var element = layui.element;
         var layer = layui.layer;
 
         $('#exit').click(function () {
-            layer.confirm('确认退出系统吗？',function () {
+            layer.confirm('确认退出系统吗？', function () {
                 layer.msg('aaa');
             })
         });
@@ -153,9 +154,9 @@
     $(function () {
         $.each($('#_menuBox').children(), function (index, element) {
             // 左侧菜单上滑收回效果：点击菜单展示时的其他菜单上滑收回效果
-            $(element).children('a.small_menu_title').click(function(){
+            $(element).children('a.small_menu_title').click(function () {
                 // 如果当前点击的菜单已展开，则不执行后面步骤
-                if(this.parentElement.classList.contains('layui-nav-itemed')){
+                if (this.parentElement.classList.contains('layui-nav-itemed')) {
                     return;
                 }
                 // 移除其他菜单的class且菜单会上滑收回
@@ -163,14 +164,14 @@
             })
             // 左侧导航点击右侧切换效果：为每一个a标签添加点击事件，切换iframe的url
             var element_a = $(element).children('dl').children('dd').children('a');
-            element_a.click(function(){
+            element_a.click(function () {
                 var url = '${pageContext.request.contextPath}';
-                $('#_iframe').attr('src',url+$(this).attr('src'));
+                $('#_iframe').attr('src', url + $(this).attr('src'));
             })
         });
 
         $('#_welcome').click(function () {
-            $('#_iframe').attr('src','${pageContext.request.contextPath}/public/welcome');
+            $('#_iframe').attr('src', '${pageContext.request.contextPath}/public/welcome');
         });
 
     })

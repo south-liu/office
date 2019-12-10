@@ -107,11 +107,15 @@
 
                     // 添加表单显示之前，先查询所有楼栋
                     $.get('${pageContext.request.contextPath}/student-huor/allFloorData', {}, function (data) {
-                        var _select = $('#actionForm').find('select[name="floorId"]');
-                        $.each(data, function (i, element) {
-                            _select.append('<option value="' + element.floorId + '">' + element.floorName + '</option>');
-                        })
-                        form.render('select');
+                        if(data.length > 0){
+                            var _select = $('#actionForm').find('select[name="floorId"]');
+                            _select.empty();
+                            _select.append('<option value="0">请选择宿舍楼栋</option>');
+                            $.each(data, function (i, element) {
+                                _select.append('<option value="' + element.floorId + '">' + element.floorName + '</option>');
+                            });
+                            form.render('select');
+                        }
                     }, 'json');
                 },
                 end: function () {// 层销毁或关闭后触发的回调
@@ -163,11 +167,15 @@
         function showEditForm(objData) {
             // 添加表单显示之前，先查询所有楼栋
             $.get('${pageContext.request.contextPath}/student-huor/allFloorData', {}, function (data) {
-                var _select = $('#actionForm').find('select[name="floorId"]');
-                $.each(data, function (i, element) {
-                    _select.append('<option value="' + element.floorId + '">' + element.floorName + '</option>');
-                })
-                form.render('select');
+                if(data.length > 0){
+                    var _select = $('#actionForm').find('select[name="floorId"]');
+                    _select.empty();
+                    _select.append('<option value="0">请选择宿舍楼栋</option>');
+                    $.each(data, function (i, element) {
+                        _select.append('<option value="' + element.floorId + '">' + element.floorName + '</option>');
+                    });
+                    form.render('select');
+                }
             }, 'json');
 
             var windowIndex = layer.open({
@@ -181,7 +189,6 @@
 
                     // 通过id获取数据并填充到表单中
                     $.get('${pageContext.request.contextPath}/student-huor/detail', {hourId: objData.hourId}, function (data) {
-                        // $('#actionForm').append('<input type="hidden" name="hourId" value="' + data.hourId + '">');
                         $('#actionForm').find('input[name="hourId"]').val(data.hourId);
                         form.val('_form',{
                             'floorId':data.floorId,
