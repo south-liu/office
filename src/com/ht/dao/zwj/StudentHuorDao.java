@@ -43,5 +43,5 @@ public interface StudentHuorDao {
 
     List<StudentHuorVO> allData();
 
-    List<StudentHuorVO> allDataAndFloorNameByFloorId(Integer floorId);
+    List<StudentHuorVO> allDataByFloorId(Integer floorId);
 }
