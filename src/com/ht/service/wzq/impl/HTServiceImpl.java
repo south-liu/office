@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class HTServiceImpl extends BaseDao implements HTService{
 
+
+
     @Override
     public List selcemester() {
         return listBySql2("select * from term");
@@ -43,9 +45,12 @@ public class HTServiceImpl extends BaseDao implements HTService{
         updObject(term);
     }
 
+
+
+
     @Override
-    public List<StudentFloorVO> selfloor() {
-        return listByHql("from StudentFloorVO");
+    public List selfloor() {
+        return listBySql2("select * from studentFloor");
     }
 
     @Override
@@ -73,6 +78,9 @@ public class HTServiceImpl extends BaseDao implements HTService{
         updObject(studentFloor);
     }
 
+
+
+
     @Override
     public List selwee() {
         return listBySql2("select * from weekly");
@@ -80,7 +88,7 @@ public class HTServiceImpl extends BaseDao implements HTService{
 
     @Override
     public List selwee(int page, int limit) {
-        return pageBySql("select w.weeklyId, e.empName, w.workDay, w.weekCur, w.studentQuestion, w.idea, w.weekNext from weekly w left join emp e on w.empId = e.empId", page, limit);
+        return pageBySql("select w.*, e.empName from weekly w left join emp e on w.empId = e.empId", page, limit);
     }
 
     @Override
@@ -100,13 +108,16 @@ public class HTServiceImpl extends BaseDao implements HTService{
 
     @Override
     public List seldeptwee(String empName, int page, int limit) {
-        return pageBySql("select w.weeklyId, e.empName, w.workDay, w.weekCur, w.studentQuestion, w.idea, w.weekNext from weekly w left join emp e on w.empId = e.empId where e.empName = "+ empName +"", page, limit);
+        return pageBySql("select w.*, e.empName from weekly w left join emp e on w.empId = e.empId where e.empName = "+ empName +"", page, limit);
     }
 
     @Override
     public Integer selcountemp(String empName) {
         return selTotalRow("select count(*) from weekly w left join emp e on w.empId = e.empId where e.empName = " + empName+"");
     }
+
+
+
 
     @Override
     public List selscore() {
@@ -115,7 +126,7 @@ public class HTServiceImpl extends BaseDao implements HTService{
 
     @Override
     public List selscore(int page, int limit) {
-        return pageBySql("select s.scoreId, t.stuName, s.score, s.rescore, c.courseName, s.testType, e.termName, s.scoreTime, m.empName, s.remark from studentScore s left join student t on s.stuId = t.studId left join course c on s.courseId = c.courseId left join term e on s.termId = e.termId left join emp m on s.empId = m.empId", page, limit);
+        return pageBySql("select s.*, t.stuName, c.courseName, m.empName from studentScore s left join student t on s.stuId = t.studId left join course c on s.courseId = c.courseId left join term e on s.termId = e.termId left join emp m on s.empId = m.empId", page, limit);
     }
 
     @Override
@@ -142,4 +153,99 @@ public class HTServiceImpl extends BaseDao implements HTService{
     public List selcoursetype() {
         return listBySql("select * from courseType");
     }
+
+
+    @Override
+    public List selcoursetype(int page, int limit) {
+        return pageBySql("select * from courseType", page, limit);
+    }
+
+    @Override
+    public Integer selcountcoursetype() {
+        return selTotalRow("select count(*) from courseType");
+    }
+
+    @Override
+    public void addtype(CourseTypeVO courseType) {
+        addObject(courseType);
+    }
+
+    @Override
+    public void deltype(Integer courseTypeId) {
+        executeSQL("delete from courseType where courseTypeId =" + courseTypeId);
+    }
+
+    @Override
+    public void updtype(CourseTypeVO courseTypeVO) {
+        updObject(courseTypeVO);
+    }
+
+
+
+
+    @Override
+    public List selcourse(int page, int litmit) {
+        return pageBySql("select c.*, t.courseTypeName from course c left join courseType t on c.courseTypeId = t.courseTypeId", page, litmit);
+    }
+
+    @Override
+    public Integer selcountcourse() {
+        return selTotalRow("select count(*) from course");
+    }
+
+    @Override
+    public List<CourseTypeVO> selscourseType() {
+        return listByHql("from CourseTypeVO");
+    }
+
+    @Override
+    public void addcourse(CourseVO course) {
+        addObject(course);
+    }
+
+    @Override
+    public void delcourse(Integer courseId) {
+        executeSQL("delete from course where courseId =" + courseId);
+    }
+
+    @Override
+    public void updcourse(CourseVO course) {
+        updObject(course);
+    }
+
+    @Override
+    public CourseVO selcourseid(Integer courseId) {
+        return (CourseVO)getObject(CourseVO.class, courseId);
+    }
+
+    @Override
+    public StudentScoreVO selstudentscore(Integer scoreId) {
+        return (StudentScoreVO)getObject(StudentScoreVO.class, scoreId);
+    }
+
+    @Override
+    public List selstudentscore(int page, int limit, Integer stuId) {
+        return pageBySql("select s.*, t.stuName, c.courseName, e.termName from studentScore s left join student t on s.stuId = t.studId left join course c on s.courseId = c.courseId left join term e on s.termId = e.termId where s.stuId ="+ stuId, page, limit);
+    }
+
+    @Override
+    public Integer selcountstudentscore(Integer stuId) {
+        return selTotalRow("select count(*) from studentScore s left join student t on s.stuId = t.studId left join course c on s.courseId = c.courseId left join term e on s.termId = e.termId where s.stuId =" + stuId);
+    }
+
+    @Override
+    public void addstudentscore(StudentScoreVO studentScore) {
+        addObject(studentScore);
+    }
+
+    @Override
+    public void updstudentscore(StudentScoreVO studentScore) {
+        updObject(studentScore);
+    }
+
+    @Override
+    public void delstudentscore(Integer scoreId) {
+        executeSQL("delete from studentScore where scoreId =" + scoreId);
+    }
+
 }

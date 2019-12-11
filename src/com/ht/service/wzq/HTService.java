@@ -42,7 +42,7 @@ public interface HTService {
     public List selwee(int page, int limit);
     //查询周报管理总行数
     public Integer selcountwee();
-    //查询部门
+    //查询部门(下拉框)
     public List<DeptVO> seldept();
     //添加周报
     public void addwee(WeeklyVO weekly);
@@ -65,5 +65,50 @@ public interface HTService {
     //查询课程名称（下拉框）
     public List<CourseVO> selcourse();
 
+
+    //查询课程类别
+    public List selcoursetype(int page, int limit);
+    //查询总行数
+    public Integer selcountcoursetype();
+    //添加课程类别
+    public void addtype(CourseTypeVO courseType);
+    //删除课程类别
+    public void deltype(Integer courseTypeId);
+    //修改课程类别
+    public void updtype(CourseTypeVO courseTypeVO);
+
+
+
+    //查询课程表
+    public List selcourse(int page, int litmit);
+    //查询课程表总行数
+    public Integer selcountcourse();
+    //查询课程类别（下拉框）
+    public List<CourseTypeVO> selscourseType();
+    //添加课程
+    public void addcourse(CourseVO course);
+    //删除课程
+    public void delcourse(Integer courseId);
+    //修改课程
+    public void updcourse(CourseVO course);
+    //通过ID查询需要修改的数据
+    public CourseVO selcourseid(Integer courseId);
+
     public List selcoursetype();
+
+
+
+
+    //查询指定学生的成绩
+    public StudentScoreVO selstudentscore(Integer scoreId);
+    //分页查询指定学生成绩
+    public List selstudentscore(int page, int limit, Integer stuId);
+    //查询制定学生成绩的总行数
+    public Integer selcountstudentscore(Integer stuId);
+    //添加学生成绩
+    public void addstudentscore(StudentScoreVO studentScore);
+    //点击编辑按钮修改学生成绩
+    public void updstudentscore(StudentScoreVO studentScore);
+    //删除学生成绩
+    public void delstudentscore(Integer scoreId);
 }

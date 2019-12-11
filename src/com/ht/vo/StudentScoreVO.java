@@ -14,9 +14,9 @@ public class StudentScoreVO {//学生成绩记录管理
     private Integer courseId;//关联课程id
     private Integer testType;//1:笔试2:机试3:模拟面试
     private Integer termId;//关联学期id
-    private Integer scoreTime;//考试时间
+    private String scoreTime;//考试时间
     private Integer empId;//录入人员,获取session值
-    private Integer remark;//备注
+    private String remark;//备注
 
     @Override
     public String toString() {
@@ -28,9 +28,9 @@ public class StudentScoreVO {//学生成绩记录管理
                 ", courseId=" + courseId +
                 ", testType=" + testType +
                 ", termId=" + termId +
-                ", scoreTime=" + scoreTime +
+                ", scoreTime='" + scoreTime + '\'' +
                 ", empId=" + empId +
-                ", remark=" + remark +
+                ", remark='" + remark + '\'' +
                 '}';
     }
 
@@ -90,11 +90,11 @@ public class StudentScoreVO {//学生成绩记录管理
         this.termId = termId;
     }
 
-    public Integer getScoreTime() {
+    public String getScoreTime() {
         return scoreTime;
     }
 
-    public void setScoreTime(Integer scoreTime) {
+    public void setScoreTime(String scoreTime) {
         this.scoreTime = scoreTime;
     }
 
@@ -106,11 +106,11 @@ public class StudentScoreVO {//学生成绩记录管理
         this.empId = empId;
     }
 
-    public Integer getRemark() {
+    public String getRemark() {
         return remark;
     }
 
-    public void setRemark(Integer remark) {
+    public void setRemark(String remark) {
         this.remark = remark;
     }
 }

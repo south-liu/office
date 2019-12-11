@@ -69,7 +69,7 @@
 
 <%--操作列表的按钮--%>
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="sel">查看</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="cha">查看</a>
 </script>
 
 <script>
@@ -128,28 +128,28 @@
         table.on('tool(test)', function(obj){
             var data = obj.data;
             //console.log(obj)
-            if(obj.event === 'sel'){
-                var lindex = layer.load();
-                $.ajax({
-                    type:"post",
-                    url:"${pageContext.request.contextPath}/MY/updfloor",
-                    async:true,
-                    dataType:"text",
-                    data:{floorId:data.floorId},
-                    success:function(data){
-                        layer.close(lindex);
-                        obj.del();
-                        layer.close(index);
-                        layer.msg('已删除!', {
-                            icon: 1,
-                            time: 1000
-                        });
-                    },
-                    error:function () {
-                        layer.close(lindex);
-                        layer.msg("服务器错误");
-                    }
-                });
+            if(obj.event === 'cha'){
+                <%--var lindex = layer.load();--%>
+                <%--$.ajax({--%>
+                <%--    type:"post",--%>
+                <%--    url:"${pageContext.request.contextPath}/MY/updfloor",--%>
+                <%--    async:true,--%>
+                <%--    dataType:"text",--%>
+                <%--    data:{floorId:data.floorId},--%>
+                <%--    success:function(data){--%>
+                <%--        layer.close(lindex);--%>
+                <%--        obj.del();--%>
+                <%--        layer.close(index);--%>
+                <%--        layer.msg('已删除!', {--%>
+                <%--            icon: 1,--%>
+                <%--            time: 1000--%>
+                <%--        });--%>
+                <%--    },--%>
+                <%--    error:function () {--%>
+                <%--        layer.close(lindex);--%>
+                <%--        layer.msg("服务器错误");--%>
+                <%--    }--%>
+                <%--});--%>
             }
         });
     });

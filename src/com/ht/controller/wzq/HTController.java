@@ -1,6 +1,6 @@
 package com.ht.controller.wzq;
 
-import com.alibaba.fastjson.JSONObject;
+import com.ht.service.llb.IStudentService;
 import com.ht.service.wzq.HTService;
 import com.ht.vo.*;
 
@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,9 @@ public class HTController {
 
     @Resource
     HTService hts;
+
+    @Resource
+    IStudentService iss;
 
     //------------------------------学期管理-----------------------------------------
 
@@ -175,7 +179,7 @@ public class HTController {
         model.addAttribute("sclass", list1);
         List<CourseVO> list2 = hts.selcourse();
         model.addAttribute("course", list2);
-        return "wzq/studentscore_list";
+        return "wzq/score_list";
     }
     @RequestMapping("/scorelist")
     @ResponseBody
@@ -191,4 +195,262 @@ public class HTController {
     }
 
 
+    //---------------课程类别-------------------
+
+    @RequestMapping("/totype_list")
+    public String tocoursetype_list(){
+        return "wzq/coursetype_list";
+    }
+    //查询课程类别
+    @RequestMapping("/coursetypelist")
+    @ResponseBody
+    public Map coursetypelist(int page, int limit){
+        List list = hts.selcoursetype(page, limit);
+        Integer count = hts.selcountcoursetype();
+        Map map = new HashMap();
+        map.put("code", 0);
+        map.put("msg", "");
+        map.put("count", count);
+        map.put("data", list);
+        return map;
+    }
+    //添加课程类别
+    @RequestMapping("/addtype")
+    public String addtype(CourseTypeVO courseType){
+        hts.addtype(courseType);
+        return "wzq/coursetype_list";
+    }
+    //删除课程类别
+    @RequestMapping("/deltype")
+    public String deltype(Integer courseTypeId){
+        hts.deltype(courseTypeId);
+        return "wzq/coursetype_list";
+    }
+    //修改课程类别
+    @RequestMapping("/updtype")
+    public String updtype(CourseTypeVO courseType){
+        hts.updtype(courseType);
+        return "wzq/coursetype_list";
+    }
+
+
+    //-----------课程管理---------------
+
+    @RequestMapping("/tocourse_list")
+    public String tocourse(){
+        return "wzq/course_list";
+    }
+    //查询课程
+    @RequestMapping("/courselist")
+    @ResponseBody
+    public Map courselist(int page, int limit){
+        List list = hts.selcourse(page, limit);
+        Integer count = hts.selcountcourse();
+        Map map = new HashMap();
+        map.put("code", 0);
+        map.put("msg", "");
+        map.put("count", count);
+        map.put("data", list);
+        return map;
+    }
+    //去添加页面（直接在页面上开一个小窗口）
+    @RequestMapping("/toaddcourse")
+    public String toaddcourse(Model model){
+        List<CourseTypeVO> list = hts.selscourseType();
+        model.addAttribute("course", list);
+        return "wzq/course_add";
+    }
+    //添加课程
+    @RequestMapping("/addcourse")
+    @ResponseBody
+    public String addcourse(CourseVO course){
+        hts.addcourse(course);
+        return "success";
+    }
+    //删除课程
+    @RequestMapping("/delcourse")
+    public String delcourse(Integer courseId){
+        hts.delcourse(courseId);
+        return "wzq/course_list";
+    }
+    //修改课程(页面数据格直接修改)
+    @RequestMapping("/updcourse")
+    public String updcourse(CourseVO course){
+        hts.updcourse(course);
+        return "wzq/course_list";
+    }
+    //去修改课程（点击编辑按钮修改）
+    @RequestMapping("/toupdcourse")
+    public String toupdcourse(Model model, Integer courseId){
+        List<CourseTypeVO> list = hts.selscourseType();
+        model.addAttribute("list", list);
+        CourseVO course = hts.selcourseid(courseId);
+        model.addAttribute("course", course);
+        return "wzq/course_upd";
+    }
+    //修改课程(点击编辑按钮修改)
+    @RequestMapping("/updcourse2")
+    @ResponseBody
+    public String updcourse2(CourseVO course){
+        hts.updcourse(course);
+        return "success";
+    }
+
+
+    //----------学生成绩-----------------------
+
+    @RequestMapping("/tostudentscore_list")
+    public String toscore_list(Model model, Integer studId){
+        StudentVO student = iss.findById(studId);
+        model.addAttribute("student", student);
+        return "wzq/studentscore_list";
+    }
+    //查询学生成绩
+    @RequestMapping("/studentscorelist")
+    @ResponseBody
+    public Map studentscorelist(int page, int limit, Integer stuId){
+        System.out.println("student的值：" + stuId);
+        List list = hts.selstudentscore(page, limit, stuId);
+        Integer count = hts.selcountstudentscore(stuId);
+        Map map = new HashMap();
+        map.put("code", 0);
+        map.put("msg", "");
+        map.put("count", count);
+        map.put("data", list);
+        return map;
+    }
+    //去添加学生成绩
+    @RequestMapping("/toaddstudentscore")
+    public String toaddstudentscore(Model model, Integer stuId){
+        List<CourseVO> list = hts.selcourse();
+        model.addAttribute("course", list);
+        List<TermVO>  list1 = hts.selxueqi();
+        model.addAttribute("xueqi", list1);
+        model.addAttribute("stuId", stuId);
+        return "wzq/studentscore_add";
+    }
+    //添加学生成绩
+    @RequestMapping("/addstudentscore")
+    @ResponseBody
+    public String addstudentscore(StudentScoreVO studentScore){
+        hts.addstudentscore(studentScore);
+        return "success";
+    }
+    //去修改学生成绩
+    @RequestMapping("/toupdstudentscoure")
+    public String toupdstudentscoure(Integer scoreId, Model model){
+        StudentScoreVO score = hts.selstudentscore(scoreId);
+        model.addAttribute("score", score);
+        List<CourseVO> list = hts.selcourse();
+        model.addAttribute("course", list);
+        List<TermVO>  list1 = hts.selxueqi();
+        model.addAttribute("xueqi", list1);
+        return "wzq/studentscore_upd";
+    }
+    //修改学生成绩(点击编辑按钮修改)
+    @RequestMapping("/updstudentscore")
+    @ResponseBody
+    public String updstudentscore(StudentScoreVO studentScore){
+        hts.updstudentscore(studentScore);
+        return "success";
+    }
+    //修改学生成绩(点击页面数据网格直接修改)
+    @RequestMapping("/updstudentscore2")
+    public String updstudentscore2(StudentScoreVO studentScore){
+        hts.updstudentscore(studentScore);
+        return "wzq/studentscore_list";
+    }
+    //删除学生成绩
+    @RequestMapping("/delstudentscore")
+    public String delstudentscore(Integer scoreId){
+        hts.delstudentscore(scoreId);
+        return "wzq/studentscore_list";
+    }
+
+
+//    //--------------考核指标--------------
+//    @RequestMapping("/toaduitmodel")
+//    public String toaduitmodel(){
+//
+//        return "wzq/"
+//    }
+
+//    @Override
+//    public JSONArray getWeekLogData(HttpServletRequest request, int page, int limit) {
+//        JSONArray data = new JSONArray();
+//        String empName = request.getParameter("empName");
+//        String depIdStr = request.getParameter("depId");
+//        int depId = 0;
+//        if ("".equals(depIdStr) || null == depIdStr){
+//            depId = 0;
+//        }else {
+//            depId = Integer.parseInt(depIdStr);
+//        }
+//        System.out.println(depId);
+//        String startDay = request.getParameter("startDay");
+//        String endDay = request.getParameter("endDay");
+//        String hql = "FROM WeeklogVo where 1=1";
+//        if (!("".equals(empName) || null == empName)){
+//            int id = getEmpName(empName);
+//            hql +=" and Empid ="+id;
+//        }
+//        if (depId!=0){
+//            hql +=" and Empid in (SELECT empId FROM EmpVo where depId="+depId+")";
+//        }
+//        if (!("".equals(startDay) || null == startDay)){
+//            hql +=" and Workday>='"+startDay+"'";
+//        }
+//        if (!("".equals(endDay) || null == endDay)){
+//            hql +=" and Workday<='"+endDay+"'";
+//        }
+//        System.out.println(hql);
+//        List<WeeklogVo> list = pageByHql(hql,page,limit);
+//        for (WeeklogVo vo:list) {
+//            //查询员工姓名
+//            EmpVo emp = (EmpVo) getObject(EmpVo.class,vo.getEmpid());
+//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+//            JSONObject wlJO = new JSONObject();
+//            wlJO.put("worklogid",vo.getWeeklogid());
+//            wlJO.put("empName",emp.getEmpName());
+//            wlJO.put("weekDay",sdf.format(vo.getWorkday()));
+//            wlJO.put("weekCur",vo.getWeekCur());
+//            wlJO.put("studentQuestion",vo.getStudentQuestion());
+//            wlJO.put("idea",vo.getIdea());
+//            wlJO.put("weekNext",vo.getWeekNext());
+//            System.out.println(wlJO);
+//            data.add(wlJO);
+//        }
+//        return data;
+//    }
+//
+//    @Override
+//    public int getWeekLogSize(HttpServletRequest request) {
+//        String empName = request.getParameter("empName");
+//        String depIdStr = request.getParameter("depId");
+//        int depId = 0;
+//        if ("".equals(depIdStr) || null == depIdStr){
+//            depId = 0;
+//        }else {
+//            depId = Integer.parseInt(depIdStr);
+//        }
+//        System.out.println(depId);
+//        String startDay = request.getParameter("startDay");
+//        String endDay = request.getParameter("endDay");
+//        String hql = "select count(*) from WeeklogVo where 1=1";
+//        if (!("".equals(empName) || null == empName)){
+//            int id = getEmpName(empName);
+//            hql +=" and Empid ="+id;
+//        }
+//        if (depId!=0){
+//            hql +=" and Empid in (SELECT empId FROM EmpVo where depId="+depId+")";
+//        }
+//        if (!("".equals(startDay) || null == startDay)){
+//            hql +=" and Workday>='"+startDay+"'";
+//        }
+//        if (!("".equals(endDay) || null == endDay)){
+//            hql +=" and Workday<='"+endDay+"'";
+//        }
+//        System.out.println(hql);
+//        return getCountByHql(hql);
+//    }
 }
