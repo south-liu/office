@@ -1,9 +1,6 @@
 package com.ht.service.cc;
 
-import com.ht.vo.FamilyInfoVO;
-import com.ht.vo.JobVO;
-import com.ht.vo.StudentEduVO;
-import com.ht.vo.StudentFamilyVO;
+import com.ht.vo.*;
 
 import java.util.List;
 
@@ -32,7 +29,6 @@ public interface StujefService {
     //查询总行数
     public Integer seltotalFam();
 
-
     public Integer seltotalFamByStuId(Integer stuId);
     /*
         家庭联系信息
@@ -43,5 +39,25 @@ public interface StujefService {
     public void UpdFam(StudentFamilyVO studentFamilyVO);
     //删除方法
     public void delFam(String id);
+
+
+    /*
+        在校情况
+    */
+
+    //分页查询
+    public List selZxSpage(int currPage, int pageSize, int stuId);
+    //查询总行数
+    public Integer seltotalZx();
+
+    public Integer seltotalZxByStuId(Integer stuId);
+    //添加方法
+    public void AddZx(StudentHappeningVO studentHappeningVO);
+    //修改方法
+    public void UpdZx(StudentHappeningVO studentHappeningVO);
+    //删除方法
+    public void delZx(String id);
+
+    public StudentHappeningVO happlist(int happenId);
 }
 

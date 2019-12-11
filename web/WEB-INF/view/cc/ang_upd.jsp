@@ -164,6 +164,7 @@
             ,"empId": "${weekArrangeVO.empId}"
             ,"orderId": "${weekArrangeVO.orderId}"
             ,"duty": "${weekArrangeVO.duty}"
+            ,"kaiguan": true //开关状态
             ,"remark": "${weekArrangeVO.remark}"
         });
 

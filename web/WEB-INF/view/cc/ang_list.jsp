@@ -6,61 +6,55 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:include page="../public/head.jsp"/>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>值班管理</title>
+    <jsp:include page="../public/head.jsp"/>
 </head>
-<style>
-    .layui-form-label {
-        float: left;
-        display: block;
-        padding: 9px 15px;
-        width: 44px;
-        font-weight: 400;
-        line-height: 20px;
-        text-align: right;
-    }
-</style>
 <body>
-
+<table class="layui-hide" id="myTable" lay-filter="fTable"></table>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
     </div>
 </script>
-<table class="layui-table"
-       lay-data="{
-        url:'${pageContext.request.contextPath}/weekang/ang_list',
-        page:true,
-        cellMinWidth: 80,
-        id:'myTable',
-        toolbar:'#toolbarDemo'}"
-       lay-filter="fTable">
-    <thead>
-    <tr>
-        <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
-        <th lay-data="{field:'weekArrangeId', sort: true, fixed: true}">ID</th>
-        <th lay-data="{field:'orderId', sort: true, fixed: true}">排序编号</th>
-        <th lay-data="{field:'week'}">星期</th>
-        <th lay-data="{field:'weekArrangeName'}">排班名称</th>
-        <th lay-data="{field:'empName'}">员工</th>
-        <th lay-data="{field:'ranges'}" >值班要求</th>
-        <th lay-data="{field:'duty'}">总值班</th>
-        <th lay-data="{field:'remark'}">说明</th>
-        <th lay-data="{fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}"></th>
-    </tr>
-    </thead>
-</table>
+
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     <a class="layui-btn layui-btn-xs" lay-event="upd">修改</a>
 </script>
 <script>
-    layui.use(['table', 'form'], function () {
+    layui.use('table', function () {
         var table = layui.table;
-        var form = layui.form;
+
+        table.render({
+            elem:'#myTable',
+            url:'${pageContext.request.contextPath}/weekang/ang_list',
+            page:true,
+            cellMinWidth: 80,
+            toolbar:'#toolbarDemo',//头部工具栏
+            title:'值班管理',
+            cols:[[
+                {type: 'checkbox', fixed: 'left'},
+                {field:'weekArrangeId', title:'ID', sort: true,align: 'center'},
+                {field:'orderId', title:'排序编号', sort: true,align: 'center'},
+                {field:'week', title:'星期',align: 'center'},
+                {field:'weekArrangeName', title:'排班名称',align: 'center'},
+                {field:'empName', title:'员工',align: 'center'},
+                {field:'ranges', title:'值班要求',align: 'center'},
+                {field:'duty', title:'总值班',align: 'center',templet: function(res){
+                        if (res.duty ==0) {
+                            return '否'
+                        } else {
+                            return '是';
+                        }
+                    }},
+                {field:'remark', title:'说明',align: 'center'},
+                {fixed: 'right', title:'操作', toolbar: '#barDemo',align: 'center'},
+            ]],
+            page:true
+        });
 
         //头工具栏事件
         table.on('toolbar(fTable)', function(obj){
@@ -77,7 +71,6 @@
                     break;
             };
         });
-
         table.on('tool(fTable)', function(obj){
             switch(obj.event){
                 case 'upd':
@@ -100,7 +93,6 @@
                         }, 'json');
                         layer.close(index);
                     });
-
             };
         });
     });
