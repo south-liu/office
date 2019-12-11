@@ -128,7 +128,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">专业类别</label>
             <div class="layui-input-inline">
-                <select name="resiDence">
+                <select name="proLevel">
                     <option value="1">中技</option>
                     <option value="2">高技</option>
                     <option value="3">3+2</option>
@@ -367,7 +367,7 @@
             "proLevel": "${student.proLevel}",
             "naTion": "${student.naTion}",
             "naTives": "${student.naTives}",
-            "resiDence": "${student.stuName}",
+            "resiDence": "${student.resiDence}",
             "studyType": "${student.studyType}",
             "parents": "${student.parentsPhone}",
             "parentsPhone": "${student.parentsPhone}",

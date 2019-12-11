@@ -87,9 +87,9 @@
                         <dd><a href="javascript:;" title="答辩成绩" src="">答辩成绩</a></dd>
                         <dd><a href="javascript:;" title="班级管理" src="studentclass/gotostudentclasslist">班级管理</a></dd>
                         <dd><a href="javascript:;" title="班级分配" src="">班级分配</a></dd>
-                        <dd><a href="javascript:;" title="课程类别" src="">课程类别</a></dd>
-                        <dd><a href="javascript:;" title="课程管理" src="">课程管理</a></dd>
-                        <dd><a href="javascript:;" title="试讲培训" src="">试讲培训</a></dd>
+                        <dd><a href="javascript:;" title="课程类别" src="MY/totype_list">课程类别</a></dd>
+                        <dd><a href="javascript:;" title="课程管理" src="MY/tocourse_list">课程管理</a></dd>
+                        <dd><a href="javascript:;" title="试讲培训" src="trial/gototriallist">试讲培训</a></dd>
                         <dd><a href="javascript:;" title="值班管理" src="weekang/tolist">值班管理</a></dd>
                     </dl>
                 </li>
@@ -145,7 +145,26 @@
 
         $('#exit').click(function () {
             layer.confirm('确认退出系统吗？', function () {
-                layer.msg('aaa');
+                var lod = layer.load();
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/system/exit",
+                    type: "post",
+                    async:true,
+                    dataType: "json",
+                    data:{},
+                    success: function (data) {
+                        layer.close(lod);
+                        layer.msg('退出成功',{
+                            time:1000
+                        },function () {
+                            window.top.location='${pageContext.request.contextPath}/public/login';
+                        });
+                    },
+                    error:function () {
+                        layer.close(lod);
+                        layer.msg('服务器错误');
+                    }
+                });
             })
         });
     });

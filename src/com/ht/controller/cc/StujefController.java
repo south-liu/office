@@ -133,16 +133,16 @@ public class StujefController {
     //在校情况
     //去页面
     @RequestMapping("/tozx")
-    public  String tozxlist(Model model){
-        model.addAttribute("stuId",2);
+    public  String tozxlist(Model model,Integer stuId){
+        model.addAttribute("stuId",stuId);
         return "cc/stuzx_list";
     }
     //去添加
     @RequestMapping("/toaddzx")
-    public  String toaddzx(Model model , HttpSession session){
+    public  String toaddzx(Model model , HttpSession session,Integer stuId){
         EmpVO emp = (EmpVO) session.getAttribute("emp");
         model.addAttribute("empId",emp.getEmpId());
-        model.addAttribute("stuId",2);
+        model.addAttribute("stuId",stuId);
         return "cc/stuzx_add";
     }
 

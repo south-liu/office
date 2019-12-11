@@ -94,4 +94,11 @@ public class LoginController {
         }
         return map;
     }
+
+    @RequestMapping("/exit")
+    @ResponseBody
+    public String exit(HttpSession session){
+        session.invalidate();
+        return "success";
+    }
 }

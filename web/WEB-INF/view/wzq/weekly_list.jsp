@@ -52,7 +52,6 @@
     </div>
 </script>
 
-//日期弹出窗口
 <script>
     layui.use(['form', 'layedit', 'laydate'], function(){
         var laydate = layui.laydate;

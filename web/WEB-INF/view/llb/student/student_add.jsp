@@ -100,7 +100,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">户口性质</label>
             <div class="layui-input-inline">
-                <select name="proLevel">
+                <select name="resiDence">
                     <option value="1">农业</option>
                     <option value="2">非农</option>
                 </select>
@@ -127,7 +127,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">专业类别</label>
             <div class="layui-input-inline">
-                <select name="resiDence">
+                <select name="proLevel">
                     <option value="1">中技</option>
                     <option value="2">高技</option>
                     <option value="3">3+2</option>

@@ -136,7 +136,40 @@ public class StudentController {
     @RequestMapping("updStu")
     @ResponseBody
     public String editStu(StudentVO studentVO){
-        studentService.updStu(studentVO);
+        StudentVO db = studentService.findById(studentVO.getStudId());
+        db.setStuName(studentVO.getStuName());
+        db.setCardId(studentVO.getCardId());
+        db.setGuarantee(studentVO.getGuarantee());
+        db.setMiddleSchool(studentVO.getMiddleSchool());
+        db.setSex(studentVO.getSex());
+        db.setAge(studentVO.getAge());
+        db.setBirthDay(studentVO.getBirthDay());
+        db.setPhone(studentVO.getPhone());
+        db.setAddr(studentVO.getAddr());
+        db.setEnterTime(studentVO.getEnterTime());
+        db.setIntrodureTech(studentVO.getIntrodureTech());
+        db.setResiDence(studentVO.getResiDence());
+        db.setNaTion(studentVO.getNaTion());
+        db.setNaTives(studentVO.getNaTives());
+        db.setProLevel(studentVO.getProLevel());
+        db.setStudyType(studentVO.getStudyType());
+        db.setParents(studentVO.getParents());
+        db.setParentsPhone(studentVO.getParentsPhone());
+        db.setIntrPhone(studentVO.getIntrPhone());
+        db.setAudiTion(studentVO.getAudiTion());
+        db.setComputer(studentVO.getComputer());
+        db.setCollar(studentVO.getCollar());
+        db.setIsVocational(studentVO.getIsVocational());
+        db.setVocationalsch(studentVO.getVocationalsch());
+        db.setVocationalFlag(studentVO.getVocationalFlag());
+        db.setEnrollno(studentVO.getEnrollno());
+        db.setAuditionOption(studentVO.getAuditionOption());
+        db.setStuno(studentVO.getStuno());
+        db.setRegistration(studentVO.getRegistration());
+        db.setDibao(studentVO.getDibao());
+        db.setSourceType(studentVO.getSourceType());
+        db.setRemark(studentVO.getRemark());
+        studentService.updStu(db);
         return "success";
     }
 
@@ -171,6 +204,25 @@ public class StudentController {
 
             otherService.updStudentHour(stuId,huorId);
         }
+        return "success";
+    }
+
+    //调整宿舍
+    @RequestMapping("leaHuor")
+    @ResponseBody
+    public String leaHuor(Integer stuId){
+        StudentVO studentVO = studentService.findById(stuId);
+            //原宿舍人数-1
+            otherService.updHuorCount(studentVO.getHuor(),-1);
+
+            otherService.updStudentHour(stuId,0);
+        return "success";
+    }
+
+    @RequestMapping("repass")
+    @ResponseBody
+    public String repass(Integer stuId){
+        studentService.repass(stuId);
         return "success";
     }
 

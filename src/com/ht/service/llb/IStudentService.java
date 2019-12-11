@@ -15,4 +15,6 @@ public interface IStudentService {
     public void addStu(StudentVO studentVO);
     public void delStu(String ids);
     public void updStu(StudentVO studentVO);
+
+    public void repass(Integer stuId);
 }

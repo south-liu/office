@@ -75,9 +75,9 @@
                 {field:'className', title:'班级',align: 'center',width:100},
                 {field:'huorName', title:'宿舍房号',align: 'center',width:100,templet: function(res){
                         if (res.huorName == ''||res.huorName==null) {
-                            return '<span onclick="qiyong(this,'+res.empId+');" class="layui-btn-llb layui-btn-normal layui-btn-mini layui-btn-disabled">已禁用</span>'
+                            return '未分配'
                         } else {
-                            return '<span onclick="jinyong(this,'+res.empId+');" class="layui-btn-llb layui-btn-llbb layui-btn-normal layui-btn-mini">已启用</span>';
+                            return res.huorName;
                         }
                     }},
                 {field:'stat', title:'学生状态',align: 'center',width:100},
@@ -159,6 +159,32 @@
                 case 'leaHuor':
                     if (length == 1) {
                         var hour = checkStatus.data[0].huorName;
+                        console.log(hour);
+                        if (hour==undefined) {
+                            layer.msg('当前学生未分配宿舍');
+                        } else {
+                            layer.confirm('确认让该学生搬离 '+hour+' 宿舍吗？',function () {
+                                var lod = layer.load();
+                                $.ajax({
+                                    type: "POST",
+                                    dataType: "json",
+                                    url: "${pageContext.request.contextPath}/student/leaHuor" ,
+                                    data: {stuId:checkStatus.data[0].studId},
+                                    success: function (result) {
+                                        layer.close(lod);
+                                        layer.msg('搬离宿舍成功',{
+                                            time:1000
+                                        },function () {
+                                            window.location.reload();
+                                        });
+                                    },
+                                    error : function() {
+                                        layer.close(lod);
+                                        layer.msg('服务器错误');
+                                    }
+                                });
+                            })
+                        }
                     } else {
                         layer.msg('请选择一个学生');
                     }
@@ -192,7 +218,7 @@
                     break;
                 case 'zxInfo':
                     if (length == 1) {
-                        window.open('${pageContext.request.contextPath}/CJEF/tofam?empId='+checkStatus.data[0].empId,'target');
+                        window.open('${pageContext.request.contextPath}/stujef/tozx?stuId='+checkStatus.data[0].studId,'target');
                     } else {
                         layer.msg('请选择一个学生');
                     }
@@ -206,7 +232,7 @@
                     break;
                 case 'test':
                     if (length == 1) {
-                        window.open('${pageContext.request.contextPath}/CJEF/tofam?empId='+checkStatus.data[0].empId,'target');
+                        window.open('${pageContext.request.contextPath}/MY/tostudentscore_list?studId='+checkStatus.data[0].studId,'target');
                     } else {
                         layer.msg('请选择一个学生');
                     }
@@ -256,7 +282,23 @@
             } else if (obj.event === 'tuixue') {
                 layer.msg('退学');
             } else if (obj.event === 'repass') {
-                layer.msg('repass');
+                layer.confirm('确实重置密码为123456吗',function () {
+                    var lod = layer.load();
+                    $.ajax({
+                        type: "POST",
+                        dataType: "json",
+                        url: "${pageContext.request.contextPath}/student/repass" ,
+                        data: {stuId:data.studId},
+                        success: function (result) {
+                            layer.close(lod);
+                            layer.msg('重置密码成功');
+                        },
+                        error : function() {
+                            layer.close(lod);
+                            layer.msg('服务器错误');
+                        }
+                    });
+                })
             }
         });
     });
