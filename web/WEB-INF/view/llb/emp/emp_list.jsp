@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>员工列表</title>
@@ -24,6 +25,27 @@
     }
 </style>
 <body>
+<div class="layui-card-body ">
+    <form class="layui-form layui-col-space5" action="" onsubmit="return false;">
+        <div class="layui-inline layui-show-xs-block">
+            <select id="deptId" name="deptId">
+                <option value="">选择部门</option>
+                <c:forEach items="${depts}" var="dept">
+                    <option value="${dept.deptId}">${dept.deptName}</option>
+                </c:forEach>
+            </select>
+        </div>
+        <div class="layui-inline layui-show-xs-block">
+            <input type="text" id="empName" name="empName"  placeholder="员工姓名" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-inline layui-show-xs-block">
+            <input type="text" id="phone" name="phone"  placeholder="手机号码" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-inline layui-show-xs-block">
+            <button class="layui-btn" id="seacch" ><i class="layui-icon">&#xe615;</i></button>
+        </div>
+    </form>
+</div>
 <table class="layui-hide" id="myTab" lay-filter="fTab"></table>
 
 <script type="text/html" id="toolbar">
@@ -85,6 +107,21 @@
                 {fixed: 'right', title:'操作', toolbar: '#bar',align: 'center',width:120}
             ]],
             page: true
+        });
+
+        //搜索
+        $('#seacch').click(function () {
+            var deptId = $('#deptId').val();
+            var empName = $('#empName').val().trim();
+            var phone = $('#phone').val().trim();
+            table.reload('myTab',{
+                url:'${pageContext.request.contextPath}/emp/pageListWhere',
+                where:{
+                    deptId:deptId,
+                    empName:empName,
+                    phone:phone
+                }
+            });
         });
 
 

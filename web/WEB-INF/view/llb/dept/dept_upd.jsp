@@ -60,7 +60,7 @@
             <select name="parentId" lay-filter="parentId">
                 <option value="0"selected>宏图软件</option>
                 <c:forEach items="${headDept}" var="hd">
-                    <c:if test="${dept.deptId != hd.deptId}">
+                    <c:if test="${dept.parentId != 0}">
                         <option value="${hd.deptId}">${hd.deptName}</option>
                     </c:if>
                 </c:forEach>

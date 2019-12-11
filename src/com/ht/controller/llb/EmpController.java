@@ -24,7 +24,9 @@ public class EmpController {
     private IEmpService empService;
 
     @RequestMapping("/toEmpList")
-    public String toDeptList(){
+    public String toDeptList(Model model){
+        List<DeptVO> list = deptService.allDept();
+        model.addAttribute("depts",list);
         return "llb/emp/emp_list";
     }
 
@@ -53,6 +55,18 @@ public class EmpController {
         map.put("msg","");
         map.put("count",count);
         map.put("data",empService.pageList(page,limit));
+        return map;
+    }
+
+    @RequestMapping("/pageListWhere")
+    @ResponseBody
+    public Map pageListWhere(int page, int limit,Integer deptId,String empName,String phone){
+        Map map = new HashMap();
+        Integer count = empService.countEmpWhere(deptId,empName,phone);
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",count);
+        map.put("data",empService.pageListWhere(page,limit,deptId,empName,phone));
         return map;
     }
 

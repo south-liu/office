@@ -132,9 +132,9 @@ public class DeptController {
     @ResponseBody
     public String updDept(DeptVO deptVO){
         DeptVO d =  deptService.selById(deptVO.getDeptId());
-        if (d.getParentId() == 0) {
-            deptService.deleteChildDept(d.getDeptId());
-        }
+//        if (d.getParentId() == 0) {
+//            deptService.deleteChildDept(d.getDeptId());
+//        }
         deptService.updateDept(deptVO);
         return "success";
     }

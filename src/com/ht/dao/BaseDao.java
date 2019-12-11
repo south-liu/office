@@ -165,8 +165,9 @@ public class BaseDao {
     public int totalRowBySql(String sql){
         Session session = getSession();
         SQLQuery sqlQuery = session.createSQLQuery(sql);
+        int i = Integer.parseInt(sqlQuery.uniqueResult().toString());
         session.close();
-        return Integer.parseInt(sqlQuery.uniqueResult().toString());
+        return i;
     }
 
     /**

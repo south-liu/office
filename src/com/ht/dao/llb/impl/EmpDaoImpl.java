@@ -47,6 +47,21 @@ public class EmpDaoImpl extends BaseDao implements IEmpDao {
     }
 
     @Override
+    public int countEmpWhere(Integer deptId, String empName, String phone) {
+        String sql = "select count(*) from emp e where 1=1";
+        if (deptId!=null && !"".equals(deptId)){
+            sql+=" and e.deptId = "+deptId;
+        }
+        if (empName!=null && !"".equals(empName)){
+            sql+=" and e.empName like '%"+empName+"%'";
+        }
+        if (phone!=null && !"".equals(phone)){
+            sql+=" and e.phone like '%"+phone+"%'";
+        }
+        return totalRowBySql(sql);
+    }
+
+    @Override
     public List<EmpVO> allEmp() {
         return findAllByHql("from EmpVO");
     }
@@ -55,6 +70,21 @@ public class EmpDaoImpl extends BaseDao implements IEmpDao {
     public List<EmpVO> pageList(int page, int limit) {
         //return pageListByHql("from EmpVO",page,limit);
         return pageListBySql("select e.*,d.deptName from emp e left join dept d on e.deptId = d.deptId",page,limit);
+    }
+
+    @Override
+    public List<EmpVO> pageListWhere(int page, int limit, Integer deptId, String empName, String phone) {
+        String sql = "select e.*,d.deptName from emp e left join dept d on e.deptId = d.deptId where 1=1 ";
+        if (deptId!=null && !"".equals(deptId)){
+            sql+=" and e.deptId = "+deptId;
+        }
+        if (empName!=null && !"".equals(empName)){
+            sql+=" and e.empName like '%"+empName+"%'";
+        }
+        if (phone!=null && !"".equals(phone)){
+            sql+=" and e.phone like '%"+phone+"%'";
+        }
+        return pageListBySql(sql,page,limit);
     }
 
     @Override

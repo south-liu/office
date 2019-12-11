@@ -35,8 +35,18 @@ public class EmpServiceImpl implements IEmpService {
     }
 
     @Override
+    public List<EmpVO> pageListWhere(int page, int limit, Integer deptId, String empName, String phone) {
+        return empDao.pageListWhere(page,limit,deptId,empName,phone);
+    }
+
+    @Override
     public int countEmp() {
         return empDao.countEmp();
+    }
+
+    @Override
+    public int countEmpWhere(Integer deptId, String empName, String phone) {
+        return empDao.countEmpWhere(deptId,empName,phone);
     }
 
     @Override
