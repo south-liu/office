@@ -21,4 +21,11 @@ public interface studentclassService {
 
     public void student_update(StudentClassVO studentClassVO);
 
+    public StudentClassVO studentclassbyid(int classId);
+
+
+    public int studentclasschoose_count(int falled);
+
+    public List studentclass_choose(int falled, int page, int limit);
+
 }

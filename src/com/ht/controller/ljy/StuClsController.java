@@ -1,6 +1,10 @@
 package com.ht.controller.ljy;
 
+import com.ht.service.cc.MajorService;
+import com.ht.service.ljy.classTypeService;
 import com.ht.service.ljy.studentclassService;
+import com.ht.service.llb.IDeptService;
+import com.ht.service.llb.IEmpService;
 import com.ht.service.zwj.StudentFallService;
 import com.ht.vo.StudentClassVO;
 import org.springframework.stereotype.Controller;
@@ -21,29 +25,46 @@ import java.util.Map;
 public class StuClsController {
 
     @Resource
-   private  studentclassService studentclassService;
+    private  studentclassService studentclassService;
+
+    @Resource
+    private IEmpService iEmpService;
+
+
+    @Resource
+    private classTypeService classTypeService;
 
     @Resource
     private StudentFallService studentFallService;
 
-//    去查询班级页面
+    @Resource
+    private IDeptService iDeptService;
+
+    @Resource
+    private MajorService majorService;
+
+    //    去查询班级页面
     @RequestMapping("/gotostudentclasslist")
     public String gotostudentclasslist(Model model){
         System.out.println("查询班级管理！！！");
-         model.addAttribute("studfall",studentFallService.allData());
+        model.addAttribute("studfall",studentFallService.allData());
         return "ljy/studentclass_list";
     }
 
-//去班级添加页面
+    //去班级添加页面
     @RequestMapping("/gotostudentclassadd")
     public String gotostudentclassadd(Model model){
         System.out.println("添加班级管理！！！");
         model.addAttribute("studfall",studentFallService.allData());
+        model.addAttribute("emplist",iEmpService.allEmp());
+        model.addAttribute("cltylist",classTypeService.classTypeList());
+        model.addAttribute("majorlist",majorService.allMajor());
+        model.addAttribute("deptlist",iDeptService.allDept());
         return "ljy/studentclass_add";
     }
 
 
-//查询返回数据
+    //查询返回数据
     @ResponseBody
     @RequestMapping("/studentclasslist")
     public Map studentclasslist(int page,int limit,Model model){
@@ -71,5 +92,39 @@ public class StuClsController {
         studentclassService.studentclass_add(studentClassVO);
         System.out.println("添加成功！！！");
         return "success";
+    }
+
+
+    @RequestMapping("/gotostudentclassupd")
+    public String gotostudentclassupd(Model model,int classId){
+        System.out.println("去修改界面！！！");
+        model.addAttribute("studfall",studentFallService.allData());
+        model.addAttribute("emplist",iEmpService.allEmp());
+        model.addAttribute("cltylist",classTypeService.classTypeList());
+        model.addAttribute("majorlist",majorService.allMajor());
+        model.addAttribute("deptlist",iDeptService.allDept());
+        model.addAttribute("stucla",studentclassService.studentclassbyid(classId));
+        return "ljy/studentclass_upd";
+    }
+
+    @ResponseBody
+    @RequestMapping("/studentclassupd")
+    public String studentclassupd(StudentClassVO studentClassVO){
+        System.out.println("修改界面！！");
+        studentclassService.student_update(studentClassVO);
+        return "success";
+    }
+
+
+    @ResponseBody
+    @RequestMapping("/studentclasschoose")
+    public Map studentclasschoose(int falled,int page,int limit){
+        Map map=new HashMap();
+        map.put("code",0);
+        map.put("msg",0);
+        map.put("count",studentclassService.studentclasschoose_count(falled));
+        map.put("data",studentclassService.studentclass_choose(falled,page,limit));
+        System.out.println("带条件查询！！！");
+        return map;
     }
 }

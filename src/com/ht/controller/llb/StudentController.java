@@ -142,5 +142,13 @@ public class StudentController {
         return "success";
     }
 
+    //调整班级
+    @RequestMapping("updClass")
+    @ResponseBody
+    public String updClass(Integer stuId,Integer classId){
+        otherService.updStudentClass(stuId,classId);
+        otherService.updClassCount(classId,1);
+        return "success";
+    }
 
 }

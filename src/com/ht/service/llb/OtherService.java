@@ -16,4 +16,14 @@ public class OtherService {
     public List<StudentClassVO> studentClassList(){
         return otherDao.studentClassList();
     }
+
+    //调整学生班级
+    public void updStudentClass(Integer stuId,Integer classId){
+        otherDao.updStudentClass(stuId,classId);
+    };
+
+    //调整班级人数
+    public void updClassCount(Integer classId,Integer num){
+       otherDao.updClassCount(classId,num);
+    };
 }

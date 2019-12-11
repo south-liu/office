@@ -25,4 +25,14 @@ public class OtherDao extends BaseDao {
     public List<StudentClassVO> studentClassList(){
         return findAllByHql("from StudentClassVO");
     }
+
+    //调整学生班级
+    public void updStudentClass(Integer stuId,Integer classId){
+        executeSQL("update student set clazz = "+classId+" where studId = "+stuId);
+    };
+
+    //调整班级人数
+    public void updClassCount(Integer classId,Integer num){
+        executeSQL("update studentClass set count = count +"+num+" where classId = "+classId);
+    };
 }

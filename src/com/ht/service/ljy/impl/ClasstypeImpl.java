@@ -16,7 +16,12 @@ import java.util.List;
 public class ClasstypeImpl extends ljyDao implements classTypeService {
 
 
-//    sql分页查询班级列表
+    @Override
+    public List classTypeList() {
+        return listbysql("select * from classType ");
+    }
+
+    //    sql分页查询班级列表
     @Override
     public List classTypeList(int page, int limit) {
         return pagelistbysql("select * from classType ",page,limit);

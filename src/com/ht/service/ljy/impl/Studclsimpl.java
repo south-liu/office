@@ -15,7 +15,7 @@ public class Studclsimpl extends ljyDao implements studentclassService {
 
     @Override
     public List studentclass_list() {
-        return listbysql("select * from studentClass");
+        return listbysql("select * from studentClass ");
     }
 
     @Override
@@ -42,5 +42,21 @@ public class Studclsimpl extends ljyDao implements studentclassService {
     @Override
     public void student_update(StudentClassVO studentClassVO) {
         updateobject(studentClassVO);
+    }
+
+
+    @Override
+    public StudentClassVO studentclassbyid(int classId) {
+        return (StudentClassVO) selectOneByHql("from StudentClassVO where classId=" + classId);
+    }
+
+    @Override
+    public int studentclasschoose_count(int falled) {
+        return selTotalRow("select count(*)  from studentClass stcls left join emp e on stcls.teacher=e.empId left join classType clst on stcls.classType=clst.classTypeId left join studentFall stufal on stcls.falled=stufal.fallId left join major mjr on stcls.majorId=mjr.majorId left join dept dept on stcls.deptId=dept.deptId  where falled="+falled);
+    }
+
+    @Override
+    public List studentclass_choose(int falled,int page,int limit) {
+        return pagelistbysql("select stcls.*,e.empName,e.postName,clst.classTypeName,stufal.`level`, mjr.majorName,dept.deptName  from studentClass stcls left join emp e on stcls.teacher=e.empId left join classType clst on stcls.classType=clst.classTypeId left join studentFall stufal on stcls.falled=stufal.fallId left join major mjr on stcls.majorId=mjr.majorId left join dept dept on stcls.deptId=dept.deptId  where falled="+falled,page,limit);
     }
 }

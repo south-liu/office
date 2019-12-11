@@ -1,5 +1,6 @@
 package com.ht.dao.ljy;
 
+import com.ht.vo.TrialVO;
 import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -33,7 +34,7 @@ public class ljyDao {
         return list;
     }
 
-//    sql查询,无分页
+    //    sql查询,无分页
     public List listbysql(String sql){
         Session session=takeSession();
         SQLQuery sqlQuery=session.createSQLQuery(sql);
@@ -41,7 +42,6 @@ public class ljyDao {
         List list=sqlQuery.list();
         session.close();
         return list;
-
     }
 
 
@@ -61,6 +61,24 @@ public class ljyDao {
         session.flush();
         session.close();
     }
+
+    //    sql根据id查询对象
+    public Object dataById(Class classs,Integer id){
+        Session session=takeSession();
+        Object o = session.get(classs, id);
+        session.close();
+        return  o;
+    }
+
+
+    //    hql根据id查询对象
+    public Object selectOneByHql(String hql){
+        Session session = takeSession();
+        Object o = session.createQuery(hql).uniqueResult();
+        session.close();
+        return o;
+    }
+
 
 
     //    修改

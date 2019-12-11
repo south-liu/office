@@ -64,4 +64,6 @@ public interface HTService {
     public List<StudentClassVO> selclass();
     //查询课程名称（下拉框）
     public List<CourseVO> selcourse();
+
+    public List selcoursetype();
 }
