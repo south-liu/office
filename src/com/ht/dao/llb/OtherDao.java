@@ -2,6 +2,7 @@ package com.ht.dao.llb;
 
 import com.ht.dao.BaseDao;
 import com.ht.vo.StudentClassVO;
+import com.ht.vo.StudentFloorVO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
@@ -24,6 +25,11 @@ public class OtherDao extends BaseDao {
     //查询所有班级
     public List<StudentClassVO> studentClassList(){
         return findAllByHql("from StudentClassVO");
+    }
+
+    //查询所有楼栋
+    public List<StudentFloorVO> allFloor(){
+        return findAllByHql("from StudentFloorVO");
     }
 
     //调整学生班级

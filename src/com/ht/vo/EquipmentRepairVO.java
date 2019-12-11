@@ -16,7 +16,7 @@ public class EquipmentRepairVO {  //维修设备申请表
     private Integer classes;  //关联班级表主键
     private Integer student;  //关联学生表申请人
     private String remark;  //备注
-    private Integer depId;  //
+    private Integer empId;  //员工Id
     private Integer userType;  //1学生 2员工
     private String startTime;  //开始时间
     private String endTime;  //结束时间
@@ -30,7 +30,7 @@ public class EquipmentRepairVO {  //维修设备申请表
                 ", classes=" + classes +
                 ", student=" + student +
                 ", remark='" + remark + '\'' +
-                ", depId=" + depId +
+                ", empId=" + empId +
                 ", userType=" + userType +
                 ", startTime='" + startTime + '\'' +
                 ", endTime='" + endTime + '\'' +
@@ -85,12 +85,12 @@ public class EquipmentRepairVO {  //维修设备申请表
         this.remark = remark;
     }
 
-    public Integer getDepId() {
-        return depId;
+    public Integer getEmpId() {
+        return empId;
     }
 
-    public void setDepId(Integer depId) {
-        this.depId = depId;
+    public void setEmpId(Integer empId) {
+        this.empId = empId;
     }
 
     public Integer getUserType() {

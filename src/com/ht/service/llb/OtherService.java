@@ -2,6 +2,7 @@ package com.ht.service.llb;
 
 import com.ht.dao.llb.OtherDao;
 import com.ht.vo.StudentClassVO;
+import com.ht.vo.StudentFloorVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,4 +27,8 @@ public class OtherService {
     public void updClassCount(Integer classId,Integer num){
        otherDao.updClassCount(classId,num);
     };
+
+    public List<StudentFloorVO> allFloor(){
+        return otherDao.allFloor();
+    }
 }

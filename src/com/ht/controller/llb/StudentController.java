@@ -34,8 +34,6 @@ public class StudentController {
     @Resource
     private MajorService majorService;
     @Resource
-    private HTService htService;
-    @Resource
     private OtherService otherService;
 
     @RequestMapping("/toStuList")
@@ -63,7 +61,7 @@ public class StudentController {
     @RequestMapping("toUpdHuor")
     public String toUpdHuor(Model model,Integer studId){
         JSONArray resArr = new JSONArray();
-        List<StudentFloorVO> floorVOS = htService.selfloor();
+        List<StudentFloorVO> floorVOS = otherService.allFloor();
         for (StudentFloorVO floorVO : floorVOS) {
             Map floorMap = new HashMap();
             floorMap.put("title",floorVO.getFloorName());
@@ -146,8 +144,33 @@ public class StudentController {
     @RequestMapping("updClass")
     @ResponseBody
     public String updClass(Integer stuId,Integer classId){
-        otherService.updStudentClass(stuId,classId);
-        otherService.updClassCount(classId,1);
+        StudentVO studentVO = studentService.findById(stuId);
+        //如果班级改变
+        if (studentVO.getClazz() != classId) {
+            //原班级人数-1
+            otherService.updClassCount(studentVO.getClazz(),-1);
+            //班级人数+1
+            otherService.updClassCount(classId,1);
+
+            otherService.updStudentClass(stuId,classId);
+        }
+        return "success";
+    }
+
+    //调整宿舍
+    @RequestMapping("updHuor")
+    @ResponseBody
+    public String updHuor(Integer stuId,Integer classId){
+        StudentVO studentVO = studentService.findById(stuId);
+        //如果班级改变
+        if (studentVO.getClazz() != classId) {
+            //原班级人数-1
+            otherService.updClassCount(studentVO.getClazz(),-1);
+            //班级人数+1
+            otherService.updClassCount(classId,1);
+
+            otherService.updStudentClass(stuId,classId);
+        }
         return "success";
     }
 
