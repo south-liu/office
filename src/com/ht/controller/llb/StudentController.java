@@ -160,16 +160,16 @@ public class StudentController {
     //调整宿舍
     @RequestMapping("updHuor")
     @ResponseBody
-    public String updHuor(Integer stuId,Integer classId){
+    public String updHuor(Integer stuId,Integer huorId){
         StudentVO studentVO = studentService.findById(stuId);
-        //如果班级改变
-        if (studentVO.getClazz() != classId) {
-            //原班级人数-1
-            otherService.updClassCount(studentVO.getClazz(),-1);
-            //班级人数+1
-            otherService.updClassCount(classId,1);
+        //如果宿舍改变
+        if (studentVO.getHuor() != huorId) {
+            //原宿舍人数-1
+            otherService.updHuorCount(studentVO.getHuor(),-1);
+            //宿舍人数+1
+            otherService.updHuorCount(huorId,1);
 
-            otherService.updStudentClass(stuId,classId);
+            otherService.updStudentHour(stuId,huorId);
         }
         return "success";
     }

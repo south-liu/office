@@ -29,8 +29,31 @@
             //showCheckbox:true,
             onlyIconControl:true,
             click:function(obj){
-                console.log(obj.data);
-
+                if (obj.data.children == undefined) {
+                    console.log(obj.data);
+                    console.log(${student.studId});
+                    var lod = layer.load();
+                    $.ajax({
+                        type: "POST",
+                        dataType: "json",
+                        url: "${pageContext.request.contextPath}/student/updHuor" ,
+                        data: {stuId:${student.studId},huorId:obj.data.id},
+                        success: function (result) {
+                            layer.close(lod);
+                            layer.msg('调整成功',{
+                                time:1000
+                            },function () {
+                                window.parent.location.reload();
+                            });
+                        },
+                        error : function() {
+                            layer.close(lod);
+                            layer.msg('服务器错误');
+                        }
+                    });
+                } else {
+                    layer.msg('请选择宿舍');
+                }
             }
         });
     });

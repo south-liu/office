@@ -37,8 +37,18 @@ public class OtherDao extends BaseDao {
         executeSQL("update student set clazz = "+classId+" where studId = "+stuId);
     };
 
+    //调整学生宿舍
+    public void updStudentHour(Integer stuId,Integer hourId){
+        executeSQL("update student set huor = "+hourId+" where studId = "+stuId);
+    };
+
     //调整班级人数
     public void updClassCount(Integer classId,Integer num){
         executeSQL("update studentClass set count = count +"+num+" where classId = "+classId);
+    };
+
+    //调整宿舍人数
+    public void updHuorCount(Integer huorId,Integer num){
+        executeSQL("update studentHuor set count = count +"+num+" where hourId = "+huorId);
     };
 }

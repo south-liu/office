@@ -73,7 +73,13 @@
                 {field:'cardId', title:'身份证号', align: 'center',width:200},
                 {field:'phone', title:'学生电话',align: 'center',width:150},
                 {field:'className', title:'班级',align: 'center',width:100},
-                {field:'huorName', title:'宿舍房号',align: 'center',width:100},
+                {field:'huorName', title:'宿舍房号',align: 'center',width:100,templet: function(res){
+                        if (res.huorName == ''||res.huorName==null) {
+                            return '<span onclick="qiyong(this,'+res.empId+');" class="layui-btn-llb layui-btn-normal layui-btn-mini layui-btn-disabled">已禁用</span>'
+                        } else {
+                            return '<span onclick="jinyong(this,'+res.empId+');" class="layui-btn-llb layui-btn-llbb layui-btn-normal layui-btn-mini">已启用</span>';
+                        }
+                    }},
                 {field:'stat', title:'学生状态',align: 'center',width:100},
                 {field:'collar', title:'是否领用电脑',align: 'center',width:100},
                 {field:'grants', title:'是否享受助学金',align: 'center',width:100},
@@ -152,7 +158,7 @@
                     break;
                 case 'leaHuor':
                     if (length == 1) {
-
+                        var hour = checkStatus.data[0].huorName;
                     } else {
                         layer.msg('请选择一个学生');
                     }

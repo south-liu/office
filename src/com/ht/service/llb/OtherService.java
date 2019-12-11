@@ -28,6 +28,16 @@ public class OtherService {
        otherDao.updClassCount(classId,num);
     };
 
+    //调整学生宿舍
+    public void updStudentHour(Integer stuId,Integer hourId){
+        otherDao.updStudentHour(stuId,hourId);
+    };
+
+    //调整宿舍人数
+    public void updHuorCount(Integer huorId,Integer num){
+        otherDao.updHuorCount(huorId,num);
+    };
+
     public List<StudentFloorVO> allFloor(){
         return otherDao.allFloor();
     }
