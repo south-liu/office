@@ -36,6 +36,16 @@ public interface HTService {
     public void delfloor(StudentFloorVO studentFloor);
 
 
+    //查询我的周报
+    public List selmyweekly(Integer empId, int page, int limit);
+    //查询我的周报总行数
+    public Integer selcountmyweekly(Integer empId);
+    //去修改周报（按周报ID查询）
+    public WeeklyVO selmyupd(Integer weeklyId);
+    //修改我的周报
+    public void updmyweekly(WeeklyVO weeklyVO);
+
+
     //不带分页
     public List selwee();
     //周报管理分页查询（page、limit为layui中页面传回的属性名）
@@ -47,7 +57,7 @@ public interface HTService {
     //添加周报
     public void addwee(WeeklyVO weekly);
     //删除周报
-    public void updweekly(Integer weeklyId);
+    public void delweekly(Integer weeklyId);
 
 
     //不带分页

@@ -64,7 +64,7 @@
                 </select>
             </div>
         </div>
-        <button class="layui-btn layui-btn-sm" lay-event="sousuo">搜索</button>
+        <button class="layui-btn layui-btn-sm" lay-event="sousuo"><i class="layui-icon layui-icon-search" style="font-size: 15px; color: #FFF;"></i>搜索</button>
     </div>
 </script>
 

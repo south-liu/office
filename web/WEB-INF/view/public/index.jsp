@@ -60,8 +60,8 @@
                         <dd><a href="javascript:;" title="我的邮件" src="">我的邮件</a></dd>
                         <dd><a href="javascript:;" title="员工请假" src="">员工请假</a></dd>
                         <dd><a href="javascript:;" title="学生请假" src="">学生请假</a></dd>
-                        <dd><a href="javascript:;" title="我的周报" src="">我的周报</a></dd>
-                        <dd><a href="javascript:;" title="考勤管理" src="">考勤管理</a></dd>
+                        <dd><a href="javascript:;" title="我的周报" src="MY/tomyweekly_list">我的周报</a></dd>
+                        <dd><a href="javascript:;" title="考勤管理" src="checkwork/gotocheckworklist">考勤管理</a></dd>
                         <dd><a href="javascript:;" title="离职申请" src="">离职申请</a></dd>
                     </dl>
                 </li>
@@ -86,7 +86,6 @@
                         <dd><a href="javascript:;" title="考试成绩" src="MY/toscore_list">考试成绩</a></dd>
                         <dd><a href="javascript:;" title="答辩成绩" src="student-reply-score/home">答辩成绩</a></dd>
                         <dd><a href="javascript:;" title="班级管理" src="studentclass/gotostudentclasslist">班级管理</a></dd>
-                        <dd><a href="javascript:;" title="班级分配" src="">班级分配</a></dd>
                         <dd><a href="javascript:;" title="课程类别" src="MY/totype_list">课程类别</a></dd>
                         <dd><a href="javascript:;" title="课程管理" src="MY/tocourse_list">课程管理</a></dd>
                         <dd><a href="javascript:;" title="试讲培训" src="trial/gototriallist">试讲培训</a></dd>

@@ -81,6 +81,28 @@ public class HTServiceImpl extends BaseDao implements HTService{
 
 
 
+
+    @Override
+    public List selmyweekly(Integer empId, int page, int limit) {
+        return pageBySql("select w.*, e.empName from weekly w left join emp e on w.empId = e.empId where w.empId =" + empId, page, limit);
+    }
+
+    @Override
+    public Integer selcountmyweekly(Integer empId) {
+        return selTotalRow("select count(*) from weekly w left join emp e on w.empId = e.empId where w.empId =" + empId);
+    }
+
+    @Override
+    public WeeklyVO selmyupd(Integer weeklyId) {
+        return (WeeklyVO)getObject(WeeklyVO.class, weeklyId);
+    }
+
+    @Override
+    public void updmyweekly(WeeklyVO weeklyVO) {
+        updObject(weeklyVO);
+    }
+
+
     @Override
     public List selwee() {
         return listBySql2("select * from weekly");
@@ -107,7 +129,7 @@ public class HTServiceImpl extends BaseDao implements HTService{
     }
 
     @Override
-    public void updweekly(Integer weeklyId) {
+    public void delweekly(Integer weeklyId) {
         executeSQL("delete from weekly where weeklyId =" + weeklyId);
     }
 

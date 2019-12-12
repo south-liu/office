@@ -19,7 +19,7 @@
 <%--顶部按钮--%>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="add">添加课程</button>
+        <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-add-circle" style="font-size: 15px; color: #FFF;"></i>添加课程</button>
     </div>
 </script>
 
@@ -45,9 +45,9 @@
             title: '课程表',
             cols: [[
                 {field:'courseId',align:'center', title:'编号', width:120, fixed: 'left', unresize: true, sort: true},
-                {field:'courseName',align:'center', title:'课程名称', width:120,edit: 'text'},
-                {field:'isObligatory',align:'center',title:'是否必修', width:200},
-                {field:'courseTypeName',align:'center',title:'课程类别', width:200},
+                {field:'courseName',align:'center', title:'课程名称', width:120, edit: 'text'},
+                {field:'isObligatory',align:'center',title:'是否必修', width:200, edit: 'text'},
+                {field:'courseTypeName',align:'center',title:'课程类别', width:200, edit: 'text'},
                 {field:'remark',align:'center',title:'说明', width:200, edit: 'text'},
                 {fixed:'right',align:'center', title:'操作', toolbar: '#barDemo', width:120}
             ]],

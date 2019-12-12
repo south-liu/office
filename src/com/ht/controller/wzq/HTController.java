@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -108,6 +108,87 @@ public class HTController {
     }
 
 
+
+
+    //----------------------------我的周报--------------------------------
+    @RequestMapping("/tomyweekly_list")
+    public String tomyweekly_list(){
+        return "wzq/myweekly_list";
+    }
+    @RequestMapping("/myweeklylist")
+    @ResponseBody
+    public Map myweeklylist(Integer empId, int page, int limit){
+        List list = hts.selmyweekly(empId, page, limit);
+        Integer count = hts.selcountmyweekly(empId);
+        Map map = new HashMap();
+        map.put("code", 0);
+        map.put("msg", "");
+        map.put("count", count);
+        map.put("data", list);
+        return map;
+    }
+    //去添加周报页面
+    @RequestMapping("/toaddmyweekly")
+    public String toaddmyweekly(){
+        return "wzq/myweekly_add";
+    }
+    //添加我的周报
+    @RequestMapping("/addmyweekly")
+    public String addmyweekly(WeeklyVO weekly){
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+        String date = sf.format(new Date());
+        weekly.setWorkDay(date);
+        hts.addwee(weekly);
+        return "wzq/myweekly_list";
+    }
+    //删除我的周报
+    @RequestMapping("/delmyweekly")
+    public String delmyweekly(Integer weeklyId){
+        hts.delweekly(weeklyId);
+        return "wzq/myweekly_list";
+    }
+    //去修改周报
+    @RequestMapping("/toupdmyweekly")
+    public String toupdmyweekly(Integer weeklyId, Model model){
+        WeeklyVO weekly = hts.selmyupd(weeklyId);
+        model.addAttribute("weekly", weekly);
+        return "wzq/myweekly_upd";
+    }
+    //修改我的周报(点击编辑按钮修改)
+    @RequestMapping("/updmyweekly")
+    public String updmyweekly(WeeklyVO weekly){
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+        String date = sf.format(new Date());
+        weekly.setWorkDay(date);
+        hts.updmyweekly(weekly);
+        return "wzq/myweekly_list";
+    }
+    //按搜索框条件查询
+    @RequestMapping("/searchmyweeklylist")
+    @ResponseBody
+    public Map searchmyweeklylist(int page, int limit, Integer empId, String date, String date1){
+        String sql = "select w.*, e.empName from weekly w left join emp e on w.empId = e.empId where w.empId =" + empId;
+        String sql1 = "select count(*) from weekly  where empId =" + empId;
+        if (!"".equals(date) && date != null){
+            sql += " and w.workDay >= '"+ date +"'";
+            sql1 += " and workDay >= '"+ date +"'";
+        }
+        if (!"".equals(date1) && date1 != null){
+            sql += " and w.workDay <= '"+ date1 +"'";
+            sql1 += " and workDay <= '"+ date1 +"'";
+        }
+        List list = hts.searchaduitlog(sql, page, limit);
+        Integer count = hts.selcountad(sql1);
+        Map map = new HashMap();
+        map.put("code", 0);
+        map.put("msg", "");
+        map.put("count", count);
+        map.put("data", list);
+        return map;
+    }
+
+
+
     //--------------------------周报管理-----------------------------------
 
     @RequestMapping("/toweekly_list")
@@ -129,20 +210,6 @@ public class HTController {
         map.put("count", count);
         map.put("data", list);
         return map;
-    }
-    //去添加周报页面
-    @RequestMapping("/toadd")
-    public String toadd(){
-        return "wzq/weekly_add";
-    }
-    //添加周报
-    @RequestMapping("/addwee")
-    public String addwee(WeeklyVO weekly){
-        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-        String date = sf.format(new Date());
-        weekly.setWorkDay(date);
-        hts.addwee(weekly);
-        return "wzq/weekly_list";
     }
     //条件搜索
     @RequestMapping("/weelist2")
@@ -176,9 +243,9 @@ public class HTController {
         return map;
     }
     //删除周报
-    @RequestMapping("/updweekly")
-    public String updweekly(Integer weeklyId){
-        hts.updweekly(weeklyId);
+    @RequestMapping("/delweekly")
+    public String delweekly(Integer weeklyId){
+        hts.delweekly(weeklyId);
         return "wzq/weekly_list";
     }
 

@@ -13,13 +13,14 @@
     <jsp:include page="../public/head.jsp"></jsp:include>
 </head>
 <body>
+
 <%--添加表单--%>
 <table class="layui-hide" id="test" lay-filter="test"></table>
 
 <%--顶部按钮--%>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="add">添加成绩</button>
+        <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-add-circle" style="font-size: 15px; color: #FFF;"></i>添加成绩</button>
     </div>
 </script>
 

@@ -97,4 +97,13 @@ public class ljyDao {
         session.close();
     }
 
+
+//sql增删改三合一
+    public int executeSQL(String sql){
+        Session session = takeSession();
+        SQLQuery sqlQuery = session.createSQLQuery(sql);
+        int i = sqlQuery.executeUpdate();
+        session.close();
+        return i;
+    }
 }

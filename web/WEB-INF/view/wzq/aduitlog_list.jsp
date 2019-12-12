@@ -47,8 +47,8 @@
                 <input type="text" name="workDay2"  id="date1"  placeholder="yyyy-MM-dd" class="layui-input">
             </div>
         </div>
-        <button class="layui-btn layui-btn-sm" lay-event="sousuo">搜索</button>
-        <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+        <button class="layui-btn layui-btn-sm" lay-event="sousuo"><i class="layui-icon layui-icon-search" style="font-size: 15px; color: #FFF;"></i>搜索</button>
+        <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-add-circle" style="font-size: 15px; color: #FFF;"></i>添加</button>
     </div>
 </script>
 
