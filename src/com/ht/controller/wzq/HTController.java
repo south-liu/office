@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -143,29 +144,42 @@ public class HTController {
         hts.addwee(weekly);
         return "wzq/weekly_list";
     }
-    //根据条件查询
+    //条件搜索
     @RequestMapping("/weelist2")
     @ResponseBody
     public Map weelist2(int page, int limit, String empName, String deptName, String date, String date1){
-        Map map = new HashMap();
-        if (empName != "" && deptName == "" && date == "" && date1 == ""){
-            System.out.println("进入了if选择...");
-            //查询所有empId为页面提交的员工
-            List list = hts.seldeptwee(empName, page, limit);
-            //查询总行数
-            Integer count = hts.selcountemp(empName);
-            map.put("code", 0);
-            map.put("msg", "");
-            map.put("count", count);
-            map.put("data", list);
-            System.out.println(map);
+        String sql = "select w.*, e.empName from weekly w left join emp e on w.empId = e.empId where 1=1";
+        String sql1 = "select count(*) from weekly  where 1=1";
+        if (!"".equals(empName) && empName != null){
+            sql += " and w.empId in (select empId from emp where empName = '"+ empName +"')";
+            sql1 += " and empId in (select empId from emp where empName = '"+ empName +"')";
         }
-        System.out.println(map);
+        if (!"".equals(deptName) && deptName != null){
+            sql += " and w.empId in (select empId from emp where  deptId in (select deptId from dept where deptName = '"+ deptName +"'))";
+            sql1 += " and empId in (select empId from emp where  deptId in (select deptId from dept where deptName = '"+ deptName +"'))";
+        }
+        if (!"".equals(date) && date != null){
+            sql += " and w.workDay >= '"+ date +"'";
+            sql1 += " and workDay >= '"+ date +"'";
+        }
+        if (!"".equals(date1) && date1 != null){
+            sql += " and w.workDay <= '"+ date1 +"'";
+            sql1 += " and workDay <= '"+ date1 +"'";
+        }
+        List list = hts.searchaduitlog(sql, page, limit);
+        Integer count = hts.selcountad(sql1);
+        Map map = new HashMap();
+        map.put("code", 0);
+        map.put("msg", "");
+        map.put("count", count);
+        map.put("data", list);
         return map;
-
-//        int time1 = Integer.parseInt("20191206")
-//        int time2 = Integer.parseInt("20191207")
-//        if (time1 < time2) {}
+    }
+    //删除周报
+    @RequestMapping("/updweekly")
+    public String updweekly(Integer weeklyId){
+        hts.updweekly(weeklyId);
+        return "wzq/weekly_list";
     }
 
 
@@ -368,89 +382,119 @@ public class HTController {
     }
 
 
-//    //--------------考核指标--------------
-//    @RequestMapping("/toaduitmodel")
-//    public String toaduitmodel(){
-//
-//        return "wzq/"
-//    }
+    //--------------考核指标--------------
+    @RequestMapping("/toaduitmodel")
+    public String toaduitmodel(){
+        return "wzq/aduitmodel_list";
+    }
+    //查询考核指标
+    @RequestMapping("/aduitmodel_list")
+    @ResponseBody
+    public Map aduitmodel_list(int page, int limit){
+        List list = hts.seladuitmodel(page, limit);
+        Integer count = hts.selcountaduitmodel();
+        Map map = new HashMap();
+        map.put("code", 0);
+        map.put("msg", "");
+        map.put("count", count);
+        map.put("data", list);
+        return map;
+    }
+    //去添加考核指标
+    @RequestMapping("/toaddaduitmodel")
+    public String toaddaduitmodel(Model model){
+        List<DeptVO> list = hts.seldept();
+        model.addAttribute("dept", list);
+        return "wzq/aduitmodel_add";
+    }
+    //添加考核指标
+    @RequestMapping("/addaduitmodel")
+    @ResponseBody
+    public String addaduitmodel(AduitModelVO aduitModel){
+        hts.addaduitmodel(aduitModel);
+        return "success";
+    }
+    //删除考核指标
+    @RequestMapping("/deladuitmodel")
+    public String delauitmodel(Integer aduitModelId){
+        hts.deladuitmodel(aduitModelId);
+        return "wzq/aduitmodel_list";
+    }
 
-//    @Override
-//    public JSONArray getWeekLogData(HttpServletRequest request, int page, int limit) {
-//        JSONArray data = new JSONArray();
-//        String empName = request.getParameter("empName");
-//        String depIdStr = request.getParameter("depId");
-//        int depId = 0;
-//        if ("".equals(depIdStr) || null == depIdStr){
-//            depId = 0;
-//        }else {
-//            depId = Integer.parseInt(depIdStr);
-//        }
-//        System.out.println(depId);
-//        String startDay = request.getParameter("startDay");
-//        String endDay = request.getParameter("endDay");
-//        String hql = "FROM WeeklogVo where 1=1";
-//        if (!("".equals(empName) || null == empName)){
-//            int id = getEmpName(empName);
-//            hql +=" and Empid ="+id;
-//        }
-//        if (depId!=0){
-//            hql +=" and Empid in (SELECT empId FROM EmpVo where depId="+depId+")";
-//        }
-//        if (!("".equals(startDay) || null == startDay)){
-//            hql +=" and Workday>='"+startDay+"'";
-//        }
-//        if (!("".equals(endDay) || null == endDay)){
-//            hql +=" and Workday<='"+endDay+"'";
-//        }
-//        System.out.println(hql);
-//        List<WeeklogVo> list = pageByHql(hql,page,limit);
-//        for (WeeklogVo vo:list) {
-//            //查询员工姓名
-//            EmpVo emp = (EmpVo) getObject(EmpVo.class,vo.getEmpid());
-//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-//            JSONObject wlJO = new JSONObject();
-//            wlJO.put("worklogid",vo.getWeeklogid());
-//            wlJO.put("empName",emp.getEmpName());
-//            wlJO.put("weekDay",sdf.format(vo.getWorkday()));
-//            wlJO.put("weekCur",vo.getWeekCur());
-//            wlJO.put("studentQuestion",vo.getStudentQuestion());
-//            wlJO.put("idea",vo.getIdea());
-//            wlJO.put("weekNext",vo.getWeekNext());
-//            System.out.println(wlJO);
-//            data.add(wlJO);
-//        }
-//        return data;
-//    }
-//
-//    @Override
-//    public int getWeekLogSize(HttpServletRequest request) {
-//        String empName = request.getParameter("empName");
-//        String depIdStr = request.getParameter("depId");
-//        int depId = 0;
-//        if ("".equals(depIdStr) || null == depIdStr){
-//            depId = 0;
-//        }else {
-//            depId = Integer.parseInt(depIdStr);
-//        }
-//        System.out.println(depId);
-//        String startDay = request.getParameter("startDay");
-//        String endDay = request.getParameter("endDay");
-//        String hql = "select count(*) from WeeklogVo where 1=1";
-//        if (!("".equals(empName) || null == empName)){
-//            int id = getEmpName(empName);
-//            hql +=" and Empid ="+id;
-//        }
-//        if (depId!=0){
-//            hql +=" and Empid in (SELECT empId FROM EmpVo where depId="+depId+")";
-//        }
-//        if (!("".equals(startDay) || null == startDay)){
-//            hql +=" and Workday>='"+startDay+"'";
-//        }
-//        if (!("".equals(endDay) || null == endDay)){
-//            hql +=" and Workday<='"+endDay+"'";
-//        }
-//        System.out.println(hql);
-//        return getCountByHql(hql);
-//    }
+
+    //---------------员工考核----------------------
+
+    @RequestMapping("/toaduitlog")
+    public String toaduitlog(Model model){
+        List<DeptVO> list = hts.seldept();
+        model.addAttribute("dept", list);
+        return "wzq/aduitlog_list";
+    }
+    //查询员工考核
+    @RequestMapping("/aduitloglist")
+    @ResponseBody
+    public Map aduitloglist(int page, int limit){
+        List list = hts.seladuitlog(page, limit);
+        Integer count = hts.selcountaduitlog();
+        Map map = new HashMap();
+        map.put("code", 0);
+        map.put("msg", "");
+        map.put("count", count);
+        map.put("data", list);
+        return map;
+    }
+    //去添加员工考核
+    @RequestMapping("/toaddaduitlog")
+    public String toaddauitlog(Model model){
+        List<AduitModelVO> list = hts.seladuitm();
+        model.addAttribute("aduitm", list);
+        List<EmpVO> list1 = hts.selemp();
+        model.addAttribute("emp", list1);
+        return "wzq/aduitlog_add";
+    }
+    //添加员工考核
+    @RequestMapping("/addaduitlog")
+    @ResponseBody
+    public String addaduitlog(AduitLogVO aduitLog){
+        hts.addaduitlog(aduitLog);
+        return "success";
+    }
+    //删除员工考核
+    @RequestMapping("/deladuitlog")
+    public String deladuitlog(Integer aduitLogId){
+        hts.deladuitlog(aduitLogId);
+        return "wzq/aduitlog_list";
+    }
+    //搜索员工考核
+    @RequestMapping("/searchaduitlog")
+    @ResponseBody
+    public Map searchaduitlog(String empName, String deptName, String date, String date1, int page, int limit){
+        String sql = "select a.*, d.aduitName, e.empName from aduitLog a left join aduitModel d on a.aduitModelId = d.aduitModelId left join emp e on a.empId = e.empId where 1=1";
+        String sql1 = "select count(*) from aduitLog  where 1=1";
+        if (!"".equals(empName) && empName != null){
+            sql += " and a.empId in (select empId from emp where empName = '"+ empName +"')";
+            sql1 += " and empId in (select empId from emp where empName = '"+ empName +"')";
+        }
+        if (!"".equals(deptName) && deptName != null){
+            sql += " and a.empId in (select empId from emp where  deptId in (select deptId from dept where deptName = '"+ deptName +"'))";
+            sql1 += " and empId in (select empId from emp where  deptId in (select deptId from dept where deptName = '"+ deptName +"'))";
+        }
+        if (!"".equals(date) && date != null){
+            sql += " and a.auditDate >= '"+ date +"'";
+            sql1 += " and auditDate >= '"+ date +"'";
+        }
+        if (!"".equals(date1) && date1 != null){
+            sql += " and a.auditDate <= '"+ date1 +"'";
+            sql1 += " and auditDate <= '"+ date1 +"'";
+        }
+        List list = hts.searchaduitlog(sql, page, limit);
+        Integer count = hts.selcountad(sql1);
+        Map map = new HashMap();
+        map.put("code", 0);
+        map.put("msg", "");
+        map.put("count", count);
+        map.put("data", list);
+        return map;
+    }
+
 }

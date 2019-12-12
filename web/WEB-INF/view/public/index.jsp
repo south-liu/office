@@ -103,7 +103,9 @@
                 <li class="layui-nav-item">
                     <a class="small_menu_title" href="javascript:;">考核管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" title="考核指标" src="">考核指标</a></dd>
+                        <dd><a href="javascript:;" title="考核指标" src="MY/toaduitmodel">考核指标</a></dd>
+                        <dd><a href="javascript:;" title="员工考核" src="MY/toaduitlog">员工考核</a></dd>
+                        <dd><a href="javascript:;" title="教师考评" src="">教师考评</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">

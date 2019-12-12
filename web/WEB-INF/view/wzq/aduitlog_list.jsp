@@ -9,7 +9,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>周报管理</title>
+    <title>员工考核</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <jsp:include page="../public/head.jsp"></jsp:include>
 </head>
@@ -31,7 +31,7 @@
             <div class="layui-input-inline" style="width: 120px">
                 <select name="deptName" id="deptName">
                     <option value="">请选择部门</option>
-                    <c:forEach items="${list}" var="list">
+                    <c:forEach items="${dept}" var="list">
                         <option value="${list.deptName}">${list.deptName}</option>
                     </c:forEach>
                 </select>
@@ -70,28 +70,28 @@
 <%--操作列表的按钮--%>
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-    <a class="layui-btn layui-btn-xs" lay-event="cha">查看</a>
+    <a class="layui-btn layui-btn-xs" lay-event="cha">查看图片</a>
 </script>
 
 <script>
-    layui.use('table', function(){
+    layui.use(('table'), function(){
         var table = layui.table;
 
         table.render({
             elem: '#test',
-            url:'${pageContext.request.contextPath}/MY/weelist',
+            url:'${pageContext.request.contextPath}/MY/aduitloglist',
             toolbar: '#toolbarDemo', //开启头部工具栏，并为其绑定左侧模板(一般放置按钮、搜索框)
             defaultToolbar: ['filter', 'exports', 'print'],
-            title: '楼栋管理表',
+            title: '员工考核表',
             cols: [[
-                {field:'weeklyId',align:'center', title:'周报编号', width:120, fixed: 'left', unresize: true, sort: true},
+                {field:'aduitLogId',align:'center', title:'编号', width:120, fixed: 'left', unresize: true, sort: true},
+                {field:'aduitName',align:'center', title:'考核内容', width:120},
                 {field:'empName',align:'center', title:'员工姓名', width:120},
-                {field:'workDay',align:'center', title:'填写日期', width:120},
-                {field:'weekCur',align:'center', title:'本周情况描述', width:120},
-                {field:'studentQuestion',align:'center', title:'问题学生情况反馈', width:120},
-                {field:'idea',align:'center', title:'意见建议', width:120},
-                {field:'weekNext',align:'center', title:'下周工作计划', width:120},
-                {fixed:'right',align:'center', title:'操作', toolbar: '#barDemo', width:120}
+                {field:'score',align:'center', title:'考核分数', width:120},
+                {field:'auditDate',align:'center', title:'考核时间', width:120},
+                {field:'auditPerson',align:'center', title:'录入人', width:120},
+                {field:'remark',align:'center', title:'说明', width:120},
+                {fixed:'right',align:'center', title:'操作', toolbar: '#barDemo', width:150}
             ]],
             page: true
         });
@@ -100,7 +100,13 @@
         table.on('toolbar(test)', function(obj){
             switch(obj.event){
                 case 'add':
-                    location.href='${pageContext.request.contextPath}/MY/toadd';
+                    var index = layer.open({
+                        title:'添加考核指标',
+                        type:2,
+                        content:["${pageContext.request.contextPath}/MY/toaddaduitlog", "no"],
+                        area:['480px', "500px"],
+                        resize:false  //不能鼠标拖动改变大小
+                    });
                     break;
                 case 'sousuo':
                     var empName = $("#empName").val().trim();
@@ -108,10 +114,10 @@
                     var date = $("#date").val().trim();
                     var date1 = $("#date1").val().trim();
                     if (empName == "" && deptName == "" && date == "" && date1 == ""){
-                        location.href='${pageContext.request.contextPath}/MY/toweekly_list';
+                        location.href='${pageContext.request.contextPath}/MY/toaduitlog';
                     }else{
                         table.reload('test', {
-                            url: '${pageContext.request.contextPath}/MY/weelist2'
+                            url: '${pageContext.request.contextPath}/MY/searchaduitlog'
                             ,where: {
                                 empName:empName,
                                 deptName:deptName,
@@ -130,31 +136,28 @@
         table.on('tool(test)', function(obj){
             var data = obj.data;
             //console.log(obj)
-            if(obj.event === 'cha'){
-
-            }
-            if (obj.event == 'del'){
-                layer.confirm('您确定要删除该周报吗？', function(index){
-                    //异步删除数据
+            if(obj.event === 'del'){
+                layer.confirm('您确定要删除该考核指标吗？', function(index){
+                    //发异步删除数据
                     var lindex = layer.load();
                     $.ajax({
                         type:"post",
-                        url:"${pageContext.request.contextPath}/MY/updweekly",
-                        async:true,  //true为异步请求，false为同步请求。
-                        dataType:"text",  //请求返回的数据类型格式。
-                        data:{weeklyId:data.weeklyId},
-                        success:function(data) {
+                        url:"${pageContext.request.contextPath}/MY/deladuitlog",
+                        async:true,
+                        dataType:"text",
+                        data:{aduitLogId:data.aduitLogId},
+                        success:function(data){
                             layer.close(lindex);
                             obj.del();
                             layer.close(index);
-                            layer.msg('已删除！', {
-                                icon:1,
-                                time:1000
+                            layer.msg('已删除!', {
+                                icon: 1,
+                                time: 1000
                             });
                         },
                         error:function () {
                             layer.close(lindex);
-                            layer.msg("服务器错误！");
+                            layer.msg("服务器错误");
                         }
                     });
                 });

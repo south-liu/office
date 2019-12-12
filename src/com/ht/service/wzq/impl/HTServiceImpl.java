@@ -107,16 +107,9 @@ public class HTServiceImpl extends BaseDao implements HTService{
     }
 
     @Override
-    public List seldeptwee(String empName, int page, int limit) {
-        return pageBySql("select w.*, e.empName from weekly w left join emp e on w.empId = e.empId where e.empName = "+ empName +"", page, limit);
+    public void updweekly(Integer weeklyId) {
+        executeSQL("delete from weekly where weeklyId =" + weeklyId);
     }
-
-    @Override
-    public Integer selcountemp(String empName) {
-        return selTotalRow("select count(*) from weekly w left join emp e on w.empId = e.empId where e.empName = " + empName+"");
-    }
-
-
 
 
     @Override
@@ -149,11 +142,11 @@ public class HTServiceImpl extends BaseDao implements HTService{
         return listByHql("from CourseVO");
     }
 
+
     @Override
     public List selcoursetype() {
         return listBySql("select * from courseType");
     }
-
 
     @Override
     public List selcoursetype(int page, int limit) {
@@ -246,6 +239,83 @@ public class HTServiceImpl extends BaseDao implements HTService{
     @Override
     public void delstudentscore(Integer scoreId) {
         executeSQL("delete from studentScore where scoreId =" + scoreId);
+    }
+
+
+
+
+    @Override
+    public List seladuitmodel() {
+        return listBySql2("select * from aduitModel");
+    }
+
+    @Override
+    public List seladuitmodel(int page, int limit) {
+        return pageBySql("select a.*, d.deptName from aduitModel a left join dept d on a.deptId = d.deptId", page, limit);
+    }
+
+    @Override
+    public Integer selcountaduitmodel() {
+        return selTotalRow("select count(*) from aduitModel a left join dept d on a.deptId = d.deptId");
+    }
+
+    @Override
+    public void addaduitmodel(AduitModelVO aduitModel) {
+        addObject(aduitModel);
+    }
+
+    @Override
+    public void deladuitmodel(Integer aduitModelId) {
+        executeSQL("delete from aduitModel where aduitModelId =" + aduitModelId);
+    }
+
+
+
+
+
+    @Override
+    public List seladuitlog() {
+        return listBySql("select * from aduitLog");
+    }
+
+    @Override
+    public List seladuitlog(int page, int limit) {
+        return pageBySql("select a.*, d.aduitName, e.empName from aduitLog a left join aduitModel d on a.aduitModelId = d.aduitModelId left join emp e on a.empId = e.empId", page, limit);
+    }
+
+    @Override
+    public Integer selcountaduitlog() {
+        return selTotalRow("select count(*) from aduitLog a left join aduitModel d on a.aduitModelId = d.aduitModelId left join emp e on a.empId = e.empId");
+    }
+
+    @Override
+    public List<AduitModelVO> seladuitm() {
+        return listByHql("from AduitModelVO");
+    }
+
+    @Override
+    public List<EmpVO> selemp() {
+        return listByHql("from EmpVO");
+    }
+
+    @Override
+    public void addaduitlog(AduitLogVO aduitLog) {
+        addObject(aduitLog);
+    }
+
+    @Override
+    public void deladuitlog(Integer aduitLogId) {
+        executeSQL("delete from aduitLog where aduitLogId =" + aduitLogId);
+    }
+
+    @Override
+    public List searchaduitlog(String sql, int page, int limit) {
+        return pageBySql(sql, page, limit);
+    }
+
+    @Override
+    public Integer selcountad(String sql) {
+        return selTotalRow(sql);
     }
 
 }

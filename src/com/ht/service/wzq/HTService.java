@@ -46,10 +46,8 @@ public interface HTService {
     public List<DeptVO> seldept();
     //添加周报
     public void addwee(WeeklyVO weekly);
-    //连接查询（通过员工ID查员工姓名）
-    public List seldeptwee(String empName, int page, int limit);
-    //查询通过员工ID查员工姓名的总行数
-    public Integer selcountemp(String empName);
+    //删除周报
+    public void updweekly(Integer weeklyId);
 
 
     //不带分页
@@ -94,11 +92,9 @@ public interface HTService {
     //通过ID查询需要修改的数据
     public CourseVO selcourseid(Integer courseId);
 
+
+
     public List selcoursetype();
-
-
-
-
     //查询指定学生的成绩
     public StudentScoreVO selstudentscore(Integer scoreId);
     //分页查询指定学生成绩
@@ -111,4 +107,37 @@ public interface HTService {
     public void updstudentscore(StudentScoreVO studentScore);
     //删除学生成绩
     public void delstudentscore(Integer scoreId);
+
+
+
+    //不带分页
+    public List seladuitmodel();
+    //分页查询考核指标
+    public List seladuitmodel(int page, int limit);
+    //查询考核指标总行数
+    public Integer selcountaduitmodel();
+    //添加考核指标
+    public void addaduitmodel(AduitModelVO aduitModel);
+    //删除考核指标
+    public void deladuitmodel(Integer aduitModelId);
+
+
+    //不带分页
+    public List seladuitlog();
+    //分页查询员工考核
+    public List seladuitlog(int page, int limit);
+    //查询员工考核总行数
+    public Integer selcountaduitlog();
+    //查询考核指标（下拉框）
+    public List<AduitModelVO> seladuitm();
+    //查询员工（下拉框）
+    public List<EmpVO> selemp();
+    //添加员工考核
+    public void addaduitlog(AduitLogVO aduitLog);
+    //删除员工考核
+    public void deladuitlog(Integer aduitLogId);
+    //搜索员工考核
+    public List searchaduitlog(String sql, int page, int limit);
+    //查询搜索总行数
+    public Integer selcountad(String sql);
 }

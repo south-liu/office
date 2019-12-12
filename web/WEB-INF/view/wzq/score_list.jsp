@@ -88,7 +88,7 @@
                 {field:'termName',align:'center', title:'考试学期', width:120},
                 {field:'scoreTime',align:'center', title:'考试时间', width:120},
                 {field:'empName',align:'center', title:'录入人员', width:120},
-                {field:'remark',align:'center', title:'备注', width:120}
+                {field:'remark',align:'center', title:'备注', width:120},
             ]],
             page: true
         });
