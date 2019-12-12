@@ -84,7 +84,7 @@
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;" title="学生资料" src="student/toStuList">学生资料</a></dd>
                         <dd><a href="javascript:;" title="考试成绩" src="MY/toscore_list">考试成绩</a></dd>
-                        <dd><a href="javascript:;" title="答辩成绩" src="">答辩成绩</a></dd>
+                        <dd><a href="javascript:;" title="答辩成绩" src="student-reply-score/home">答辩成绩</a></dd>
                         <dd><a href="javascript:;" title="班级管理" src="studentclass/gotostudentclasslist">班级管理</a></dd>
                         <dd><a href="javascript:;" title="班级分配" src="">班级分配</a></dd>
                         <dd><a href="javascript:;" title="课程类别" src="MY/totype_list">课程类别</a></dd>
@@ -98,6 +98,7 @@
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;" title="宿舍管理" src="student-huor/home">宿舍管理</a></dd>
                         <dd><a href="javascript:;" title="楼栋管理" src="MY/tofloor_list">楼栋管理</a></dd>
+                        <dd><a href="javascript:;" title="维修管理" src="repair/tolist">维修管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -123,6 +124,7 @@
                         <dd><a href="javascript:;" title="院系设置" src="Chengcollege/tolist">院系设置</a></dd>
                         <dd><a href="javascript:;" title="专业设置" src="major/tolist">专业设置</a></dd>
                         <dd><a href="javascript:;" title="学期设置" src="MY/toterm_list">学期设置</a></dd>
+                        <dd><a href="javascript:;" title="答辩项目" src="project/home">答辩项目</a></dd>
                     </dl>
                 </li>
             </ul>

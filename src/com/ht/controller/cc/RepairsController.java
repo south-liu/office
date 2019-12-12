@@ -34,6 +34,7 @@ public class RepairsController {
     public String toaddstulist(){
         return "cc/repair/sturepair_add";
     }
+
     @ResponseBody
     @RequestMapping("/repair_list")
     public Map collegelist(int page, int limit){
@@ -77,16 +78,4 @@ public class RepairsController {
         return "";
     }
 
-    //学生提交申请
-    @RequestMapping("/emprepairadd")
-    @ResponseBody
-    public String addstuepaira(EquipmentRepairVO equipmentRepairVO, HttpSession session){
-        StudentVO stu=  (StudentVO) session.getAttribute("stu");
-        equipmentRepairVO.setStudent(stu.getStudId());
-        equipmentRepairVO.setStartTime(DateFormat.getDateInstance().format(new Date()));
-        equipmentRepairVO.setUserType(1);//设置申请人的类型  学生为1
-        equipmentRepairVO.setStatus(0);//设置设备的默认状态  0 未完成||1 已完成
-        rs.AddRepair(equipmentRepairVO);
-        return "";
-    }
 }
