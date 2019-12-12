@@ -34,7 +34,6 @@ public class RepairsController {
     public String toaddstulist(){
         return "cc/repair/sturepair_add";
     }
-
     @ResponseBody
     @RequestMapping("/repair_list")
     public Map collegelist(int page, int limit){
@@ -77,5 +76,4 @@ public class RepairsController {
         rs.AddRepair(equipmentRepairVO);
         return "";
     }
-
 }

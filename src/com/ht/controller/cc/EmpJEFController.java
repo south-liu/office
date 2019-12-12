@@ -28,13 +28,13 @@ public class EmpJEFController {
     @RequestMapping("/tojob")
     public  String tolist(Model model, int empId){
         model.addAttribute("empId",empId);
-        return "cc/joblist";
+        return "cc/empjef/joblist";
     }
 
     @RequestMapping("/toaddjob")
     public  String toaddjob(Model model, int empid){
         model.addAttribute("empId",empid);
-        return "cc/addjob";
+        return "cc/empjef/addjob";
     }
 
     @ResponseBody
@@ -79,13 +79,13 @@ public class EmpJEFController {
     @RequestMapping("/tofam")
     public  String tofamlist(Model model,int empId){
         model.addAttribute("empId",empId);
-        return "cc/famlist";
+        return "cc/empjef/famlist";
     }
 
     @RequestMapping("/toaddfam")
     public  String toaddfam(Model model, int empId){
         model.addAttribute("empId",empId);
-        return "cc/addfam";
+        return "cc/empjef/addfam";
     }
 
     @ResponseBody

@@ -24,14 +24,14 @@ public class MajorController {
 
     @RequestMapping("/tolist")
     public  String tolist(){
-        return "cc/major_list";
+        return "cc/major/major_list";
     }
 
     @RequestMapping("/toaddmajor")
     public  String toaddjob(Model model){
         List<CollegeDeptVO> list = ms.AllCollege();
         model.addAttribute("collegeDeptVO",list);
-        return "cc/major_add";
+        return "cc/major/major_add";
     }
 
     @RequestMapping("/toupdmajor")
@@ -39,7 +39,7 @@ public class MajorController {
         System.out.println("test"+ms.AllMajor(majorId));
         model.addAttribute("majorVO",ms.AllMajor(majorId));
         model.addAttribute("collegeDeptVO",ms.AllCollege());
-        return "cc/major_upd";
+        return "cc/major/major_upd";
     }
 
 

@@ -30,13 +30,13 @@ public class StujefController {
     @RequestMapping("/toedu")
     public  String tolist(Model model){
         model.addAttribute("stuId",2);
-        return "cc/stuedu_list";
+        return "cc/stujef/stuedu_list";
     }
 
     @RequestMapping("/toaddedu")
     public  String toaddjob(Model model){
         model.addAttribute("stuId",2);
-        return "cc/stuedu_add";
+        return "cc/stujef/stuedu_add";
     }
 
     @ResponseBody
@@ -82,13 +82,13 @@ public class StujefController {
     @RequestMapping("/tofam")
     public  String tofamlist(Model model){
         model.addAttribute("stuId",2);
-        return "cc/stufam_list";
+        return "cc/stujef/stufam_list";
     }
 
     @RequestMapping("/toaddfam")
     public  String toaddfam(Model model){
         model.addAttribute("stuId",2);
-        return "cc/stufam_add";
+        return "cc/stujef/stufam_add";
     }
 
     @ResponseBody
@@ -135,7 +135,7 @@ public class StujefController {
     @RequestMapping("/tozx")
     public  String tozxlist(Model model,Integer stuId){
         model.addAttribute("stuId",stuId);
-        return "cc/stuzx_list";
+        return "cc/stujef/stuzx_list";
     }
     //去添加
     @RequestMapping("/toaddzx")
@@ -143,14 +143,14 @@ public class StujefController {
         EmpVO emp = (EmpVO) session.getAttribute("emp");
         model.addAttribute("empId",emp.getEmpId());
         model.addAttribute("stuId",stuId);
-        return "cc/stuzx_add";
+        return "cc/stujef/stuzx_add";
     }
 
     //去修改
     @RequestMapping("/toupdzx")
     public  String toupdang(Model model,int happenId){
         model.addAttribute("studentHappeningVO",stus.happlist(happenId));
-        return "cc/stuzx_upd";
+        return "cc/stujef/stuzx_upd";
     }
     @ResponseBody
     @RequestMapping("/zxlist")

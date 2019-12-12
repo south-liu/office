@@ -25,14 +25,14 @@ public class WeekAngController {
 
     @RequestMapping("/tolist")
     public  String tolist(){
-        return "cc/ang_list";
+        return "cc/weekAng/ang_list";
     }
 
     @RequestMapping("/toaddang")
     public  String toaddjob(Model model){
         List<EmpVO> list = as.Allemp();
         model.addAttribute("empVO",list);
-        return "cc/ang_add";
+        return "cc/weekAng/ang_add";
     }
 
     @RequestMapping("/toupdang")
@@ -41,7 +41,7 @@ public class WeekAngController {
         model.addAttribute("weekArrangeVO",as.AllAng(weekArrangeId));
         model.addAttribute("empVO",as.Allemp());
         System.out.println(as.Allemp());
-        return "cc/ang_upd";
+        return "cc/weekAng/ang_upd";
     }
 
     @ResponseBody
