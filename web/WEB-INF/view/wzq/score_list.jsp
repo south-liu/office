@@ -26,7 +26,7 @@
                 <select name="term" id="term">
                     <option value="">请选择学期</option>
                     <c:forEach items="${term}" var="list">
-                        <option value="${list.termId}">${list.termName}</option>
+                        <option value="${list.termName}">${list.termName}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -59,7 +59,7 @@
                 <select name="course" id="course">
                     <option value="">请选择课程</option>
                     <c:forEach items="${course}" var="list">
-                        <option value="${list.courseId}">${list.courseName}</option>
+                        <option value="${list.courseName}">${list.courseName}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -96,59 +96,28 @@
         //头工具栏事件
         table.on('toolbar(test)', function(obj){
             switch(obj.event){
-                case 'add':
-                    location.href='${pageContext.request.contextPath}/MY/toadd';
-                    break;
                 case 'sousuo':
-                    var empName = $("#empName").val().trim();
-                    var deptName = $("#deptName").val().trim();
-                    var date = $("#date").val().trim();
-                    var date1 = $("#date1").val().trim();
-                    if (empName == "" && deptName == "" && date == "" && date1 == ""){
-                        location.href='${pageContext.request.contextPath}/MY/toweekly_list';
+                    var term = $("#term").val().trim();
+                    var sclass = $("#sclass").val().trim();
+                    var leibie = $("#leibie").val().trim();
+                    var course = $("#course").val().trim();
+                    if (term == "" && sclass == "" && leibie == "" && course == ""){
+                        location.href='${pageContext.request.contextPath}/MY/toscore_list';
                     }else{
-                        var lindex = layer.load();
-                        $.ajax({
-                            type:"post",
-                            url:"${pageContext.request.contextPath}/MY/toweekly_list2",
-                            async:true,
-                            dataType:"text",
-                            data:{empName:empName, deptName:deptName, date:date, date1:date1},
+                        table.reload('test', {
+                            url: '${pageContext.request.contextPath}/MY/selscorelist'
+                            ,where: {
+                                term:term,
+                                sclass:sclass,
+                                leibie:leibie,
+                                course:course
+                            } //设定异步数据接口的额外参数
                         });
                     }
 
 
                     break;
             };
-        });
-
-        //监听行工具事件
-        table.on('tool(test)', function(obj){
-            var data = obj.data;
-            //console.log(obj)
-            if(obj.event === 'sel'){
-                var lindex = layer.load();
-                $.ajax({
-                    type:"post",
-                    url:"${pageContext.request.contextPath}/MY/updfloor",
-                    async:true,
-                    dataType:"text",
-                    data:{floorId:data.floorId},
-                    success:function(data){
-                        layer.close(lindex);
-                        obj.del();
-                        layer.close(index);
-                        layer.msg('已删除!', {
-                            icon: 1,
-                            time: 1000
-                        });
-                    },
-                    error:function () {
-                        layer.close(lindex);
-                        layer.msg("服务器错误");
-                    }
-                });
-            }
         });
     });
 </script>

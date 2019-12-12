@@ -142,11 +142,11 @@ public class HTServiceImpl extends BaseDao implements HTService{
         return listByHql("from CourseVO");
     }
 
-
     @Override
     public List selcoursetype() {
         return listBySql("select * from courseType");
     }
+
 
     @Override
     public List selcoursetype(int page, int limit) {

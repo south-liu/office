@@ -195,11 +195,43 @@ public class HTController {
         model.addAttribute("course", list2);
         return "wzq/score_list";
     }
+    //分页查询
     @RequestMapping("/scorelist")
     @ResponseBody
     public Map score_list(int page, int limit){
         List list = hts.selscore(page, limit);
         Integer count = hts.selcountscore();
+        Map map = new HashMap();
+        map.put("code", 0);
+        map.put("msg", "");
+        map.put("count", count);
+        map.put("data", list);
+        return map;
+    }
+    //搜索条件查询
+    @RequestMapping("/selscorelist")
+    @ResponseBody
+    public Map selscorelist(String term, String sclass, Integer leibie, String course, int page, int limit){
+        String sql = "select s.*, t.termName, c.courseName from studentScore s left join term t on s.termId = t.termId left join course c on s.courseId = c.courseId where 1 = 1";
+        String sql1 = "select count(*) from studentScore where 1 = 1";
+        if(term != null && !"".equals(term)){
+            sql += " and s.termId in (select termId from term where termName = '" + term +"')";
+            sql1 += " and termId in (select termId from term where termName = '" + term +"')";
+        }
+        if(sclass != null && !"".equals(sclass)){
+            sql += " and s.stuId in (select stuId from student where clazz in (select classId from studentClass where className = '" + sclass +"'))";
+            sql1 += " and stuId in (select stuId from student where clazz in (select classId from studentClass where className = '" + sclass +"'))";
+        }
+        if(leibie != null && !"".equals(leibie)){
+            sql += " and s.testType = " + leibie;
+            sql1 += " and testType = " + leibie;
+        }
+        if(course != null && !"".equals(course)){
+            sql += " and s.courseId in (select courseId from course where courseName = '" + course +"')";
+            sql1 += " and courseId in (select courseId from course where courseName = '" + course +"')";
+        }
+        List list = hts.searchaduitlog(sql, page, limit);
+        Integer count = hts.selcountad(sql1);
         Map map = new HashMap();
         map.put("code", 0);
         map.put("msg", "");
