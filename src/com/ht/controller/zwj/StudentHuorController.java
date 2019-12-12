@@ -54,7 +54,6 @@ public class StudentHuorController {// 学生宿舍管理
         if (studentHuorVO == null || studentHuorVO.getHuorName() == null) {
             hashMap.put("code", 1);
             hashMap.put("msg", "添加失败！");
-            hashMap.put("result", studentHuorService.add(studentHuorVO));
 
             return hashMap;
         }
