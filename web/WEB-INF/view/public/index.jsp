@@ -158,6 +158,7 @@
                     success: function (data) {
                         layer.close(lod);
                         layer.msg('退出成功',{
+                            icon:1,
                             time:1000
                         },function () {
                             window.top.location='${pageContext.request.contextPath}/public/login';
@@ -165,7 +166,9 @@
                     },
                     error:function () {
                         layer.close(lod);
-                        layer.msg('服务器错误');
+                        layer.msg('服务器错误',{
+                            icon:2
+                        });
                     }
                 });
             })

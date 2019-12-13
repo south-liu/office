@@ -72,7 +72,13 @@
                 {field:'sex', title:'性别',sort: true,align: 'center',width:80},
                 {field:'cardId', title:'身份证号', align: 'center',width:200},
                 {field:'phone', title:'学生电话',align: 'center',width:150},
-                {field:'className', title:'班级',align: 'center',width:100},
+                {field:'className', title:'班级',align: 'center',width:100,templet: function(res){
+                        if (res.className == ''||res.className==null) {
+                            return '未分配'
+                        } else {
+                            return res.className;
+                        }
+                    }},
                 {field:'huorName', title:'宿舍房号',align: 'center',width:100,templet: function(res){
                         if (res.huorName == ''||res.huorName==null) {
                             return '未分配'
@@ -80,7 +86,6 @@
                             return res.huorName;
                         }
                     }},
-                {field:'stat', title:'学生状态',align: 'center',width:100},
                 {field:'collar', title:'是否领用电脑',align: 'center',width:100},
                 {field:'grants', title:'是否享受助学金',align: 'center',width:100},
                 {field:'computer', title:'是否送电脑',align: 'center',width:100},
@@ -88,7 +93,13 @@
                 {field:'parentsPhone', title:'家长电话',align: 'center',width:100},
                 {field:'', title:'已缴金额',align: 'center',width:100},
                 {field:'qkMoney', title:'欠款金额',align: 'center',width:100},
-                {field:'stat', title:'学生状态',align: 'center',width:100},
+                {field:'stat', title:'学生状态',align: 'center',width:100,templet: function(res){
+                        if (res.stat == 0) {
+                            return '退学'
+                        } else {
+                            return '正常';
+                        }
+                    }},
                 {fixed: 'right', title:'操作', toolbar: '#bar',align: 'center',width:250},
             ]],
             page: true
@@ -151,12 +162,19 @@
 
                 case 'updHuor':
                     if (length == 1) {
-                        layer.open({
-                            title:'调整宿舍',
-                            type:2,
-                            content:'${pageContext.request.contextPath}/student/toUpdHuor?studId='+checkStatus.data[0].studId,
-                            area: ['500px', '400px']
-                        });
+                        if (checkStatus.data[0].stat ==0) {
+                            layer.msg('该学生已退学',{
+                                icon:0,
+                                time:1000
+                            });
+                        } else {
+                            layer.open({
+                                title:'调整宿舍',
+                                type:2,
+                                content:'${pageContext.request.contextPath}/student/toUpdHuor?studId='+checkStatus.data[0].studId,
+                                area: ['500px', '400px']
+                            });
+                        }
                     } else {
                         layer.msg('请选择一个学生',{
                             icon:0
@@ -165,37 +183,44 @@
                     break;
                 case 'leaHuor':
                     if (length == 1) {
-                        var hour = checkStatus.data[0].huorName;
-                        console.log(hour);
-                        if (hour==undefined) {
-                            layer.msg('当前学生未分配宿舍',{
-                                icon:0
+                        if (checkStatus.data[0].stat ==0) {
+                            layer.msg('该学生已退学',{
+                                icon:0,
+                                time:1000
                             });
                         } else {
-                            layer.confirm('确认让该学生搬离 '+hour+' 宿舍吗？',function () {
-                                var lod = layer.load();
-                                $.ajax({
-                                    type: "POST",
-                                    dataType: "json",
-                                    url: "${pageContext.request.contextPath}/student/leaHuor" ,
-                                    data: {stuId:checkStatus.data[0].studId},
-                                    success: function (result) {
-                                        layer.close(lod);
-                                        layer.msg('搬离宿舍成功',{
-                                            icon:1,
-                                            time:1000
-                                        },function () {
-                                            window.location.reload();
-                                        });
-                                    },
-                                    error : function() {
-                                        layer.close(lod);
-                                        layer.msg('服务器错误',{
-                                            icon:2
-                                        });
-                                    }
+                            var hour = checkStatus.data[0].huorName;
+                            console.log(hour);
+                            if (hour==undefined) {
+                                layer.msg('当前学生未分配宿舍',{
+                                    icon:0
                                 });
-                            })
+                            } else {
+                                layer.confirm('确认让该学生搬离 '+hour+' 宿舍吗？',function () {
+                                    var lod = layer.load();
+                                    $.ajax({
+                                        type: "POST",
+                                        dataType: "json",
+                                        url: "${pageContext.request.contextPath}/student/leaHuor" ,
+                                        data: {stuId:checkStatus.data[0].studId},
+                                        success: function (result) {
+                                            layer.close(lod);
+                                            layer.msg('搬离宿舍成功',{
+                                                icon:1,
+                                                time:1000
+                                            },function () {
+                                                window.location.reload();
+                                            });
+                                        },
+                                        error : function() {
+                                            layer.close(lod);
+                                            layer.msg('服务器错误',{
+                                                icon:2
+                                            });
+                                        }
+                                    });
+                                })
+                            }
                         }
                     } else {
                         layer.msg('请选择一个学生',{
@@ -205,12 +230,19 @@
                     break;
                 case 'updClass':
                     if (length == 1) {
-                        layer.open({
-                            title:'调整班级',
-                            type:2,
-                            content:'${pageContext.request.contextPath}/student/toUpdClass?studId='+checkStatus.data[0].studId,
-                            area: ['500px', '400px']
-                        });
+                        if (checkStatus.data[0].stat ==0) {
+                            layer.msg('该学生已退学',{
+                                icon:0,
+                                time:1000
+                            });
+                        } else {
+                            layer.open({
+                                title:'调整班级',
+                                type:2,
+                                content:'${pageContext.request.contextPath}/student/toUpdClass?studId='+checkStatus.data[0].studId,
+                                area: ['500px', '400px']
+                            });
+                        }
                     } else {
                         layer.msg('请选择一个学生',{
                             icon:0
@@ -306,7 +338,7 @@
                 });
             } else if(obj.event === 'edit'){
                 layer.open({
-                    title:'修改员工',
+                    title:'编辑信息',
                     type:2,
                     content:'${pageContext.request.contextPath}/student/toEdit?studId='+data.studId,
                     area: ['720px', '500px'],
@@ -314,7 +346,37 @@
                     maxmin:true
                 });
             } else if (obj.event === 'tuixue') {
-                layer.msg('退学');
+                if (data.stat == 0) {
+                    layer.msg('该学生已退学',{
+                        icon:0,
+                        time:1000
+                    });
+                } else {
+                    layer.confirm('确实将该学生退学吗',function () {
+                        var lod = layer.load();
+                        $.ajax({
+                            type: "POST",
+                            dataType: "json",
+                            url: "${pageContext.request.contextPath}/student/updStatus" ,
+                            data: {stuId:data.studId,stat:0},
+                            success: function (result) {
+                                layer.close(lod);
+                                layer.msg('退学成功',{
+                                    icon:1,
+                                    time:1000
+                                },function () {
+                                    window.location.reload();
+                                });
+                            },
+                            error : function() {
+                                layer.close(lod);
+                                layer.msg('服务器错误',{
+                                    icon:2
+                                });
+                            }
+                        });
+                    })
+                }
             } else if (obj.event === 'repass') {
                 layer.confirm('确实重置密码为123456吗',function () {
                     var lod = layer.load();

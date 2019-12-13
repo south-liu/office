@@ -52,13 +52,13 @@ public class StudentController {
         return "llb/student/student_add";
     }
 
-    @RequestMapping("toEdit")
+    @RequestMapping("/toEdit")
     public String toEdit(Model model,Integer studId){
         model.addAttribute("student",studentService.findById(studId));
         return "llb/student/student_edit";
     }
 
-    @RequestMapping("toUpdHuor")
+    @RequestMapping("/toUpdHuor")
     public String toUpdHuor(Model model,Integer studId){
         JSONArray resArr = new JSONArray();
         List<StudentFloorVO> floorVOS = otherService.allFloor();
@@ -81,7 +81,7 @@ public class StudentController {
         return "llb/student/upd_huor";
     }
 
-    @RequestMapping("toUpdClass")
+    @RequestMapping("/toUpdClass")
     public String toUpdClass(Model model,Integer studId){
         JSONArray resArr = new JSONArray();
         List<StudentFallVO> fallVOS = studentFallService.allData();
@@ -119,21 +119,22 @@ public class StudentController {
         return map;
     }
 
-    @RequestMapping("delStu")
+    @RequestMapping("/delStu")
     @ResponseBody
     public String delStu(String idstr){
         studentService.delStu(idstr);
         return "success";
     }
 
-    @RequestMapping("addStu")
+    @RequestMapping("/addStu")
     @ResponseBody
     public String addStu(StudentVO studentVO){
+        studentVO.setStat(1);
         studentService.addStu(studentVO);
         return "success";
     }
 
-    @RequestMapping("updStu")
+    @RequestMapping("/updStu")
     @ResponseBody
     public String editStu(StudentVO studentVO){
         StudentVO db = studentService.findById(studentVO.getStudId());
@@ -174,7 +175,7 @@ public class StudentController {
     }
 
     //调整班级
-    @RequestMapping("updClass")
+    @RequestMapping("/updClass")
     @ResponseBody
     public String updClass(Integer stuId,Integer classId){
         StudentVO studentVO = studentService.findById(stuId);
@@ -191,7 +192,7 @@ public class StudentController {
     }
 
     //调整宿舍
-    @RequestMapping("updHuor")
+    @RequestMapping("/updHuor")
     @ResponseBody
     public String updHuor(Integer stuId,Integer huorId){
         StudentVO studentVO = studentService.findById(stuId);
@@ -208,7 +209,7 @@ public class StudentController {
     }
 
     //调整宿舍
-    @RequestMapping("leaHuor")
+    @RequestMapping("/leaHuor")
     @ResponseBody
     public String leaHuor(Integer stuId){
         StudentVO studentVO = studentService.findById(stuId);
@@ -219,11 +220,28 @@ public class StudentController {
         return "success";
     }
 
-    @RequestMapping("repass")
+    @RequestMapping("/repass")
     @ResponseBody
     public String repass(Integer stuId){
         studentService.repass(stuId);
         return "success";
     }
 
+    @RequestMapping("/updStatus")
+    @ResponseBody
+    public String updStatus(Integer stuId,Integer stat){
+        StudentVO studentVO = studentService.findById(stuId);
+        if (stat == 0) {//如果是退学
+            //原宿舍人数-1
+            otherService.updHuorCount(studentVO.getHuor(),-1);
+            otherService.updStudentHour(stuId,0);
+
+            //原班级人数-1
+            otherService.updClassCount(studentVO.getClazz(),-1);
+            otherService.updStudentClass(stuId,0);
+        }
+
+        studentService.updStuStatus(stuId,stat);
+        return "success";
+    }
 }

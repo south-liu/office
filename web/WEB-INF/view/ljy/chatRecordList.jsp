@@ -14,16 +14,16 @@
 <body>
 
 <table class="layui-table"
-       lay-data="{width: 1000, height:550, url:'${pageContext.request.contextPath}/chatRecord/chatRecordlist', page:true, id:'myTable',toolbar:'#toolbarDemo'}"
+       lay-data="{url:'${pageContext.request.contextPath}/chatRecord/chatRecordlist', page:true, id:'myTable',toolbar:'#toolbarDemo'}"
        lay-filter="fTable">
     <thead>
     <tr>
         <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
-        <th lay-data="{field:'chatId', width:80, sort: true, fixed: true}">ID</th>
-        <th lay-data="{field:'studentname', width:135, sort: true}">学生名称</th>
-        <th lay-data="{field:'teachname', width:135, sort: true}">员工名称</th>
-        <th lay-data="{field:'address', width:135, sort: true}">地址</th>
-        <th lay-data="{field:'sayScon', width:135, sort: true}">谈心内容</th>
+        <th lay-data="{field:'chatId', width:80, sort: true, fixed: true,align:'center'}">ID</th>
+        <th lay-data="{field:'studentname', width:135}">学生名称</th>
+        <th lay-data="{field:'empName', width:135}">员工名称</th>
+        <th lay-data="{field:'address', width:135}">地址</th>
+        <th lay-data="{field:'sayScon', width:300}">谈心内容</th>
         <th lay-data="{field:'chatDate', width:135, sort: true}">时间</th>
         <th lay-data="{fixed: 'right', width:182, align:'center', toolbar: '#barDemo'}"></th>
     </tr>
@@ -60,11 +60,7 @@
                         $.post('${pageContext.request.contextPath}/chatRecord/chatRecorddelete', {chatId: obj.data.chatId}, function (data) {
                             console.log(data);
                             layer.msg('删除成功！');
-                            obj.del();
-                            <%--var tableIns = table.render({--%>
-                            <%--elem: '#myTable'--%>
-                            <%--,url: '${pageContext.request.contextPath}/classtype/classtypelist' //设置异步接口--%>
-                            <%--});--%>
+                           location.reload();
                         }, 'json');
                         layer.close(index);
                     });
@@ -116,7 +112,6 @@
                     yes: function (index, layero) {
 //                            选中输入框
                         var studentname = $('#studentname').val().trim();
-                        var teachname = $('#teachname').val().trim();
                         var address = $('#address').val().trim();
                         var sayScon = $('#sayScon').val().trim();
                         var chatDate = $('#chatDate').val().trim();
@@ -136,7 +131,6 @@
                                 dataType: "text",
                                 data: {
                                     studentname: studentname,
-                                    teachname: teachname,
                                     address: address,
                                     sayScon: sayScon,
                                     chatDate: chatDate
@@ -162,7 +156,7 @@
                         }
                     },
                     btnAlign: 'c',
-                    area: ['450px', '500px']
+                    area: ['450px', '430px']
                 });
 
             }

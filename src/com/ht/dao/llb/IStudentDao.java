@@ -18,4 +18,5 @@ public interface IStudentDao {
     public void updStu(StudentVO studentVO);
 
     public void repass(Integer stuId);
+    public void updStuStatus(Integer stuId,Integer stat);
 }

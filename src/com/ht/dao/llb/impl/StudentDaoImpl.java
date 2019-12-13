@@ -57,4 +57,9 @@ public class StudentDaoImpl extends BaseDao implements IStudentDao {
     public void repass(Integer stuId) {
         executeSQL("update student set password = '123456' where studId = "+stuId);
     }
+
+    @Override
+    public void updStuStatus(Integer stuId,Integer stat) {
+        executeSQL("update student set stat = "+stat+" where studId = "+stuId);
+    }
 }

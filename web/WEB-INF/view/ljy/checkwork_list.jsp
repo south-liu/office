@@ -69,7 +69,7 @@
                     } else if (res.status == 1) {
                         return '<span class="layui-btn-llb layui-btn-llbb layui-btn-normal layui-btn-mini">审核已通过</span>';
                     } else if (res.status == 2) {
-                        return '<span  class="layui-btn-llb layui-btn-llbb layui-btn-normal layui-btn-mini">审核未通过</span>';
+                        return '<span  class="layui-btn-llb layui-btn-llbb layui-btn-danger layui-btn-mini">审核未通过</span>';
                     }
                 }
                 },

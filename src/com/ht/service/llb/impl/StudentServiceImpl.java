@@ -58,4 +58,9 @@ public class StudentServiceImpl implements IStudentService {
     public void repass(Integer stuId) {
         studentDao.repass(stuId);
     }
+
+    @Override
+    public void updStuStatus(Integer stuId, Integer stat) {
+        studentDao.updStuStatus(stuId,stat);
+    }
 }
