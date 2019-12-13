@@ -160,6 +160,7 @@
                                 success: function (result) {
                                     layer.close(lod);
                                     layer.msg('删除成功',{
+                                        icon:1,
                                         time:1000
                                     },function () {
                                         window.location.reload();
@@ -167,33 +168,46 @@
                                 },
                                 error : function() {
                                     layer.close(lod);
-                                    layer.msg('服务器错误');
+                                    layer.msg('服务器错误',{
+                                        icon:2
+                                    });
                                 }
                             });
                         });
                     } else {
-                        layer.msg('请选择一个员工');
+                        layer.msg('请选择一个员工',{
+                            icon:0
+                        });
                     }
                     break;
                 case 'jobInfo':
                     if (length == 1) {
-                        window.open('${pageContext.request.contextPath}/CJEF/tojob?empId='+checkStatus.data[0].empId,'target');
+                        <%--window.open('${pageContext.request.contextPath}/CJEF/tojob?empId='+checkStatus.data[0].empId,'target');--%>
+                        window.location.href = '${pageContext.request.contextPath}/CJEF/tojob?empId='+checkStatus.data[0].empId;
                     } else {
-                        layer.msg('请选择一个员工');
+                        layer.msg('请选择一个员工',{
+                            icon:0
+                        });
                     }
                     break;
                 case 'eduInfo':
                     if (length == 1) {
-                        window.open('${pageContext.request.contextPath}/education/gotoeducationlist?empId='+checkStatus.data[0].empId,'target');
+                        <%--window.open('${pageContext.request.contextPath}/education/gotoeducationlist?empId='+checkStatus.data[0].empId,'target');--%>
+                        window.location.href = '${pageContext.request.contextPath}/education/gotoeducationlist?empId='+checkStatus.data[0].empId;
                     } else {
-                        layer.msg('请选择一个员工');
+                        layer.msg('请选择一个员工',{
+                            icon:0
+                        });
                     }
                     break;
                 case 'famInfo':
                     if (length == 1) {
-                        window.open('${pageContext.request.contextPath}/CJEF/tofam?empId='+checkStatus.data[0].empId,'target');
+                        <%--window.open('${pageContext.request.contextPath}/CJEF/tofam?empId='+checkStatus.data[0].empId,'target');--%>
+                        window.location.href = '${pageContext.request.contextPath}/CJEF/tofam?empId='+checkStatus.data[0].empId;
                     } else {
-                        layer.msg('请选择一个员工');
+                        layer.msg('请选择一个员工',{
+                            icon:0
+                        });
                     }
                     break;
 
@@ -219,6 +233,7 @@
                         success: function (result) {
                             layer.close(lod);
                             layer.msg('删除成功',{
+                                icon:1,
                                 time:1000
                             },function () {
                                window.location.reload();
@@ -226,7 +241,9 @@
                         },
                         error : function() {
                             layer.close(lod);
-                            layer.msg('服务器错误');
+                            layer.msg('服务器错误',{
+                                icon:2
+                            });
                         }
                     });
                 });
@@ -249,11 +266,15 @@
                         data: {empId:data.empId},
                         success: function (result) {
                             layer.close(lod);
-                            layer.msg('重置密码成功');
+                            layer.msg('重置密码成功',{
+                                icon:1
+                            });
                         },
                         error : function() {
                             layer.close(lod);
-                            layer.msg('服务器错误');
+                            layer.msg('服务器错误',{
+                                icon:2
+                            });
                         }
                     });
                 })
@@ -271,6 +292,7 @@
                 success: function (result) {
                     layer.close(lod);
                     layer.msg('启用成功',{
+                        icon:1,
                         time:1000
                     },function () {
                         window.location.reload();
@@ -278,7 +300,9 @@
                 },
                 error : function() {
                     layer.close(lod);
-                    layer.msg('服务器错误');
+                    layer.msg('服务器错误',{
+                        icon:2
+                    });
                 }
             });
         })
@@ -294,6 +318,7 @@
                 success: function (result) {
                     layer.close(lod);
                     layer.msg('禁用成功',{
+                        icon:1,
                         time:1000
                     },function () {
                         window.location.reload();
@@ -301,7 +326,9 @@
                 },
                 error : function() {
                     layer.close(lod);
-                    layer.msg('服务器错误');
+                    layer.msg('服务器错误',{
+                        icon:2
+                    });
                 }
             });
         })

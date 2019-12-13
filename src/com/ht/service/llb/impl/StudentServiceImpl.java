@@ -20,6 +20,11 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
+    public StudentVO findByPhone(String phone) {
+        return studentDao.findByPhone(phone);
+    }
+
+    @Override
     public List<StudentVO> allStu() {
         return studentDao.allStu();
     }

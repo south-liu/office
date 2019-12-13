@@ -20,6 +20,7 @@
 <%--顶部按钮--%>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="fanhui">返回</button>
         <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-add-circle" style="font-size: 15px; color: #FFF;"></i>添加成绩</button>
     </div>
 </script>
@@ -70,6 +71,9 @@
                         area:['480px', "600px"],
                         resize:false  //不能鼠标拖动改变大小
                     });
+                    break;
+                case 'fanhui':
+                    history.go(-1);
                     break;
                 //自定义头工具栏右侧图标 - 提示按钮
                 case 'LAYTABLE_TIPS':

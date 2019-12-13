@@ -128,6 +128,7 @@
                                 success: function (result) {
                                     layer.close(lod);
                                     layer.msg('删除成功',{
+                                        icon:1,
                                         time:1000
                                     },function () {
                                         window.location.reload();
@@ -135,12 +136,16 @@
                                 },
                                 error : function() {
                                     layer.close(lod);
-                                    layer.msg('服务器错误');
+                                    layer.msg('服务器错误',{
+                                        icon:2
+                                    });
                                 }
                             });
                         });
                     } else {
-                        layer.msg('请选择一个学生');
+                        layer.msg('请选择一个学生',{
+                            icon:0
+                        });
                     }
                     break;
 
@@ -153,7 +158,9 @@
                             area: ['500px', '400px']
                         });
                     } else {
-                        layer.msg('请选择一个学生');
+                        layer.msg('请选择一个学生',{
+                            icon:0
+                        });
                     }
                     break;
                 case 'leaHuor':
@@ -161,7 +168,9 @@
                         var hour = checkStatus.data[0].huorName;
                         console.log(hour);
                         if (hour==undefined) {
-                            layer.msg('当前学生未分配宿舍');
+                            layer.msg('当前学生未分配宿舍',{
+                                icon:0
+                            });
                         } else {
                             layer.confirm('确认让该学生搬离 '+hour+' 宿舍吗？',function () {
                                 var lod = layer.load();
@@ -173,6 +182,7 @@
                                     success: function (result) {
                                         layer.close(lod);
                                         layer.msg('搬离宿舍成功',{
+                                            icon:1,
                                             time:1000
                                         },function () {
                                             window.location.reload();
@@ -180,13 +190,17 @@
                                     },
                                     error : function() {
                                         layer.close(lod);
-                                        layer.msg('服务器错误');
+                                        layer.msg('服务器错误',{
+                                            icon:2
+                                        });
                                     }
                                 });
                             })
                         }
                     } else {
-                        layer.msg('请选择一个学生');
+                        layer.msg('请选择一个学生',{
+                            icon:0
+                        });
                     }
                     break;
                 case 'updClass':
@@ -198,43 +212,60 @@
                             area: ['500px', '400px']
                         });
                     } else {
-                        layer.msg('请选择一个学生');
+                        layer.msg('请选择一个学生',{
+                            icon:0
+                        });
                     }
                     break;
 
                 case 'eduInfo':
                     if (length == 1) {
-                        window.open('${pageContext.request.contextPath}/stujef/toedu?stuId='+checkStatus.data[0].studId,'target');
+                        <%--window.open('${pageContext.request.contextPath}/stujef/toedu?stuId='+checkStatus.data[0].studId,'target');--%>
+                        window.location.href='${pageContext.request.contextPath}/stujef/toedu?stuId='+checkStatus.data[0].studId;
                     } else {
-                        layer.msg('请选择一个学生');
+                        layer.msg('请选择一个学生',{
+                            icon:0
+                        });
                     }
                     break;
                 case 'famInfo':
                     if (length == 1) {
-                        window.open('${pageContext.request.contextPath}/stujef/tofam?stuId='+checkStatus.data[0].studId,'target');
+                        <%--window.open('${pageContext.request.contextPath}/stujef/tofam?stuId='+checkStatus.data[0].studId,'target');--%>
+                        window.location.href='${pageContext.request.contextPath}/stujef/tofam?stuId='+checkStatus.data[0].studId;
                     } else {
-                        layer.msg('请选择一个学生');
+                        layer.msg('请选择一个学生',{
+                            icon:0
+                        });
                     }
                     break;
                 case 'zxInfo':
                     if (length == 1) {
-                        window.open('${pageContext.request.contextPath}/stujef/tozx?stuId='+checkStatus.data[0].studId,'target');
+                        <%--window.open('${pageContext.request.contextPath}/stujef/tozx?stuId='+checkStatus.data[0].studId,'target');--%>
+                        window.location.href='${pageContext.request.contextPath}/stujef/tozx?stuId='+checkStatus.data[0].studId;
                     } else {
-                        layer.msg('请选择一个学生');
+                        layer.msg('请选择一个学生',{
+                            icon:0
+                        });
                     }
                     break;
                 case 'dabian':
                     if (length == 1) {
-                        window.open('${pageContext.request.contextPath}/CJEF/tofam?empId='+checkStatus.data[0].empId,'target');
+                        <%--window.open('${pageContext.request.contextPath}/CJEF/tofam?empId='+checkStatus.data[0].empId,'target');--%>
+                        window.location.href='${pageContext.request.contextPath}/CJEF/tofam?empId='+checkStatus.data[0].empId;
                     } else {
-                        layer.msg('请选择一个学生');
+                        layer.msg('请选择一个学生',{
+                            icon:0
+                        });
                     }
                     break;
                 case 'test':
                     if (length == 1) {
-                        window.open('${pageContext.request.contextPath}/MY/tostudentscore_list?studId='+checkStatus.data[0].studId,'target');
+                        <%--window.open('${pageContext.request.contextPath}/MY/tostudentscore_list?studId='+checkStatus.data[0].studId,'target');--%>
+                        window.location.href='${pageContext.request.contextPath}/MY/tostudentscore_list?studId='+checkStatus.data[0].studId;
                     } else {
-                        layer.msg('请选择一个学生');
+                        layer.msg('请选择一个学生',{
+                            icon:0
+                        });
                     }
                     break;
                 //自定义头工具栏右侧图标 - 提示
@@ -259,6 +290,7 @@
                         success: function (result) {
                             layer.close(lod);
                             layer.msg('删除成功',{
+                                icon:1,
                                 time:1000
                             },function () {
                                window.location.reload();
@@ -266,7 +298,9 @@
                         },
                         error : function() {
                             layer.close(lod);
-                            layer.msg('服务器错误');
+                            layer.msg('服务器错误',{
+                                icon:2
+                            });
                         }
                     });
                 });
@@ -291,11 +325,15 @@
                         data: {stuId:data.studId},
                         success: function (result) {
                             layer.close(lod);
-                            layer.msg('重置密码成功');
+                            layer.msg('重置密码成功',{
+                                icon:1
+                            });
                         },
                         error : function() {
                             layer.close(lod);
-                            layer.msg('服务器错误');
+                            layer.msg('服务器错误',{
+                                icon:2
+                            });
                         }
                     });
                 })

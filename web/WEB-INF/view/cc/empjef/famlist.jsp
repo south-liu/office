@@ -14,7 +14,8 @@
 <body>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+        <button class="layui-btn layui-btn-sm" lay-event="fanhui">返回</button>
+        <button class="layui-btn layui-btn-sm" lay-event="add">添加家庭信息</button>
     </div>
 </script>
 
@@ -76,6 +77,9 @@
                             area: ['460px', '420px'],
                             resize:false
                         });
+                        break;
+                    case 'fanhui':
+                        history.go(-1);
                         break;
                 };
             });

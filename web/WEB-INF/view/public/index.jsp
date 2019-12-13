@@ -13,7 +13,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>office</title>
-    <jsp:include page="../public/head.jsp"></jsp:include>
+    <jsp:include page="head.jsp"></jsp:include>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -52,78 +52,78 @@
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree" lay-filter="test" id="_menuBox">
 
-                <li class="layui-nav-item"><a href="javascript:;" id="_welcome">首页</a></li>
+                <li class="layui-nav-item"><a href="javascript:;" id="_welcome"><i class="layui-icon layui-icon-home" style="font-size: 15px; color: #FFF;margin-right: 10px;"></i>首页</a></li>
 
                 <li class="layui-nav-item">
-                    <a class="small_menu_title" href="javascript:;">个人主页</a>
+                    <a class="small_menu_title" href="javascript:;"><i class="layui-icon layui-icon-username" style="font-size: 15px; color: #FFF;margin-right: 10px;"></i>个人主页</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" title="我的邮件" src="">我的邮件</a></dd>
-                        <dd><a href="javascript:;" title="员工请假" src="">员工请假</a></dd>
-                        <dd><a href="javascript:;" title="学生请假" src="">学生请假</a></dd>
-                        <dd><a href="javascript:;" title="我的周报" src="MY/tomyweekly_list">我的周报</a></dd>
-                        <dd><a href="javascript:;" title="考勤管理" src="checkwork/gotocheckworklist">考勤管理</a></dd>
-                        <dd><a href="javascript:;" title="离职申请" src="">离职申请</a></dd>
+                        <dd><a href="javascript:;" title="我的邮件" src=""><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>我的邮件</a></dd>
+                        <dd><a href="javascript:;" title="员工请假" src=""><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>员工请假</a></dd>
+                        <dd><a href="javascript:;" title="学生请假" src=""><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>学生请假</a></dd>
+                        <dd><a href="javascript:;" title="我的周报" src="MY/tomyweekly_list"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>我的周报</a></dd>
+                        <dd><a href="javascript:;" title="考勤管理" src="checkwork/gotocheckworklist"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>考勤管理</a></dd>
+                        <dd><a href="javascript:;" title="离职申请" src=""><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>离职申请</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a class="small_menu_title" href="javascript:;">通知公告</a>
+                    <a class="small_menu_title" href="javascript:;"><i class="layui-icon layui-icon-carousel" style="font-size: 15px; color: #FFF;margin-right: 10px;"></i>通知公告</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" title="公告发布" src="">公告发布</a></dd>
+                        <dd><a href="javascript:;" title="公告发布" src=""><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>公告发布</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a class="small_menu_title" href="javascript:;">员工管理</a>
+                    <a class="small_menu_title" href="javascript:;"><i class="layui-icon layui-icon-user" style="font-size: 15px; color: #FFF;margin-right: 10px;"></i>员工管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" title="员工资料" src="emp/toEmpList">员工资料</a></dd>
-                        <dd><a href="javascript:;" title="周报管理" src="MY/toweekly_list">周报管理</a></dd>
-                        <dd><a href="javascript:;" title="谈心记录" src="chatRecord/gotochatRecordList">谈心记录</a></dd>
+                        <dd><a href="javascript:;" title="员工资料" src="emp/toEmpList"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>员工资料</a></dd>
+                        <dd><a href="javascript:;" title="周报管理" src="MY/toweekly_list"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>周报管理</a></dd>
+                        <dd><a href="javascript:;" title="谈心记录" src="chatRecord/gotochatRecordList"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>谈心记录</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a class="small_menu_title" href="javascript:;">教务管理</a>
+                    <a class="small_menu_title" href="javascript:;"><i class="layui-icon layui-icon-component" style="font-size: 15px; color: #FFF;margin-right: 10px;"></i>教务管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" title="学生资料" src="student/toStuList">学生资料</a></dd>
-                        <dd><a href="javascript:;" title="考试成绩" src="MY/toscore_list">考试成绩</a></dd>
-                        <dd><a href="javascript:;" title="答辩成绩" src="student-reply-score/home">答辩成绩</a></dd>
-                        <dd><a href="javascript:;" title="班级管理" src="studentclass/gotostudentclasslist">班级管理</a></dd>
-                        <dd><a href="javascript:;" title="课程类别" src="MY/totype_list">课程类别</a></dd>
-                        <dd><a href="javascript:;" title="课程管理" src="MY/tocourse_list">课程管理</a></dd>
-                        <dd><a href="javascript:;" title="试讲培训" src="trial/gototriallist">试讲培训</a></dd>
-                        <dd><a href="javascript:;" title="值班管理" src="weekang/tolist">值班管理</a></dd>
+                        <dd><a href="javascript:;" title="学生资料" src="student/toStuList"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>学生资料</a></dd>
+                        <dd><a href="javascript:;" title="考试成绩" src="MY/toscore_list"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>考试成绩</a></dd>
+                        <dd><a href="javascript:;" title="答辩成绩" src="student-reply-score/home"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>答辩成绩</a></dd>
+                        <dd><a href="javascript:;" title="班级管理" src="studentclass/gotostudentclasslist"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>班级管理</a></dd>
+                        <dd><a href="javascript:;" title="课程类别" src="MY/totype_list"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>课程类别</a></dd>
+                        <dd><a href="javascript:;" title="课程管理" src="MY/tocourse_list"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>课程管理</a></dd>
+                        <dd><a href="javascript:;" title="试讲培训" src="trial/gototriallist"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>试讲培训</a></dd>
+                        <dd><a href="javascript:;" title="值班管理" src="weekang/tolist"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>值班管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a class="small_menu_title" href="javascript:;">后勤管理</a>
+                    <a class="small_menu_title" href="javascript:;"><i class="layui-icon layui-icon-tabs" style="font-size: 15px; color: #FFF;margin-right: 10px;"></i>后勤管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" title="宿舍管理" src="student-huor/home">宿舍管理</a></dd>
-                        <dd><a href="javascript:;" title="楼栋管理" src="MY/tofloor_list">楼栋管理</a></dd>
-                        <dd><a href="javascript:;" title="维修管理" src="repair/tolist">维修管理</a></dd>
+                        <dd><a href="javascript:;" title="宿舍管理" src="student-huor/home"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>宿舍管理</a></dd>
+                        <dd><a href="javascript:;" title="楼栋管理" src="MY/tofloor_list"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>楼栋管理</a></dd>
+                        <dd><a href="javascript:;" title="维修管理" src="repair/tolist"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>维修管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a class="small_menu_title" href="javascript:;">考核管理</a>
+                    <a class="small_menu_title" href="javascript:;"><i class="layui-icon layui-icon-date" style="font-size: 15px; color: #FFF;margin-right: 10px;"></i>考核管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" title="考核指标" src="MY/toaduitmodel">考核指标</a></dd>
-                        <dd><a href="javascript:;" title="员工考核" src="MY/toaduitlog">员工考核</a></dd>
-                        <dd><a href="javascript:;" title="教师考评" src="">教师考评</a></dd>
+                        <dd><a href="javascript:;" title="考核指标" src="MY/toaduitmodel"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>考核指标</a></dd>
+                        <dd><a href="javascript:;" title="员工考核" src="MY/toaduitlog"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>员工考核</a></dd>
+                        <dd><a href="javascript:;" title="教师考评" src=""><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>教师考评</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a class="small_menu_title" href="javascript:;">系统报表</a>
+                    <a class="small_menu_title" href="javascript:;"><i class="layui-icon layui-icon-chart" style="font-size: 15px; color: #FFF;margin-right: 10px;"></i>系统报表</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" title="系统报表" src="">系统报表</a></dd>
+                        <dd><a href="javascript:;" title="系统报表" src=""><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>系统报表</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a class="small_menu_title" href="javascript:;">系统设置</a>
+                    <a class="small_menu_title" href="javascript:;"><i class="layui-icon layui-icon-set" style="font-size: 15px; color: #FFF;margin-right: 10px;"></i>系统设置</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" title="届别管理" src="student-fall/home">届别管理</a></dd>
-                        <dd><a href="javascript:;" title="班级类别" src="classtype/gotoclasstypelist">班级类别</a></dd>
-                        <dd><a href="javascript:;" title="部门管理" src="dept/toDeptList">部门管理</a></dd>
-                        <dd><a href="javascript:;" title="院系设置" src="Chengcollege/tolist">院系设置</a></dd>
-                        <dd><a href="javascript:;" title="专业设置" src="major/tolist">专业设置</a></dd>
-                        <dd><a href="javascript:;" title="学期设置" src="MY/toterm_list">学期设置</a></dd>
-                        <dd><a href="javascript:;" title="答辩项目" src="project/home">答辩项目</a></dd>
+                        <dd><a href="javascript:;" title="届别管理" src="student-fall/home"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>届别管理</a></dd>
+                        <dd><a href="javascript:;" title="班级类别" src="classtype/gotoclasstypelist"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>班级类别</a></dd>
+                        <dd><a href="javascript:;" title="部门管理" src="dept/toDeptList"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>部门管理</a></dd>
+                        <dd><a href="javascript:;" title="院系设置" src="Chengcollege/tolist"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>院系设置</a></dd>
+                        <dd><a href="javascript:;" title="专业设置" src="major/tolist"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>专业设置</a></dd>
+                        <dd><a href="javascript:;" title="学期设置" src="MY/toterm_list"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>学期设置</a></dd>
+                        <dd><a href="javascript:;" title="答辩项目" src="project/home"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>答辩项目</a></dd>
                     </dl>
                 </li>
             </ul>

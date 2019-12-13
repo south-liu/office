@@ -19,6 +19,11 @@ public class StudentDaoImpl extends BaseDao implements IStudentDao {
     }
 
     @Override
+    public StudentVO findByPhone(String phone) {
+        return (StudentVO) findOneByHql("from StudentVO where phone = '"+phone+"'");
+    }
+
+    @Override
     public List<StudentVO> allStu() {
         return findAllByHql("from StudentVO");
     }

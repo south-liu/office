@@ -8,13 +8,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>后台登陆</title>
-    <jsp:include page="head.jsp"></jsp:include>
+    <title>学生登陆</title>
+    <jsp:include page="../head.jsp"></jsp:include>
 </head>
 <style type="text/css">
     .login-bg{
         /*background: #eeeeee url() 0 0 no-repeat;*/
-        background:url(../images/bg.png) no-repeat center;
+        background:url(../../images/bg.png) no-repeat center;
         background-size: cover;
         overflow: hidden;
     }
@@ -46,7 +46,7 @@
         font-size: 16px;
     }
     .login #darkbannerwrap {
-        background: url(../images/aiwrap.png);
+        background: url(../../images/aiwrap.png);
         width: 18px;
         height: 10px;
         margin: 0 0 20px -58px;
@@ -155,12 +155,12 @@
                     var index = layer.load();
                     $.ajax({
                         type:"post",
-                        url:"${pageContext.request.contextPath}/system/login",
+                        url:"${pageContext.request.contextPath}/system/student/login",
                         async:true,
                         dataType:"json",
                         data:{
                             phone:data.field.phone,
-                            password:data.field.password,
+                            passWord:data.field.password,
 
                             //二次验证
                             challenge:challenge,
@@ -184,7 +184,7 @@
                                     icon:1,
                                     time:1000
                                 },function(){
-                                    window.location='${pageContext.request.contextPath}/public/index'
+                                    window.location='${pageContext.request.contextPath}/public/student/index'
                                 });
                             }
                         },

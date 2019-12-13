@@ -35,10 +35,7 @@ public class EmpDaoImpl extends BaseDao implements IEmpDao {
 
     @Override
     public EmpVO findEmpByPhone(String phone) {
-        Session session = getSession();
-        Transaction transaction = session.beginTransaction();
-        EmpVO empVO = (EmpVO) session.createQuery("from EmpVO where phone = '"+phone+"'").uniqueResult();
-        return empVO;
+        return (EmpVO) findOneByHql("from EmpVO where phone = '"+phone+"'");
     }
 
     @Override

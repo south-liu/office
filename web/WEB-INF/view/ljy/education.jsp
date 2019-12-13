@@ -36,6 +36,7 @@
 
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="fanhui">返回</button>
         <button class="layui-btn layui-btn-sm" lay-event="addCheckData">添加记录</button>
     </div>
 </script>
@@ -155,6 +156,8 @@
                     btnAlign: 'c',
                     area: ['450px', '500px']
                 });
+            }  else if (event === 'fanhui') {
+                history.go(-1);
             }
         });
 
