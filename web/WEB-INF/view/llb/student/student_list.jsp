@@ -117,7 +117,7 @@
                         content:'${pageContext.request.contextPath}/student/toAdd',
                         area: ['720px', '500px'],
                         resize:false,
-                        maxmin:true
+                        // maxmin:true
                     });
                     break;
                 case 'delStus':
