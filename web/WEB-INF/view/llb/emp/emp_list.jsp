@@ -138,7 +138,7 @@
                         content:'${pageContext.request.contextPath}/emp/toAdd',
                         area: ['720px', '500px'],
                         resize:false,
-                        maxmin:true
+                        // maxmin:true
                     });
                     break;
                 case 'delEmps':

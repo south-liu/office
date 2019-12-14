@@ -109,6 +109,12 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
+                    <a class="small_menu_title" href="javascript:;"><i class="layui-icon layui-icon-file-b" style="font-size: 15px; color: #FFF;margin-right: 10px;"></i>文件管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;" title="资料文档" src=""><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>资料文档</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
                     <a class="small_menu_title" href="javascript:;"><i class="layui-icon layui-icon-chart" style="font-size: 15px; color: #FFF;margin-right: 10px;"></i>系统报表</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;" title="系统报表" src=""><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>系统报表</a></dd>
