@@ -39,7 +39,7 @@
     <a class="layui-btn layui-btn-xs" lay-event="getFile">下载文件</a>
 </script>
 
-<div id="addFile">
+<div id="addFile" style="display: none;padding: 20px 35px 20px 0px;">
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">选择文件</label>
@@ -53,13 +53,11 @@
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">说明</label>
         <div class="layui-input-block">
-            <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+            <textarea id="remark" placeholder="请输入内容" class="layui-textarea"></textarea>
         </div>
     </div>
-    <div class="layui-form-item" style="margin-left: 138px;">
-        <div class="layui-input-block">
-            <button type="submit" class="layui-btn" id="sub">立即提交</button>
-        </div>
+    <div class="layui-input-block" style="margin-left: 208px;">
+        <button type="submit" class="layui-btn" id="sub">确定添加</button>
     </div>
 </div>
 
@@ -72,6 +70,7 @@
         var uploadInst = upload.render({
             elem: '#upload', //绑定元素
             //url: '/upload/', //上传接口
+            size:10240,
             auto:false,
             accept: 'file',
             done: function(res){
@@ -83,8 +82,24 @@
         });
 
         $('#sub').click(function () {
-           var formData = new FormData();
-            formData.append('file',$('.layui-upload-file')[0].files[0]);
+            var file = $('.layui-upload-file')[0].files[0];
+            var remark = $('#remark').val().trim();
+            if (file == null) {
+                layer.msg('请选择文件',{
+                    icon:0
+                });
+                return;
+            }
+            if (remark == ""){
+                layer.msg('请填写说明',{
+                    icon:0
+                });
+                return;
+            }
+
+            var formData = new FormData();
+            formData.append('file',file);
+            formData.append('remark',remark);
             $.ajax({
                 type:'post',
                 url:'${pageContext.request.contextPath}/file/addFile',
@@ -94,30 +109,32 @@
                 dataType:'json',
                 data:formData,
                 success:function (data) {
-                    layer.msg(data,{
+                    layer.msg('上传成功',{
                         icon:1,
                         time:2000
                     },function(){
-                        //location.href='${pageContext.request.contextPath}/user/toList';
+                        location.reload();
                     });
                 },
                 error:function () {
-                    layer.msg('服务器错误，请稍后再试！');
+                    layer.msg('服务器错误，请稍后再试！',{
+                        icon:2
+                    });
                 }
             });
-            layer.msg(1);
+
         });
 
         table.render({
             elem: '#myTab',
-            url:'${pageContext.request.contextPath}/emp/pageList',
+            url:'${pageContext.request.contextPath}/file/pageList',
             toolbar: '#toolbar', //开启头部工具栏，并为其绑定左侧模板
             defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
                 title: '提示',
                 layEvent: 'LAYTABLE_TIPS',
                 icon: 'layui-icon-tips'
             }],
-            title: '员工数据表',
+            title: '文件表',
             cols: [[
                 {type: 'checkbox', fixed: 'left'},
                 {field:'docId', title:'编号', sort: true,align: 'center'},
@@ -138,9 +155,9 @@
                 case 'addFile':
                     layer.open({
                         title:'添加文件',
-                        type:2,
-                        content:'${pageContext.request.contextPath}/emp/toAdd',
-                        area: ['720px', '500px'],
+                        type:1,
+                        content:$('#addFile'),
+                        area: ['500px', '350px'],
                         resize:false,
                         // maxmin:true
                     });
@@ -163,8 +180,8 @@
                     $.ajax({
                         type: "POST",
                         dataType: "json",
-                        url: "${pageContext.request.contextPath}/emp/delEmp" ,
-                        data: {idstr:data.empId},
+                        url: "${pageContext.request.contextPath}/file/delFile" ,
+                        data: {docId:data.docId},
                         success: function (result) {
                             layer.close(lod);
                             layer.msg('删除成功',{
@@ -183,8 +200,7 @@
                     });
                 });
             } else if(obj.event === 'getFile'){
-                window.open ("DownFile.do?method=DownTemplet");
-               layer.msg('下载');
+                location.href='${pageContext.request.contextPath}/file/download.do?docId='+data.docId;
             }
         });
     })

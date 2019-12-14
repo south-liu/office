@@ -73,7 +73,7 @@
                 {field: 'why', title: '原因说明',  width: 150},
                 {field: 'chairman', title: '审核人', align: 'center', width: 100},
                 {field: 'checkTime', title: '审核时间 ', align: 'center', width: 120},
-                {field: 'remark', title: '审核说明 ', edit: 'text',  width: 150},
+                {field: 'remark', title: '审核说明 ',  width: 150},
 //                {field: 'status', title: '审核状态', align: 'center', width: 100},
 
                 {

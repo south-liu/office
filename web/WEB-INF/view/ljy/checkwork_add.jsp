@@ -47,7 +47,7 @@
         </div>
 
         <div class="layui-input-inline">
-            <select name="noCardTime2" lay-filter="noCardTime">
+            <select name="noCardTime2" id="noCardTime2" lay-filter="noCardTime">
                 <option value="">请选择未打卡时间点</option>
                 <option value="8:00">8:00</option>
                 <option value="14:00">14:00</option>
@@ -87,33 +87,41 @@
 
         //监听提交
         form.on('submit(sub)', function (data) {
-            console.log(data.field);
+            console.log("22" + data.field);
             var fd = data.field;
-            var lod = layer.load();
-            console.log(${emp.empId})
+            var noCardTime2 = $('#noCardTime2').val().trim();
+            console.log("3" + noCardTime2)
             //部门数据
-            $.ajax({
-                url: "${pageContext.request.contextPath}/checkwork/checkworkadd",
-                type: "post",
-                async: true,
-                dataType: "json",
-                data: {
-                    noCardTime: fd.noCardTime1 + ' ' + fd.noCardTime2,
-                    why: fd.why
-                },
-                success: function (data) {
-                    layer.close(lod);
-                    layer.msg('添加成功', {
-                        time: 1000
-                    }, function () {
-                        window.parent.location.reload();
-                    });
-                },
-                error: function () {
-                    layer.close(lod);
-                    layer.msg('服务器错误');
-                }
-            });
+            if (noCardTime2 == '') {
+                layer.msg('请输入未打卡时间段!', {
+                    icon: 2,
+                    time: 1000
+                });
+            } else {
+                var lod = layer.load();
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/checkwork/checkworkadd",
+                    type: "post",
+                    async: true,
+                    dataType: "json",
+                    data: {
+                        noCardTime: fd.noCardTime1 + ' ' + fd.noCardTime2,
+                        why: fd.why
+                    },
+                    success: function (data) {
+                        layer.close(lod);
+                        layer.msg('添加成功', {
+                            time: 1000
+                        }, function () {
+                            window.parent.location.reload();
+                        });
+                    },
+                    error: function () {
+                        layer.close(lod);
+                        layer.msg('服务器错误');
+                    }
+                });
+            }
             return false;
         });
     });
