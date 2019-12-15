@@ -2,6 +2,7 @@ package com.ht.service.zwj.impl;
 
 import com.ht.dao.zwj.StudentReplyScoreDao;
 import com.ht.service.zwj.StudentReplyScoreService;
+import com.ht.vo.ProjectVO;
 import com.ht.vo.StudentReplyScoreVO;
 import org.springframework.stereotype.Service;
 
@@ -58,44 +59,62 @@ public class StudentReplyScoreServiceImpl implements StudentReplyScoreService {
         }
     }
 
+    /**
+     * 加搜索条件的查询数据
+     *
+     * @param projectId
+     * @param studentClassId
+     * @return
+     */
     @Override
-    public List<Map<String, Object>> findStudentReplyScoreByOptions(int projectId, int studentClassId, int empId, int page, int limit) {
+    public List<Map<String, Object>> findStudentReplyScoreByOptions(int projectId, int studentClassId, int page, int limit) {
         StringBuffer stringBuffer = new StringBuffer();
 
-        String whereString = "where 1=1";
+        String whereString = "where 1 = 1";
         if (projectId > 0) {
             whereString += " and srs.projectId = " + projectId;
         }
         if (studentClassId > 0) {
             whereString += " and cla.classId = " + studentClassId;
         }
-        if (empId > 0) {
-            whereString += " and emp.empId = " + empId;
-        }
 
-        stringBuffer.append("select srs.*,cla.className,pro.projectName,stu.stuName,emp.empName from " + StudentReplyScoreDao.currentTableName + " as srs left join student as stu on stu.studId = srs.studentId left join studentClass as cla on stu.clazz = cla.classId left join project as pro on pro.projectId = srs.projectId left join emp on emp.empId = srs.empId " + whereString + " order by " + StudentReplyScoreDao.currentTableId + " asc limit " + ((page - 1) * limit) + "," + limit);
+        stringBuffer.append("select srs.*,cla.className,pro.projectName,stu.stuName,emp.empName,(select e.empName from emp as e where e.empId = srs.gradeEmpId) as 'gradeEmpName' from " + StudentReplyScoreDao.currentTableName + " as srs left join student as stu on stu.studId = srs.studentId left join studentClass as cla on stu.clazz = cla.classId left join project as pro on pro.projectId = srs.projectId left join emp on emp.empId = srs.empId " + whereString + " order by " + StudentReplyScoreDao.currentTableId + " asc limit " + ((page - 1) * limit) + "," + limit);
 
         return studentReplyScoreDao.findDataBySql(stringBuffer.toString());
     }
 
+    /**
+     * 加搜索条件的总数
+     *
+     * @param projectId
+     * @param studentClassId
+     * @return
+     */
     @Override
-    public int findCountByOptions(int projectId, int studentClassId, int empId) {
+    public long findStudentReplyScoreCountByOptions(int projectId, int studentClassId) {
         StringBuffer stringBuffer = new StringBuffer();
 
-        String whereString = "where 1=1";
+        String whereString = "where 1 = 1";
         if (projectId > 0) {
             whereString += " and srs.projectId = " + projectId;
         }
         if (studentClassId > 0) {
             whereString += " and cla.classId = " + studentClassId;
         }
-        if (empId > 0) {
-            whereString += " and emp.empId = " + empId;
-        }
 
         stringBuffer.append("select count(1) from " + StudentReplyScoreDao.currentTableName + " as srs left join student as stu on stu.studId = srs.studentId left join studentClass as cla on stu.clazz = cla.classId left join project as pro on pro.projectId = srs.projectId left join emp on emp.empId = srs.empId " + whereString);
-        int count = studentReplyScoreDao.findCountByOptions(stringBuffer.toString());
+        long count = studentReplyScoreDao.findCountByOptions(stringBuffer.toString());
 
         return count;
+    }
+
+    @Override
+    public List<ProjectVO> findGradedProjectByStudentId(Integer stuId) {
+        return studentReplyScoreDao.findGradedProjectByStudentId(stuId);
+    }
+
+    @Override
+    public Map<String, Object> findProjectScoreByOptions(Integer stuId, Integer projectId) {
+        return studentReplyScoreDao.findProjectScoreByOptions(stuId, projectId);
     }
 }

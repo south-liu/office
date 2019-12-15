@@ -1,5 +1,6 @@
 package com.ht.service.zwj;
 
+import com.ht.vo.ProjectVO;
 import com.ht.vo.StudentReplyScoreVO;
 
 import java.util.List;
@@ -20,7 +21,11 @@ public interface StudentReplyScoreService {
 
     void deleteMultiStudentReplyScore(Integer[] replyIds);
 
-    List<Map<String, Object>> findStudentReplyScoreByOptions(int projectId, int studentClassId, int empId, int page, int limit);
+    List<Map<String, Object>> findStudentReplyScoreByOptions(int projectId, int studentClassId, int page, int limit);
 
-    int findCountByOptions(int projectId, int studentClassId, int empId);
+    long findStudentReplyScoreCountByOptions(int projectId, int studentClassId);
+
+    List<ProjectVO> findGradedProjectByStudentId(Integer stuId);
+
+    Map<String, Object> findProjectScoreByOptions(Integer stuId, Integer projectId);
 }

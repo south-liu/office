@@ -1,5 +1,6 @@
 package com.ht.dao.zwj;
 
+import com.ht.vo.ProjectVO;
 import com.ht.vo.StudentReplyScoreVO;
 
 import java.util.List;
@@ -23,5 +24,9 @@ public interface StudentReplyScoreDao {
 
     List<Map<String,Object>> findDataBySql(String sql);
 
-    int findCountByOptions(String sql);
+    long findCountByOptions(String sql);
+
+    List<ProjectVO> findGradedProjectByStudentId(Integer stuId);
+
+    Map<String, Object> findProjectScoreByOptions(Integer stuId, Integer projectId);
 }

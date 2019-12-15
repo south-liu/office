@@ -1,8 +1,10 @@
 package com.ht.dao.zwj.impl;
 
 import com.ht.dao.zwj.StudentReplyScoreDao;
+import com.ht.vo.ProjectVO;
 import com.ht.vo.StudentReplyScoreVO;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.transform.Transformers;
@@ -21,8 +23,8 @@ public class StudentReplyScoreDaoImpl implements StudentReplyScoreDao {
     public List<Map<String, Object>> allData(Integer page, Integer limit) {
         Session session = sessionFactory.openSession();
 
-        Query query = session.createSQLQuery("select srs.*,cla.className,pro.projectName,stu.stuName,emp.empName\n" +
-                "from " + currentTableName + " as srs left join student as stu on stu.studId = srs.studentId left join studentClass as cla on stu.clazz = cla.classId left join project as pro on pro.projectId = srs.projectId left join emp on emp.empId = srs.empId order by " + currentTableId + " asc limit ?,?");
+        Query query = session.createSQLQuery("select srs.*,cla.className,pro.projectName,stu.stuName,emp.empName,(select e.empName from emp as e where e.empId=srs.gradeEmpId) as 'gradeEmpName' from " + currentTableName + " as srs left join student as stu on stu.studId = srs.studentId left join studentClass as cla on stu.clazz = cla.classId left join project as pro on pro.projectId = srs.projectId left join emp on emp.empId = srs.empId order by " + currentTableId + " asc limit ?,?");
+        System.out.println(query);
         query.setInteger(0, (page - 1) * limit);
         query.setInteger(1, limit);
         query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);// 将结果集以Map集合返回
@@ -93,12 +95,36 @@ public class StudentReplyScoreDaoImpl implements StudentReplyScoreDao {
     }
 
     @Override
-    public int findCountByOptions(String sql) {
+    public long findCountByOptions(String sql) {
         Session session = sessionFactory.openSession();
 
-        int count = (int)session.createSQLQuery(sql).uniqueResult();
+        long count = ((Number) session.createSQLQuery(sql).uniqueResult()).longValue();
 
         session.close();
         return count;
+    }
+
+    @Override
+    public List<ProjectVO> findGradedProjectByStudentId(Integer stuId) {
+        Session session = sessionFactory.openSession();
+
+        SQLQuery sqlQuery = session.createSQLQuery("select distinct p.* from " + currentTableName + " as srs left join project as p on p.projectId = srs.projectId where srs.studentId = " + stuId).addEntity(ProjectVO.class);
+        List<ProjectVO> list = sqlQuery.list();
+
+        session.close();
+
+        return list;
+    }
+
+    @Override
+    public Map<String, Object> findProjectScoreByOptions(Integer stuId, Integer projectId) {
+        Session session = sessionFactory.openSession();
+
+        Query query = session.createSQLQuery("select srs.*,stu.stuName,p.projectName,(select empName from emp where emp.empId = srs.empId) as gradeEmpName from "+currentTableName+" as srs left join project as p on p.projectId = srs.projectId left join student as stu on stu.studId = srs.studentId where stu.studId = "+stuId+" and srs.projectId = "+projectId).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+        Map<String,Object> map = (Map<String, Object>) query.uniqueResult();
+
+        session.close();
+
+        return map;
     }
 }

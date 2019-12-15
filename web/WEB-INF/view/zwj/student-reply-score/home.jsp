@@ -11,8 +11,9 @@
 <head>
     <title>学生答辩成绩</title>
     <jsp:include page="/WEB-INF/view/public/head.jsp"></jsp:include>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/xm-select/dist/xm-select.js"></script>
     <style type="text/css">
-        .layui-inline .layui-form-label {
+        .layui-form-item .layui-form-label {
             width: 100px;
         }
     </style>
@@ -23,21 +24,10 @@
 <form class="layui-form" id="searchForm">
     <div class="layui-form-item" style="margin-top: 15px;">
         <div class="layui-inline">
-            <label class="layui-form-label">项目名称：</label>
-            <div class="layui-input-inline">
-                <select name="projectId" lay-verify="required" lay-search>
-                    <option value="0"></option>
-                    <c:forEach var="project" items="${projectList}">
-                        <option value="${project.projectId}">${project.projectName}</option>
-                    </c:forEach>
-                </select>
-            </div>
-        </div>
-        <div class="layui-inline">
             <label class="layui-form-label">班级名称：</label>
             <div class="layui-input-inline">
                 <select name="studentClassId" lay-verify="required" lay-search>
-                    <option value="0"></option>
+                    <option value="0">请选择班级名称</option>
                     <c:forEach var="studentClass" items="${studentClassList}">
                         <option value="${studentClass.classId}">${studentClass.className}</option>
                     </c:forEach>
@@ -45,12 +35,12 @@
             </div>
         </div>
         <div class="layui-inline">
-            <label class="layui-form-label">评分人员：</label>
+            <label class="layui-form-label">项目名称：</label>
             <div class="layui-input-inline">
-                <select name="empId" lay-verify="required" lay-search>
-                    <option value="0"></option>
-                    <c:forEach var="emp" items="${empList}">
-                        <option value="${emp.empId}">${emp.empName}</option>
+                <select name="projectId" lay-verify="required" lay-search>
+                    <option value="0">请选择项目名称</option>
+                    <c:forEach var="project" items="${projectList}">
+                        <option value="${project.projectId}">${project.projectName}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -87,111 +77,112 @@
     <form class="layui-form" lay-filter="_form" method="post" id="actionForm">
         <input type="hidden" name="replyId">
         <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">班级名称：</label>
-                <div class="layui-input-inline">
-                    <select name="studentClassId" lay-verify="studentClassName" lay-filter="studentClassSelect">
-                        <option value="0">请选择班级名称</option>
-                    </select>
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">学生姓名：</label>
-                <div class="layui-input-inline">
-                    <select name="studentId" lay-verify="studentName">
-                        <option value="0">请选择学生姓名</option>
-                    </select>
-                </div>
+            <label class="layui-form-label">班级名称：</label>
+            <div class="layui-input-inline">
+                <select name="studentClassId" lay-verify="studentClassName" lay-filter="studentClassSelect">
+                    <option value="0">请选择班级名称</option>
+                </select>
             </div>
         </div>
         <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">项目名称：</label>
-                <div class="layui-input-inline">
-                    <select name="projectId" lay-verify="projectName">
-                        <option value="0">请选择项目名称</option>
-                    </select>
-                </div>
+            <label class="layui-form-label">项目成员：</label>
+            <div class="layui-input-inline" style="width:518px;">
+                <%--<select name="studentId" lay-verify="studentName" id="studentSelect">
+                    <option value="0">请先选择班级</option>
+                </select>--%>
+                <div id="studentSelect"></div>
             </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">打分老师：</label>
-                <div class="layui-input-inline">
-                    <select name="empId" lay-verify="empName">
-                        <option value="0">请选择打分老师</option>
-                    </select>
-                </div>
+            <br/>
+            <div class="layui-form-mid layui-word-aux" id="tips" style="margin-left:130px;"></div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">项目名称：</label>
+            <div class="layui-input-inline">
+                <select name="projectId" lay-verify="projectName">
+                    <option value="0">请选择项目名称</option>
+                </select>
+            </div>
+            <label class="layui-form-label">任课老师：</label>
+            <div class="layui-input-inline">
+                <select name="empId" lay-verify="empName">
+                    <option value="0">请选择任课老师</option>
+                </select>
             </div>
         </div>
         <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">功能完善(50)：</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="score1" lay-verify="required|number|score1" lay-reqtext="功能完善分数在0~50之间"
-                           placeholder="请输入功能完善分数(0~50)" autocomplete="off" class="layui-input">
-                </div>
+            <label class="layui-form-label">功能完善(50)：</label>
+            <div class="layui-input-inline">
+                <input type="text" name="score1" lay-verify="required|number|score1" lay-reqtext="功能完善分数在0~50之间"
+                       placeholder="请输入功能完善分数(0~50)" autocomplete="off" class="layui-input">
             </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">技术难度(10)：</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="score2" lay-verify="required|number|score2" lay-reqtext="技术难度分数在0~10之间"
-                           placeholder="请输入技术难度分数(0~10)" autocomplete="off" class="layui-input">
-                </div>
+            <label class="layui-form-label">技术难度(10)：</label>
+            <div class="layui-input-inline">
+                <input type="text" name="score2" lay-verify="required|number|score2" lay-reqtext="技术难度分数在0~10之间"
+                       placeholder="请输入技术难度分数(0~10)" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">界面完美(10)：</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="score3" lay-verify="required|number|score3" lay-reqtext="界面完美分数在0~10之间"
-                           placeholder="请输入界面完美分数(0~10)" autocomplete="off" class="layui-input">
-                </div>
+            <label class="layui-form-label">界面完美(10)：</label>
+            <div class="layui-input-inline">
+                <input type="text" name="score3" lay-verify="required|number|score3" lay-reqtext="界面完美分数在0~10之间"
+                       placeholder="请输入界面完美分数(0~10)" autocomplete="off" class="layui-input">
             </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">回答问题(10)：</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="score4" lay-verify="required|number|score4" lay-reqtext="回答问题分数在0~10之间"
-                           placeholder="请输入回答问题分数(0~10)" autocomplete="off" class="layui-input">
-                </div>
+            <label class="layui-form-label">回答问题(10)：</label>
+            <div class="layui-input-inline">
+                <input type="text" name="score4" lay-verify="required|number|score4" lay-reqtext="回答问题分数在0~10之间"
+                       placeholder="请输入回答问题分数(0~10)" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">演示方法(10)：</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="score5" lay-verify="required|number|score5" lay-reqtext="演示方法分数在0~10之间"
-                           placeholder="请输入演示方法分数(0~10)" autocomplete="off" class="layui-input">
-                </div>
+            <label class="layui-form-label">演示方法(10)：</label>
+            <div class="layui-input-inline">
+                <input type="text" name="score5" lay-verify="required|number|score5" lay-reqtext="演示方法分数在0~10之间"
+                       placeholder="请输入演示方法分数(0~10)" autocomplete="off" class="layui-input">
             </div>
-            <div class="layui-inline" style="vertical-align: top;">
-                <label class="layui-form-label">语言表达(10)：</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="score6" lay-verify="required|number|score6" lay-reqtext="语言表达分数在0~10之间"
-                           placeholder="请输入语言表达分数(0~10)" autocomplete="off" class="layui-input">
-                </div>
+            <label class="layui-form-label">语言表达(10)：</label>
+            <div class="layui-input-inline">
+                <input type="text" name="score6" lay-verify="required|number|score6" lay-reqtext="语言表达分数在0~10之间"
+                       placeholder="请输入语言表达分数(0~10)" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">备注：</label>
             <div class="layui-input-block">
-                <textarea name="remark" placeholder="请输入备注" class="layui-textarea" style="width: 555px;"></textarea>
+                <textarea name="remark" placeholder="请输入备注" class="layui-textarea" style="width: 520px;"></textarea>
             </div>
         </div>
         <div class="layui-form-item" style="text-align: center;">
-            <%--            <div class="layui-input-block">--%>
             <button class="layui-btn" lay-submit lay-filter="submitForm">立即提交</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-            <%--            </div>--%>
         </div>
     </form>
 </div>
 
 <script type="text/javascript">
+    // 配置下拉框 【选择学生】
+    var studentSelect = xmSelect.render({
+        el: '#studentSelect',
+        layVerify: 'required',// layui验证表单类型
+        name: 'studentIds',
+        max: 6,// 最大可选数
+        toolbar: {// 工具栏
+            show: true,
+            list: ['CLEAR']
+        },
+        filterable: true,// 开启过滤
+        paging: true,// 开启分页
+        pageSize: 5,// 每页显示数量
+        maxMethod: function (selectedData, item) {// 超出最大时回调函数
+            layui.layer.msg('最多可选六位成员！', {time: 1000});
+        }
+    });
+
     layui.use(['table', 'layer', 'form'], function () {
         var table = layui.table;
         var layer = layui.layer;
         var form = layui.form;
 
-        var _area = ['780px', '550px'];// 添加与修改的公共宽高
+        var _area = ['800px', '600px'];// 添加与修改的公共宽高
 
         var addTitle = '添加答辩成绩';
         var addFormAction = '${pageContext.request.contextPath}/student-reply-score/add';
@@ -214,8 +205,8 @@
                 }
             },
             studentName: function (value, item) { //value：表单的值、item：表单的DOM对象
-                if (value == 0) {
-                    return '请选择录入的学生！';
+                if (value == null) {// 等于null时，说明已选班级但没有学生
+                    return '该班级没有学生，请先为该班级录入学生！';
                 }
             },
             projectName: function (value, item) {
@@ -225,7 +216,7 @@
             },
             empName: function (value, item) {
                 if (value == 0) {
-                    return '请选择的打分老师！';
+                    return '请选择的任课老师！';
                 }
             },
             score1: function (value, item) {
@@ -290,21 +281,13 @@
                     var loadIndex = layer.load();
                     layero.hide();
                     $('#actionForm').attr('action', addFormAction);
+                    $('#tips').text('(选择两位或两位以上成员时为多人项目，则为每一位成员添加相同成绩)');
 
                     // 查询表单所需下拉可选值
                     $.get('${pageContext.request.contextPath}/student-reply-score/addTheNeed', {}, function (data) {
-                        var select_student = $('#actionForm').find('select[name="studentId"]');// 选择学生的下拉框
-                        var select_project = $('#actionForm').find('select[name="projectId"]');// 选择项目的下拉框
-                        var select_emp = $('#actionForm').find('select[name="empId"]');// 选择打分老师的下拉框
                         var select_studentClass = $('#actionForm').find('select[name="studentClassId"]');// 选择班级名称的下拉框
-
-                        select_student.empty();// 清空下拉框
-                        select_student.append('<option value="0">请选择学生姓名</option>');// 默认的select html
-                        $.each(data.studentList, function (i, element) {
-                            select_student.append('<option value="' + element.studId + '">' + element.stuName +
-                                '</option>');
-                        });
-                        form.render('select');
+                        var select_project = $('#actionForm').find('select[name="projectId"]');// 选择项目的下拉框
+                        var select_emp = $('#actionForm').find('select[name="empId"]');// 选择任课老师的下拉框
 
                         select_project.empty();// 清空下拉框
                         select_project.append('<option value="0">请选择项目名称</option>');// 默认的select html
@@ -314,7 +297,7 @@
                         });
 
                         select_emp.empty();// 清空下拉框
-                        select_emp.append('<option value="0">请选择打分老师</option>');// 默认的select html
+                        select_emp.append('<option value="0">请选择任课老师</option>');// 默认的select html
                         $.each(data.empList, function (i, element) {
                             select_emp.append('<option value="' + element.empId + '">' + element.empName +
                                 '</option>');
@@ -333,6 +316,13 @@
                     }, 'json');
                 },
                 end: function () {// 层销毁或关闭后触发的回调
+                    $('#tips').text('');
+
+                    // 清空学生下拉框
+                    studentSelect.update({
+                        data: [],
+                        disabled: false
+                    });
                     // 清空表单
                     $('#actionBox').children('form')[0].reset();
                 }
@@ -389,16 +379,33 @@
                     $.get('${pageContext.request.contextPath}/student-reply-score/editTheNeed', {replyId: objData.replyId}, function (data) {
                         var select_student = $('#actionForm').find('select[name="studentId"]');// 选择学生的下拉框
                         var select_project = $('#actionForm').find('select[name="projectId"]');// 选择项目的下拉框
-                        var select_emp = $('#actionForm').find('select[name="empId"]');// 选择打分老师的下拉框
+                        var select_emp = $('#actionForm').find('select[name="empId"]');// 选择任课老师的下拉框
                         var select_studentClass = $('#actionForm').find('select[name="studentClassId"]');// 选择班级名称的下拉框
 
-                        var studentId = data.studentReplyScore.studentId;
-                        select_student.empty();// 清空下拉框
-                        select_student.append('<option value="0">请选择学生姓名</option>');// 默认的select html
-                        $.each(data.studentList, function (i, element) {
-                            select_student.append('<option ' + (studentId == element.studId ? 'selected' : '') +
-                                ' value = "' + element.studId + '" > ' + element.stuName +
+                        var currentStudentClassId = data.currentStudentClass.classId;
+                        select_studentClass.empty();// 清空下拉框
+                        select_studentClass.append('<option value="0">请选择班级名称</option>');// 默认的select html
+                        $.each(data.studentClassList, function (i, element) {
+                            select_studentClass.append('<option ' + (currentStudentClassId == element.classId ?
+                                'selected' : '') + ' value="' + element.classId + '">' +
+                                element.className +
                                 '</option>');
+                        });
+                        select_studentClass.attr('disabled', 'disabled');
+
+                        // 渲染学生下拉框
+                        var studentId = data.studentReplyScore.studentId;// 当前需要编辑信息的学生id
+                        var studentData = [];
+                        $.each(data.studentList, function (i, element) {
+                            if (studentId == element.studId) {
+                                studentData.push({name: element.stuName, value: element.studId, selected: true});
+                            } else {
+                                studentData.push({name: element.stuName, value: element.studId});
+                            }
+                        });
+                        studentSelect.update({
+                            data: studentData,
+                            disabled: true
                         });
 
                         var projectId = data.studentReplyScore.projectId;
@@ -412,22 +419,11 @@
 
                         var empId = data.studentReplyScore.empId;
                         select_emp.empty();// 清空下拉框
-                        select_emp.append('<option value="0">请选择打分老师</option>');// 默认的select html
+                        select_emp.append('<option value="0">请选择任课老师</option>');// 默认的select html
                         $.each(data.empList, function (i, element) {
                             select_emp.append('<option ' + (empId == element.empId ? 'selected' : '') + ' value="' + element.empId + '">' + element.empName +
                                 '</option>');
                         });
-
-                        var currentStudentClassId = data.currentStudentClass.classId;
-                        select_studentClass.empty();// 清空下拉框
-                        select_studentClass.append('<option value="0">请选择班级名称</option>');// 默认的select html
-                        $.each(data.studentClassList, function (i, element) {
-                            select_studentClass.append('<option ' + (currentStudentClassId == element.classId ?
-                                'selected' : '') + ' value="' + element.classId + '">' +
-                                element.className +
-                                '</option>');
-                        });
-                        select_studentClass.attr('disabled', 'disabled');
 
                         form.val('_form', {
                             'replyId': data.studentReplyScore.replyId,
@@ -448,6 +444,11 @@
                 end: function () {// 层销毁或关闭后触发的回调
                     $('#actionForm').find('input[name="replyId"]').removeAttr('value');
                     $('#actionForm').find('select[name="studentClassId"]').removeAttr('disabled');
+
+                    studentSelect.update({
+                        data: [],
+                        disabled: false
+                    });
                     // 清空表单
                     $('#actionBox').children('form')[0].reset();
                 }
@@ -461,7 +462,6 @@
                     method: dataForm.method,
                     url: dataForm.action,
                     data: data.field,
-                    timeout: 100,
                     dataType: 'json',
                     success: function (data, textStatus) {
                         layer.close(loadIndex);
@@ -519,17 +519,18 @@
         $('#searchBtn').click(function (event) {
             var projectSelect = $('#searchForm').find('select[name="projectId"]');
             var studentClassSelect = $('#searchForm').find('select[name="studentClassId"]');
-            var empSelect = $('#searchForm').find('select[name="empId"]');
 
             table.reload('dataTable', {
                 url: '${pageContext.request.contextPath}/student-reply-score/search',
                 where: {
                     projectId: projectSelect.val(),
-                    studentClassId: studentClassSelect.val(),
-                    empId: empSelect.val()
+                    studentClassId: studentClassSelect.val()
+                },
+                page: {
+                    curr: 1 //重新从第 1 页开始
                 }
             });
-        })
+        });
 
         // 删除多条
         function deleteMulti(checkStatus) {
@@ -586,7 +587,8 @@
                 , {field: 'stuName', width: 90, title: '学生姓名'}
                 , {field: 'className', width: 120, title: '学生班级'}
                 , {field: 'projectName', width: 120, title: '项目名称'}
-                , {field: 'empName', width: 100, title: '打分老师'}
+                , {field: 'empName', width: 100, title: '任课老师'}
+                , {field: 'gradeEmpName', width: 100, title: '打分老师'}
                 , {field: 'score1', width: 130, title: '功能完善（50）'}
                 , {field: 'score2', width: 130, title: '技术难度（10）'}
                 , {field: 'score3', width: 130, title: '界面完美（10）'}
@@ -624,18 +626,25 @@
 
         // 监听学生班级下拉
         form.on('select(studentClassSelect)', function (data) {
-            var loadIndex = layer.load(1);
             var selectClassId = data.value;
-            $.get('${pageContext.request.contextPath}/student-reply-score/allStudentByStudentClassId', {studentClassId: selectClassId}, function (data) {
-                var select_student = $('#actionForm').find('select[name="studentId"]');
-
+            // var select_student = $('#actionForm').find('select[name="studentId"]');// 需要改变的下拉框
+            if (selectClassId == 0) {
                 select_student.empty();// 清空下拉框
-                select_student.append('<option value="0">请选择学生姓名</option>');// 默认的select html
-                $.each(data, function (i, element) {
-                    select_student.append('<option value="' + element.studId + '">' + element.stuName +
-                        '</option>');
-                });
+                // 选择0 则不发送请求
                 form.render('select');
+                return;
+            }
+            var loadIndex = layer.load(1);
+            $.get('${pageContext.request.contextPath}/student-reply-score/allStudentByStudentClassId', {studentClassId: selectClassId}, function (data) {
+                // 渲染学生下拉框
+                var studentData = [];
+                $.each(data, function (i, element) {
+                    studentData.push({name: element.stuName, value: element.studId});
+                });
+                studentSelect.update({
+                    data: studentData
+                });
+
                 layer.close(loadIndex);
             }, 'json');
         });

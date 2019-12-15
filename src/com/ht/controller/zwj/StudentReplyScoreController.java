@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,14 +38,34 @@ public class StudentReplyScoreController {
 
     @RequestMapping("/home")
     public String home(Model model) {
-        List studentClassList = studentclassService.studentclass_list();
-        List<ProjectVO> projectVOS = projectService.allData();
-        List<EmpVO> empVOS = empService.allEmp();
+        List studentClassList = studentclassService.studentclass_list();// 所有学生班级
+        List<ProjectVO> projectVOS = projectService.allData();// 所有的答辩项目
 
         model.addAttribute("studentClassList", studentClassList);
         model.addAttribute("projectList", projectVOS);
-        model.addAttribute("empList", empVOS);
         return "zwj/student-reply-score/home";
+    }
+
+    @RequestMapping(value = "/preview",method = RequestMethod.GET)
+    public String preview(@RequestParam Integer stuId, Model model) {
+        System.out.println(stuId);
+
+        // 查询该学生所有的答辩项目
+        List<ProjectVO> projectList = studentReplyScoreService.findGradedProjectByStudentId(stuId);
+
+        model.addAttribute("projectList",projectList);
+
+        return "zwj/student-reply-score/preview";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/findDataToPreview",method = RequestMethod.GET)
+    public Map<String,Object> findDataToPreview(@RequestParam Integer stuId,@RequestParam Integer projectId) {
+        // 查询该学生所有的答辩项目
+        Map<String,Object> map = studentReplyScoreService.findProjectScoreByOptions(stuId,projectId);
+        System.out.println(map);
+
+        return map;
     }
 
     @ResponseBody
@@ -65,15 +86,29 @@ public class StudentReplyScoreController {
 
     @ResponseBody
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public Map<String, Object> allStudent(StudentReplyScoreVO studentReplyScore) {
-        // 计算答辩成绩
-        studentReplyScore.setScore7(studentReplyScore.getScore1() + studentReplyScore.getScore2() + studentReplyScore.getScore3() + studentReplyScore.getScore4() + studentReplyScore.getScore5() + studentReplyScore.getScore6());
+    public Map<String, Object> allStudent(StudentReplyScoreVO studentReplyScore, @RequestParam(name = "studentIds") String studentIdsString, HttpSession session) {
+        String[] studentIdsArr = studentIdsString.split(",");
+
+        EmpVO emp = (EmpVO) session.getAttribute("emp");// 获取存在session中的当前员工教师
+        // 计算答辩成绩 插入多人时的分数都是一样的
+        float totalPoints = studentReplyScore.getScore1() + studentReplyScore.getScore2() + studentReplyScore.getScore3() + studentReplyScore.getScore4() + studentReplyScore.getScore5() + studentReplyScore.getScore6();
 
         Map<String, Object> hashMap = new HashMap<>();
         try {
+            int successCount = 0;// 插入成功次数
+            for (String s : studentIdsArr) {
+                studentReplyScore.setScore7(totalPoints);
+                studentReplyScore.setStudentId(Integer.parseInt(s));// 为每条记录设置学生id
+                studentReplyScore.setGradeEmpId(emp == null ? 1015 : emp.getEmpId());// 将session中的当前教师设置为打分老师
+
+                if (studentReplyScoreService.addStudentReplyScore(studentReplyScore) > 0) {
+                    ++successCount;// 插入成功加一
+                }
+            }
+
             hashMap.put("code", 0);
             hashMap.put("msg", "添加成功！");
-            hashMap.put("result", studentReplyScoreService.addStudentReplyScore(studentReplyScore));
+            hashMap.put("result", successCount);
             return hashMap;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -85,9 +120,13 @@ public class StudentReplyScoreController {
 
     @ResponseBody
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public Map<String, Object> updateStudent(StudentReplyScoreVO studentReplyScore) {
+    public Map<String, Object> updateStudent(StudentReplyScoreVO studentReplyScore, @RequestParam(name = "studentIds") Integer studentIdsString, HttpSession session) {
+        EmpVO emp = (EmpVO) session.getAttribute("emp");// 当前打分老师
+        studentReplyScore.setGradeEmpId(emp == null ? 1015 : emp.getEmpId());
+
         // 计算答辩成绩
         studentReplyScore.setScore7(studentReplyScore.getScore1() + studentReplyScore.getScore2() + studentReplyScore.getScore3() + studentReplyScore.getScore4() + studentReplyScore.getScore5() + studentReplyScore.getScore6());
+        studentReplyScore.setStudentId(studentIdsString);
         Map<String, Object> map = new HashMap<>();
         try {
             studentReplyScoreService.updateStudentReplyScore(studentReplyScore);
@@ -205,13 +244,13 @@ public class StudentReplyScoreController {
      */
     @ResponseBody
     @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public Map<String, Object> search(@RequestParam(required = false, defaultValue = "1") Integer page, @RequestParam(required = false, defaultValue = "10") Integer limit, @RequestParam int projectId, @RequestParam int studentClassId, @RequestParam int empId) {
-        List<Map<String, Object>> list = studentReplyScoreService.findStudentReplyScoreByOptions(projectId, studentClassId, empId, page, limit);
+    public Map<String, Object> search(@RequestParam(required = false, defaultValue = "1") Integer page, @RequestParam(required = false, defaultValue = "10") Integer limit, @RequestParam int projectId, @RequestParam int studentClassId) {
+        List<Map<String, Object>> list = studentReplyScoreService.findStudentReplyScoreByOptions(projectId, studentClassId, page, limit);
 
         Map<String, Object> map = new HashMap<>();
         map.put("code", 0);
         map.put("msg", "");
-        map.put("count", studentReplyScoreService.getTotality());
+        map.put("count", studentReplyScoreService.findStudentReplyScoreCountByOptions(projectId, studentClassId));
         map.put("data", list);
 
         return map;
