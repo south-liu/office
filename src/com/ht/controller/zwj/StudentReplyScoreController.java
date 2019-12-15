@@ -99,7 +99,7 @@ public class StudentReplyScoreController {
             for (String s : studentIdsArr) {
                 studentReplyScore.setScore7(totalPoints);
                 studentReplyScore.setStudentId(Integer.parseInt(s));// 为每条记录设置学生id
-                studentReplyScore.setGradeEmpId(emp == null ? 1015 : emp.getEmpId());// 将session中的当前教师设置为打分老师
+                studentReplyScore.setGradeEmpId(emp.getEmpId());// 将session中的当前教师设置为打分老师
 
                 if (studentReplyScoreService.addStudentReplyScore(studentReplyScore) > 0) {
                     ++successCount;// 插入成功加一
@@ -122,7 +122,7 @@ public class StudentReplyScoreController {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public Map<String, Object> updateStudent(StudentReplyScoreVO studentReplyScore, @RequestParam(name = "studentIds") Integer studentIdsString, HttpSession session) {
         EmpVO emp = (EmpVO) session.getAttribute("emp");// 当前打分老师
-        studentReplyScore.setGradeEmpId(emp == null ? 1015 : emp.getEmpId());
+        studentReplyScore.setGradeEmpId(emp.getEmpId());
 
         // 计算答辩成绩
         studentReplyScore.setScore7(studentReplyScore.getScore1() + studentReplyScore.getScore2() + studentReplyScore.getScore3() + studentReplyScore.getScore4() + studentReplyScore.getScore5() + studentReplyScore.getScore6());

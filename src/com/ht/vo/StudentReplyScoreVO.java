@@ -10,7 +10,8 @@ public class StudentReplyScoreVO {
     private Integer replyId;//成绩主键id
     private Integer  studentId;//学生表外键
     private Integer projectId;//关联答辩项目
-    private Integer empId;//打分老师管理员工表外键
+    private Integer empId;//任课老师 员工表外键
+    private Integer gradeEmpId;//评分老师 员工表外键
     private float score1;//功能完善50
     private float score2;//技术难度10
     private float score3;//界面完美10
@@ -19,24 +20,6 @@ public class StudentReplyScoreVO {
     private float score6;//语言表达10
     private float score7;//总分100
     private String remark;//备注
-
-    @Override
-    public String toString() {
-        return "StudentReplyScoreVO{" +
-                "replyId=" + replyId +
-                ", studentId=" + studentId +
-                ", projectId=" + projectId +
-                ", empId=" + empId +
-                ", score1=" + score1 +
-                ", score2=" + score2 +
-                ", score3=" + score3 +
-                ", score4=" + score4 +
-                ", score5=" + score5 +
-                ", score6=" + score6 +
-                ", score7=" + score7 +
-                ", remark='" + remark + '\'' +
-                '}';
-    }
 
     public Integer getReplyId() {
         return replyId;
@@ -68,6 +51,14 @@ public class StudentReplyScoreVO {
 
     public void setEmpId(Integer empId) {
         this.empId = empId;
+    }
+
+    public Integer getGradeEmpId() {
+        return gradeEmpId;
+    }
+
+    public void setGradeEmpId(Integer gradeEmpId) {
+        this.gradeEmpId = gradeEmpId;
     }
 
     public float getScore1() {
@@ -132,5 +123,39 @@ public class StudentReplyScoreVO {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        StudentReplyScoreVO that = (StudentReplyScoreVO) o;
+
+        return replyId.equals(that.replyId);
+    }
+
+    @Override
+    public int hashCode() {
+        return replyId.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "StudentReplyScoreVO{" +
+                "replyId=" + replyId +
+                ", studentId=" + studentId +
+                ", projectId=" + projectId +
+                ", empId=" + empId +
+                ", gradeEmpId=" + gradeEmpId +
+                ", score1=" + score1 +
+                ", score2=" + score2 +
+                ", score3=" + score3 +
+                ", score4=" + score4 +
+                ", score5=" + score5 +
+                ", score6=" + score6 +
+                ", score7=" + score7 +
+                ", remark='" + remark + '\'' +
+                '}';
     }
 }
