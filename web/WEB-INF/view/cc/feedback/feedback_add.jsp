@@ -44,7 +44,9 @@
     <div class="layui-form-item">
         <div class="layui-upload">
             <label class="layui-form-label">图片：</label>
-            <button type="button" class="layui-btn layui-btn-normal" id="imgname">选择文件</button>
+            <button type="button" class="layui-btn layui-btn-normal" id="imgname">
+                <i class="layui-icon">&#xe67c;</i>提交图片
+            </button>
         </div>
     </div>
     <div class="layui-form-item">
