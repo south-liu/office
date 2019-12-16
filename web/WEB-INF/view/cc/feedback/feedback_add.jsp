@@ -1,16 +1,16 @@
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
-  Date: 2019/12/6
-  Time: 11:42
+  Date: 2019/12/9
+  Time: 16:04
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>添加专业</title>
-    <jsp:include page="../public/head.jsp"></jsp:include>
+    <title>填写问题反馈</title>
+    <jsp:include page="../../public/head.jsp"></jsp:include>
 </head>
 <style type="text/css">
     .layui-input-block {
@@ -35,68 +35,64 @@
 </style>
 <body style="padding: 30px;">
 <form class="layui-form" action="">
-    <div class="layui-form-item">
-        <label class="layui-form-label">专业名称：</label>
-        <div class="layui-input-inline">
-            <input type="text" name="majorName" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">院系名称：</label>
-        <div class="layui-input-block">
-            <select name="collegeDeptId" lay-filter="parentId">
-                <option value="0" selected>无</option>
-                <c:forEach items="${collegeDeptVO}" var="clg">
-                    <option value="${clg.collegeDeptId}">${clg.collegeDeptName}</option>
-                </c:forEach>
-            </select>
-        </div>
-    </div>
     <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">说明：</label>
+        <label class="layui-form-label">建议：</label>
         <div class="layui-input-block">
             <textarea name="remark" placeholder="请输入内容" lay-verify="required" class="layui-textarea"></textarea>
         </div>
     </div>
-
+    <div class="layui-form-item">
+        <div class="layui-upload">
+            <label class="layui-form-label">图片：</label>
+            <button type="button" class="layui-btn layui-btn-normal" id="imgname">选择文件</button>
+        </div>
+    </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button type="submit" class="layui-btn" lay-submit="" lay-filter="sub">确定</button>
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="sub" id="updto">确定</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
 </form>
 
 <script>
-    layui.use('laydate', function(){
-        var laydate = layui.laydate;
-        //执行一个laydate实例
-        laydate.render({
-            elem: '#data' //指定元素
-        });
-        laydate.render({
-            elem:'#datas'
-        });
-    });
-    layui.use(['form', 'layer'], function(){
+    layui.use(['form', 'layer','upload'], function(){
         var form = layui.form
             ,layer = layui.layer
+            ,upload = layui.upload;
         //监听提交
+        upload.render({
+            elem: '#imgname'
+            <%--,url: '${pageContext.request.contextPath}/feedback/upload/'--%>
+            ,auto: false
+            //,multiple: true
+            ,accept: 'file'
+            ,done: function(res){
+                console.log(res)
+            }
+        });
+
         form.on('submit(sub)', function(data){
             console.log(data.field);
             var fd = data.field;
             var lod = layer.load();
+            var formData = new FormData();
+            formData.append('file',$('.layui-upload-file')[0].files[0]);
+            formData.append('remark',fd.remark);
+
             //部门数据
             $.ajax({
-                url: "${pageContext.request.contextPath}/major/addlist",
+                url: "${pageContext.request.contextPath}/feedback/addlist",
                 type: "post",
+                processData: false,
+                contentType: false,
                 async:true,
                 dataType: "json",
-                data:{
-                    majorName:fd.majorName,
-                    collegeDeptId:fd.collegeDeptId,
+                data: formData,
+                /*{
+                    image:formData,
                     remark:fd.remark
-                },
+                },*/
                 success: function (data) {
                     layer.close(lod);
                     layer.msg('添加成功',{
@@ -114,9 +110,8 @@
             });
             return false;
         });
-
     });
 </script>
 </body>
-</html>
 
+</html>

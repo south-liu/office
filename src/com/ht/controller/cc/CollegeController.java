@@ -20,7 +20,7 @@ public class CollegeController {
     
     @RequestMapping("/tolist")
     public  String tolist(){
-        return "cc/colege/collegelist";
+        return "cc/college/collegelist";
     }
     @ResponseBody
     @RequestMapping("/collegelist")
