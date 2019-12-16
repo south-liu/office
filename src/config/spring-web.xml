@@ -59,6 +59,7 @@
             <mvc:mapping path="/system/**"/>
             <mvc:mapping path="/public/**"/>
             <mvc:mapping path="/file/**"/>
+            <mvc:mapping path="/student/**"/>
 
             <mvc:mapping path="/Chengcollege/**"/>
             <mvc:mapping path="/CJEF/**"/>

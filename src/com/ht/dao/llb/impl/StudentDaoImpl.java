@@ -34,8 +34,44 @@ public class StudentDaoImpl extends BaseDao implements IStudentDao {
     }
 
     @Override
+    public List<StudentVO> pageListWhere(int page, int limit, String stuName, String phone, Integer clazz, Integer huor) {
+        String sql = "select s.*,sc.className,h.huorName from student s left join studentClass sc on s.clazz = sc.classId left join studentHuor h on s.huor = h.hourId where 1=1 ";
+        if (stuName!=null && !"".equals(stuName)){
+            sql+=" and s.stuName like '%"+stuName+"%'";
+        }
+        if (phone!=null && !"".equals(phone)){
+            sql+=" and s.phone like '%"+phone+"%'";
+        }
+        if (clazz!=null && !"".equals(clazz)){
+            sql+=" and s.clazz = "+clazz;
+        }
+        if (huor!=null && !"".equals(huor)){
+            sql+=" and s.huor = "+huor;
+        }
+        return pageListBySql(sql,page,limit);
+    }
+
+    @Override
     public int countStudent() {
         return totalRowByHql("select count(*) from StudentVO");
+    }
+
+    @Override
+    public int countStuWhere(String stuName, String phone, Integer clazz, Integer huor) {
+        String sql = "select count(*) from student s where 1=1";
+        if (stuName!=null && !"".equals(stuName)){
+            sql+=" and s.stuName like '%"+stuName+"%'";
+        }
+        if (phone!=null && !"".equals(phone)){
+            sql+=" and s.phone like '%"+phone+"%'";
+        }
+        if (clazz!=null && !"".equals(clazz)){
+            sql+=" and s.clazz = "+clazz;
+        }
+        if (huor!=null && !"".equals(huor)){
+            sql+=" and s.huor = "+huor;
+        }
+        return totalRowBySql(sql);
     }
 
     @Override

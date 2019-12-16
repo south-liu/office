@@ -52,7 +52,7 @@
 
         <p>》<a style="cursor:pointer" href="javascript:history.go(-1);">返回上一页面</a></p>
 
-        <p>》<a href="${pageContext.request.contextPath}/public/index">返回网站首页</a></p>
+        <%--<p>》<a href="${pageContext.request.contextPath}/public/index">返回网站首页</a></p>--%>
 
     </div>
 

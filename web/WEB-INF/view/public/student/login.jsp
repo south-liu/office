@@ -114,7 +114,7 @@
 </style>
 <body class="login-bg">
 <div class="login layui-anim layui-anim-up">
-    <div class="message">用户登录</div>
+    <div class="message">学生登录</div>
     <div id="darkbannerwrap"></div>
     <form method="post" class="layui-form" >
         <input name="phone" placeholder="手机号"  type="text" lay-verify="required" class="layui-input" >

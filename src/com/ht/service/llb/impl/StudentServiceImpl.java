@@ -35,8 +35,18 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
+    public List<StudentVO> pageListWhere(int page, int limit, String stuName, String phone, Integer clazz, Integer huor) {
+        return studentDao.pageListWhere(page,limit,stuName,phone,clazz,huor);
+    }
+
+    @Override
     public int countStudent() {
         return studentDao.countStudent();
+    }
+
+    @Override
+    public int countStuWhere(String stuName, String phone, Integer clazz, Integer huor) {
+        return studentDao.countStuWhere(stuName,phone,clazz,huor);
     }
 
     @Override

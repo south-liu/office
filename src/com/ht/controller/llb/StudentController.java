@@ -40,7 +40,11 @@ public class StudentController {
     private StudentReplyScoreService studentReplyScoreService;
 
     @RequestMapping("/toStuList")
-    public String toStuList(){
+    public String toStuList(Model model){
+        List<StudentClassVO> classVOS = otherService.studentClassList();
+        List<StudentHuorVO> huorVOS = studentHuorService.allData();
+        model.addAttribute("clazzs",classVOS);
+        model.addAttribute("huors",huorVOS);
         return "llb/student/student_list";
     }
 
@@ -119,6 +123,18 @@ public class StudentController {
         map.put("msg","");
         map.put("count",count);
         map.put("data",studentService.pageList(page,limit));
+        return map;
+    }
+
+    @RequestMapping("/pageListWhere")
+    @ResponseBody
+    public Map pageListWhere(int page, int limit,String stuName, String phone, Integer clazz, Integer huor){
+        Map map = new HashMap();
+        Integer count = studentService.countStuWhere(stuName,phone,clazz,huor);
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",count);
+        map.put("data",studentService.pageListWhere(page,limit,stuName,phone,clazz,huor));
         return map;
     }
 

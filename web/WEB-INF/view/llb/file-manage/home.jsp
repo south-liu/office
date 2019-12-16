@@ -96,7 +96,7 @@
                 });
                 return;
             }
-
+            var lod = layer.load();
             var formData = new FormData();
             formData.append('file',file);
             formData.append('remark',remark);
@@ -109,6 +109,7 @@
                 dataType:'json',
                 data:formData,
                 success:function (data) {
+                    layer.close(lod);
                     layer.msg('上传成功',{
                         icon:1,
                         time:2000
@@ -117,6 +118,7 @@
                     });
                 },
                 error:function () {
+                    layer.close(lod);
                     layer.msg('服务器错误，请稍后再试！',{
                         icon:2
                     });

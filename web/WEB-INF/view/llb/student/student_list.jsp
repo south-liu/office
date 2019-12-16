@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>学生资料</title>
@@ -24,6 +25,35 @@
     }
 </style>
 <body>
+<div class="layui-card-body ">
+    <form class="layui-form layui-col-space5" action="" onsubmit="return false;">
+        <div class="layui-inline layui-show-xs-block">
+            <input type="text" id="stuName" name="stuName"  placeholder="学生姓名" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-inline layui-show-xs-block">
+            <input type="text" id="phone" name="phone"  placeholder="手机号码" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-inline layui-show-xs-block">
+            <select id="clazz" name="clazz">
+                <option value="">选择班级</option>
+                <c:forEach items="${clazzs}" var="cl">
+                    <option value="${cl.classId}">${cl.className}</option>
+                </c:forEach>
+            </select>
+        </div>
+        <div class="layui-inline layui-show-xs-block">
+            <select id="huor" name="huor">
+                <option value="">宿舍房号</option>
+                <c:forEach items="${huors}" var="h">
+                    <option value="${h.hourId}">${h.huorName}</option>
+                </c:forEach>
+            </select>
+        </div>
+        <div class="layui-inline layui-show-xs-block">
+            <button class="layui-btn" id="seacch" ><i class="layui-icon">&#xe615;</i></button>
+        </div>
+    </form>
+</div>
 <table class="layui-hide" id="myTab" lay-filter="fTab"></table>
 
 <script type="text/html" id="toolbar">
@@ -103,6 +133,23 @@
                 {fixed: 'right', title:'操作', toolbar: '#bar',align: 'center',width:250},
             ]],
             page: true
+        });
+
+        //搜索
+        $('#seacch').click(function () {
+            var stuName = $('#stuName').val();
+            var phone = $('#phone').val().trim();
+            var clazz = $('#clazz').val();
+            var huor = $('#huor').val();
+            table.reload('myTab',{
+                url:'${pageContext.request.contextPath}/student/pageListWhere',
+                where:{
+                    stuName:stuName,
+                    phone:phone,
+                    clazz:clazz,
+                    huor:huor
+                }
+            });
         });
 
         //头工具栏事件
