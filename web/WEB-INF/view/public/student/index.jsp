@@ -58,7 +58,7 @@
                     <a class="small_menu_title" href="javascript:;"><i class="layui-icon layui-icon-username" style="font-size: 15px; color: #FFF;margin-right: 10px;"></i>个人主页</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;" title="申请请假" src=""><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>申请请假</a></dd>
-                        <dd><a href="javascript:;" title="问题反馈" src=""><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>问题反馈</a></dd>
+                        <dd><a href="javascript:;" title="问题反馈" src="feedback/tolist"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>问题反馈</a></dd>
                         <dd><a href="javascript:;" title="报修申请" src=""><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>报修申请</a></dd>
                         <dd><a href="javascript:;" title="教师考评" src=""><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>教师考评</a></dd>
                     </dl>

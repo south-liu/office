@@ -91,9 +91,16 @@ public class FeedBackController {
     @RequestMapping("/addmsg")
     @ResponseBody
     public String addmsg(FeedBackMsgVO feedBackMsgVO,HttpSession session,int feedbackId) {
+        StudentVO stu = (StudentVO) session.getAttribute("student");
         EmpVO emp = (EmpVO) session.getAttribute("emp");
-        feedBackMsgVO.setUserName(emp.getEmpName());
-        feedBackMsgVO.setUserId(emp.getEmpId());
+
+        if (stu!=null){
+            feedBackMsgVO.setUserName(stu.getStuName());
+            feedBackMsgVO.setUserId(stu.getStudId());
+        }else {
+            feedBackMsgVO.setUserName(emp.getEmpName());
+            feedBackMsgVO.setUserId(emp.getEmpId());
+        }
 
         Date newdata = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
