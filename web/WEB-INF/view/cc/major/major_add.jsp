@@ -45,7 +45,6 @@
         <label class="layui-form-label">院系名称：</label>
         <div class="layui-input-block">
             <select name="collegeDeptId" lay-filter="parentId">
-                <option value="0" selected>无</option>
                 <c:forEach items="${collegeDeptVO}" var="clg">
                     <option value="${clg.collegeDeptId}">${clg.collegeDeptName}</option>
                 </c:forEach>
