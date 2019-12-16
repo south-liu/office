@@ -68,7 +68,7 @@
     </div>
 
     <div class="layui-body">
-        <iframe src="${pageContext.request.contextPath}/public/student/welcome" frameborder="0" id="_iframe"
+        <iframe src="${pageContext.request.contextPath}/studentSide/welcome" frameborder="0" id="_iframe"
                 style="width:100%;height:100%;"></iframe>
     </div>
 
@@ -87,7 +87,7 @@
             layer.confirm('确认退出系统吗？', function () {
                 var lod = layer.load();
                 $.ajax({
-                    url: "${pageContext.request.contextPath}/system/exit",
+                    url: "${pageContext.request.contextPath}/studentSide/exit",
                     type: "post",
                     async:true,
                     dataType: "json",
@@ -97,7 +97,7 @@
                         layer.msg('退出成功',{
                             time:1000
                         },function () {
-                            window.top.location='${pageContext.request.contextPath}/public/student/login';
+                            window.top.location='${pageContext.request.contextPath}/studentSide/login';
                         });
                     },
                     error:function () {

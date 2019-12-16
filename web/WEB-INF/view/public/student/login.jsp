@@ -155,7 +155,7 @@
                     var index = layer.load();
                     $.ajax({
                         type:"post",
-                        url:"${pageContext.request.contextPath}/system/student/login",
+                        url:"${pageContext.request.contextPath}/studentSide/login",
                         async:true,
                         dataType:"json",
                         data:{
@@ -184,7 +184,7 @@
                                     icon:1,
                                     time:1000
                                 },function(){
-                                    window.location='${pageContext.request.contextPath}/public/student/index'
+                                    window.location='${pageContext.request.contextPath}/studentSide/index'
                                 });
                             }
                         },
@@ -203,7 +203,7 @@
         //获取极简验证码
         function getGee() {
             $.ajax({
-                url: "${pageContext.request.contextPath}/system/geeCheck?t=" + (new Date()).getTime(), // 加随机数防止缓存
+                url: "${pageContext.request.contextPath}/studentSide/geeCheck?t=" + (new Date()).getTime(), // 加随机数防止缓存
                 type: "get",
                 dataType: "json",
                 success: function (data) {

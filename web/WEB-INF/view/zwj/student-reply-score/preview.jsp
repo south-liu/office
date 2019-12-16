@@ -12,7 +12,7 @@
     <title>学生成绩预览</title>
     <jsp:include page="/WEB-INF/view/public/head.jsp"></jsp:include>
     <script type="text/javascript"
-            src="${pageContext.request.contextPath}/echarts-4.5.0/echarts.min.js"></script>
+            src="${pageContext.request.contextPath}/js/echarts.min.js"></script>
     <style type="text/css">
         .selectBox {
             position: fixed;
@@ -21,7 +21,10 @@
         }
     </style>
 </head>
-<body>
+<body style="padding: 30px">
+<div class="layui-btn-container">
+    <a class="layui-btn layui-btn-sm" href="javascript:history.go(-1);">返回</a>
+</div>
 <%--没有该学生的答辩成绩时--%>
 <c:if test="${empty projectList}">
     该学生还没有答辩成绩！
@@ -45,6 +48,7 @@
 
     <script type="text/javascript">
         $(function () {
+
             window.onresize = function () {
                 //重置容器高宽
                 myEcharts.resize();
@@ -66,7 +70,7 @@
                         },
                         tooltip: {
                             trigger: 'item',
-                            formatter: "{a} <br/>{b} : {c}分"
+                            formatter: "{a}<br>{b} : {c}分"
                         },
                         legend: {
                             orient: 'vertical',
@@ -75,7 +79,7 @@
                         },
                         series: [
                             {
-                                name: '访问来源',
+                                name: data.projectName,
                                 type: 'pie',
                                 radius: '60%',
                                 data: [

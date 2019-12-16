@@ -36,32 +36,9 @@ public class PublicController {
         return "public/welcome";
     }
 
-    /**
-     * 首页入口
-     * @author 钟文军
-     * @return
-     */
-    @RequestMapping("/student/index")
-    public String sindex(){
-        return "public/student/index";
-    }
-
-    /**
-     * 登陆界面
-     * @return
-     */
-    @RequestMapping("/student/login")
-    public String slogin(){
-        return "public/student/login";
-    }
-
-    /**
-     * 欢迎界面
-     * @return
-     */
-    @RequestMapping("/student/welcome")
-    public String swelcome(){
-        return "public/student/welcome";
+    @RequestMapping("/error")
+    public String error(){
+        return "error/error";
     }
 
 }

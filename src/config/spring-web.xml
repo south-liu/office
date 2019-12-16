@@ -51,4 +51,55 @@
         <property name="maxUploadSize" value="10485760"/>
     </bean>
 
+    <!--后台访问拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/dept/**"/>
+            <mvc:mapping path="/emp/**"/>
+            <mvc:mapping path="/system/**"/>
+            <mvc:mapping path="/public/**"/>
+            <mvc:mapping path="/file/**"/>
+
+            <mvc:mapping path="/Chengcollege/**"/>
+            <mvc:mapping path="/CJEF/**"/>
+            <mvc:mapping path="/major/**"/>
+            <mvc:mapping path="/repair/**"/>
+            <mvc:mapping path="/stujef/**"/>
+            <mvc:mapping path="/weekang/**"/>
+
+            <mvc:mapping path="/classtype/**"/>
+            <mvc:mapping path="/chatRecord/**"/>
+            <mvc:mapping path="/checkwork/**"/>
+            <mvc:mapping path="/education/**"/>
+            <mvc:mapping path="/studentclass/**"/>
+            <mvc:mapping path="/trial/**"/>
+
+            <mvc:mapping path="/MY/**"/>
+
+            <mvc:mapping path="/project/**"/>
+            <mvc:mapping path="/student-fall/**"/>
+            <mvc:mapping path="/student-huor/**"/>
+            <mvc:mapping path="/student-reply-score/**"/>
+
+            <mvc:exclude-mapping path="/system/geeCheck"/>
+
+            <mvc:exclude-mapping path="/system/login"/>
+
+            <mvc:exclude-mapping path="/public/login"/>
+            <mvc:exclude-mapping path="/public/error"/>
+
+            <bean class="com.ht.interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/studentSide/**"/>
+
+            <mvc:exclude-mapping path="/studentSide/geeCheck"/>
+
+            <mvc:exclude-mapping path="/studentSide/login"/>
+
+            <bean class="com.ht.interceptor.StuLoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
 </beans>

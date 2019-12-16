@@ -8,6 +8,7 @@ import com.ht.service.llb.OtherService;
 import com.ht.service.wzq.HTService;
 import com.ht.service.zwj.StudentFallService;
 import com.ht.service.zwj.StudentHuorService;
+import com.ht.service.zwj.StudentReplyScoreService;
 import com.ht.vo.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +36,8 @@ public class StudentController {
     private MajorService majorService;
     @Resource
     private OtherService otherService;
+    @Resource
+    private StudentReplyScoreService studentReplyScoreService;
 
     @RequestMapping("/toStuList")
     public String toStuList(){
@@ -218,6 +221,21 @@ public class StudentController {
 
             otherService.updStudentHour(stuId,0);
         return "success";
+    }
+
+    //查询学生是否有答辩成绩
+    @RequestMapping("/selReply")
+    @ResponseBody
+    public Map selReply(Integer stuId){
+        Map map = new HashMap();
+        // 查询该学生所有的答辩项目
+        List<ProjectVO> projectList = studentReplyScoreService.findGradedProjectByStudentId(stuId);
+        if (projectList.size() == 0) {
+            map.put("code",0);
+        } else {
+            map.put("code",1);
+        }
+        return map;
     }
 
     @RequestMapping("/repass")

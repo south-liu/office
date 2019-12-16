@@ -282,8 +282,30 @@
                     break;
                 case 'dabian':
                     if (length == 1) {
-                        <%--window.open('${pageContext.request.contextPath}/CJEF/tofam?empId='+checkStatus.data[0].empId,'target');--%>
-                        window.location.href='${pageContext.request.contextPath}/CJEF/tofam?empId='+checkStatus.data[0].empId;
+                        var lod = layer.load();
+                        $.ajax({
+                            type: "POST",
+                            dataType: "json",
+                            url: "${pageContext.request.contextPath}/student/selReply" ,
+                            data: {stuId:checkStatus.data[0].studId},
+                            success: function (result) {
+                                layer.close(lod);
+                                if (result.code == 0) {
+                                    layer.msg('该学生还没有答辩成绩！',{
+                                        icon:0,
+                                        time:1000
+                                    });
+                                } else {
+                                    window.location.href='${pageContext.request.contextPath}/student-reply-score/preview?stuId='+checkStatus.data[0].studId;
+                                }
+                            },
+                            error : function() {
+                                layer.close(lod);
+                                layer.msg('服务器错误',{
+                                    icon:2
+                                });
+                            }
+                        });
                     } else {
                         layer.msg('请选择一个学生',{
                             icon:0
