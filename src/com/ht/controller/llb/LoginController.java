@@ -2,11 +2,11 @@ package com.ht.controller.llb;
 
 import com.ht.dao.llb.IStudentDao;
 import com.ht.service.llb.IEmpService;
+import com.ht.service.llb.IRoleService;
 import com.ht.service.llb.IStudentService;
 import com.ht.utils.gee.GeeConfig;
 import com.ht.utils.gee.GeeLib;
-import com.ht.vo.EmpVO;
-import com.ht.vo.StudentVO;
+import com.ht.vo.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -27,6 +29,8 @@ public class LoginController {
     private IEmpService empService;
     @Resource
     private IStudentService studentService;
+    @Resource
+    private IRoleService roleService;
 
     /**
      * 获取极简验证码
@@ -66,12 +70,12 @@ public class LoginController {
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            System.out.println(gtResult);
+//            System.out.println(gtResult);
         } else {
             // gt-server非正常情况下，进行failback模式验证
-            System.out.println("failback:use your own server captcha validate");
+//            System.out.println("failback:use your own server captcha validate");
             gtResult = geeLib.failbackValidateRequest(challenge, validate, seccode);
-            System.out.println(gtResult);
+//            System.out.println(gtResult);
         }
 
         Map map = new HashMap();
@@ -89,8 +93,37 @@ public class LoginController {
         } else {
             if (gtResult == 1) {
                 //验证成功
-                map.put("type","success");
-                map.put("msg","登陆成功");
+
+                //查询出该员工的角色
+                EmpRoleVO empRoleVO = roleService.selEmpRoleByEmpId(dbEmp.getEmpId());
+
+                //如果没有授权角色
+                if (empRoleVO==null) {
+                    map.put("type","error");
+                    map.put("msg","权限不足，请联系管理员");
+                } else {
+                    map.put("type","success");
+                    map.put("msg","登陆成功");
+
+                    //查询出该角色的所有权限
+                    List<CharModuleVO> allCharModule = roleService.allCharModuleByCharacterId(empRoleVO.getCharacterId());
+                    List<ModuleVO> moduleList = new ArrayList<>();
+                    for (CharModuleVO charModuleVO : allCharModule) {
+                        moduleList.add(roleService.selModuleByModuleId(charModuleVO.getModuleId()));
+                    }
+
+                    //所有根目录
+                    List<ModuleVO> allRootModule = new ArrayList<>();
+                    for (ModuleVO moduleVO : moduleList) {
+                        if (moduleVO.getParentId() == 0) {
+                            allRootModule.add(moduleVO);
+                        }
+                    }
+                    session.setAttribute("allRootModule",allRootModule);
+                    session.setAttribute("moduleList",moduleList);
+
+                }
+
                 session.setAttribute("emp",dbEmp);
             } else {
                 map.put("type","geeError");

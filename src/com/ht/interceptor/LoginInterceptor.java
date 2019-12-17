@@ -1,13 +1,18 @@
 package com.ht.interceptor;
 
+import com.ht.service.llb.IRoleService;
+import com.ht.vo.ModuleVO;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
+import java.util.List;
 
 public class LoginInterceptor implements HandlerInterceptor {
+
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         String uri = httpServletRequest.getRequestURI();
@@ -24,8 +29,21 @@ public class LoginInterceptor implements HandlerInterceptor {
             out.println("</script>");
             out.println("</html>");
             return false;
+        } else {
+            if ("/public/index".equals(uri) || "/public/welcome".equals(uri)||"/system/exit".equals(uri)){
+                return true;
+            }
+            List<ModuleVO> allModule = (List<ModuleVO>) httpServletRequest.getSession().getAttribute("moduleList");
+            for (ModuleVO moduleVO : allModule) {
+                if (moduleVO.getParentId()!=0) {
+                    if ((uri.split("/")[1]).equals(moduleVO.getUrl().split("/")[0])){
+                        return true;
+                    }
+                }
+            }
+            httpServletResponse.sendRedirect(httpServletRequest.getContextPath()+"/public/error");
+            return false;
         }
-        return true;
     }
 
     @Override

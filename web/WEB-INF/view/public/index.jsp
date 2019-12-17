@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,84 +55,18 @@
 
                 <li class="layui-nav-item"><a href="javascript:;" id="_welcome"><i class="layui-icon layui-icon-home" style="font-size: 15px; color: #FFF;margin-right: 10px;"></i>首页</a></li>
 
-                <li class="layui-nav-item">
-                    <a class="small_menu_title" href="javascript:;"><i class="layui-icon layui-icon-username" style="font-size: 15px; color: #FFF;margin-right: 10px;"></i>个人主页</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" title="我的邮件" src=""><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>我的邮件</a></dd>
-                        <dd><a href="javascript:;" title="员工请假" src=""><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>员工请假</a></dd>
-                        <dd><a href="javascript:;" title="学生请假" src=""><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>学生请假</a></dd>
-                        <dd><a href="javascript:;" title="我的周报" src="MY/tomyweekly_list"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>我的周报</a></dd>
-                        <dd><a href="javascript:;" title="考勤管理" src="checkwork/gotocheckworklist"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>考勤管理</a></dd>
-                        <dd><a href="javascript:;" title="离职申请" src=""><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>离职申请</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a class="small_menu_title" href="javascript:;"><i class="layui-icon layui-icon-carousel" style="font-size: 15px; color: #FFF;margin-right: 10px;"></i>通知公告</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" title="公告发布" src=""><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>公告发布</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a class="small_menu_title" href="javascript:;"><i class="layui-icon layui-icon-user" style="font-size: 15px; color: #FFF;margin-right: 10px;"></i>员工管理</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" title="员工资料" src="emp/toEmpList"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>员工资料</a></dd>
-                        <dd><a href="javascript:;" title="周报管理" src="MY/toweekly_list"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>周报管理</a></dd>
-                        <dd><a href="javascript:;" title="谈心记录" src="chatRecord/gotochatRecordList"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>谈心记录</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a class="small_menu_title" href="javascript:;"><i class="layui-icon layui-icon-component" style="font-size: 15px; color: #FFF;margin-right: 10px;"></i>教务管理</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" title="学生资料" src="student/toStuList"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>学生资料</a></dd>
-                        <dd><a href="javascript:;" title="考试成绩" src="MY/toscore_list"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>考试成绩</a></dd>
-                        <dd><a href="javascript:;" title="答辩成绩" src="student-reply-score/home"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>答辩成绩</a></dd>
-                        <dd><a href="javascript:;" title="班级管理" src="studentclass/gotostudentclasslist"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>班级管理</a></dd>
-                        <dd><a href="javascript:;" title="课程类别" src="MY/totype_list"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>课程类别</a></dd>
-                        <dd><a href="javascript:;" title="课程管理" src="MY/tocourse_list"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>课程管理</a></dd>
-                        <dd><a href="javascript:;" title="试讲培训" src="trial/gototriallist"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>试讲培训</a></dd>
-                        <dd><a href="javascript:;" title="值班管理" src="weekang/tolist"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>值班管理</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a class="small_menu_title" href="javascript:;"><i class="layui-icon layui-icon-tabs" style="font-size: 15px; color: #FFF;margin-right: 10px;"></i>后勤管理</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" title="宿舍管理" src="student-huor/home"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>宿舍管理</a></dd>
-                        <dd><a href="javascript:;" title="楼栋管理" src="MY/tofloor_list"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>楼栋管理</a></dd>
-                        <dd><a href="javascript:;" title="维修管理" src="repair/tolist"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>维修管理</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a class="small_menu_title" href="javascript:;"><i class="layui-icon layui-icon-date" style="font-size: 15px; color: #FFF;margin-right: 10px;"></i>考核管理</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" title="考核指标" src="MY/toaduitmodel"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>考核指标</a></dd>
-                        <dd><a href="javascript:;" title="员工考核" src="MY/toaduitlog"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>员工考核</a></dd>
-                        <dd><a href="javascript:;" title="教师考评" src=""><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>教师考评</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a class="small_menu_title" href="javascript:;"><i class="layui-icon layui-icon-file-b" style="font-size: 15px; color: #FFF;margin-right: 10px;"></i>文件管理</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" title="资料文档" src="file/toFileList"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>资料文档</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a class="small_menu_title" href="javascript:;"><i class="layui-icon layui-icon-chart" style="font-size: 15px; color: #FFF;margin-right: 10px;"></i>系统报表</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" title="系统报表" src=""><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>系统报表</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a class="small_menu_title" href="javascript:;"><i class="layui-icon layui-icon-set" style="font-size: 15px; color: #FFF;margin-right: 10px;"></i>系统设置</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" title="届别管理" src="student-fall/home"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>届别管理</a></dd>
-                        <dd><a href="javascript:;" title="班级类别" src="classtype/gotoclasstypelist"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>班级类别</a></dd>
-                        <dd><a href="javascript:;" title="部门管理" src="dept/toDeptList"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>部门管理</a></dd>
-                        <dd><a href="javascript:;" title="院系设置" src="Chengcollege/tolist"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>院系设置</a></dd>
-                        <dd><a href="javascript:;" title="专业设置" src="major/tolist"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>专业设置</a></dd>
-                        <dd><a href="javascript:;" title="学期设置" src="MY/toterm_list"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>学期设置</a></dd>
-                        <dd><a href="javascript:;" title="答辩项目" src="project/home"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>答辩项目</a></dd>
-                    </dl>
-                </li>
+                <c:forEach items="${allRootModule}" var="rootModule">
+                    <li class="layui-nav-item">
+                        <a class="small_menu_title" href="javascript:;"><i class="layui-icon ${rootModule.icon}" style="font-size: 15px; color: #FFF;margin-right: 10px;"></i>${rootModule.moduleName}</a>
+                        <dl class="layui-nav-child">
+                            <c:forEach items="${moduleList}" var="module">
+                                <c:if test="${module.parentId == rootModule.moduleId}">
+                                    <dd><a href="javascript:;" title="${module.moduleName}" src="${module.url}"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>${module.moduleName}</a></dd>
+                                </c:if>
+                            </c:forEach>
+                        </dl>
+                    </li>
+                </c:forEach>
             </ul>
         </div>
     </div>
