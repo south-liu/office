@@ -56,24 +56,24 @@
         <mvc:interceptor>
             <mvc:mapping path="/dept/**"/>
             <mvc:mapping path="/emp/**"/>
-            <mvc:mapping path="/system/**"/>
+            <!--<mvc:mapping path="/system/**"/>-->
             <mvc:mapping path="/public/**"/>
             <mvc:mapping path="/file/**"/>
             <mvc:mapping path="/student/**"/>
             <mvc:mapping path="/menu/**"/>
 
             <mvc:mapping path="/Chengcollege/**"/>
-            <mvc:mapping path="/CJEF/**"/>
+            <!--<mvc:mapping path="/CJEF/**"/>-->
             <mvc:mapping path="/major/**"/>
             <mvc:mapping path="/repair/**"/>
-            <mvc:mapping path="/stujef/**"/>
+            <!--<mvc:mapping path="/stujef/**"/>-->
             <mvc:mapping path="/weekang/**"/>
-            <mvc:mapping path="/feedback/**"/>
+            <!--<mvc:mapping path="/feedback/**"/>-->
 
             <mvc:mapping path="/classtype/**"/>
             <mvc:mapping path="/chatRecord/**"/>
             <mvc:mapping path="/checkwork/**"/>
-            <mvc:mapping path="/education/**"/>
+            <!--<mvc:mapping path="/education/**"/>-->
             <mvc:mapping path="/studentclass/**"/>
             <mvc:mapping path="/trial/**"/>
 
@@ -85,9 +85,10 @@
             <mvc:mapping path="/student-huor/**"/>
             <mvc:mapping path="/student-reply-score/**"/>
 
-            <mvc:exclude-mapping path="/system/geeCheck"/>
+            <!--<mvc:exclude-mapping path="/system/geeCheck"/>
 
             <mvc:exclude-mapping path="/system/login"/>
+            <mvc:exclude-mapping path="/system/exit"/>-->
 
             <mvc:exclude-mapping path="/public/login"/>
             <mvc:exclude-mapping path="/public/error"/>
