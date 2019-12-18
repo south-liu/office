@@ -23,7 +23,7 @@
         <div class="layui-inline">
             <label class="layui-form-label" style="width: 90px">员工姓名:</label>
             <div class="layui-input-inline" style="width: 120px">
-                <input type="text" name="empName" id="empName" style="width: 120px" class="layui-input">
+                <input type="text" name="empName" id="empName" placeholder="请输入员工姓名" style="width: 120px" class="layui-input">
             </div>
         </div>
         <div class="layui-inline">
@@ -40,11 +40,11 @@
         <div class="layui-inline">
             <label class="layui-form-label" style="width: 90px">日期范围:</label>
             <div class="layui-input-inline" style="width: 100px;">
-                <input type="text" name="workDay1"  id="date"  placeholder="yyyy-MM-dd" class="layui-input">
+                <input type="text" name="workDay1"  id="date" placeholder="yyyy-MM-dd" class="layui-input">
             </div>
             <div class="layui-form-mid">-</div>
             <div class="layui-input-inline" style="width: 100px;">
-                <input type="text" name="workDay2"  id="date1"  placeholder="yyyy-MM-dd" class="layui-input">
+                <input type="text" name="workDay2"  id="date1" placeholder="yyyy-MM-dd" class="layui-input">
             </div>
         </div>
         <button class="layui-btn layui-btn-sm" lay-event="sousuo"><i class="layui-icon layui-icon-search" style="font-size: 15px; color: #FFF;"></i>搜索</button>
@@ -104,7 +104,7 @@
                         title:'添加考核指标',
                         type:2,
                         content:["${pageContext.request.contextPath}/MY/toaddaduitlog", "no"],
-                        area:['480px', "500px"],
+                        area:['430px', "500px"],
                         resize:false  //不能鼠标拖动改变大小
                     });
                     break;

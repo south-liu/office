@@ -157,9 +157,9 @@ public class HTController {
     //修改我的周报(点击编辑按钮修改)
     @RequestMapping("/updmyweekly")
     public String updmyweekly(WeeklyVO weekly){
-        /*SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
         String date = sf.format(new Date());
-        weekly.setWorkDay(date);*/
+        weekly.setWorkDay(date);
         hts.updmyweekly(weekly);
         return "wzq/myweekly_list";
     }
@@ -218,8 +218,8 @@ public class HTController {
         String sql = "select w.*, e.empName from weekly w left join emp e on w.empId = e.empId where 1=1";
         String sql1 = "select count(*) from weekly  where 1=1";
         if (!"".equals(empName) && empName != null){
-            sql += " and w.empId in (select empId from emp where empName = '"+ empName +"')";
-            sql1 += " and empId in (select empId from emp where empName = '"+ empName +"')";
+            sql += " and w.empId in (select empId from emp where empName like '%"+ empName +"%')";
+            sql1 += " and empId in (select empId from emp where empName like '%"+ empName +"%')";
         }
         if (!"".equals(deptName) && deptName != null){
             sql += " and w.empId in (select empId from emp where  deptId in (select deptId from dept where deptName = '"+ deptName +"'))";
@@ -571,8 +571,8 @@ public class HTController {
         String sql = "select a.*, d.aduitName, e.empName from aduitLog a left join aduitModel d on a.aduitModelId = d.aduitModelId left join emp e on a.empId = e.empId where 1=1";
         String sql1 = "select count(*) from aduitLog  where 1=1";
         if (!"".equals(empName) && empName != null){
-            sql += " and a.empId in (select empId from emp where empName = '"+ empName +"')";
-            sql1 += " and empId in (select empId from emp where empName = '"+ empName +"')";
+            sql += " and a.empId in (select empId from emp where empName like '%"+ empName +"%')";
+            sql1 += " and empId in (select empId from emp where empName like '%"+ empName +"%')";
         }
         if (!"".equals(deptName) && deptName != null){
             sql += " and a.empId in (select empId from emp where  deptId in (select deptId from dept where deptName = '"+ deptName +"'))";
@@ -595,5 +595,4 @@ public class HTController {
         map.put("data", list);
         return map;
     }
-
 }

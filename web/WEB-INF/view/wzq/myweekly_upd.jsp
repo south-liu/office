@@ -8,12 +8,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>修改周报</title>
+    <title>添加周报</title>
     <jsp:include page="../public/head.jsp"></jsp:include>
 </head>
 <body>
 <fieldset class="layui-elem-field layui-field-title" style="margin: 20px 0 0 0;">
-    <legend>修改本周周报</legend>
+    <legend>添加本周周报</legend>
     <jsp:include page="../public/head.jsp"></jsp:include>
 </fieldset>
     <form class="layui-form" action="${pageContext.request.contextPath}/MY/updmyweekly" method="post">
@@ -27,25 +27,25 @@
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label" style="width: 120px;text-align:left;margin: 0px 15px 0px 100px">本周情况描述:</label>
             <div class="layui-input-block" style="margin-right: 210px">
-                <textarea placeholder="${weekly.weekCur}" lay-verify="required" autocomplete="off" name="weekCur" class="layui-textarea">${weekly.weekCur}</textarea>
+                <textarea placeholder="${weekly.weekCur}" lay-verify="required" autocomplete="off" name="weekCur" class="layui-textarea"></textarea>
             </div>
         </div>
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label" style="width: 120px;text-align:left;margin: 0px 15px 0px 100px">问题学生情况反馈:</label>
             <div class="layui-input-block" style="margin-right: 210px">
-                <textarea placeholder="${weekly.studentQuestion}" lay-verify="required" name="studentQuestion" class="layui-textarea">${weekly.studentQuestion}</textarea>
+                <textarea placeholder="${weekly.studentQuestion}" lay-verify="required" name="studentQuestion" class="layui-textarea"></textarea>
             </div>
         </div>
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label" style="width: 120px;text-align:left;margin: 0px 15px 0px 100px">意见建议:</label>
             <div class="layui-input-block" style="margin-right: 210px">
-                <textarea placeholder="${weekly.idea}" lay-verify="required" name="idea" class="layui-textarea">${weekly.idea}</textarea>
+                <textarea placeholder="${weekly.idea}" lay-verify="required" name="idea" class="layui-textarea"></textarea>
             </div>
         </div>
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label" style="width: 120px;text-align:left;margin: 0px 15px 0px 100px">下周工作计划:</label>
             <div class="layui-input-block" style="margin-right: 210px">
-                <textarea placeholder="${weekly.weekNext}" lay-verify="required" name="weekNext" class="layui-textarea">${weekly.weekNext}</textarea>
+                <textarea placeholder="${weekly.weekNext}" lay-verify="required" name="weekNext" class="layui-textarea"></textarea>
             </div>
         </div>
 

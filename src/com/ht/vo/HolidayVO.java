@@ -12,11 +12,14 @@ public class HolidayVO {//请假申请表(员工)
     private Integer holidayId;
     private Integer empId;//关联Emp(请假人)
     private Integer holidayDay;//请假天数
+    private String dayStr;//请假时长
     private String startTime;//开始时间
     private String endTime;//结束时间
-    private String title;//标题
+    private String type;//类型
     private Integer status;//状态 1:审批中 2：已完成 3：不批准
     private String remark;//内容
+    private String taskId;//流程任务id
+
 
     @Override
     public String toString() {
@@ -24,11 +27,13 @@ public class HolidayVO {//请假申请表(员工)
                 "holidayId=" + holidayId +
                 ", empId=" + empId +
                 ", holidayDay=" + holidayDay +
+                ", dayStr='" + dayStr + '\'' +
                 ", startTime='" + startTime + '\'' +
                 ", endTime='" + endTime + '\'' +
-                ", title='" + title + '\'' +
+                ", type='" + type + '\'' +
                 ", status=" + status +
                 ", remark='" + remark + '\'' +
+                ", taskId=" + taskId +
                 '}';
     }
 
@@ -56,6 +61,14 @@ public class HolidayVO {//请假申请表(员工)
         this.holidayDay = holidayDay;
     }
 
+    public String getDayStr() {
+        return dayStr;
+    }
+
+    public void setDayStr(String dayStr) {
+        this.dayStr = dayStr;
+    }
+
     public String getStartTime() {
         return startTime;
     }
@@ -72,12 +85,12 @@ public class HolidayVO {//请假申请表(员工)
         this.endTime = endTime;
     }
 
-    public String getTitle() {
-        return title;
+    public String getType() {
+        return type;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Integer getStatus() {
@@ -94,5 +107,13 @@ public class HolidayVO {//请假申请表(员工)
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
     }
 }

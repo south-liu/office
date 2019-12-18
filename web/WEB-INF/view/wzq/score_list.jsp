@@ -84,7 +84,17 @@
                 {field:'score',align:'center', title:'分数', width:120},
                 {field:'rescore',align:'center', title:'补考分数', width:120},
                 {field:'courseName',align:'center', title:'课程名称', width:120},
-                {field:'testType',align:'center', title:'考试类别', width:120},
+                {field:'testType',align:'center', title:'考试类别', width:120, templet: function (res) {
+                        if (res.testType == 1){
+                            return '<span>笔试</span>'
+                        }
+                        if (res.testType == 2){
+                            return '<span>机试</span>'
+                        }
+                        if (res.testType == 3){
+                            return '<span>模拟面试</span>'
+                        }
+                    }},
                 {field:'termName',align:'center', title:'考试学期', width:120},
                 {field:'scoreTime',align:'center', title:'考试时间', width:120},
                 {field:'empName',align:'center', title:'录入人员', width:120},

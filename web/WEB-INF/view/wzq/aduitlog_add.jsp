@@ -15,7 +15,7 @@
 <body>
     <form class="layui-form" action="">
 
-        <div class="layui-form-item">
+        <div class="layui-form-item" style="margin-top: 15px; margin-left: 20px">
             <label class="layui-form-label">考核指标</label>
             <div class="layui-input-block" style="width: 200px">
                 <select name="aduitModelId" lay-filter="aihao" lay-verify="required">
@@ -27,7 +27,14 @@
             </div>
         </div>
 
-        <div class="layui-form-item">
+        <div class="layui-inline" style="margin-left: 20px">
+            <label class="layui-form-label">考核时间</label>
+            <div class="layui-input-inline">
+                <input type="text" name="auditDate" id="da" style="width: 200px" autocomplete="off" class="layui-input" placeholder="yyyy-MM-dd">
+            </div>
+        </div>
+
+        <div class="layui-form-item" style="margin-top: 15px; margin-left: 20px">
             <label class="layui-form-label">员工姓名</label>
             <div class="layui-input-block" style="width: 200px">
                 <select name="empId" lay-filter="aihao" lay-verify="required">
@@ -39,17 +46,10 @@
             </div>
         </div>
 
-        <div class="layui-form-item" style="margin-top: 15px">
+        <div class="layui-form-item" style="margin-top: 15px; margin-left: 20px">
             <label class="layui-form-label">考核分数</label>
             <div class="layui-input-block">
                 <input type="text" name="score" style="width: 200px" autocomplete="off" placeholder="请输入考核分数" class="layui-input">
-            </div>
-        </div>
-
-        <div class="layui-inline">
-            <label class="layui-form-label">考试时间</label>
-            <div class="layui-input-inline">
-                <input type="date" name="auditDate" style="width: 200px" autocomplete="off" class="layui-input">
             </div>
         </div>
 
@@ -57,14 +57,14 @@
 
         <input type="hidden" name="image" value="1"/><%-- 图片--%>
 
-        <div class="layui-form-item layui-form-text" style="margin-top: 15px">
+        <div class="layui-form-item layui-form-text" style="margin-top: 15px; margin-left: 20px">
             <label class="layui-form-label">说明</label>
             <div class="layui-input-block">
                 <textarea placeholder="请输入说明" name="remark" style="width: 200px" lay-verify="required" class="layui-textarea"></textarea>
             </div>
         </div>
 
-        <div class="layui-form-item" style="margin-left: 45px;">
+        <div class="layui-form-item" style="margin-left: 35px;">
             <div class="layui-input-block">
                 <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">提交</button>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
@@ -77,6 +77,13 @@
         layui.use(['form', 'layedit', 'laydate'], function(){
             var form = layui.form
                 ,layer = layui.layer
+                ,laydate = layui.laydate;
+
+            //日期时间选择器
+            laydate.render({
+                elem: '#da',
+                type: 'datetime'
+            });
 
             //监听提交
             form.on('submit(demo1)', function(obj){

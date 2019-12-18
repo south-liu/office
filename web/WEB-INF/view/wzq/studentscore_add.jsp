@@ -17,21 +17,21 @@
 
         <input type="hidden" name="stuId" value="${stuId}"/><%--学生ID--%>
 
-        <div class="layui-form-item" style="margin-top: 20px">
+        <div class="layui-form-item" style="margin-top: 20px; margin-left: 20px">
             <label class="layui-form-label">学生成绩</label>
             <div class="layui-input-block">
                 <input type="text" name="score" style="width: 200px" lay-verify="required" autocomplete="off" placeholder="请输入名称" class="layui-input">
             </div>
         </div>
 
-        <div class="layui-form-item" style="margin-top: 15px">
+        <div class="layui-form-item" style="margin-top: 15px; margin-left: 20px">
             <label class="layui-form-label">补考成绩</label>
             <div class="layui-input-block">
                 <input type="text" name="rescore" style="width: 200px" autocomplete="off" placeholder="请输入补考成绩" class="layui-input">
             </div>
         </div>
 
-        <div class="layui-form-item">
+        <div class="layui-form-item" style="margin-left: 20px">
             <label class="layui-form-label">课程名称</label>
             <div class="layui-input-block" style="width: 200px">
                 <select name="courseId" lay-filter="aihao" lay-verify="required">
@@ -43,7 +43,14 @@
             </div>
         </div>
 
-        <div class="layui-form-item">
+        <div class="layui-inline" style="margin-left: 20px">
+            <label class="layui-form-label">考试时间</label>
+            <div class="layui-input-inline">
+                <input type="text" name="scoreTime" id="date" style="width: 200px" lay-verify="required" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item" style="margin-top: 15px; margin-left: 20px">
             <label class="layui-form-label">考试类别</label>
             <div class="layui-input-block" style="width: 200px">
                 <select name="testType" lay-filter="aihao" lay-verify="required">
@@ -55,7 +62,7 @@
             </div>
         </div>
 
-        <div class="layui-form-item">
+        <div class="layui-form-item" style="margin-left: 20px">
             <label class="layui-form-label">在读学期</label>
             <div class="layui-input-block" style="width: 200px">
                 <select name="termId" lay-filter="aihao" lay-verify="required">
@@ -67,23 +74,16 @@
             </div>
         </div>
 
-        <div class="layui-inline">
-            <label class="layui-form-label">考试时间</label>
-            <div class="layui-input-inline">
-                <input type="date" name="scoreTime" style="width: 200px"  placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-
         <input type="hidden" name="empId" value="1002"/><%--录入人员ID--%>
 
-        <div class="layui-form-item layui-form-text" style="margin-top: 15px">
+        <div class="layui-form-item layui-form-text" style="margin-top: 15px; margin-left: 20px">
             <label class="layui-form-label">备注</label>
             <div class="layui-input-block">
                 <textarea placeholder="请输入备注" name="remark" style="width: 200px" lay-verify="required" class="layui-textarea"></textarea>
             </div>
         </div>
 
-        <div class="layui-form-item" style="margin-left: 45px;">
+        <div class="layui-form-item" style="margin-left: 35px;">
             <div class="layui-input-block">
                 <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">提交</button>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
@@ -96,6 +96,14 @@
         layui.use(['form', 'layedit', 'laydate'], function(){
             var form = layui.form
                 ,layer = layui.layer
+                ,laydate = layui.laydate;
+
+            //日期
+            laydate.render({
+                elem: '#date',
+                type:'date'
+
+            });
 
             //监听提交
             form.on('submit(demo1)', function(obj){

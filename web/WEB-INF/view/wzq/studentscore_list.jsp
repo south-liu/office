@@ -20,7 +20,6 @@
 <%--顶部按钮--%>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="fanhui">返回</button>
         <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-add-circle" style="font-size: 15px; color: #FFF;"></i>添加成绩</button>
     </div>
 </script>
@@ -49,7 +48,17 @@
                 {field:'stuName',align:'center', title:'学生姓名', width:120},
                 {field:'score',align:'center', title:'学生成绩', width:120, edit: 'text'},
                 {field:'courseName',align:'center',title:'课程名字', width:200},
-                {field:'testType',align:'center',title:'考试类别', width:200},
+                {field:'testType',align:'center',title:'考试类别', width:200, templet: function (res) {
+                        if (res.testType == 1){
+                            return '<span>笔试</span>';
+                        }
+                        if (res.testType == 2){
+                            return '<span>机试</span>';
+                        }
+                        if (res.testType == 3){
+                            return '<span>模拟面试</span>';
+                        }
+                    }},
                 {field:'termName',align:'center',title:'在读学期', width:200},
                 {field:'scoreTime',align:'center',title:'考试时间', width:200},
                 {field:'remark',align:'center',title:'备注', width:200, edit: 'text'},
@@ -68,12 +77,9 @@
                         title:'添加学生成绩',
                         type:2,
                         content:["${pageContext.request.contextPath}/MY/toaddstudentscore?stuId=" + ${param.studId}, "no"],  <%-- ${param.studId}获取URL框中段递过来的参数 --%>
-                        area:['480px', "600px"],
+                        area:['430px', "600px"],
                         resize:false  //不能鼠标拖动改变大小
                     });
-                    break;
-                case 'fanhui':
-                    history.go(-1);
                     break;
                 //自定义头工具栏右侧图标 - 提示按钮
                 case 'LAYTABLE_TIPS':
@@ -116,7 +122,7 @@
                     title:'修改成绩',
                     type:2,
                     content:["${pageContext.request.contextPath}/MY/toupdstudentscoure?scoreId="+data.scoreId, "no"],
-                    area:['480px', "600px"],
+                    area:['430px', "600px"],
                     resize:false  //不能鼠标拖动改变大小
                 });
             }

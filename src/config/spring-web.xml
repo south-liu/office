@@ -60,6 +60,7 @@
             <mvc:mapping path="/public/**"/>
             <mvc:mapping path="/file/**"/>
             <mvc:mapping path="/student/**"/>
+            <mvc:mapping path="/menu/**"/>
 
             <mvc:mapping path="/Chengcollege/**"/>
             <mvc:mapping path="/CJEF/**"/>
@@ -67,6 +68,7 @@
             <mvc:mapping path="/repair/**"/>
             <mvc:mapping path="/stujef/**"/>
             <mvc:mapping path="/weekang/**"/>
+            <mvc:mapping path="/feedback/**"/>
 
             <mvc:mapping path="/classtype/**"/>
             <mvc:mapping path="/chatRecord/**"/>
@@ -76,6 +78,7 @@
             <mvc:mapping path="/trial/**"/>
 
             <mvc:mapping path="/MY/**"/>
+            <mvc:mapping path="/TP/**"/>
 
             <mvc:mapping path="/project/**"/>
             <mvc:mapping path="/student-fall/**"/>

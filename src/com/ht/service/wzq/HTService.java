@@ -150,4 +150,8 @@ public interface HTService {
     public List searchaduitlog(String sql, int page, int limit);
     //查询搜索总行数
     public Integer selcountad(String sql);
+
+
+
+
 }

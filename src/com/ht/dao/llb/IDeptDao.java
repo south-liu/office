@@ -19,4 +19,5 @@ public interface IDeptDao {
     public void deleteDept(DeptVO deptVO);
     //删除子部门
     public void deleteChildDept(Integer pid);
+
 }

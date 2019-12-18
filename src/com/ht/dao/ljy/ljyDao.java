@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -18,28 +19,29 @@ import java.util.List;
 public class ljyDao {
     @Resource
     public SessionFactory sessionFactory;
-    private Session takeSession(){
+
+    private Session takeSession() {
         return sessionFactory.openSession();
     }
 
     //    分页查询
-    public List pagelistbysql(String sql, int currPage, int pageSize){
-        Session session=takeSession();
-        SQLQuery sqlQuery=session.createSQLQuery(sql);
+    public List pagelistbysql(String sql, int currPage, int pageSize) {
+        Session session = takeSession();
+        SQLQuery sqlQuery = session.createSQLQuery(sql);
         sqlQuery.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
-        sqlQuery.setFirstResult((currPage-1)*pageSize);
+        sqlQuery.setFirstResult((currPage - 1) * pageSize);
         sqlQuery.setMaxResults(pageSize);
-        List list=sqlQuery.list();
+        List list = sqlQuery.list();
         session.close();
         return list;
     }
 
     //    sql查询,无分页
-    public List listbysql(String sql){
-        Session session=takeSession();
-        SQLQuery sqlQuery=session.createSQLQuery(sql);
+    public List listbysql(String sql) {
+        Session session = takeSession();
+        SQLQuery sqlQuery = session.createSQLQuery(sql);
         sqlQuery.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
-        List list=sqlQuery.list();
+        List list = sqlQuery.list();
         session.close();
         return list;
     }
@@ -49,30 +51,40 @@ public class ljyDao {
     public int selTotalRow(String sql) {
         Session session = takeSession();
         SQLQuery sqlquery = session.createSQLQuery(sql);
-        int i = Integer.parseInt(sqlquery.uniqueResult()+"");
+        int i = Integer.parseInt(sqlquery.uniqueResult() + "");
         session.close();
         return i;
     }
 
+    //    查询一个对象
+    public Object selOneValue(String sql) {
+        Session session = takeSession();
+        SQLQuery sqlquery = session.createSQLQuery(sql);
+        Object object =  sqlquery.uniqueResult();
+        session.close();
+        return object;
+    }
+
+
     //    删除
-    public void deleteobject(Object object){
-        Session session=takeSession();
+    public void deleteobject(Object object) {
+        Session session = takeSession();
         session.delete(object);
         session.flush();
         session.close();
     }
 
     //    sql根据id查询对象
-    public Object dataById(Class classs,Integer id){
-        Session session=takeSession();
+    public Object dataById(Class classs, Integer id) {
+        Session session = takeSession();
         Object o = session.get(classs, id);
         session.close();
-        return  o;
+        return o;
     }
 
 
     //    hql根据id查询对象
-    public Object selectOneByHql(String hql){
+    public Object selectOneByHql(String hql) {
         Session session = takeSession();
         Object o = session.createQuery(hql).uniqueResult();
         session.close();
@@ -80,26 +92,25 @@ public class ljyDao {
     }
 
 
-
     //    修改
-    public void updateobject(Object object){
-        Session session=takeSession();
+    public void updateobject(Object object) {
+        Session session = takeSession();
         session.update(object);
         session.flush();
         session.close();
     }
 
     //    添加方法
-    public void addobject(Object object){
-        Session session=takeSession();
+    public void addobject(Object object) {
+        Session session = takeSession();
         session.save(object);
         session.flush();
         session.close();
     }
 
 
-//sql增删改三合一
-    public int executeSQL(String sql){
+    //sql增删改三合一
+    public int executeSQL(String sql) {
         Session session = takeSession();
         SQLQuery sqlQuery = session.createSQLQuery(sql);
         int i = sqlQuery.executeUpdate();

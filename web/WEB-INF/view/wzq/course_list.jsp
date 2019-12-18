@@ -65,7 +65,7 @@
                         title:'添加课程',
                         type:2,
                         content:["${pageContext.request.contextPath}/MY/toaddcourse", "no"],
-                        area:['480px', "400px"],
+                        area:['450px', "400px"],
                         resize:false  //不能鼠标拖动改变大小
                     });
                     break;

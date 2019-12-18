@@ -58,7 +58,7 @@
                         title:'添加考核指标',
                         type:2,
                         content:["${pageContext.request.contextPath}/MY/toaddaduitmodel", "no"],
-                        area:['480px', "400px"],
+                        area:['430px', "400px"],
                         resize:false  //不能鼠标拖动改变大小
                     });
                     break;

@@ -19,7 +19,6 @@
 
 <%--顶部按钮--%>
 <script type="text/html" id="toolbarDemo">
-    <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-add-circle" style="font-size: 15px; color: #FFF;"></i>添加</button>
         <div class="layui-inline">
             <label class="layui-form-label" style="width: 90px">日期范围:</label>
             <div class="layui-input-inline" style="width: 100px; float: left;">
@@ -31,6 +30,7 @@
             </div>
         </div>
         <button class="layui-btn layui-btn-sm" lay-event="sousuo"><i class="layui-icon layui-icon-search" style="font-size: 15px; color: #FFF;"></i>搜索</button>
+        <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-add-circle" style="font-size: 15px; color: #FFF;"></i>添加</button>
     </div>
 </script>
 
@@ -65,15 +65,15 @@
             url:'${pageContext.request.contextPath}/MY/myweeklylist?empId=${emp.empId}',
             toolbar: '#toolbarDemo', //开启头部工具栏，并为其绑定左侧模板(一般放置按钮、搜索框)
             defaultToolbar: ['filter', 'exports', 'print'],
-            title: '楼栋管理表',
+            title: '我的周报表',
             cols: [[
-                {field:'weeklyId',align:'center', title:'编号', width:80, fixed: 'left', unresize: true, sort: true},
+                {field:'weeklyId',align:'center', title:'周报编号', width:120, fixed: 'left', unresize: true, sort: true},
                 {field:'empName',align:'center', title:'员工姓名', width:120},
                 {field:'workDay',align:'center', title:'填写日期', width:120},
-                {field:'weekCur',align:'center', title:'本周情况描述', width:200},
-                {field:'studentQuestion',align:'center', title:'问题学生情况反馈', width:150},
-                {field:'idea',align:'center', title:'意见建议', width:150},
-                {field:'weekNext',align:'center', title:'下周工作计划', width:200},
+                {field:'weekCur',align:'center', title:'本周情况描述', width:120},
+                {field:'studentQuestion',align:'center', title:'问题学生情况反馈', width:120},
+                {field:'idea',align:'center', title:'意见建议', width:120},
+                {field:'weekNext',align:'center', title:'下周工作计划', width:120},
                 {fixed:'right',align:'center', title:'操作', toolbar: '#barDemo', width:160}
             ]],
             page: true

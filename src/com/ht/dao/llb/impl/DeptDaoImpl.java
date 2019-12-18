@@ -55,4 +55,5 @@ public class DeptDaoImpl extends BaseDao implements IDeptDao {
     public void deleteChildDept(Integer pid) {
        executeSQL("delete from dept where parentId = "+pid);
     }
+
 }

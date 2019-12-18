@@ -15,21 +15,21 @@
 <body>
     <form class="layui-form" action="">
 
-        <div class="layui-form-item" style="margin-top: 20px">
+        <div class="layui-form-item" style="margin-top: 20px; margin-left: 20px">
             <label class="layui-form-label">考核内容</label>
             <div class="layui-input-block">
                 <input type="text" name="aduitName" style="width: 200px" lay-verify="required" autocomplete="off" placeholder="请输入考核内容" class="layui-input">
             </div>
         </div>
 
-        <div class="layui-form-item" style="margin-top: 15px">
+        <div class="layui-form-item" style="margin-top: 15px; margin-left: 20px">
             <label class="layui-form-label">考核分数</label>
             <div class="layui-input-block">
                 <input type="text" name="scores" style="width: 200px" autocomplete="off" placeholder="请输入考核分数" class="layui-input">
             </div>
         </div>
 
-        <div class="layui-form-item">
+        <div class="layui-form-item" style="margin-left: 20px">
             <label class="layui-form-label">考核指标</label>
             <div class="layui-input-block" style="width: 200px">
                 <select name="deptId" lay-filter="aihao" lay-verify="required">
@@ -41,14 +41,14 @@
             </div>
         </div>
 
-        <div class="layui-form-item layui-form-text" style="margin-top: 15px">
+        <div class="layui-form-item layui-form-text" style="margin-top: 15px; margin-left: 20px">
             <label class="layui-form-label">说明</label>
             <div class="layui-input-block">
                 <textarea placeholder="请输入说明" name="remark" style="width: 200px" lay-verify="required" class="layui-textarea"></textarea>
             </div>
         </div>
 
-        <div class="layui-form-item" style="margin-left: 45px;">
+        <div class="layui-form-item" style="margin-left: 35px">
             <div class="layui-input-block">
                 <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">提交</button>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>

@@ -81,16 +81,16 @@
             url:'${pageContext.request.contextPath}/MY/weelist',
             toolbar: '#toolbarDemo', //开启头部工具栏，并为其绑定左侧模板(一般放置按钮、搜索框)
             defaultToolbar: ['filter', 'exports', 'print'],
-            title: '楼栋管理表',
+            title: '周报管理表',
             cols: [[
-                {field:'weeklyId',align:'center', title:'编号', width:80, fixed: 'left', unresize: true, sort: true},
+                {field:'weeklyId',align:'center', title:'周报编号', width:120, fixed: 'left', unresize: true, sort: true},
                 {field:'empName',align:'center', title:'员工姓名', width:120},
                 {field:'workDay',align:'center', title:'填写日期', width:120},
-                {field:'weekCur',align:'center', title:'本周情况描述', width:200},
-                {field:'studentQuestion',align:'center', title:'问题学生情况反馈', width:150},
-                {field:'idea',align:'center', title:'意见建议', width:150},
-                {field:'weekNext',align:'center', title:'下周工作计划', width:200},
-                {fixed:'right',align:'center', title:'操作', toolbar: '#barDemo', width:160}
+                {field:'weekCur',align:'center', title:'本周情况描述', width:120},
+                {field:'studentQuestion',align:'center', title:'问题学生情况反馈', width:120},
+                {field:'idea',align:'center', title:'意见建议', width:120},
+                {field:'weekNext',align:'center', title:'下周工作计划', width:120},
+                {fixed:'right',align:'center', title:'操作', toolbar: '#barDemo', width:120}
             ]],
             page: true
         });

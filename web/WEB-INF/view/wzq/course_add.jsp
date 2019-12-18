@@ -15,14 +15,14 @@
 <body>
     <form class="layui-form" action="">
 
-        <div class="layui-form-item" style="margin-top: 20px">
+        <div class="layui-form-item" style="margin-top: 20px; margin-left: 20px">
             <label class="layui-form-label">课程名称</label>
             <div class="layui-input-block">
                 <input type="text" name="courseName" style="width: 200px" lay-verify="required" autocomplete="off" placeholder="请输入名称" class="layui-input">
             </div>
         </div>
 
-        <div class="layui-form-item">
+        <div class="layui-form-item" style="margin-left: 20px">
             <label class="layui-form-label">是否必修</label>
             <div class="layui-input-block">
                 <input type="radio" name="isObligatory" value="是" title="是" checked="">
@@ -30,7 +30,7 @@
             </div>
         </div>
 
-        <div class="layui-form-item">
+        <div class="layui-form-item" style="margin-left: 20px">
             <label class="layui-form-label">课程类别</label>
             <div class="layui-input-block" style="width: 200px">
                 <select name="courseTypeId" lay-filter="aihao" lay-verify="required">
@@ -42,14 +42,14 @@
             </div>
         </div>
 
-        <div class="layui-form-item layui-form-text">
+        <div class="layui-form-item layui-form-text" style="margin-left: 20px">
             <label class="layui-form-label">说明</label>
             <div class="layui-input-block">
                 <textarea placeholder="请输入说明" name="remark" style="width: 200px" lay-verify="required" class="layui-textarea"></textarea>
             </div>
         </div>
 
-        <div class="layui-form-item" style="margin-left: 45px;">
+        <div class="layui-form-item" style="margin-left: 45px">
             <div class="layui-input-block">
                 <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">提交</button>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
