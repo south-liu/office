@@ -331,6 +331,12 @@ public class TPController {
         //通过任务对象获取流程实例ID
         String processInstId = task.getProcessInstanceId();
 
+        //设置当前任务办理人
+        Authentication.setAuthenticatedUserId(empVO.getEmpName());
+
+        //设置备注信息（任务ID、实例ID、页面上的备注）
+        taskService.addComment(taskId, processInstId, comment);
+
         //根据单据ID查询单据对象
         HolidayVO holiday = tps.selholiday(holidayId);
 
@@ -358,6 +364,7 @@ public class TPController {
             assignee = deptService.selById(nextDeptId).getChairman();
         }
 
+
         //添加任务变量
         Map variable = new HashMap();
         variable.put("flow", flow);
@@ -367,11 +374,6 @@ public class TPController {
         //完成当前任务
         taskService.complete(taskId, variable);
 
-        //设置当前任务办理人
-        Authentication.setAuthenticatedUserId(empVO.getEmpName());
-
-        //设置备注信息（任务ID、实例ID、页面上的备注）
-        taskService.addComment(taskId, processInstId, comment);
 
         //根据流程实例获取实例对象（完成流程的实例依然会存放在数据库中，但是查询出来的是null的）
         ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(processInstId).singleResult();

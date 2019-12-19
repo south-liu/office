@@ -71,7 +71,7 @@
                         title:'添加请假申请',
                         type:2,
                         content:["${pageContext.request.contextPath}/TP/toaddholiday", "no"],  <%-- ${param.studId}获取URL框中段递过来的参数 --%>
-                        area:['460px', "450px"],
+                        area:['460px', "480px"],
                         resize:false  //不能鼠标拖动改变大小
                     });
                     break;
