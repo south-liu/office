@@ -2,6 +2,7 @@ package com.ht.dao.llb.impl;
 
 import com.ht.dao.BaseDao;
 import com.ht.dao.llb.IEmpDao;
+import com.ht.vo.EmpAssessmentTotalVO;
 import com.ht.vo.EmpVO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -100,7 +101,12 @@ public class EmpDaoImpl extends BaseDao implements IEmpDao {
     }
 
     @Override
-    public void repass(Integer empId) {
-        executeSQL("update emp set password = '123456' where empId = "+empId);
+    public void repass(Integer empId,String password) {
+        executeSQL("update emp set password = '"+password+"' where empId = "+empId);
+    }
+
+    @Override
+    public void addEmpAssessmentTotal(EmpAssessmentTotalVO empAssessmentTotalVO) {
+        saveObject(empAssessmentTotalVO);
     }
 }

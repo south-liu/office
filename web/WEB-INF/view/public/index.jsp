@@ -19,7 +19,7 @@
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo">office</div>
+        <div class="layui-logo" style="font-size: 35px;">office</div>
         <!-- 头部区域（可配合layui已有的水平导航） -->
         <ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item"><a href="">控制台</a></li>
@@ -40,8 +40,7 @@
                     ${emp.empName}
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="">基本资料</a></dd>
-                    <dd><a href="">安全设置</a></dd>
+                    <dd><a id="repass" href="javascript:;">修改密码</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item"><a id="exit" href="javascript:;">退出</a></li>
@@ -78,7 +77,7 @@
 
     <div class="layui-footer">
         <!-- 底部固定区域 -->
-        © layui.com - 底部固定区域
+        © office
     </div>
 </div>
 <script>
@@ -89,31 +88,147 @@
 
         $('#exit').click(function () {
             layer.confirm('确认退出系统吗？', function () {
-                var lod = layer.load();
-                $.ajax({
-                    url: "${pageContext.request.contextPath}/system/exit",
-                    type: "post",
-                    async:true,
-                    dataType: "json",
-                    data:{},
-                    success: function (data) {
-                        layer.close(lod);
-                        layer.msg('退出成功',{
-                            icon:1,
-                            time:1000
-                        },function () {
-                            window.top.location='${pageContext.request.contextPath}/public/login';
-                        });
-                    },
-                    error:function () {
-                        layer.close(lod);
-                        layer.msg('服务器错误',{
-                            icon:2
-                        });
-                    }
-                });
+                exit();
             })
         });
+
+        //修改密码
+        $('#repass').click(function () {
+            var op1 = layer.open({
+                title: '验证密码',
+                type: 1,
+                content: '<div style="margin-top: 10px" class="layui-inline">\n' +
+
+                    '  <div style="margin: 20px 0px ">' +
+                    '          <label class="layui-form-label">原密码：</label>\n' +
+                    '        <div class="layui-input-inline">\n' +
+                    '            <input type="text" id="oldPass" autocomplete="off" class="layui-input">\n' +
+                    '        </div>' +
+                    '       </div> \n' +
+                    '        </div> \n',
+
+                btn:['确定','取消'],
+                yes:function (index,layero) {
+                    var oldpass = $('#oldPass').val().trim();
+                    if (oldpass==''){
+                        layer.msg('请输入密码',{
+                            icon:0,
+                            time:1000
+                        });
+                        return;
+                    }
+                    var lod1 = layer.load();
+                    $.ajax({
+                        type: "POST",
+                        dataType: "json",
+                        url: "${pageContext.request.contextPath}/system/selEmp",
+                        data: {empId:${emp.empId}},
+                        success: function (result) {
+                            layer.close(lod1);
+                            var pass = result.password;
+                            if (pass!=oldpass) {
+                                layer.msg('密码错误', {
+                                    icon:2,
+                                    time: 1000
+                                });
+                            } else {
+                                layer.close(op1);
+                                layer.msg('验证成功', {
+                                    icon:1,
+                                    time: 1000
+                                }, function () {
+                                    updPass();
+                                });
+                            }
+                        },
+                        error: function () {
+                            layer.close(lod1);
+                            layer.msg('服务器错误');
+                        }
+                    });
+                },
+                btnAlign:'c',
+                area:['350px','200px']
+            })
+        });
+
+        //修改密码
+        function updPass() {
+            var op1 = layer.open({
+                title: '请输入新密码',
+                type: 1,
+                content: '<div style="margin-top: 10px" class="layui-inline">\n' +
+
+                    '  <div style="margin: 20px 0px ">' +
+                    '          <label class="layui-form-label">新密码：</label>\n' +
+                    '        <div class="layui-input-inline">\n' +
+                    '            <input type="text" id="newPass" autocomplete="off" class="layui-input">\n' +
+                    '        </div>' +
+                    '       </div> \n' +
+                    '        </div> \n',
+
+                btn:['确定','取消'],
+                yes:function (index,layero) {
+                    var newPass = $('#newPass').val().trim();
+                    if (newPass==''){
+                        layer.msg('请输入密码',{
+                            icon:0,
+                            time:1000
+                        });
+                        return;
+                    }
+                    var lod1 = layer.load();
+                    $.ajax({
+                        type: "POST",
+                        dataType: "json",
+                        url: "${pageContext.request.contextPath}/system/repass",
+                        data: {empId:${emp.empId},password:newPass},
+                        success: function (result) {
+                            layer.msg('修改成功,请重新登陆', {
+                                icon:1,
+                                time: 1000
+                            }, function () {
+                                exit();
+                            });
+                        },
+                        error: function () {
+                            layer.close(lod1);
+                            layer.msg('服务器错误');
+                        }
+                    });
+                },
+                btnAlign:'c',
+                area:['350px','200px']
+            })
+        };
+
+        //退出登陆
+        function exit() {
+            var lod = layer.load();
+            $.ajax({
+                url: "${pageContext.request.contextPath}/system/exit",
+                type: "post",
+                async:true,
+                dataType: "json",
+                data:{},
+                success: function (data) {
+                    layer.close(lod);
+                    layer.msg('退出成功',{
+                        icon:1,
+                        time:1000
+                    },function () {
+                        window.top.location='${pageContext.request.contextPath}/public/login';
+                    });
+                },
+                error:function () {
+                    layer.close(lod);
+                    layer.msg('服务器错误',{
+                        icon:2
+                    });
+                }
+            });
+        }
+
     });
 
 
@@ -131,7 +246,7 @@
             // 左侧导航点击右侧切换效果：为每一个a标签添加点击事件，切换iframe的url
             var element_a = $(element).children('dl').children('dd').children('a');
             element_a.click(function () {
-                var url = '${pageContext.request.contextPath}';
+                var url = '${pageContext.request.contextPath}/';
                 $('#_iframe').attr('src', url + $(this).attr('src'));
             })
         });

@@ -71,7 +71,7 @@
                         title:'添加请假申请',
                         type:2,
                         content:["${pageContext.request.contextPath}/TP/toaddholiday", "no"],  <%-- ${param.studId}获取URL框中段递过来的参数 --%>
-                        area:['460px', "540px"],
+                        area:['460px', "450px"],
                         resize:false  //不能鼠标拖动改变大小
                     });
                     break;
@@ -81,7 +81,7 @@
                     break;
                 case 'ltask':
                     var lod = layer.load();
-                    location.href='${pageContext.request.contextPath}/MY/toaddmyweekly';
+                    location.href='${pageContext.request.contextPath}/TP/historyTask?empId=${emp.empId}';
                     break;
             };
         });

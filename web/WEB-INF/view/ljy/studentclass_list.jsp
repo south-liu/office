@@ -127,9 +127,9 @@
 
                 console.log($(data.elem).text());
                 console.log($(data.elem));
-                table.reload(mytable, {
+                table.reload('myTab', {
                     url: '${pageContext.request.contextPath}/studentclass/studentclasschoose'
-                    , where: {level: data.value} //设定异步数据接口的额外参数
+                    , where: {falled: data.value} //设定异步数据接口的额外参数
                     //,height: 300
                 });
 

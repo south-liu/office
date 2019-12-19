@@ -6,6 +6,7 @@ import com.ht.vo.DeptVO;
 import com.ht.vo.EmpVO;
 import com.ht.vo.HolidayVO;
 import org.activiti.engine.*;
+import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.history.HistoricVariableInstance;
 import org.activiti.engine.impl.identity.Authentication;
 import org.activiti.engine.repository.Deployment;
@@ -305,7 +306,7 @@ public class TPController {
             map.put("empName",tps.selempName(holidayVO.getEmpId()).getEmpName());
             map.put("dayStr",holidayVO.getDayStr());
             map.put("startTime",holidayVO.getStartTime());
-            map.put("endTime",holidayVO.getEmpId());
+            map.put("endTime",holidayVO.getEndTime());
             map.put("type",holidayVO.getType());
             map.put("status",holidayVO.getStatus());
             map.put("remark",holidayVO.getRemark());
@@ -333,18 +334,21 @@ public class TPController {
         //根据单据ID查询单据对象
         HolidayVO holiday = tps.selholiday(holidayId);
 
-        //设置当前任务办理人
-        Authentication.setAuthenticatedUserId(empVO.getEmpName());
-
-        //设置备注信息（任务ID、实例ID、页面上的备注）
-        taskService.addComment(taskId, processInstId, comment);
-
         String assignee = "";
         //上级部门Id
         int nextDeptId = deptService.selById(empVO.getDeptId()).getParentId();
+
+        List<DeptVO> all = deptService.allDept();
+
         //如果是最高部门
         if (nextDeptId == 0) {
-            List<DeptVO> all = deptService.allDept();
+
+            for (DeptVO deptVO : all) {
+                if (deptVO.getParentId() == -1) {//查询出总部门的负责人
+                    assignee = deptVO.getChairman();
+                }
+            }
+        } else if (nextDeptId == -1) {
             for (DeptVO deptVO : all) {
                 if (deptVO.getParentId() == -1) {//查询出总部门的负责人
                     assignee = deptVO.getChairman();
@@ -362,6 +366,12 @@ public class TPController {
 
         //完成当前任务
         taskService.complete(taskId, variable);
+
+        //设置当前任务办理人
+        Authentication.setAuthenticatedUserId(empVO.getEmpName());
+
+        //设置备注信息（任务ID、实例ID、页面上的备注）
+        taskService.addComment(taskId, processInstId, comment);
 
         //根据流程实例获取实例对象（完成流程的实例依然会存放在数据库中，但是查询出来的是null的）
         ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(processInstId).singleResult();
@@ -396,6 +406,65 @@ public class TPController {
         }
         model.addAttribute("commentList", commentMaps);
         return "wzq/holiday_comm";
+    }
+
+
+    //查看我的历史审批任务
+    @RequestMapping("/historyTask")
+    public String historyTask(Integer empId, Model model){
+        EmpVO emp = tps.selempName(empId);
+
+        //流程实例ID列表
+        List<String> processInstanceIds = new ArrayList<>();
+
+        //所有历史任务实例
+        List<HistoricTaskInstance> hisTaskList = historyService.createHistoricTaskInstanceQuery().list();
+
+        for (HistoricTaskInstance historicTaskInstance : hisTaskList) {
+            //查找当前登陆的员工的审批
+            if (emp.getEmpName().equals(historicTaskInstance.getAssignee())) {
+                processInstanceIds.add(historicTaskInstance.getProcessInstanceId());
+            }
+        }
+
+        List<Integer> holidayIdList = new ArrayList<>();
+
+        //所有变量名为 holidayId 的变量实例
+        List<HistoricVariableInstance> hists =historyService.createHistoricVariableInstanceQuery().variableName("holidayId").list();
+        for (HistoricVariableInstance hist : hists) {
+            for (String processInstanceId : processInstanceIds) {
+                //查找处理人为当前登陆员工的 holidayId
+                if (hist.getProcessInstanceId().equals(processInstanceId)){
+                    holidayIdList.add((Integer) hist.getValue());
+                }
+            }
+        }
+
+
+        List<HolidayVO> holidayVOList = new ArrayList<>();
+
+        for (Integer holidayId : holidayIdList) {
+            HolidayVO holidayVO = tps.selHolidayById(holidayId);
+            holidayVOList.add(holidayVO);
+        }
+
+        List<Map> holidayMaps = new ArrayList<>();
+
+        for (HolidayVO holidayVO : holidayVOList) {
+            Map map = new HashMap();
+            map.put("holidayId",holidayVO.getHolidayId());
+            map.put("empName",tps.selempName(holidayVO.getEmpId()).getEmpName());
+            map.put("dayStr",holidayVO.getDayStr());
+            map.put("startTime",holidayVO.getStartTime());
+            map.put("endTime",holidayVO.getEndTime());
+            map.put("type",holidayVO.getType());
+            map.put("status",holidayVO.getStatus());
+            map.put("remark",holidayVO.getRemark());
+            holidayMaps.add(map);
+        }
+
+        model.addAttribute("holidayList", holidayMaps);
+        return "wzq/holiday_history_task";
     }
 
 }

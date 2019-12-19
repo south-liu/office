@@ -156,7 +156,7 @@
                     btnAlign: 'c',
                     area: ['450px', '500px']
                 });
-            }  else if (event === 'fanhui') {
+            }  else if (obj.event === 'fanhui') {
                 history.go(-1);
             }
         });

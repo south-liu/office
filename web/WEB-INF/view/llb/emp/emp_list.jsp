@@ -257,13 +257,13 @@
                     maxmin:true
                 });
             } else if(obj.event === 'repass'){
-                layer.confirm('确实重置密码为123456吗',function () {
+                layer.confirm('确定重置密码为123456吗',function () {
                     var lod = layer.load();
                     $.ajax({
                         type: "POST",
                         dataType: "json",
                         url: "${pageContext.request.contextPath}/emp/repass" ,
-                        data: {empId:data.empId},
+                        data: {empId:data.empId,password:'123456'},
                         success: function (result) {
                             layer.close(lod);
                             layer.msg('重置密码成功',{

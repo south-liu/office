@@ -28,8 +28,6 @@ public class LoginController {
     @Resource
     private IEmpService empService;
     @Resource
-    private IStudentService studentService;
-    @Resource
     private IRoleService roleService;
 
     /**
@@ -131,6 +129,22 @@ public class LoginController {
             }
         }
         return map;
+    }
+
+    //修改密码
+    @RequestMapping("repass")
+    @ResponseBody
+    public String repass(Integer empId,String password){
+        empService.repass(empId,password);
+        return "success";
+    }
+
+    //查询员工信息
+    @RequestMapping("/selEmp")
+    @ResponseBody
+    public EmpVO selEmp(Integer empId){
+        EmpVO empVO = empService.findEmpById(empId);
+        return empVO;
     }
 
     @RequestMapping("/exit")

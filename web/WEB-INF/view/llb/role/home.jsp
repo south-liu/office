@@ -87,8 +87,6 @@
                     layer.msg('修改成功',{
                         icon:1,
                         time:1000
-                    },function () {
-                        window.location.reload();
                     });
                 },
                 error : function() {

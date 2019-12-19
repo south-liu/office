@@ -1,5 +1,6 @@
 package com.ht.dao.llb;
 
+import com.ht.vo.EmpAssessmentTotalVO;
 import com.ht.vo.EmpVO;
 
 import java.util.List;
@@ -20,5 +21,9 @@ public interface IEmpDao {
     public void delEmp(String ids);
     public void updEmp(EmpVO empVO);
     public void updEmpStatus(Integer empId,Integer status);
-    public void repass(Integer empId);
+    public void repass(Integer empId,String password);
+
+
+    //添加员工考评总表
+    public void addEmpAssessmentTotal(EmpAssessmentTotalVO empAssessmentTotalVO);
 }

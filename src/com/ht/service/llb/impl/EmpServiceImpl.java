@@ -2,6 +2,7 @@ package com.ht.service.llb.impl;
 
 import com.ht.dao.llb.IEmpDao;
 import com.ht.service.llb.IEmpService;
+import com.ht.vo.EmpAssessmentTotalVO;
 import com.ht.vo.EmpVO;
 import org.springframework.stereotype.Service;
 
@@ -70,7 +71,12 @@ public class EmpServiceImpl implements IEmpService {
     }
 
     @Override
-    public void repass(Integer empId) {
-        empDao.repass(empId);
+    public void repass(Integer empId,String password) {
+        empDao.repass(empId,password);
+    }
+
+    @Override
+    public void addEmpAssessmentTotal(EmpAssessmentTotalVO empAssessmentTotalVO) {
+        empDao.addEmpAssessmentTotal(empAssessmentTotalVO);
     }
 }

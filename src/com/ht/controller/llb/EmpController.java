@@ -3,6 +3,7 @@ package com.ht.controller.llb;
 import com.ht.service.llb.IDeptService;
 import com.ht.service.llb.IEmpService;
 import com.ht.vo.DeptVO;
+import com.ht.vo.EmpAssessmentTotalVO;
 import com.ht.vo.EmpVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +23,7 @@ public class EmpController {
     private IDeptService deptService;
     @Resource
     private IEmpService empService;
+
 
     @RequestMapping("/toEmpList")
     public String toDeptList(Model model){
@@ -44,6 +46,14 @@ public class EmpController {
         model.addAttribute("depts",list);
         model.addAttribute("emp",empVO);
         return "llb/emp/emp_edit";
+    }
+
+    //查询员工信息
+    @RequestMapping("/selEmp")
+    @ResponseBody
+    public EmpVO selEmp(Integer empId){
+        EmpVO empVO = empService.findEmpById(empId);
+        return empVO;
     }
 
     @RequestMapping("/pageList")
@@ -76,6 +86,13 @@ public class EmpController {
         empVO.setNation(P1+C1+A1);
         empVO.setStatus(1);
         empService.addEmp(empVO);
+
+        ////添加员工考评总表
+        EmpAssessmentTotalVO empAssessmentTotalVO = new EmpAssessmentTotalVO();
+        empAssessmentTotalVO.setEmpId(empVO.getEmpId());
+        empAssessmentTotalVO.setTotalScores(100);
+        empService.addEmpAssessmentTotal(empAssessmentTotalVO);
+
         return "success";
     }
 
@@ -103,8 +120,8 @@ public class EmpController {
 
     @RequestMapping("repass")
     @ResponseBody
-    public String repass(Integer empId){
-        empService.repass(empId);
+    public String repass(Integer empId,String password){
+        empService.repass(empId,password);
         return "success";
     }
 }
