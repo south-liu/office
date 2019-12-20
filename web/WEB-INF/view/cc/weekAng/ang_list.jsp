@@ -65,7 +65,7 @@
                         type:2,
                         content:'${pageContext.request.contextPath}/weekang/toaddang',
                         btnAlign: 'c',
-                        area: ['460px', '650px'],
+                        area: ['460px', '500px'],
                         resize:false,
                     });
                     break;
