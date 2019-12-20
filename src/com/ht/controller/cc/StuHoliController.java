@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
+import java.time.Month;
 import java.util.*;
 
 @Controller
@@ -26,7 +27,18 @@ public class StuHoliController {
     }
 
     @RequestMapping("/toptcls")
-    public  String toptcls(Model model,Integer stuId,Integer sum){
+    public  String toptcls(Model model,Integer stuId,Integer sum,int mon){
+        String month = null;
+        Calendar cal = Calendar.getInstance();
+        int mo = cal.get(Calendar.MONTH) + 1;
+        if (mon==1){
+            month = ""+mo;
+        }else if (mon==2){
+            month="all";
+        }else if (mon==3){
+            month = ""+(mo-1);
+        }
+        model.addAttribute("month",month);
         model.addAttribute("sum",sum);
         model.addAttribute("stuId",stuId);
         return "cc/stuholiday/stuholi_ptcls";
@@ -35,12 +47,14 @@ public class StuHoliController {
     @ResponseBody
     @RequestMapping("/holi_list")
     public Map holilist(int page, int limit, Model model){
+        Calendar cal = Calendar.getInstance();
+        int mo = cal.get(Calendar.MONTH) + 1;
 //        List list = cs.selSpage(page,rows);//每页数据
         Map map = new HashMap();
         map.put("code", 0);
         map.put("msg", 0);
         map.put("count",0);
-        map.put("data",hs.selSpage(page,limit));
+        map.put("data",hs.selSpage(page,limit,mo));
 
         return map;
     }
@@ -48,13 +62,13 @@ public class StuHoliController {
 
     @ResponseBody
     @RequestMapping("/holi_ptcls")
-    public Map holi_ptcls(int page, int limit,Integer studentId,Integer sum){
+    public Map holi_ptcls(int page, int limit,Integer studentId,Integer sum,String month){
 //        List list = cs.selSpage(page,rows);//每页数据
         Map map = new HashMap();
         map.put("code", 0);
         map.put("msg", 0);
         map.put("count",sum);
-        map.put("data",hs.selSpageholi(page,limit,studentId,sum));
+        map.put("data",hs.selSpageholi(page,limit,studentId,sum,month));
 
         return map;
     }

@@ -22,8 +22,8 @@
 
         table.render({
             elem:'#myTable',
-            url:'${pageContext.request.contextPath}/stuholi/holi_ptcls?studentId=${stuId}'+'&sum='+${sum},
-
+            <%--url:'${pageContext.request.contextPath}/stuholi/holi_ptcls?studentId=${stuId}'+'&sum='+${sum}+'&month=${month}',--%>
+            url:'${pageContext.request.contextPath}/stuholi/holi_ptcls?studentId=${stuId}&sum=${sum}&month=${month}',
             cellMinWidth: 80,
             title:'请假详情',
             cols:[[
@@ -46,22 +46,6 @@
                 {field:'remark', title:'内容',align: 'center'},
             ]],
             page:true
-        });
-
-        //头工具栏事件
-        table.on('toolbar(fTable)', function(obj){
-            switch(obj.event){
-                case 'add':
-                    var index = layer.open({
-                        title:'添加',
-                        type:2,
-                        content:'${pageContext.request.contextPath}/weekang/toaddang',
-                        btnAlign: 'c',
-                        area: ['460px', '500px'],
-                        resize:false,
-                    });
-                    break;
-            };
         });
     });
 </script>

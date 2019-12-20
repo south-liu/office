@@ -11,9 +11,8 @@ import java.util.List;
 @Service
 public class HolServiceImpl extends BaseDao implements HoliStuService {
     @Override
-    public List selSpage(int currPage, int pageSize) {
-        return pageListBySql("select studentId,count(holidayId) sum,stu.stuName from holidayStudent hs left join student stu on hs.studentId=stu.studId  group by hs.studentId",currPage,pageSize);
-
+    public List selSpage(int currPage, int pageSize,int mon) {
+        return pageListBySql("select studentId,count(holidayId) sum,stu.stuName from holidayStudent hs left join student stu on hs.studentId=stu.studId where date_format(`startTime`,'%m')="+mon+" group by hs.studentId",currPage,pageSize);
     }
 
     @Override
@@ -26,7 +25,7 @@ public class HolServiceImpl extends BaseDao implements HoliStuService {
 
         if (month!=null && month!="all" && stuName.equals("")){
             wh =" where";
-            whereM = " date_format(`startTime`,'%c')='"+month+"'";
+            whereM = " date_format(`startTime`,'%m')='"+month+"'";
             sql = "select studentId,count(holidayId) sum,stu.stuName from holidayStudent hs left join student stu on hs.studentId=stu.studId"+wh+whereM+"group by hs.studentId";
         } else if (month == "all" &&  stuName.equals("")){
             sql = "select studentId,count(holidayId) sum,stu.stuName from holidayStudent hs left join student stu on hs.studentId=stu.studId group by hs.studentId";
@@ -38,7 +37,7 @@ public class HolServiceImpl extends BaseDao implements HoliStuService {
             wh =" where";
             whereN =" stu.stuName like'%"+stuName+"%'";
             an= "and";
-            whereM = " date_format(`startTime`,'%c')='"+month+"'";
+            whereM = " date_format(`startTime`,'%m')='"+month+"'";
             sql = "select studentId,count(holidayId) sum,stu.stuName from holidayStudent hs left join student stu on hs.studentId=stu.studId"+wh+whereM+an+whereN+"group by hs.studentId";
         }
 
@@ -56,8 +55,15 @@ public class HolServiceImpl extends BaseDao implements HoliStuService {
     }
 
     @Override
-    public List selSpageholi(int currPage, int pageSize,Integer studentId,Integer sum) {
-        return pageListBySql("select stu.stuName,hs.* from holidayStudent hs left join student stu on hs.studentId=stu.studId where studentId="+studentId,currPage,sum);
+    public List selSpageholi(int currPage, int pageSize,Integer studentId,Integer sum,String month) {
+        String sql = null;
+        if (month.equals("all")){
+            sql = "select stu.stuName,hs.* from holidayStudent hs left join student stu on hs.studentId=stu.studId where studentId=" + studentId;
+        }else {
+            sql = "select stu.stuName,hs.* from holidayStudent hs left join student stu on hs.studentId=stu.studId where studentId=" + studentId + " and date_format(`startTime`,'%m')="+month;
+        }//        return pageListBySql("select stu.stuName,hs.* from holidayStudent hs left join student stu on hs.studentId=stu.studId where studentId="+studentId+" and date_format(`startTime`,'%m')="+month,currPage,sum);
+        return pageListBySql(sql,currPage,sum);
+
     }
 
 }

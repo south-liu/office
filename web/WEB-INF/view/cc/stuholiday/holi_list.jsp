@@ -81,12 +81,13 @@
         var form = layui.form;
 
         table.on('tool(fTable)', function (obj) {
+            var month = form.val('example');
             switch(obj.event){
                 case 'particulars':
                     var index = layer.open({
                         title:'请假详情',
                         type:2,
-                        content:'${pageContext.request.contextPath}/stuholi/toptcls?stuId='+obj.data.studentId+'&sum='+obj.data.sum,
+                        content:'${pageContext.request.contextPath}/stuholi/toptcls?stuId='+obj.data.studentId+'&sum='+obj.data.sum+'&mon='+month.mouth,
                         btnAlign: 'c',
                         area: ['900px', '400px'],
                         resize:false
