@@ -3,14 +3,12 @@ package com.ht.service.zwj.other;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.transform.Transformers;
-import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
 
-@Repository
 @Transactional
 public class CommonService {
     @Resource
@@ -27,6 +25,20 @@ public class CommonService {
         Session session = sessionFactory.getCurrentSession();
 
         return session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+    }
+
+    /**
+     * 查询得到LIst集合存储传入的对象
+     *
+     * @param sql
+     * @param clazz
+     * @param <T>
+     * @return
+     */
+    public <T> List<T> findListBySql(String sql, Class<T> clazz) {
+        Session session = sessionFactory.getCurrentSession();
+
+        return session.createSQLQuery(sql).setResultTransformer(Transformers.aliasToBean(clazz)).list();
     }
 
     /**
