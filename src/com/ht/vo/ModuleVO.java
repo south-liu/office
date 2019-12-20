@@ -1,10 +1,12 @@
 package com.ht.vo;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "module")//权限表
-public class ModuleVO {
+public class ModuleVO implements Serializable {
+    private static final long serialVersionUID = -2706606288840173179L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer moduleId;

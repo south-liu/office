@@ -41,6 +41,16 @@ public class BaseDao {
         return list;
     }
 
+    //普通sql查询
+    public List listBySql3(String sql){
+        Session session = getSession();
+        SQLQuery sqlquery = session.createSQLQuery(sql);
+        sqlquery.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
+        List list = sqlquery.list();
+        session.close();
+        return list;
+    }
+
     //HQL分页(适用范围：分页查询一个表的所有字段)
     public List pageByHql(String hql, int currPage, int pageSize){
         Session session = getSession();

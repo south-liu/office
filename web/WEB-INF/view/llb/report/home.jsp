@@ -33,84 +33,40 @@
                     </a>
                 </td>
                 <td align="center">
-                    <a href="" target="_target">
+                    <a href="${pageContext.request.contextPath}/stuholi/tolist" target="_target">
                         <img src="../../images/report_normal.gif" border="0">
                         <br>
-                        日常考核统计
+                        学生请假统计
                     </a>
                 </td>
                 <td align="center">
                     <a href="" target="_target">
                         <img src="../../images/report_normal.gif" border="0">
                         <br>
-                        日常考核统计
-                    </a>
-                </td>
-                <td align="center">
-                    <a href="" target="_target">
-                        <img src="../../images/report_normal.gif" border="0">
-                        <br>
-                        日常考核统计
+                        员工请假统计
                     </a>
                 </td>
             </tr>
             <tr height="120">
                 <td align="center">
-                    <a href="" target="_target">
+                    <a href="${pageContext.request.contextPath}/bedroom/goto_bedroom_list" target="_target">
                         <img src="../../images/report_normal.gif" border="0">
                         <br>
-                        日常考核统计
+                        宿舍统计报表
                     </a>
                 </td>
                 <td align="center">
                     <a href="" target="_target">
                         <img src="../../images/report_normal.gif" border="0">
                         <br>
-                        日常考核统计
+                        历史值班安排表
                     </a>
                 </td>
                 <td align="center">
                     <a href="" target="_target">
                         <img src="../../images/report_normal.gif" border="0">
                         <br>
-                        日常考核统计
-                    </a>
-                </td>
-                <td align="center">
-                    <a href="" target="_target">
-                        <img src="../../images/report_normal.gif" border="0">
-                        <br>
-                        日常考核统计
-                    </a>
-                </td>
-            </tr>
-            <tr height="120">
-                <td align="center">
-                    <a href="" target="_target">
-                        <img src="../../images/report_normal.gif" border="0">
-                        <br>
-                        日常考核统计
-                    </a>
-                </td>
-                <td align="center">
-                    <a href="" target="_target">
-                        <img src="../../images/report_normal.gif" border="0">
-                        <br>
-                        日常考核统计
-                    </a>
-                </td>
-                <td align="center">
-                    <a href="" target="_target">
-                        <img src="../../images/report_normal.gif" border="0">
-                        <br>
-                        日常考核统计
-                    </a>
-                </td>
-                <td align="center">
-                    <a href="" target="_target">
-                        <img src="../../images/report_normal.gif" border="0">
-                        <br>
-                        日常考核统计
+                        未打卡说明统计
                     </a>
                 </td>
             </tr>
