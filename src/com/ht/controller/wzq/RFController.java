@@ -34,7 +34,7 @@ public class RFController {
     public String tocheckwork_rf(){
         return "wzq/checkwork_rf";
     }
-
+    //未打卡时间段月览
     @RequestMapping("/checkwork_list_rf")
     @ResponseBody
     public JSONObject checkwork_list_rf(HttpServletResponse response){
@@ -85,10 +85,9 @@ public class RFController {
         JSONObject json = new JSONObject();
         json.put("zong", zong);
         json.put("xilie", xilie);
-//        System.out.println(JSONArray.toJSON(zong).toString());
         return json;
     }
-
+    //未打卡年度总览
     @RequestMapping("/checkwork_list_rf_zong")
     @ResponseBody
     public JSONObject checkwork_list_rf_zong(HttpServletResponse response){
@@ -155,6 +154,23 @@ public class RFController {
     //去员工考核报表
     @RequestMapping("/toempassessment")
     public String toempassessment(Model model){
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+        String date = sf.format(new Date());
+        String a = date.substring(0, date.length() - 6);
+        String b = date.substring(date.length() - 5, date.length() - 3);
+        date = a + "年" + b + "月";
+        //给查询考核用
+        model.addAttribute("date", date);
+        List<Map> lsit2 = rfs.seladuitlog();
+        model.addAttribute("aduitlog", lsit2);
+        List<DeptVO> list = hts.seldept();
+        model.addAttribute("emp", list);
+        return "wzq/empassessment_list";
+    }
+    //返回考核报表
+    @RequestMapping("/toempassessmentlist")
+    public String toempassessmentlist(Model model, String date){
+        model.addAttribute("date", date);
         List<Map> lsit2 = rfs.seladuitlog();
         model.addAttribute("aduitlog", lsit2);
         List<DeptVO> list = hts.seldept();
@@ -163,8 +179,8 @@ public class RFController {
     }
     @RequestMapping("/empassessment_list")
     @ResponseBody
-    public Map empassessment_list(int page, int limit){
-        List list = rfs.selempassessment(page, limit);
+    public Map empassessment_list(String date, int page, int limit){
+        List list = rfs.selempassessment(date, page, limit);
         Integer count = rfs.selcountempassessment();
         Map map = new HashMap();
         map.put("code", 0);
@@ -206,4 +222,28 @@ public class RFController {
         map.put("data", list);
         return map;
     }
+    //去查询员工考核
+    @RequestMapping("/toempassessment_aduitlog_list")
+    public String toempassessment_aduitlog_list(Integer empId, String date, Model model){
+        model.addAttribute("empId", empId);
+        model.addAttribute("date", date);
+        return "wzq/empassessment_aduitlog_list";
+    }
+    //查询员工考核
+    @RequestMapping("/empassessment_aduitlog_list")
+    @ResponseBody
+    public Map empassessment_aduitlog_list(Integer empId, String date, int page, int limit){
+        List list = rfs.selempassessmentaduitlog(empId, date, page, limit);
+        Integer count = rfs.selcountempassessmentaduitlog(empId, date);
+        Map map = new HashMap();
+        map.put("code", 0);
+        map.put("msg", "");
+        map.put("count", count);
+        map.put("data", list);
+        return map;
+    }
+
+
+
+
 }

@@ -26,7 +26,7 @@
             <tbody>
             <tr height="120">
                 <td align="center">
-                    <a href="" target="_target">
+                    <a href="${pageContext.request.contextPath}/RF/toempassessment" target="_target">
                         <img src="../../images/report_normal.gif" border="0">
                         <br>
                         日常考核统计
@@ -63,7 +63,7 @@
                     </a>
                 </td>
                 <td align="center">
-                    <a href="" target="_target">
+                    <a href="${pageContext.request.contextPath}/RF/tocheckwork_rf" target="_target">
                         <img src="../../images/report_normal.gif" border="0">
                         <br>
                         未打卡说明统计

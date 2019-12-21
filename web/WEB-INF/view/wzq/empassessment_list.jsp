@@ -35,10 +35,19 @@
                 </div>
             </div>
 
-            <div class="layui-inline">
+            <button class="layui-btn layui-btn-sm" id="sousuo" lay-event="sousuo" style="margin-left: 20px"><i class="layui-icon layui-icon-search" style="font-size: 15px; color: #FFF;"></i>搜索</button>
+
+            <div class="layui-inline" style="margin-left: 110px">
+                <label class="layui-form-label" style="width: 300px; font-size: 20px">
+                    当前审核时间:
+                    <span id="_span"></span>
+                </label>
+            </div>
+
+            <div class="layui-inline" style="margin-left:150px">
                 <label class="layui-form-label" style="width: 90px">审核时间:</label>
                 <div class="layui-input-inline" style="width: 120px">
-                    <select name="date1" id="date1">
+                    <select name="date1" id="date1" lay-filter="TB">
                         <option value="">请选择时间</option>
                         <c:forEach items="${aduitlog}" var="list">
                             <option value="${list.dates}">${list.dates}</option>
@@ -46,7 +55,7 @@
                     </select>
                 </div>
             </div>
-            <button class="layui-btn layui-btn-sm" id="sousuo" lay-event="sousuo"><i class="layui-icon layui-icon-search" style="font-size: 15px; color: #FFF;"></i>搜索</button>
+
         </div>
     </form>
 </div>
@@ -59,23 +68,31 @@
     <a class="layui-btn layui-btn-xs" lay-event="cha">查看详情</a>
 </script>
 
-<script>
-    layui.use('table', function(){
-        var table = layui.table;
+<script type="text/javascript">
+
+    // var date = new Date();
+    // $('#_span').text(date.getFullYear()+'年'+(date.getMonth() + 1)+'月');
+
+    //初始当前审核时间，获取初始传过来的值
+    $('#_span').text('${date}')
+
+    layui.use(['table', 'form'], function(){
+        var table = layui.table,
+            form = layui.form;
 
         table.render({
             elem: '#test',
-            url:'${pageContext.request.contextPath}/RF/empassessment_list',
-            // toolbar: '#toolbarDemo', //开启头部工具栏，并为其绑定左侧模板(一般放置按钮、搜索框)
+            url:'${pageContext.request.contextPath}/RF/empassessment_list?date=${date}',
+            toolbar: '#toolbarDemo', //开启头部工具栏，并为其绑定左侧模板(一般放置按钮、搜索框)
             defaultToolbar: ['filter', 'exports', 'print'],
             title: '员工考核报表',
             cols: [[
-                {field:'empId',align:'center', title:'员工编号', width:80, fixed: 'left', unresize: true, sort: true},
-                {field:'empName',align:'center', title:'员工姓名', width:120},
-                {field:'deptName',align:'center', title:'部门名称', width:120},
-                {field:'sex',align:'center', title:'性别', width:200},
-                {field:'phone',align:'center', title:'手机号码', width:150},
-                {field:'zongscore',align:'center', title:'考核总分', width:150, templet:function (res) {
+                {field:'empId',align:'center', title:'员工编号', fixed: 'left', unresize: true, sort: true},
+                {field:'empName',align:'center', title:'员工姓名'},
+                {field:'deptName',align:'center', title:'部门名称'},
+                {field:'sex',align:'center', title:'性别'},
+                {field:'phone',align:'center', title:'手机号码'},
+                {field:'zongscore',align:'center', title:'考核总分', templet:function (res) {
                         if (res.zongscore == null){
                             return 100;
                         }else {
@@ -104,17 +121,40 @@
                     } //设定异步数据接口的额外参数
                 });
             }
-        })
+        });
 
 
         //监听行工具事件
         table.on('tool(test)', function(obj){
             var data = obj.data;
-            //console.log(obj)
-            if(obj.event === 'cha'){
 
+            if(obj.event === 'cha'){
+                var date1 = $("#date1").val().trim();
+                <%--获取URL参数:${param.date1}--%>
+                if (date1 != ""){
+                    location.href="${pageContext.request.contextPath}/RF/toempassessment_aduitlog_list?empId=" + data.empId + "&date=" + date1;
+                }else {
+                    location.href='${pageContext.request.contextPath}/RF/toempassessment_aduitlog_list?empId=' + data.empId + "&date=${date}";
+                }
             }
         });
+
+        form.on('select(TB)', function (data) {
+            if (data.value == null || data.value == ""){
+                return;
+            }else {
+                //当选择审核时间下拉框时替换显示当前时间的值
+                $('#_span').text($('#date1').val());
+                table.reload('test',{
+                    url:'${pageContext.request.contextPath}/RF/empassessment_list_sousuo',
+                    where:{
+                        empName:"",
+                        deptName:"",
+                        date1:data.value
+                    }
+                })
+            }
+        })
     });
 </script>
 </body>

@@ -43,10 +43,10 @@
             }],
             title: '课程类别表',
             cols: [[
-                {field:'courseTypeId',align:'center', title:'课程编号', width:120, fixed: 'left', unresize: true, sort: true},
-                {field:'courseTypeName',align:'center', title:'类别名称', width:120, edit: 'text'},
-                {field:'remark',align:'center',title:'说明', width:200, edit: 'text'},
-                {fixed:'right',align:'center', title:'操作', toolbar: '#barDemo', width:100}
+                {field:'courseTypeId',align:'center', title:'课程编号', fixed: 'left', unresize: true, sort: true},
+                {field:'courseTypeName',align:'center', title:'类别名称', edit: 'text'},
+                {field:'remark',align:'center',title:'说明', edit: 'text'},
+                {fixed:'right',align:'center', title:'操作', toolbar: '#barDemo'}
             ]],
             page: true
         });

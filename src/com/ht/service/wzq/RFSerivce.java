@@ -19,9 +19,13 @@ public interface RFSerivce {
 
 
     //查询员工考核报表
-    public List selempassessment(int page, int limit);
+    public List selempassessment(String date, int page, int limit);
     //查询员工报表总行数
     public Integer selcountempassessment();
     //查询时间(下拉框)
     public List seladuitlog();
+    //查询考核
+    public List selempassessmentaduitlog(Integer empId, String date, int page, int limit);
+    //查询考核总行数
+    public Integer selcountempassessmentaduitlog(Integer empId, String date);
 }

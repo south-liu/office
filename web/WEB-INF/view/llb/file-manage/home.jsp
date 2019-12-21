@@ -9,7 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>员工列表</title>
+    <title>文件管理</title>
     <jsp:include page="../../public/head.jsp"></jsp:include>
 </head>
 <style type="text/css">

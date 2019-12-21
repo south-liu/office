@@ -131,8 +131,6 @@
                         layer.msg('修改成功',{
                             time:1000
                         },function () {
-                            //var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                            //parent.layer.close(index); //再执行关闭
                             window.parent.location.reload();  //添加成功之后关闭本页面且刷新原页面（直接重新访问原页面）
                         });
                     },

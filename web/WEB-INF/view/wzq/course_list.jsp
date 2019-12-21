@@ -44,12 +44,12 @@
             }],
             title: '课程表',
             cols: [[
-                {field:'courseId',align:'center', title:'编号', width:120, fixed: 'left', unresize: true, sort: true},
-                {field:'courseName',align:'center', title:'课程名称', width:120, edit: 'text'},
-                {field:'isObligatory',align:'center',title:'是否必修', width:200, edit: 'text'},
-                {field:'courseTypeName',align:'center',title:'课程类别', width:200, edit: 'text'},
-                {field:'remark',align:'center',title:'说明', width:200, edit: 'text'},
-                {fixed:'right',align:'center', title:'操作', toolbar: '#barDemo', width:120}
+                {field:'courseId',align:'center', title:'编号', fixed: 'left', unresize: true, sort: true},
+                {field:'courseName',align:'center', title:'课程名称', edit: 'text'},
+                {field:'isObligatory',align:'center',title:'是否必修', edit: 'text'},
+                {field:'courseTypeName',align:'center',title:'课程类别', edit: 'text'},
+                {field:'remark',align:'center',title:'说明', edit: 'text'},
+                {fixed:'right',align:'center', title:'操作', toolbar: '#barDemo'}
             ]],
             page: true
         });

@@ -1,6 +1,7 @@
 package com.ht.dao.wzq;
 
 import java.util.List;
+import java.util.Queue;
 import javax.annotation.Resource;
 import org.hibernate.*;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,23 +30,18 @@ public class BaseDao {
      * @return
      */
     //查询列表
-    public List listByHql(String hql){return getSession().createQuery(hql).list();
+    public List listByHql(String hql){
+        Session session = getSession();
+        Query sqlQuery = session.createQuery(hql);
+        List list = sqlQuery.list();
+        session.close();
+        return list;
     }
 
     //普通sql查询
     public List listBySql2(String sql){
         Session session = getSession();
         SQLQuery sqlquery = session.createSQLQuery(sql);
-        List list = sqlquery.list();
-        session.close();
-        return list;
-    }
-
-    //普通sql查询
-    public List listBySql3(String sql){
-        Session session = getSession();
-        SQLQuery sqlquery = session.createSQLQuery(sql);
-        sqlquery.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
         List list = sqlquery.list();
         session.close();
         return list;

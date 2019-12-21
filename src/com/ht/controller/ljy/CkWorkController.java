@@ -29,21 +29,21 @@ public class CkWorkController {
 
     @RequestMapping("/gotocheckworklist")
     public String gotocheckworklist(){
-        System.out.println("进去查询页面！");
+        //System.out.println("进去查询页面！");
         return "ljy/checkwork_list";
     }
 
 
     @RequestMapping("/gotocheckworkadd")
     public String gotocheckworkadd(){
-        System.out.println("进去添加页面！");
+        //System.out.println("进去添加页面！");
         return "ljy/checkwork_add";
     }
 
 
     @RequestMapping("/gotomycheck")
     public String gotomycheck(){
-        System.out.println("进去添加页面！");
+        //System.out.println("进去添加页面！");
         return "ljy/checkwork_mycheck";
     }
 
@@ -71,7 +71,7 @@ public class CkWorkController {
       checkWorkVO.setEmpId(empVO.getEmpId());
       checkWorkVO.setStatus(0);
         checkworkService.checkwork_add(checkWorkVO);
-        System.out.println("添加未打卡说明！");
+        //System.out.println("添加未打卡说明！");
         return "success";
     }
 
@@ -92,7 +92,7 @@ public class CkWorkController {
     @RequestMapping("/updStatus")
     public String updatestatus(int checkworkId,int status,String remark){
        String date= DateFormat.getDateInstance().format(new Date());
-        System.out.println("修改状态成功！");
+        //System.out.println("修改状态成功！");
         checkworkService.updatestatus(checkworkId,status,date,remark);
         return "success";
     }
@@ -101,7 +101,7 @@ public class CkWorkController {
     @ResponseBody
     @RequestMapping("/checkwork_update")
     public String checkwork_update(int checkworkId,String remark){
-        System.out.println("修改未打卡说明！！！");
+        //System.out.println("修改未打卡说明！！！");
         checkworkService.checkwork_update(checkworkId,remark);
         return "success";
     }

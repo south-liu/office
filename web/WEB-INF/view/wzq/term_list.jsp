@@ -43,10 +43,10 @@
             }],
             title: '学期表',
             cols: [[
-                {field:'termId',align:'center', title:'学期编号', width:120, fixed: 'left', unresize: true, sort: true},
-                {field:'termName',align:'center', title:'学期名称', width:120, edit: 'text'},
-                {field:'remark',align:'center',title:'说明', width:200, sort: true, edit: 'text'},
-                {fixed:'right',align:'center', title:'操作', toolbar: '#barDemo', width:100}
+                {field:'termId',align:'center', title:'学期编号', fixed: 'left', unresize: true, sort: true},
+                {field:'termName',align:'center', title:'学期名称', edit: 'text'},
+                {field:'remark',align:'center',title:'说明', edit: 'text'},
+                {fixed:'right',align:'center', title:'操作', toolbar: '#barDemo'}
             ]],
             page: true
         });
@@ -161,7 +161,7 @@
             var lindex = layer.load();
             var data = obj.data //得得到所在行的的对应列的值
                 //,value = obj.value //得到修改后的值
-                //,field = obj.field; //得到字段
+            //,field = obj.field; //得到字段
             $.ajax({
                 type:"post",
                 url:"${pageContext.request.contextPath}/MY/delterm",

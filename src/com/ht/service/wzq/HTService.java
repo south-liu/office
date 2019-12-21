@@ -150,7 +150,12 @@ public interface HTService {
     public List searchaduitlog(String sql, int page, int limit);
     //查询搜索总行数
     public Integer selcountad(String sql);
-
+    //查询指定员工考核详情
+    public AduitLogVO seladuitlog(Integer aduitLogId);
+    //查询考核内容
+    public AduitModelVO seladuitModel(Integer aduitModelId);
+    //查询员工姓名
+    public EmpVO selemp(Integer empId);
 
 
 

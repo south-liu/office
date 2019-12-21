@@ -4,18 +4,21 @@ import com.ht.service.llb.IStudentService;
 import com.ht.service.wzq.HTService;
 import com.ht.vo.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 
 
+import net.sf.ehcache.transaction.xa.commands.StorePutCommand;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Created by shkstart on 2019/12/4.
@@ -250,7 +253,7 @@ public class HTController {
     }
 
 
-    //------------------考试成绩---------------------
+    //------------------查看考试成绩---------------------
 
     @RequestMapping("/toscore_list")
     public String toscore_list(Model model){
@@ -410,7 +413,7 @@ public class HTController {
     }
 
 
-    //----------学生成绩-----------------------
+    //----------操作指定学生学生成绩-----------------------
 
     @RequestMapping("/tostudentscore_list")
     public String toscore_list(Model model, Integer studId){
@@ -548,8 +551,55 @@ public class HTController {
         List<AduitModelVO> list = hts.seladuitm();
         model.addAttribute("aduitm", list);
         List<EmpVO> list1 = hts.selemp();
-        model.addAttribute("emp", list1);
+        model.addAttribute("emps", list1);
         return "wzq/aduitlog_add";
+    }
+    //添加员工考核时先上传图片
+    @RequestMapping("/addimgs")
+    @ResponseBody
+    public Map addimgs(MultipartFile file, HttpServletRequest request) throws IOException {
+        System.out.println("file的值：" + file);
+        //全局唯一标识：用于设置上传文件的新名称
+        String xinName = UUID.randomUUID().toString();
+
+        //获取上传时的文件名
+        String oneName = file.getOriginalFilename();
+
+        //截取后缀名
+        String suffixName = oneName.substring(oneName.lastIndexOf("."));
+
+        //获取项目路径
+        String path = request.getSession().getServletContext().getRealPath("");
+
+        //使用实时时间生成文件夹
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        String strDate = sdf.format(new Date());
+
+        //上传文件存放在项目下的路径
+        String dirName = "\\WEB-INF\\static\\upload\\" + strDate + "\\";
+
+        //总路径
+        File dirFile = new File(path + dirName);
+        if (!dirFile.exists()){  //dirFile不存在时
+
+            //创建多级目录
+            dirFile.mkdirs();
+        }
+
+        //拼接成新文件名 = 全局唯一标识 + 截取的后缀
+        String newName = xinName + suffixName;
+
+        //保存文件
+        File newFile = new File(path + dirName + newName);
+        file.transferTo(newFile);
+
+        //赋值给数据库对应的列
+        String a = "\\upload\\" + strDate + "\\" + newName;
+
+        Map res = new HashMap();
+        res.put("date", a);
+
+        return res;
     }
     //添加员工考核
     @RequestMapping("/addaduitlog")
@@ -594,5 +644,16 @@ public class HTController {
         map.put("count", count);
         map.put("data", list);
         return map;
+    }
+    //查看图片
+    @RequestMapping("/toaduitlog_list_id")
+    public String toaduitlog_list_id(Integer aduitLogId, Integer aduitModelId, Integer empId, Model model){
+        AduitLogVO aduitLog = hts.seladuitlog(aduitLogId);
+        model.addAttribute("aduitLog", aduitLog);
+        AduitModelVO aduitModel = hts.seladuitModel(aduitModelId);
+        model.addAttribute("aduitModel", aduitModel);
+        EmpVO emp = hts.selemp(empId);
+        model.addAttribute("emp", emp);
+        return "wzq/aduitlog_list_id";
     }
 }

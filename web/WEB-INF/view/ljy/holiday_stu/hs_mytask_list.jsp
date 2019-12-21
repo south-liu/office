@@ -13,6 +13,10 @@
     <jsp:include page="../../public/head.jsp"></jsp:include>
 </head>
 <body>
+<%--返回按钮--%>
+<div class="layui-inline">
+    <button class="layui-btn layui-btn-sm" onclick="javascript:history.go(-1);" style="height: 30px; margin: 10px 0 0 15px"><i class="layui-icon layui-icon-return" style="font-size: 15px; color: #FFF"></i>返回</button>
+</div>
 <table class="layui-table" lay-even="" lay-skin="row">
     <colgroup>
         <col width="150">

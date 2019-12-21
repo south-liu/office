@@ -38,12 +38,12 @@
             defaultToolbar: ['filter', 'exports', 'print'],
             title: '考核指标表',
             cols: [[
-                {field:'aduitModelId',align:'center', title:'编号', width:120, fixed: 'left', unresize: true, sort: true},
-                {field:'aduitName',align:'center', title:'考核内容', width:120},
-                {field:'scores',align:'center', title:'考核分数', width:120},
-                {field:'deptName',align:'center',title:'部门名称', width:200},
-                {field:'remark',align:'center',title:'说明', width:200},
-                {fixed:'right',align:'center', title:'操作', toolbar: '#barDemo', width:120}
+                {field:'aduitModelId',align:'center', title:'编号', fixed: 'left', unresize: true, sort: true},
+                {field:'aduitName',align:'center', title:'考核内容'},
+                {field:'scores',align:'center', title:'考核分数'},
+                {field:'deptName',align:'center',title:'部门名称'},
+                {field:'remark',align:'center',title:'说明'},
+                {fixed:'right',align:'center', title:'操作', toolbar: '#barDemo'}
             ]],
             page: true
         });

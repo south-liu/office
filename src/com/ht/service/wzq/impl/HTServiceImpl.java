@@ -50,7 +50,7 @@ public class HTServiceImpl extends BaseDao implements HTService{
 
     @Override
     public List selfloor() {
-        return listBySql3("select * from studentFloor");
+        return listBySql2("select * from studentFloor");
     }
 
     @Override
@@ -338,6 +338,21 @@ public class HTServiceImpl extends BaseDao implements HTService{
     @Override
     public Integer selcountad(String sql) {
         return selTotalRow(sql);
+    }
+
+    @Override
+    public AduitLogVO seladuitlog(Integer aduitLogId) {
+        return (AduitLogVO)getObject(AduitLogVO.class, aduitLogId);
+    }
+
+    @Override
+    public AduitModelVO seladuitModel(Integer aduitModelId) {
+        return (AduitModelVO) getObject(AduitModelVO.class, aduitModelId);
+    }
+
+    @Override
+    public EmpVO selemp(Integer empId) {
+        return (EmpVO) getObject(EmpVO.class, empId);
     }
 
 }

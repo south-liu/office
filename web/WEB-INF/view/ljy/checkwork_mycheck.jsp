@@ -26,11 +26,10 @@
     }
 </style>
 
-<script type="text/html" id="toolbarDemo">
-    <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="fanhui">返回</button>
-    </div>
-</script>
+<%--返回按钮--%>
+<div class="layui-inline">
+    <button class="layui-btn layui-btn-sm" onclick="javascript:history.go(-1);" style="height: 30px; margin: 10px 0 0 15px"><i class="layui-icon layui-icon-return" style="font-size: 15px; color: #FFF"></i>返回</button>
+</div>
 
 
 <script type="text/html" id="bar">
@@ -56,7 +55,7 @@
             }],
             title: '员工数据表',
             cols: [[
-                {type: 'checkbox', fixed: 'left'},
+                // {type: 'checkbox', fixed: 'left'},
 
                 {field: 'empName', title: '姓名', fixed: 'left', unresize: true, sort: true, align: 'center', width: 90},
                 {

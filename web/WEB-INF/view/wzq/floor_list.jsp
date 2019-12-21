@@ -43,9 +43,9 @@
             }],
             title: '楼栋管理表',
             cols: [[
-                {field:'floorId',align:'center', title:'楼栋编号', width:120, fixed: 'left', unresize: true, sort: true},
-                {field:'floorName',align:'center', title:'楼栋名称', width:120, edit: 'text'},
-                {fixed:'right',align:'center', title:'操作', toolbar: '#barDemo', width:100}
+                {field:'floorId',align:'center', title:'楼栋编号', fixed: 'left', unresize: true, sort: true},
+                {field:'floorName',align:'center', title:'楼栋名称', edit: 'text'},
+                {fixed:'right',align:'center', title:'操作', toolbar: '#barDemo'}
             ]],
             page: true
         });

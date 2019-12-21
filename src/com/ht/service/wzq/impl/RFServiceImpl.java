@@ -35,12 +35,7 @@ public class RFServiceImpl extends BaseDao implements RFSerivce {
 
 
     @Override
-    public List selempassessment(int page, int limit) {
-        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-        String date = sf.format(new Date());
-        String a = date.substring(0, date.length() - 6);
-        String b = date.substring(date.length() - 5, date.length() - 3);
-        date = a + "年" + b + "月";
+    public List selempassessment(String date, int page, int limit) {
         return pageBySql("select e.*, d.deptName, (a.totalScores + score) zongscore from emp e left join dept d on e.deptId = d.deptId left join empAssessmentTotal a on e.empId = a.empId left join (select m.empId, sum(case when date_format(m.auditDate,'%Y年%m月')='" + date + "' then m.score else 0 end) as score from aduitLog m group by m.empId) m on a.empId = m.empId", page, limit);
     }
 
@@ -52,5 +47,15 @@ public class RFServiceImpl extends BaseDao implements RFSerivce {
     @Override
     public List seladuitlog() {
         return listBySql("select date_format(m.auditDate,'%Y年%m月') dates from aduitLog m group by dates desc");
+    }
+
+    @Override
+    public List selempassessmentaduitlog(Integer empId, String date, int page, int limit) {
+        return pageBySql("select a.*, d.aduitName, e.empName from aduitLog a left join aduitModel d on a.aduitModelId = d.aduitModelId left join emp e on a.empId = e.empId where e.empId = "+ empId +" and date_format(a.auditDate,'%Y年%m月') = '"+ date +"'", page, limit);
+    }
+
+    @Override
+    public Integer selcountempassessmentaduitlog(Integer empId, String date) {
+        return selTotalRow("select count(*) from aduitLog a left join aduitModel d on a.aduitModelId = d.aduitModelId left join emp e on a.empId = e.empId where e.empId = "+ empId +" and date_format(a.auditDate,'%Y年%m月') = '"+ date +"'");
     }
 }
