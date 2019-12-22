@@ -13,6 +13,12 @@
     <jsp:include page="../../public/head.jsp"></jsp:include>
 </head>
 <body style="padding: 30px 0px 30px 44px;">
+
+<%--返回按钮--%>
+<div class="layui-inline" style="margin-bottom: 20px">
+    <button class="layui-btn layui-btn-sm" onclick="javascript:history.go(-1);"><i class="layui-icon layui-icon-return" style="font-size: 15px; color: #FFF"></i>返回</button>
+</div>
+
 <form id="empForm" class="layui-form layui-form-pane" action="">
     <div class="layui-form-item">
         <div class="layui-inline">
@@ -24,29 +30,29 @@
         <div class="layui-inline">
             <label class="layui-form-label">部门名称</label>
             <div class="layui-input-inline">
-                <select name="deptId">
+                <select name="deptId" lay-verify="required">
+                    <option value="">请选择部门</option>
                     <c:forEach items="${depts}" var="dept">
                         <option value="${dept.deptId}">${dept.deptName}</option>
                     </c:forEach>
                 </select>
             </div>
         </div>
-    </div>
-    <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">职务名称</label>
             <div class="layui-input-inline">
                 <input type="text" name="postName" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
         </div>
+    </div>
+    <div class="layui-form-item">
+
         <div class="layui-inline">
             <label class="layui-form-label">家庭地址</label>
             <div class="layui-input-inline">
                 <input type="text" name="address" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
         </div>
-    </div>
-    <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">性别</label>
             <div class="layui-input-inline">
@@ -57,22 +63,31 @@
         <div class="layui-inline">
             <label class="layui-form-label">身份证号</label>
             <div class="layui-input-inline">
-                <input type="text" name="cardId" lay-verify="" placeholder="请输入" autocomplete="off" class="layui-input">
+                <input type="text" name="cardId" lay-verify="identity" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
-
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">出生日期</label>
             <div class="layui-input-inline">
-                <input type="text" id="date" name="birthday" lay-verify="" placeholder="请输入" autocomplete="off" class="layui-input">
+                <input type="text" id="date" name="birthday" lay-verify="date" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">手机号码</label>
             <div class="layui-input-inline">
-                <input type="text" name="phone" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+                <input type="text" name="phone" lay-verify="phone" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">婚姻状况</label>
+            <div class="layui-input-inline">
+                <select name="married" lay-verify="required">
+                    <option value="">请选择婚姻状况</option>
+                    <option value="是">已婚</option>
+                    <option value="否">未婚</option>
+                </select>
             </div>
         </div>
     </div>
@@ -99,7 +114,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">QQ号码</label>
             <div class="layui-input-inline">
-                <input type="text" name="qqCode" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+                <input type="text" name="qqCode" lay-verify="required|number" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-inline">
@@ -108,24 +123,14 @@
                 <input type="text" name="weixin" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
         </div>
-    </div>
-    <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">邮箱地址</label>
             <div class="layui-input-inline">
-                <input type="text" name="email" lay-verify="" placeholder="请输入" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-inline">
-            <label class="layui-form-label">婚姻状况</label>
-            <div class="layui-input-inline">
-                <select name="married">
-                    <option value="是">已婚</option>
-                    <option value="否">未婚</option>
-                </select>
+                <input type="text" name="email" lay-verify="email" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
+
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">毕业学校</label>
@@ -139,27 +144,27 @@
                 <input type="text" name="major" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
         </div>
-    </div>
-    <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">学历</label>
             <div class="layui-input-inline">
-                <select name="education">
-                    <option value="高中以下" selected>高中以下</option>
+                <select name="education" lay-verify="required">
+                    <option value="">请选择学历</option>
+                    <option value="高中以下">高中以下</option>
                     <option value="专科">专科</option>
                     <option value="本科">本科</option>
                     <option value="本科以上">本科以上</option>
                 </select>
             </div>
         </div>
+    </div>
+    <div class="layui-form-item">
+
         <div class="layui-inline">
             <label class="layui-form-label">开户银行</label>
             <div class="layui-input-inline">
-                <input type="text" name="bank" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+                <input type="text" name="bank" lay-verify="required|number" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
         </div>
-    </div>
-    <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">账户名称</label>
             <div class="layui-input-inline">
@@ -169,7 +174,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">银行账号</label>
             <div class="layui-input-inline">
-                <input type="text" name="bankNumber" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+                <input type="text" name="bankNumber" lay-verify="required|number" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
@@ -183,11 +188,9 @@
         <div class="layui-inline">
             <label class="layui-form-label">入职日期</label>
             <div class="layui-input-inline">
-                <input type="text" id="date2" name="hireDay" lay-verify="" placeholder="请输入" autocomplete="off" class="layui-input">
+                <input type="text" id="date2" name="hireDay" lay-verify="date" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
         </div>
-    </div>
-    <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">登陆密码</label>
             <div class="layui-input-inline">

@@ -32,15 +32,15 @@
     <thead>
     <input id="empid" value="${empId}" type="hidden">
     <tr>
-        <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
-        <th lay-data="{field:'jobId', sort: true, fixed: true}">ID</th>
+<%--        <th lay-data="{type:'checkbox', fixed: 'left'}"></th>--%>
+        <th lay-data="{field:'jobId', sort: true, fixed: true,align: 'center'}">ID</th>
 <%--        <th lay-data="{field:'empId',hide:true}"></th>--%>
-        <th lay-data="{field:'companyName',edit:'text'}" >公司名称</th>
-        <th lay-data="{field:'degree',edit:'text'}">岗位</th>
-        <th lay-data="{field:'startDate',edit:'text'}">入职时间</th>
-        <th lay-data="{field:'endDate',edit:'text'}">离职时间</th>
-        <th lay-data="{field:'reason',edit:'text'}">离职原因</th>
-        <th lay-data="{field:'remark',edit:'text'}">说明</th>
+        <th lay-data="{field:'companyName',edit:'text',align: 'center'}" >公司名称</th>
+        <th lay-data="{field:'degree',edit:'text',align: 'center'}">岗位</th>
+        <th lay-data="{field:'startDate',edit:'text',align: 'center'}">入职时间</th>
+        <th lay-data="{field:'endDate',edit:'text',align: 'center'}">离职时间</th>
+        <th lay-data="{field:'reason',edit:'text',align: 'center'}">离职原因</th>
+        <th lay-data="{field:'remark',edit:'text',align: 'center'}">说明</th>
         <th lay-data="{fixed: 'right', align:'center', toolbar: '#barDemo'}"></th>
     </tr>
     </thead>
@@ -91,7 +91,8 @@
                 var value = obj.value //得到修改后的值
                     ,data = obj.data //得到所在行所有键值
                     ,field = obj.field; //得到字段
-                layer.msg(field + '修改成功');
+                //layer.msg(field + '修改成功');
+                var lindex = layer.load();
                 $.ajax({
                     type:"post",
                     url:"${pageContext.request.contextPath}/CJEF/updjob",
@@ -103,13 +104,13 @@
                         layer.msg('修改成功!', {
                             icon: 1,
                             time: 1000
-                        },function () {
+                        }/*,function () {
                             layer.close(index);
                             // location.reload();
                             table.reload('myTable', {
                                 url: '${pageContext.request.contextPath}/CJEF/joblist'
                             });
-                        });
+                        }*/);
                     },
                     error:function () {
                         layer.close(lindex);

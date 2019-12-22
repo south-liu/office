@@ -31,12 +31,12 @@
     <thead>
     <input id="empid" value="${empId}" type="hidden">
     <tr>
-        <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
-        <th lay-data="{field:'familyId', sort: true, fixed: true}">ID</th>
-        <th lay-data="{field:'contactName',edit:'text'}" >联系人名称</th>
-        <th lay-data="{field:'relationship',edit:'text'}">关系</th>
-        <th lay-data="{field:'phone',edit:'text'}">联系电话</th>
-        <th lay-data="{field:'remark',edit:'text'}">说明</th>
+<%--        <th lay-data="{type:'checkbox', fixed: 'left'}"></th>--%>
+        <th lay-data="{field:'familyId', sort: true, fixed: true,align: 'center'}">ID</th>
+        <th lay-data="{field:'contactName',edit:'text',align: 'center'}" >联系人名称</th>
+        <th lay-data="{field:'relationship',edit:'text',align: 'center'}">关系</th>
+        <th lay-data="{field:'phone',edit:'text',align: 'center'}">联系电话</th>
+        <th lay-data="{field:'remark',edit:'text',align: 'center'}">说明</th>
         <th lay-data="{fixed:'right', align:'center', toolbar: '#barDemo'}"></th>
     </tr>
     </thead>

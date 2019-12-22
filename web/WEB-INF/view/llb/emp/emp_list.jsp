@@ -132,14 +132,16 @@
             var length = checkStatus.data.length;
             switch(obj.event){
                 case 'addEmp':
-                    layer.open({
+                    layer.load();
+                    /*layer.open({
                         title:'添加员工',
                         type:2,
                         content:'${pageContext.request.contextPath}/emp/toAdd',
                         area: ['720px', '500px'],
                         resize:false,
                         // maxmin:true
-                    });
+                    });*/
+                    location.href='${pageContext.request.contextPath}/emp/toAdd';
                     break;
                 case 'delEmps':
                     var ids = [];
@@ -182,6 +184,7 @@
                     break;
                 case 'jobInfo':
                     if (length == 1) {
+                        layer.load();
                         <%--window.open('${pageContext.request.contextPath}/CJEF/tojob?empId='+checkStatus.data[0].empId,'target');--%>
                         window.location.href = '${pageContext.request.contextPath}/CJEF/tojob?empId='+checkStatus.data[0].empId;
                     } else {
@@ -192,6 +195,7 @@
                     break;
                 case 'eduInfo':
                     if (length == 1) {
+                        layer.load();
                         <%--window.open('${pageContext.request.contextPath}/education/gotoeducationlist?empId='+checkStatus.data[0].empId,'target');--%>
                         window.location.href = '${pageContext.request.contextPath}/education/gotoeducationlist?empId='+checkStatus.data[0].empId;
                     } else {
@@ -202,6 +206,7 @@
                     break;
                 case 'famInfo':
                     if (length == 1) {
+                        layer.load();
                         <%--window.open('${pageContext.request.contextPath}/CJEF/tofam?empId='+checkStatus.data[0].empId,'target');--%>
                         window.location.href = '${pageContext.request.contextPath}/CJEF/tofam?empId='+checkStatus.data[0].empId;
                     } else {
@@ -213,7 +218,7 @@
 
                 //自定义头工具栏右侧图标 - 提示
                 case 'LAYTABLE_TIPS':
-                    layer.alert('点击数据即可修改');
+                    layer.alert('(lll￢ω￢)');
                     break;
             };
         });
@@ -248,14 +253,16 @@
                     });
                 });
             } else if(obj.event === 'edit'){
-                layer.open({
+                layer.load();
+                location.href='${pageContext.request.contextPath}/emp/toEdit?empId='+data.empId;
+                /*layer.open({
                     title:'修改员工',
                     type:2,
                     content:'${pageContext.request.contextPath}/emp/toEdit?empId='+data.empId,
                     area: ['720px', '500px'],
                     resize:false,
                     maxmin:true
-                });
+                });*/
             } else if(obj.event === 'repass'){
                 layer.confirm('确定重置密码为123456吗',function () {
                     var lod = layer.load();

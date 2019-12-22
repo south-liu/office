@@ -77,7 +77,7 @@
                         <a href="javascript:layer.load();
                     location.href='${pageContext.request.contextPath}/mynotice/viewNotice?noticeId=${notice.noticeId}';">
                             <i class="layui-icon layui-icon-tips"></i> ${notice.title}
-                            <span>${notice.empName}${notice.noticeIime}</span>
+                            <span style="float: right;">${notice.empName}&nbsp;&nbsp;${notice.noticeIime}</span>
                         </a><br>
 
                     </c:forEach>
@@ -107,7 +107,7 @@
     
     $(function () {
         $.get('https://v1.hitokoto.cn/',{},function (data) {
-            console.log(data);
+            //console.log(data);
             $('#titSpan').text(data.from);
             $('#conSpan').text(data.hitokoto);
         },'json');

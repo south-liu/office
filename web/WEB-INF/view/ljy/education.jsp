@@ -13,7 +13,7 @@
 </head>
 <body>
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+<%--    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>--%>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 
@@ -23,12 +23,12 @@
        lay-filter="fTable">
     <thead>
     <tr>
-        <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
-        <th lay-data="{field:'schoolName', sort: true,edit:'text'}">学生名称</th>
-        <th lay-data="{field:'degree',  sort: true,edit:'text'}">学历</th>
-        <th lay-data="{field:'startDate',  sort: true,edit:'text'}">入校时间</th>
-        <th lay-data="{field:'endDate', sort: true,edit:'text'}">毕业时间</th>
-        <th lay-data="{field:'remark',sort: true,edit:'text'}">说明</th>
+<%--        <th lay-data="{type:'checkbox', fixed: 'left'}"></th>--%>
+        <th lay-data="{field:'schoolName',edit:'text',align: 'center'}">学校名称</th>
+        <th lay-data="{field:'degree',edit:'text',align: 'center'}">学历</th>
+        <th lay-data="{field:'startDate',  sort: true,edit:'text',align: 'center'}">入校时间</th>
+        <th lay-data="{field:'endDate', sort: true,edit:'text',align: 'center'}">毕业时间</th>
+        <th lay-data="{field:'remark',edit:'text',align: 'center'}">说明</th>
         <th lay-data="{fixed: 'right',align:'center', toolbar: '#barDemo'}"></th>
     </tr>
     </thead>
@@ -113,9 +113,9 @@
                         var endDate = $('#endDate').val().trim();
                         var remark = $('#remark').val().trim();
 //                            判断是否为空
-                        if (schoolName == '') {
-                            layer.msg('请输入类别名称!', {
-                                icon: 2,
+                        if (schoolName == ''||degree == ''||startDate == ''||endDate == ''||remark == '') {
+                            layer.msg('请输入完整!', {
+                                icon: 0,
                                 time: 1000
                             });
                         } else {
@@ -168,7 +168,7 @@
             var value = obj.value //得到修改后的值
                 ,data = obj.data //得到所在行所有键值
                 ,field = obj.field; //得到字段名
-            layer.msg('[ID: '+ data.eduId +'] ' + field + '更改为：'+ value);
+            //layer.msg('[ID: '+ data.eduId +'] ' + field + '更改为：'+ value);
             $.ajax({
                 type:"post",
                 url:"${pageContext.request.contextPath}/education/educationupdate",
@@ -180,11 +180,11 @@
                     layer.msg('修改成功!', {
                         icon: 1,
                         time: 1000
-                    },function () {
+                    }/*,function () {
                         table.reload('myTable', {
                             url: '${pageContext.request.contextPath}/education/educationlist?empId='+${empId}
                         });
-                    });
+                    }*/);
                 },
                 error:function () {
                     layer.close(lindex);
