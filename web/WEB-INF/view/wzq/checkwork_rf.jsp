@@ -16,10 +16,10 @@
     <script type="text/javascript"src="${pageContext.request.contextPath}/js/jquery-3.4.1.min.js"></script>
 </head>
 <body>
-    <%--顶部按钮--%>
+   <%-- &lt;%&ndash;顶部按钮&ndash;%&gt;
     <div class="layui-inline" style="background: #F2F2F2; width: 100%; height: 50px">
         <button class="layui-btn layui-btn-sm" id="fan" onclick="fan()" style="height: 30px; margin: 10px 0 0 15px"><i class="layui-icon layui-icon-return" style="font-size: 15px; color: #FFF"></i>返回</button>
-    </div>
+    </div>--%>
 
     <div id="main" style="width: 600px; height: 400px; margin-left: 400px; margin-top: 20px"></div>
     <script type="text/javascript">

@@ -82,7 +82,7 @@
 
                     </c:forEach>
 
-                    <a href="javascript:layer.load();
+                    <a style="font-weight: 700;" href="javascript:layer.load();
                     location.href='${pageContext.request.contextPath}/mynotice/toNoticeList';">
                          所有公告 <i class="layui-icon layui-icon-next"></i>
                     </a><br>

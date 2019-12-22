@@ -40,7 +40,7 @@
                     </a>
                 </td>
                 <td align="center">
-                    <a href="" target="_target">
+                    <a href="${pageContext.request.contextPath}/empholi/tolist" target="_target">
                         <img src="../../images/report_normal.gif" border="0">
                         <br>
                         员工请假统计
