@@ -92,7 +92,6 @@ public class StuHoliController {
         map.put("msg","");
         map.put("count",count);
         map.put("data",hs.pageListWhere(page,limit,stuName,month));
-        System.out.println("count "+count);
         return map;
     }
 }

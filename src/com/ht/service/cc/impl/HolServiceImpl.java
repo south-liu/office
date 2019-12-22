@@ -41,8 +41,6 @@ public class HolServiceImpl extends BaseDao implements HoliStuService {
             sql = "select studentId,count(holidayId) sum,stu.stuName from holidayStudent hs left join student stu on hs.studentId=stu.studId"+wh+whereM+an+whereN+"group by hs.studentId";
         }
 
-        System.out.println("1111"+sql);
-
 //        String sql11 = "select studentId,count(holidayId) sum,stu.stuName from holidayStudent hs left join student stu on hs.studentId=stu.studId  where stu.stuName like'%"+stuName+"%' "+whereM+" group by hs.studentId";
 //        String sql = "select studentId,count(holidayId) sum,stu.stuName from holidayStudent hs left join student stu on hs.studentId=stu.studId"+wh+whereN+whereM+"group by hs.studentId";
         return pageListBySql(sql,page,limit);

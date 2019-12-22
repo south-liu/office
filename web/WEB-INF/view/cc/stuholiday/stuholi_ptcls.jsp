@@ -14,8 +14,6 @@
 </head>
 <body>
 <table class="layui-hide" id="myTable" lay-filter="fTable"></table>
-<script type="text/html" id="toolbarDemo">
-</script>
 <script>
     layui.use('table', function () {
         var table = layui.table;
@@ -28,7 +26,7 @@
             title:'请假详情',
             cols:[[
                 {field:'holidayId', title:'ID', sort: true,align: 'center'},
-                {field:'stuName', title:'排序编号',align: 'center'},
+                {field:'stuName', title:'学生姓名',align: 'center'},
                 {field:'holidayDay', title:'假期天数',align: 'center'},
                 {field:'holidayHour', title:'小时',align: 'center'},
                 {field:'startTime', title:'开始时间',align: 'center'},

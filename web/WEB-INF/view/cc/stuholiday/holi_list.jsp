@@ -57,8 +57,7 @@
         url:'${pageContext.request.contextPath}/stuholi/holi_list',
         page:true,
         cellMinWidth: 80,
-        id:'myTable',
-        toolbar:'#toolbarDemo'}"
+        id:'myTable'}"
        lay-filter="fTable">
     <thead>
     <tr>
