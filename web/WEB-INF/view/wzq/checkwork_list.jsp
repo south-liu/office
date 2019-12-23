@@ -9,7 +9,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>员工考核报表</title>
+    <title>未打卡审核报表</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <jsp:include page="../public/head.jsp"></jsp:include>
 </head>
@@ -28,7 +28,7 @@
                 <div class="layui-input-inline" style="width: 120px">
                     <select name="deptName" id="deptName">
                         <option value="">请选择部门</option>
-                        <c:forEach items="${emp}" var="list">
+                        <c:forEach items="${emps}" var="list">
                             <option value="${list.deptName}">${list.deptName}</option>
                         </c:forEach>
                     </select>
@@ -49,7 +49,8 @@
                 <div class="layui-input-inline" style="width: 120px">
                     <select name="date1" id="date1" lay-filter="TB">
                         <option value="">请选择时间</option>
-                        <c:forEach items="${aduitlog}" var="list">
+                        <option value="全部">全部</option>
+                        <c:forEach items="${noCardTimes}" var="list">
                             <option value="${list.dates}">${list.dates}</option>
                         </c:forEach>
                     </select>
@@ -60,13 +61,15 @@
     </form>
 </div>
 
+<%--顶部按钮--%>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="tu"><i class="layui-icon layui-icon-chart" style="font-size: 15px; color: #FFF;"></i>图表展示总体趋势</button>
+    </div>
+</script>
+
 <%--添加表单--%>
 <table class="layui-hide" id="test" lay-filter="test"></table>
-
-<%--操作列表的按钮--%>
-<script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="cha">查看详情</a>
-</script>
 
 <script type="text/javascript">
 
@@ -82,24 +85,29 @@
 
         table.render({
             elem: '#test',
-            url:'${pageContext.request.contextPath}/RF/empassessment_list?date=${date}',
+            url:'${pageContext.request.contextPath}/RF/checkwork_list?date=${date}',
             toolbar: '#toolbarDemo', //开启头部工具栏，并为其绑定左侧模板(一般放置按钮、搜索框)
             defaultToolbar: ['filter', 'exports', 'print'],
-            title: '员工考核报表',
+            title: '未打卡报表',
             cols: [[
-                {field:'empId',align:'center', title:'员工编号', fixed: 'left', unresize: true, sort: true},
-                {field:'empName',align:'center', title:'员工姓名'},
-                {field:'deptName',align:'center', title:'部门名称'},
-                {field:'sex',align:'center', title:'性别'},
-                {field:'phone',align:'center', title:'手机号码'},
-                {field:'zongscore',align:'center', title:'考核总分', templet:function (res) {
-                        if (res.zongscore == null){
-                            return 100;
-                        }else {
-                            return res.zongscore;
+                {field:'checkworkId',align:'center', title:'编号', sort: true},
+                {field:'eName',align:'center', title:'员工姓名'},
+                {field:'noCardTime',align:'center', title:'未打卡时间'},
+                {field:'why',align:'center', title:'未打卡原因'},
+                {field:'mName',align:'center', title:'审核人'},
+                {field:'remark',align:'center', title:'审核批注'},
+                {field:'checkTime',align:'center', title:'审核时间'},
+                {field:'status',align:'center', title:'审核状态', templet:function (res) {
+                        if (res.status == 0){
+                            return "未审核";
                         }
-                    }},
-                {fixed:'right',align:'center', title:'操作', toolbar: '#barDemo'}
+                        if (res.status == 1){
+                            return "审核通过";
+                        }
+                        if (res.status == 2){
+                            return "审核不通过";
+                        }
+                    }}
             ]],
             page: true
         });
@@ -110,10 +118,10 @@
             var deptName = $("#deptName").val().trim();
             var date1 = $("#date1").val().trim();
             if (empName == "" && deptName == "" && date1 == ""){
-               location.href='${pageContext.request.contextPath}/RF/toempassessment';
+               location.href='${pageContext.request.contextPath}/RF/tocheckwork_list';
             }else{
                 table.reload('test', {
-                    url: '${pageContext.request.contextPath}/RF/empassessment_list_sousuo'
+                    url: '${pageContext.request.contextPath}/RF/checkwork_list_sousuo'
                     ,where: {
                         empName:empName,
                         deptName:deptName,
@@ -123,20 +131,13 @@
             }
         });
 
-
-        //监听行工具事件
-        table.on('tool(test)', function(obj){
-            var data = obj.data;
-
-            if(obj.event === 'cha'){
-                var date1 = $("#date1").val().trim();
-                <%--获取URL参数:${param.date1}--%>
-                if (date1 != ""){
-                    location.href="${pageContext.request.contextPath}/RF/toempassessment_aduitlog_list?empId=" + data.empId + "&date=" + date1;
-                }else {
-                    location.href='${pageContext.request.contextPath}/RF/toempassessment_aduitlog_list?empId=' + data.empId + "&date=${date}";
-                }
-            }
+        //头工具栏事件
+        table.on('toolbar(test)', function(obj){
+            switch(obj.event){
+                case 'tu':
+                    location.href='${pageContext.request.contextPath}/RF/tocheckwork_rf';
+                    break;
+            };
         });
 
         form.on('select(TB)', function (data) {
@@ -146,7 +147,7 @@
                 //当选择审核时间下拉框时替换显示当前时间的值
                 $('#_span').text($('#date1').val());
                 table.reload('test',{
-                    url:'${pageContext.request.contextPath}/RF/empassessment_list_sousuo',
+                    url:'${pageContext.request.contextPath}/RF/checkwork_list_sousuo',
                     where:{
                         empName:"",
                         deptName:"",

@@ -30,8 +30,20 @@ public class RFServiceImpl extends BaseDao implements RFSerivce {
         return listBySql2("select date_format(noCardTime,'%Y年') Times from checkwork group by Times");
     }
 
+    @Override
+    public List selcheckwork() {
+        return listBySql("select date_format(m.noCardTime,'%Y年%m月') dates from checkwork m group by dates desc");
+    }
 
+    @Override
+    public List selcheckwork(String date, int page, int limit) {
+        return pageBySql("select c.*, e.empName eName, m.empName mName from checkwork c left join emp e on c.empId = e.empId left join emp m on c.deptHeadId = m.empId where date_format(c.noCardTime, '%Y年%m月') ='" + date + "'", page, limit);
+    }
 
+    @Override
+    public Integer selcountcheckwork(String date) {
+        return selTotalRow("select count(*) from checkwork c left join emp e on c.empId = e.empId left join emp m on c.deptHeadId = m.empId where date_format(c.noCardTime, '%Y年%m月') ='" + date + "'");
+    }
 
 
     @Override
