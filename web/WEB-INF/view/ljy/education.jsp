@@ -114,7 +114,7 @@
                         var remark = $('#remark').val().trim();
 //                            判断是否为空
                         if (schoolName == ''||degree == ''||startDate == ''||endDate == ''||remark == '') {
-                            layer.msg('请输入完整!', {
+                            layer.msg('请输入完整信息!', {
                                 icon: 0,
                                 time: 1000
                             });
@@ -169,6 +169,7 @@
                 ,data = obj.data //得到所在行所有键值
                 ,field = obj.field; //得到字段名
             //layer.msg('[ID: '+ data.eduId +'] ' + field + '更改为：'+ value);
+
             $.ajax({
                 type:"post",
                 url:"${pageContext.request.contextPath}/education/educationupdate",

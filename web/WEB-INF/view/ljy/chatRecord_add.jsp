@@ -1,17 +1,17 @@
 <%--
   Created by IntelliJ IDEA.
   User: JY
-  Date: 2019/12/11
-  Time: 14:09
+  Date: 2019/12/23
+  Time: 16:43
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>添加未打卡说明</title>
+    <title>谈心记录添加</title>
     <jsp:include page="../public/head.jsp"></jsp:include>
 </head>
-
 <style type="text/css">
     .layui-input-block {
         margin-left: 110px;
@@ -35,32 +35,43 @@
         width: 190px;
     }
 </style>
-<body style="padding: 30px">
+<body style="padding: 30px;">
 <form class="layui-form" action="">
 
-    <div class="layui-form-item">
-        <label class="layui-form-label">未打卡日期：</label>
-        <div class="layui-input-inline">
-            <input type="text" name="noCardTime1" id="noCardTime" lay-verify="required" placeholder="请输入"
-                   autocomplete="off"
-                   class="layui-input">
-        </div>
 
+    <div class="layui-form-item">
+        <label class="layui-form-label">学生姓名：</label>
         <div class="layui-input-inline">
-            <select name="noCardTime2" id="noCardTime2" lay-filter="noCardTime">
-                <option value="">请选择未打卡时间点</option>
-                <option value="8:00">8:00</option>
-                <option value="14:00">14:00</option>
-                <option value="17:00">17:00</option>
-                <option value="21:00">21:00</option>
+            <select name="stuName" id="stuName">
+                <option value="">请选择学生</option>
+                <c:forEach items="${allstu}" var="stu">
+                    <option value="${stu.studId}">${stu.stuName}</option>
+                </c:forEach>
             </select>
         </div>
     </div>
 
-    <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">原因说明：</label>
-        <div class="layui-input-block">
-            <textarea name="why" placeholder="请输入内容" lay-verify="required" class="layui-textarea"></textarea>
+    <div class="layui-form-item">
+        <label class="layui-form-label">地址：</label>
+        <div class="layui-input-inline">
+            <input type="text" id="address" name="address" lay-verify="required" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">时间：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="date" id="date" lay-verify="required" placeholder="请输入" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">内容：</label>
+        <div class="layui-input-inline">
+            <textarea name="sayScon" id="sayScon" placeholder="请输入内容" lay-verify="required"
+                      class="layui-textarea"></textarea>
         </div>
     </div>
 
@@ -72,7 +83,6 @@
     </div>
 </form>
 
-
 <script>
     layui.use(['form', 'layer', 'laydate'], function () {
         var form = layui.form
@@ -81,40 +91,46 @@
 
         //日期
         laydate.render({
-            elem: '#noCardTime',
-            min:-10,
-            max:0
+            elem: '#date'
         });
 
 
         //监听提交
         form.on('submit(sub)', function (data) {
-            console.log("22" + data.field);
+            console.log(data.field);
             var fd = data.field;
-            var noCardTime2 = $('#noCardTime2').val().trim();
-            console.log("3" + noCardTime2)
-            //部门数据
-            if (noCardTime2 == '') {
-                layer.msg('请输入未打卡时间点!', {
+            var stuName = $('#stuName').val().trim();
+            var address = $('#address').val().trim();
+            var date = $('#date').val().trim();
+            var sayScon = $('#sayScon').val().trim();
+
+            if (date == '' || address == '' || stuName == '' || sayScon == '') {
+
+                layer.msg('请输入全部信息!', {
                     icon: 2,
                     time: 1000
                 });
             } else {
                 var lod = layer.load();
+                //试讲培训数据
                 $.ajax({
-                    url: "${pageContext.request.contextPath}/checkwork/checkworkadd",
+                    url: "${pageContext.request.contextPath}/chatRecord/chatRecordadd",
                     type: "post",
                     async: true,
                     dataType: "json",
                     data: {
-                        noCardTime: fd.noCardTime1 + ' ' + fd.noCardTime2,
-                        why: fd.why
+                        chatDate: fd.date,
+                        address: fd.address,
+                        sayScon: fd.sayScon,
+                        sayFace:fd.stuName
                     },
                     success: function (data) {
                         layer.close(lod);
                         layer.msg('添加成功', {
                             time: 1000
                         }, function () {
+                            //var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            //parent.layer.close(index); //再执行关闭
                             window.parent.location.reload();
                         });
                     },
@@ -124,9 +140,11 @@
                     }
                 });
             }
+
             return false;
         });
     });
 </script>
+
 </body>
 </html>

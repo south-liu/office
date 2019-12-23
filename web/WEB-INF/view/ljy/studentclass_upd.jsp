@@ -55,7 +55,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">授课老师：</label>
         <div class="layui-input-inline">
-            <select name="teacher" lay-filter="teacher">
+            <select name="teacher" id="teacher" lay-filter="teacher">
                 <option value="">请选择授课老师</option>
                 <c:forEach items="${emplist}" var="emp">
                     <option value="${emp.empId}">${emp.empName}</option>
@@ -65,7 +65,7 @@
 
         <label class="layui-form-label">班主任：</label>
         <div class="layui-input-inline">
-            <select name="classTeacher" lay-filter="classTeacher">
+            <select name="classTeacher" id="classTeacher" lay-filter="classTeacher">
                 <option value="">请选择班主任</option>
                 <c:forEach items="${emplist}" var="emp">
                     <option value="${emp.empId}">${emp.empName}</option>
@@ -77,7 +77,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">班级类别：</label>
         <div class="layui-input-inline">
-            <select name="classType" lay-filter="classType">
+            <select name="classType" id="classType" lay-filter="classType">
                 <option value="">请选择班级类别</option>
                 <c:forEach items="${cltylist}" var="clty">
                     <option value="${clty.classTypeId}">${clty.classTypeName}</option>
@@ -87,7 +87,7 @@
 
         <label class="layui-form-label">系名称：</label>
         <div class="layui-input-inline">
-            <select name="deptId" lay-filter="deptType">
+            <select name="deptId" id="deptId" lay-filter="deptType">
                 <option value="">请选择所属系名称</option>
                 <c:forEach items="${deptlist}" var="dept">
                     <option value="${dept.deptId}">${dept.deptName}</option>
@@ -100,7 +100,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">专业名称：</label>
         <div class="layui-input-inline">
-            <select name="majorId" lay-filter="deptType">
+            <select name="majorId" id="majorId" lay-filter="deptType">
                 <option value="">请选择专业类别</option>
                 <c:forEach items="${majorlist}" var="major">
                     <option value="${major.majorId}">${major.majorName}</option>
@@ -110,7 +110,7 @@
 
         <label class="layui-form-label">界别年份：</label>
         <div class="layui-input-inline">
-            <select name="falled" lay-filter="deptType">
+            <select name="falled" id="falled" lay-filter="deptType">
                 <option value="">请选择年份</option>
                 <c:forEach items="${studfall}" var="sf">
                     <option value="${sf.fallId}">${sf.level}</option>
@@ -143,40 +143,58 @@
         form.on('submit(sub)', function (data) {
             console.log(data.field);
             var fd = data.field;
-            var lod = layer.load();
-            //部门数据
-            $.ajax({
-                url: "${pageContext.request.contextPath}/studentclass/studentclassupd",
-                type: "post",
-                async: true,
-                dataType: "json",
-                data: {
-                    classId:${stucla.classId},
-                    classNo: fd.classNo,
-                    className: fd.className,
-                    classTeacher: fd.classTeacher,
-                    classType: fd.classType,
-                    deptId: fd.deptId,
-                    fallId: fd.fallId,
-                    majorId: fd.majorId,
-                    teacher: fd.teacher,
-                    remark: fd.remark
-                },
-                success: function (data) {
-                    layer.close(lod);
-                    layer.msg('修改成功', {
+
+
+            var teacher=$('#teacher').val().trim();
+                var classTeacher=$('#classTeacher').val().trim();
+                var classType=$('#classType').val().trim();
+                var deptId=$('#deptId').val().trim();
+                var majorId=$('#majorId').val().trim();
+                var falled=$('#falled').val().trim();
+
+                if (teacher==''|| classTeacher==''||classType==''||deptId==''||majorId==''||falled==''){
+                    layer.msg('请输入全部信息!', {
+                        icon: 2,
                         time: 1000
-                    }, function () {
-                        //var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                        //parent.layer.close(index); //再执行关闭
-                        window.parent.location.reload();
                     });
-                },
-                error: function () {
-                    layer.close(lod);
-                    layer.msg('服务器错误');
-                }
-            });
+
+            }else{
+                var lod = layer.load();
+                //班级管理数据
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/studentclass/studentclassupd",
+                    type: "post",
+                    async: true,
+                    dataType: "json",
+                    data: {
+                        classId:${stucla.classId},
+                        classNo: fd.classNo,
+                        className: fd.className,
+                        classTeacher: fd.classTeacher,
+                        classType: fd.classType,
+                        deptId: fd.deptId,
+                        falled: fd.falled,
+                        majorId: fd.majorId,
+                        teacher: fd.teacher,
+                        remark: fd.remark
+                    },
+                    success: function (data) {
+                        layer.close(lod);
+                        layer.msg('修改成功', {
+                            time: 1000
+                        }, function () {
+                            //var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            //parent.layer.close(index); //再执行关闭
+                            window.parent.location.reload();
+                        });
+                    },
+                    error: function () {
+                        layer.close(lod);
+                        layer.msg('服务器错误');
+                    }
+                });
+            }
+
             return false;
         });
 

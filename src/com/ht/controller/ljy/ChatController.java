@@ -1,9 +1,11 @@
 package com.ht.controller.ljy;
 
 import com.ht.service.ljy.chatRecordService;
+import com.ht.service.llb.IStudentService;
 import com.ht.vo.ChatRecordVO;
 import com.ht.vo.EmpVO;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -23,10 +25,20 @@ public class ChatController {
     @Resource
     chatRecordService chatRecordService;
 
+    @Resource
+    IStudentService iStudentService;
+
     @RequestMapping("/gotochatRecordList")
     public String gotochatRecordList(){
         System.out.println("去查询谈心记录界面！！！");
         return "ljy/chatRecordList";
+    }
+
+    @RequestMapping("/gotochatRecord_add")
+    public String gotochatRecordadd(Model model){
+        model.addAttribute("allstu",iStudentService.allStu());
+        System.out.println("去查询谈心记录界面！！！"+iStudentService.allStu());
+        return "ljy/chatRecord_add";
     }
 
 //    查询记录方法
