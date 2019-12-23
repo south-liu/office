@@ -49,4 +49,15 @@ public class EvaluationStandardDaoImpl extends DaoUtils implements EvaluationSta
         }
         this.deleteEntity(evaluation);
     }
+
+    /**
+     * 通过类型获取所有考评标准
+     *
+     * @param evaluationType
+     * @return
+     */
+    @Override
+    public List<EvaluationVO> queryAllDataByType(int evaluationType) {
+        return super.queryAllBySql("select * from evaluation where evaluationType = " + evaluationType, Transformers.aliasToBean(EvaluationVO.class));
+    }
 }
