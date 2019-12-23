@@ -498,7 +498,7 @@
                 if (data.code == 0 && data.result > 0) {
                     var windowIndex = layer.open({
                         type: 2,
-                        title: '【' + objectData.className + '】' + '的同学对 [' + objectData.empName + '] 老师的考评详细',
+                        title: '考评详细',
                         resize: false,
                         content: ['${pageContext.request.contextPath}/assessment/lookDetailList?assessmentId=' + objectData.assessmentId],
                         area: ['600px', '600px'],
