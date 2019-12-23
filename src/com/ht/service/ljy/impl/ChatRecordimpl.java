@@ -20,7 +20,7 @@ public class ChatRecordimpl extends ljyDao implements chatRecordService {
 //    }
         @Override
         public List chatrecord_list(int page, int limit) {
-            return pagelistbysql("select c.*,e.empName from chatRecord c left join emp e on c.teacher = e.empId",page,limit);
+            return pagelistbysql("select stu.stuName,c.*,e.empName from chatRecord c left join emp e on c.teacher = e.empId left join student stu on stu.studId=c.sayFace",page,limit);
         }
 //查询记录总数
     @Override

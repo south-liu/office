@@ -20,7 +20,7 @@
     <tr>
         <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
         <th lay-data="{field:'chatId', width:80, sort: true, fixed: true,align:'center'}">ID</th>
-        <th lay-data="{field:'studentname', width:135}">学生名称</th>
+        <th lay-data="{field:'stuName', width:135}">学生名称</th>
         <th lay-data="{field:'empName', width:135}">员工名称</th>
         <th lay-data="{field:'address', width:135}">地址</th>
         <th lay-data="{field:'sayScon', width:300}">谈心内容</th>
@@ -32,13 +32,12 @@
 
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="addCheckData">添加记录</button>
+        <button class="layui-btn layui-btn-sm" lay-event="addCheckData" onclick="addchatRecord()">添加记录</button>
     </div>
 </script>
 
@@ -60,7 +59,7 @@
                         $.post('${pageContext.request.contextPath}/chatRecord/chatRecorddelete', {chatId: obj.data.chatId}, function (data) {
                             console.log(data);
                             layer.msg('删除成功！');
-                           location.reload();
+                            location.reload();
                         }, 'json');
                         layer.close(index);
                     });
@@ -68,100 +67,111 @@
             }
         )
 
+
 //        添加记录
-        table.on('toolbar(fTable)', function (obj) {
-            var checkStatus = table.checkStatus(obj.config.id);
-            if (obj.event == 'addCheckData') {
-                layer.open({
-                    title: '添加记录',
-                    type: 1,
-                    content: '<div style="margin-top: 10px" class="layui-inline">\n' +
+        <%--table.on('toolbar(fTable)', function (obj) {--%>
+        <%--var checkStatus = table.checkStatus(obj.config.id);--%>
+        <%--if (obj.event == 'addCheckData') {--%>
+        <%--layer.open({--%>
+        <%--title: '添加记录',--%>
+        <%--type: 1,--%>
+        <%--content: '<div style="margin-top: 10px" class="layui-inline">\n' +--%>
 
-                    '  <div style="margin: 20px 0px ">' +
-                    '          <label class="layui-form-label">学生姓名：</label>\n' +
-                    '        <div class="layui-input-inline">\n' +
-                    '            <input type="text" id="studentname" lay-verify="required" autocomplete="off" class="layui-input">\n' +
-                    '        </div>' +
-                    '       </div> \n' +
+        <%--'  <div style="margin: 20px 0px ">' +--%>
+        <%--'          <label class="layui-form-label">学生姓名：</label>\n' +--%>
+        <%--'        <div class="layui-input-inline">\n' +--%>
+        <%--'            <input type="text" id="studentname" lay-verify="required" autocomplete="off" class="layui-input">\n' +--%>
+        <%--'        </div>' +--%>
+        <%--'       </div> \n' +--%>
 
-                    '  <div style="margin: 20px 0px ">' +
-                    '        <label class="layui-form-label">地址：</label>\n' +
-                    '        <div class="layui-input-inline">\n' +
-                    '            <input type="text" id="address" lay-verify="required" autocomplete="off" class="layui-input">\n' +
-                    '        </div>\n' +
-                    '       </div> \n' +
-
-
-                    '  <div style="margin: 20px 0px ">' +
-                    '        <label class="layui-form-label">内容：</label>\n' +
-                    '        <div class="layui-input-inline">\n' +
-                    '            <textarea id="sayScon" lay-verify="required" autocomplete="off" class="layui-input" style="width: 300px;height: 100px"></textarea>\n' +
-                    '        </div>\n' +
-                    '       </div> \n' +
+        <%--'  <div style="margin: 20px 0px ">' +--%>
+        <%--'        <label class="layui-form-label">地址：</label>\n' +--%>
+        <%--'        <div class="layui-input-inline">\n' +--%>
+        <%--'            <input type="text" id="address" lay-verify="required" autocomplete="off" class="layui-input">\n' +--%>
+        <%--'        </div>\n' +--%>
+        <%--'       </div> \n' +--%>
 
 
-                    '  <div style="margin: 20px 0px ">' +
-                    '        <label class="layui-form-label">时间：</label>\n' +
-                    '        <div class="layui-input-inline">\n' +
-                    '            <input type="date" id="chatDate" lay-verify="required" autocomplete="off" class="layui-input">\n' +
-                    '        </div>\n' +
-                    '       </div> \n' +
-                    '        </div> \n',
+        <%--'  <div style="margin: 20px 0px ">' +--%>
+        <%--'        <label class="layui-form-label">内容：</label>\n' +--%>
+        <%--'        <div class="layui-input-inline">\n' +--%>
+        <%--'            <textarea id="sayScon" lay-verify="required" autocomplete="off" class="layui-input" style="width: 300px;height: 100px"></textarea>\n' +--%>
+        <%--'        </div>\n' +--%>
+        <%--'       </div> \n' +--%>
 
-                    btn: ['确定', '取消'],
-                    yes: function (index, layero) {
-//                            选中输入框
-                        var studentname = $('#studentname').val().trim();
-                        var address = $('#address').val().trim();
-                        var sayScon = $('#sayScon').val().trim();
-                        var chatDate = $('#chatDate').val().trim();
-//                            判断是否为空
-                        if (studentname == '') {
-                            layer.msg('请输入学生姓名!', {
-                                icon: 2,
-                                time: 1000
-                            });
-                        } else {
-                            var
-                                lindex = layer.load();
-                            $.ajax({
-                                type: "post",
-                                url: "${pageContext.request.contextPath}/chatRecord/chatRecordadd",
-                                async: true,
-                                dataType: "text",
-                                data: {
-                                    studentname: studentname,
-                                    address: address,
-                                    sayScon: sayScon,
-                                    chatDate: chatDate
-                                },
-                                success: function (data) {
-                                    layer.close(lindex);
-                                    layer.msg('添加成功!', {
-                                        icon: 1,
-                                        time: 1000
-                                    }, function () {
-                                        layer.close(index);
-                                        // location.reload();
-                                        table.reload('myTable', {
-                                            url: '${pageContext.request.contextPath}/chatRecord/chatRecordlist'
-                                        });
-                                    });
-                                },
-                                error: function () {
-                                    layer.close(lindex);
-                                    layer.msg("服务器错误");
-                                }
-                            });
-                        }
-                    },
-                    btnAlign: 'c',
-                    area: ['450px', '430px']
-                });
 
-            }
-        });
+        <%--'  <div style="margin: 20px 0px ">' +--%>
+        <%--'        <label class="layui-form-label">时间：</label>\n' +--%>
+        <%--'        <div class="layui-input-inline">\n' +--%>
+        <%--'            <input type="date" id="chatDate" lay-verify="required" autocomplete="off" class="layui-input">\n' +--%>
+        <%--'        </div>\n' +--%>
+        <%--'       </div> \n' +--%>
+        <%--'        </div> \n',--%>
+
+        <%--btn: ['确定', '取消'],--%>
+        <%--yes: function (index, layero) {--%>
+        <%--//                            选中输入框--%>
+        <%--var studentname = $('#studentname').val().trim();--%>
+        <%--var address = $('#address').val().trim();--%>
+        <%--var sayScon = $('#sayScon').val().trim();--%>
+        <%--var chatDate = $('#chatDate').val().trim();--%>
+        <%--//                            判断是否为空--%>
+        <%--if (studentname == '' || address == '' || sayScon == '' || chatDate == '') {--%>
+        <%--layer.msg('请输完全部信息!', {--%>
+        <%--icon: 2,--%>
+        <%--time: 1000--%>
+        <%--});--%>
+        <%--} else {--%>
+        <%--var--%>
+        <%--lindex = layer.load();--%>
+        <%--$.ajax({--%>
+        <%--type: "post",--%>
+        <%--url: "${pageContext.request.contextPath}/chatRecord/chatRecordadd",--%>
+        <%--async: true,--%>
+        <%--dataType: "text",--%>
+        <%--data: {--%>
+        <%--stuName: studentname,--%>
+        <%--address: address,--%>
+        <%--sayScon: sayScon,--%>
+        <%--chatDate: chatDate--%>
+        <%--},--%>
+        <%--success: function (data) {--%>
+        <%--layer.close(lindex);--%>
+        <%--layer.msg('添加成功!', {--%>
+        <%--icon: 1,--%>
+        <%--time: 1000--%>
+        <%--}, function () {--%>
+        <%--layer.close(index);--%>
+        <%--// location.reload();--%>
+        <%--table.reload('myTable', {--%>
+        <%--url: '${pageContext.request.contextPath}/chatRecord/chatRecordlist'--%>
+        <%--});--%>
+        <%--});--%>
+        <%--},--%>
+        <%--error: function () {--%>
+        <%--layer.close(lindex);--%>
+        <%--layer.msg("服务器错误");--%>
+        <%--}--%>
+        <%--});--%>
+        <%--}--%>
+        <%--},--%>
+        <%--btnAlign: 'c',--%>
+        <%--area: ['450px', '430px']--%>
+        <%--});--%>
+
+        <%--}--%>
+        <%--});--%>
     });
+
+    function addchatRecord() {
+        layer.open({
+            title: '添加试讲日期',
+            type: 2,
+            content: ['${pageContext.request.contextPath}/chatRecord/gotochatRecord_add', 'no'],
+            area: ['480px', '550px'],
+            resize: false
+        })
+    }
 </script>
 </body>
 </html>
