@@ -42,7 +42,14 @@
             <td><font size="2" color="#666">${list.startTime}</font></td>
             <td><font size="2" color="#666">${list.endTime}</font></td>
             <td><font size="2" color="#666">${list.type}</font></td>
-            <td><font size="2" color="#666">${list.status}</font></td>
+            <td>
+                <font size="2" color="#666">
+                    <c:if test="${list.status == 1}">审批中</c:if>
+                    <c:if test="${list.status == 2}">已完成</c:if>
+                    <c:if test="${list.status == 3}">不批准</c:if>
+
+                </font>
+            </td>
             <td><font size="2" color="#666">${list.remark}</font></td>
             <td>
                 <a class="layui-btn layui-btn-xs" onclick="agree(${list.holidayId},${list.taskId});">同意</a>
