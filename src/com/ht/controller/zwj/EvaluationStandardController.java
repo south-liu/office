@@ -47,19 +47,20 @@ public class EvaluationStandardController {
                 map.put("msg", "考评名称已存在！");
                 return map;
             }
-        }
+            evaluation.setScore(5);// 所有考评内容分值 5
 
-        try {
-            long id = evaluationStandardService.addEvaluationStandard(evaluation);
-            if (id > 0) {
-                map.put("code", 0);
-                map.put("msg", "添加成功！");
-                map.put("result", id);
+            try {
+                long id = evaluationStandardService.addEvaluationStandard(evaluation);
+                if (id > 0) {
+                    map.put("code", 0);
+                    map.put("msg", "添加成功！");
+                    map.put("result", id);
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                map.put("code", 1);
+                map.put("msg", "添加失败！");
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            map.put("code", 1);
-            map.put("msg", "添加失败！");
         }
         return map;
     }
@@ -82,6 +83,7 @@ public class EvaluationStandardController {
                 throw new Exception("考评名称不能为空！");
             }
 
+            evaluation.setScore(5);// 所有考评内容分值 5
             evaluationStandardService.updateEvaluationStandard(evaluation);
         } catch (Exception e) {
             System.out.println(e.getMessage());

@@ -35,16 +35,9 @@
     <form class="layui-form" method="post" id="actionForm" lay-filter="_form">
         <input type="hidden" name="evaluationId">
         <div class="layui-form-item">
-            <label class="layui-form-label">考评名称：</label>
+            <label class="layui-form-label">考评内容：</label>
             <div class="layui-input-inline">
-                <input type="text" name="evaluationName" lay-verify="required" lay-reqtext="考评名称是必填项，岂能为空？" placeholder="请输入考评名称"
-                       autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">考评分值：</label>
-            <div class="layui-input-inline">
-                <input type="text" name="score" lay-verify="required|number" lay-reqtext="考评分值是必填项，岂能为空？" placeholder="请输入考评分值"
+                <input type="text" name="evaluationName" lay-verify="required" lay-reqtext="考评内容是必填项，岂能为空？" placeholder="请输入考评名称"
                        autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -79,33 +72,17 @@
         var formArea = ['500px', '400px'];// 编辑和添加表单的宽高
 
         /*var addFormTitle = '添加考评';
-        var addFormURL = '
-
-
-
-
-
-
-
-        ${pageContext.request.contextPath}/evaluation-standard/add';
+        var addFormURL = '${pageContext.request.contextPath}/evaluation-standard/add';
 
         var editFormTitle = '编辑考评';
-        var editFormURL = '
-
-
-
-
-
-
-
-        ${pageContext.request.contextPath}/evaluation-standard/add';*/
+        var editFormURL = '${pageContext.request.contextPath}/evaluation-standard/add';*/
 
         var addOptions = {
-            title: '添加考评',
+            title: '添加考评内容',
             url: '${pageContext.request.contextPath}/evaluation-standard/add'
         };
         var editOptions = {
-            title: '编辑考评',
+            title: '编辑考评内容',
             url: '${pageContext.request.contextPath}/evaluation-standard/update',
             detailUrl: '${pageContext.request.contextPath}/evaluation-standard/detail'
         };
@@ -192,7 +169,6 @@
                             "evaluationId": data.evaluationId,
                             "evaluationName": data.evaluationName,
                             "evaluationType": data.evaluationType,
-                            "score": data.score,
                             "remark": data.remark
                         });
                         layer.close(loadIndex);
@@ -320,8 +296,7 @@
             , cols: [[
                 {field: 'checkbox', type: 'checkbox', fixed: 'left', width: 40}
                 , {field: 'evaluationId', width: 80, title: 'ID', sort: true}
-                , {field: 'evaluationName', title: '考评名称'}
-                , {field: 'score', title: '考评分值'}
+                , {field: 'evaluationName', title: '考评内容'}
                 , {
                     field: 'evaluationType', title: '考评类型', templet: function (d) {
                         if (d.evaluationType == 1) {
@@ -331,7 +306,8 @@
                         }
                     }
                 }
-                , {field: 'remark', title: '考评说明', minWidth: 150}
+                , {field: 'score', title: '考评分值'}
+                , {field: 'remark', title: '说明', minWidth: 150}
                 , {fixed: 'right', width: 200, title: '操作', align: 'center', toolbar: '#action_toolbar'}
             ]]
         });
