@@ -115,10 +115,15 @@ public class DaoUtils {
         Session session = getSession();
 
         Serializable serializable = session.save(o);
-        long id = Long.parseLong(serializable != null ? serializable.toString() : "0");
-
+        session.flush();
         closeSession(session);
-        return id;
+
+        System.out.println("save：" + serializable);
+        // 如果是数值型主键则转换为long
+        if (serializable instanceof Number) {
+            return ((Number) serializable).longValue();
+        }
+        return serializable != null ? 1 : 0;
     }
 
     /**

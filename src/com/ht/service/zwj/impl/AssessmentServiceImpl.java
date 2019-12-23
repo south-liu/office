@@ -3,6 +3,7 @@ package com.ht.service.zwj.impl;
 import com.ht.dao.zwj.AssessmentDao;
 import com.ht.service.zwj.AssessmentService;
 import com.ht.service.zwj.other.student.OStudentService;
+import com.ht.vo.AssessmentInformation;
 import com.ht.vo.AssessmentVO;
 import org.springframework.stereotype.Service;
 
@@ -192,5 +193,8 @@ public class AssessmentServiceImpl implements AssessmentService {
         return assessmentDao.queryTotalNumberByOptions(querySQL.toString());
     }
 
-
+    @Override
+    public long insertAssessmentInformation(AssessmentInformation assessmentInformation) {
+        return assessmentDao.insertAssessmentInformation(assessmentInformation);
+    }
 }

@@ -1,5 +1,6 @@
 package com.ht.dao.zwj;
 
+import com.ht.vo.AssessmentInformation;
 import com.ht.vo.AssessmentVO;
 
 import java.util.List;
@@ -27,4 +28,6 @@ public interface AssessmentDao {
     List<Map<String, Object>> queryAllData(int page, int limit, String options);
 
     long queryTotalNumberByOptions(String toString);
+
+    long insertAssessmentInformation(AssessmentInformation assessmentInformation);
 }

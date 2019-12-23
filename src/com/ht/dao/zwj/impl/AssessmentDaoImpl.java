@@ -2,6 +2,7 @@ package com.ht.dao.zwj.impl;
 
 import com.ht.dao.zwj.AssessmentDao;
 import com.ht.dao.zwj.DaoUtils;
+import com.ht.vo.AssessmentInformation;
 import com.ht.vo.AssessmentVO;
 import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Repository;
@@ -101,5 +102,11 @@ public class AssessmentDaoImpl extends DaoUtils implements AssessmentDao {
     @Override
     public long queryTotalNumberByOptions(String toString) {
         return queryTotalNumber("select count(1) from assessment as a where 1 = 1 " + toString);
+    }
+
+    @Override
+    public long insertAssessmentInformation(AssessmentInformation assessmentInformation) {
+        super.saveEntity(assessmentInformation);
+        return assessmentInformation.getAssessmentId();
     }
 }

@@ -1,5 +1,6 @@
 package com.ht.service.zwj;
 
+import com.ht.vo.AssessmentInformation;
 import com.ht.vo.AssessmentVO;
 
 import java.util.List;
@@ -31,4 +32,6 @@ public interface AssessmentService {
     List<Map<String, Object>> searchAssessmentByOptions(int page, int limit, Integer empId, String startTime, String endTime);
 
     long searchAssessmentTotalityByOptions(Integer empId, String startTime, String endTime);
+
+    long insertAssessmentInformation(AssessmentInformation assessmentInformation);
 }
