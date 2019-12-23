@@ -31,6 +31,9 @@ public interface checkworkService {
 //    根据id查询我的审批的个数
     public int checkwork_mycheckcount(int empId);
 
+    //    根据id查询我的未审批的个数
+    public int checkwork_mycheckcountNo(int empId);
+
 
     public void updatestatus(int checkworkId, int status, String checkTime, String remark);
 

@@ -53,17 +53,17 @@
             }],
             title: '员工数据表',
             cols: [[
-                {type: 'checkbox', fixed: 'left'},
-                {field: 'empName', title: '姓名', fixed: 'left', unresize: true, sort: true, align: 'center', width: 90},
-                {field: 'noCardTime', title: '未打卡时间', align: 'center', width: 120},
+                // {type: 'checkbox', fixed: 'left'},
+                {field: 'empName', title: '姓名', fixed: 'left', unresize: true, align: 'center', width: 90},
+                {field: 'noCardTime', title: '未打卡时间', align: 'center', width: 160},
                 {field: 'why', title: '原因说明',  width: 250},
                 {field: 'chairman', title: '审核人', align: 'center', width: 100},
-                {field: 'checkTime', title: '审核时间 ',  align: 'center', width: 120},
+                {field: 'checkTime', title: '审核时间 ',  align: 'center', width: 160},
                 {field: 'remark', title: '审核说明 ',width: 250},
 //                {field: 'status', title: '审核状态', align: 'center', width: 100},
 
                 {
-                    field: 'status', title: '状态', align: 'center', templet: function (res) {
+                    field: 'status', title: '审核状态', align: 'center', templet: function (res) {
                     if (res.status == 0) {
                         return '<span   class="layui-btn-llb layui-btn-normal layui-btn-mini layui-btn-disabled">未审核</span>'
                     } else if (res.status == 1) {

@@ -41,11 +41,13 @@
             defaultToolbar: ['filter', 'exports', 'print'],
             title: '我的请假申请表',
             cols: [[
-                {field:'holidayId',align:'center', title:'编号', width:120, fixed: 'left', unresize: true, sort: true},
+                {field:'holidayId',align:'center', title:'编号', width:80, fixed: 'left', unresize: true, sort: true},
                 {field:'empName',align:'center', title:'请假人', width:120},
                 {field:'dayStr',align:'center', title:'请假时长', width:120},
-                {field:'startTime',align:'center', title:'开始时间', width:120},
-                {field:'endTime',align:'center', title:'结束时间', width:120},
+                {field:'startTime',align:'center', title:'开始时间', width:160},
+                {field:'endTime',align:'center', title:'结束时间', width:160},
+                {field:'remark',align:'center', title:'请假事由', width:120},
+                {field:'type',align:'center', title:'类型', width:120},
                 {field:'status',align:'center', title:'状态', width:120, templet: function (res) {
                         if (res.status == 1){
                             return "审批中";
@@ -57,7 +59,6 @@
                             return "不批准";
                         }
                     }},
-                {field:'remark',align:'center', title:'请假事由', width:120},
                 {fixed:'right',align:'center', title:'操作', toolbar: '#barDemo', width:160}
             ]],
             page: true
@@ -91,8 +92,15 @@
             var data = obj.data;
 
             if(obj.event === 'cha'){
-                var lod = layer.load();
-                location.href='${pageContext.request.contextPath}/TP/pizhuholiday?holidayId=' + data.holidayId;
+                var index = layer.open({
+                    title:'批注',
+                    type:2,
+                    content:["${pageContext.request.contextPath}/TP/pizhuholiday?holidayId=" + data.holidayId, "no"],  <%-- ${param.studId}获取URL框中段递过来的参数 --%>
+                    area:['500px', "300px"],
+                    resize:false  //不能鼠标拖动改变大小
+                });
+                <%--var lod = layer.load();--%>
+                <%--location.href='${pageContext.request.contextPath}/TP/pizhuholiday?holidayId=' + data.holidayId;--%>
             }
 
         });

@@ -19,6 +19,6 @@ public interface IStudentDao {
     public void delStu(String ids);
     public void updStu(StudentVO studentVO);
 
-    public void repass(Integer stuId);
+    public void repass(Integer stuId,String password);
     public void updStuStatus(Integer stuId,Integer stat);
 }

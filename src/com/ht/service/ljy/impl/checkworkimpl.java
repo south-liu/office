@@ -57,6 +57,11 @@ public class checkworkimpl extends ljyDao implements checkworkService {
     }
 
     @Override
+    public int checkwork_mycheckcountNo(int empId) {
+        return selTotalRow("select count(*) from checkwork ck left join emp on ck.empId=emp.empId left join dept on emp.deptId=dept.deptId where ck.deptheadId=" + empId+" and ck.status=0");
+    }
+
+    @Override
     public void updatestatus(int checkworkId, int status, String checkTime,String remark) {
         executeSQL("update checkwork set status = " + status + ",checkTime='" + checkTime + "',remark='" + remark + "' where checkworkId = " + checkworkId);
     }

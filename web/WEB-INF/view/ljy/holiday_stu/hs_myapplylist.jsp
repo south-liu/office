@@ -33,7 +33,7 @@
 
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看批注</a>
-    <a class="layui-btn layui-btn-xs" lay-event="img" target="_blank">办理进度</a>
+    <%--<a class="layui-btn layui-btn-xs" lay-event="img" target="_blank">办理进度</a>--%>
 </script>
 
 <script type="text/html" id="toolbarDemo">
