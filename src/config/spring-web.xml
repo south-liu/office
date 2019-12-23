@@ -106,6 +106,8 @@
 
             <mvc:exclude-mapping path="/studentSide/login"/>
 
+            <mvc:exclude-mapping path="/studentSide/exit"/>
+
             <bean class="com.ht.interceptor.StuLoginInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>

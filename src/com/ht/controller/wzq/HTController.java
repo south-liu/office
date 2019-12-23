@@ -118,6 +118,7 @@ public class HTController {
     public String tomyweekly_list(){
         return "wzq/myweekly_list";
     }
+
     @RequestMapping("/myweeklylist")
     @ResponseBody
     public Map myweeklylist(Integer empId, int page, int limit){
@@ -160,9 +161,9 @@ public class HTController {
     //修改我的周报(点击编辑按钮修改)
     @RequestMapping("/updmyweekly")
     public String updmyweekly(WeeklyVO weekly){
-        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-        String date = sf.format(new Date());
-        weekly.setWorkDay(date);
+        //SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+        //String date = sf.format(new Date());
+        //weekly.setWorkDay(date);
         hts.updmyweekly(weekly);
         return "wzq/myweekly_list";
     }

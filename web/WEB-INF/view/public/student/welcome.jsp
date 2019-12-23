@@ -14,7 +14,7 @@
     <jsp:include page="../head.jsp"></jsp:include>
 </head>
 <body>
-<div class="layui-carousel" id="test1">
+<%--<div class="layui-carousel" id="test1">
     <div carousel-item>
         <div>条目1</div>
         <div>条目2</div>
@@ -22,7 +22,7 @@
         <div>条目4</div>
         <div>条目5</div>
     </div>
-</div>
+</div>--%>
 
 <div style="padding: 20px; background-color: #F2F2F2;">
     <div class="layui-card" style="width:300px">

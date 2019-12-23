@@ -147,7 +147,8 @@ public class StudentController {
 
     @RequestMapping("/addStu")
     @ResponseBody
-    public String addStu(StudentVO studentVO){
+    public String addStu(StudentVO studentVO,String P1,String C1,String A1){
+        studentVO.setNaTives(P1+C1+A1);
         studentVO.setStat(1);
         studentService.addStu(studentVO);
         return "success";
@@ -155,8 +156,9 @@ public class StudentController {
 
     @RequestMapping("/updStu")
     @ResponseBody
-    public String editStu(StudentVO studentVO){
+    public String editStu(StudentVO studentVO,String P1,String C1,String A1){
         StudentVO db = studentService.findById(studentVO.getStudId());
+        db.setNaTives(P1+C1+A1);
         db.setStuName(studentVO.getStuName());
         db.setCardId(studentVO.getCardId());
         db.setGuarantee(studentVO.getGuarantee());
@@ -254,10 +256,18 @@ public class StudentController {
         return map;
     }
 
+    //查询学生信息
+    @RequestMapping("/selStu")
+    @ResponseBody
+    public StudentVO selStu(Integer stuId){
+        StudentVO studentVO = studentService.findById(stuId);
+        return studentVO;
+    }
+
     @RequestMapping("/repass")
     @ResponseBody
-    public String repass(Integer stuId){
-        studentService.repass(stuId);
+    public String repass(Integer stuId,String password){
+        studentService.repass(stuId,password);
         return "success";
     }
 

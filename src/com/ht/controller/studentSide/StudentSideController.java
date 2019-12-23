@@ -140,6 +140,21 @@ public class StudentSideController {
         return map;
     }
 
+    //查询学生信息
+    @RequestMapping("/selStu")
+    @ResponseBody
+    public StudentVO selStu(Integer stuId){
+        StudentVO studentVO = studentService.findById(stuId);
+        return studentVO;
+    }
+
+    @RequestMapping("/repass")
+    @ResponseBody
+    public String repass(Integer stuId,String password){
+        studentService.repass(stuId,password);
+        return "success";
+    }
+
     @RequestMapping("/exit")
     @ResponseBody
     public String exit(HttpSession session) {

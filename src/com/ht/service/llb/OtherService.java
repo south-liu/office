@@ -41,4 +41,12 @@ public class OtherService {
     public List<StudentFloorVO> allFloor(){
         return otherDao.allFloor();
     }
+
+    public int myWeeklyOfTime(Integer empId,String startTime,String endTime){
+        return otherDao.myWeeklyOfTime(empId,startTime,endTime);
+    }
+
+    public int mychatRecordOfTime(Integer empId,String startTime,String endTime){
+        return otherDao.mychatRecordOfTime(empId,startTime,endTime);
+    }
 }

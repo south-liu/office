@@ -47,7 +47,7 @@
                 <div class="layui-card-body">
                     <a href="javascript:layer.load();
                     location.href='${pageContext.request.contextPath}/TP/mytaskholidaylist?empId=${emp.empId}';">
-                        <i class="layui-icon layui-icon-tips"></i> 员工请假待审批(0)
+                        <i class="layui-icon layui-icon-tips"></i> 员工请假待审批(${myEmpHolidayTask})
                     </a><br>
                     <a href="javascript:layer.load();
                     location.href='${pageContext.request.contextPath}/hstudent/hs_myTask_list';">
@@ -55,13 +55,14 @@
                     </a><br>
                     <a href="javascript:layer.load();
                     location.href='${pageContext.request.contextPath}/checkwork/gotomycheck';">
-                        <i class="layui-icon layui-icon-tips"></i> 未打卡待审批(0)
+                        <i class="layui-icon layui-icon-tips"></i> 未打卡待审批(${countCheckWork})
+                    </a><br>
+                    <a href="javascript:layer.load();
+                    location.href='${pageContext.request.contextPath}/MY/tomyweekly_list';">
+                        <i class="layui-icon layui-icon-log"></i> 本周工作周报(${myweekly})&nbsp;&nbsp;<font color="red">周日17:00前提交</font>
                     </a><br>
                     <a href="">
-                        <i class="layui-icon layui-icon-log"></i> 本周工作周报()&nbsp;&nbsp;<font color="red">周日17:00前提交</font>
-                    </a><br>
-                    <a href="">
-                        <i class="layui-icon layui-icon-chat"></i> 月谈心记录()&nbsp;&nbsp;<font color="red">每月需完成5个</font>
+                        <i class="layui-icon layui-icon-chat"></i> 月谈心记录(${mychat})&nbsp;&nbsp;<font color="red">每月需完成5个</font>
                     </a><br>
                 </div>
             </div>
