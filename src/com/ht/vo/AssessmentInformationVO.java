@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "assessmentInformation")// 考评内容分值
-public class AssessmentInformation implements Serializable {
+public class AssessmentInformationVO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -60,7 +60,7 @@ public class AssessmentInformation implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        AssessmentInformation that = (AssessmentInformation) o;
+        AssessmentInformationVO that = (AssessmentInformationVO) o;
 
         if (!studentId.equals(that.studentId)) return false;
         if (!assessmentId.equals(that.assessmentId)) return false;
@@ -77,7 +77,7 @@ public class AssessmentInformation implements Serializable {
 
     @Override
     public String toString() {
-        return "AssessmentInformation{" +
+        return "AssessmentInformationVO{" +
                 "studentId=" + studentId +
                 ", assessmentId=" + assessmentId +
                 ", evaluationId=" + evaluationId +

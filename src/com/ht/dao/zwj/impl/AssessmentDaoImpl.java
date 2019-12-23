@@ -2,7 +2,6 @@ package com.ht.dao.zwj.impl;
 
 import com.ht.dao.zwj.AssessmentDao;
 import com.ht.dao.zwj.DaoUtils;
-import com.ht.vo.AssessmentInformation;
 import com.ht.vo.AssessmentVO;
 import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Repository;

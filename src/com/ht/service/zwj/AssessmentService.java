@@ -1,6 +1,5 @@
 package com.ht.service.zwj;
 
-import com.ht.vo.AssessmentInformation;
 import com.ht.vo.AssessmentVO;
 
 import java.util.List;
