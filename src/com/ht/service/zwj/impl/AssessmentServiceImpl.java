@@ -3,7 +3,7 @@ package com.ht.service.zwj.impl;
 import com.ht.dao.zwj.AssessmentDao;
 import com.ht.service.zwj.AssessmentService;
 import com.ht.service.zwj.other.student.OStudentService;
-import com.ht.vo.AssessmentInformation;
+import com.ht.vo.AssessmentInformationVO;
 import com.ht.vo.AssessmentVO;
 import org.springframework.stereotype.Service;
 
@@ -164,10 +164,10 @@ public class AssessmentServiceImpl implements AssessmentService {
             querySQL.append(" and a.empId = " + empId);
         }
         if (startTime != null && !startTime.isEmpty()) {
-            querySQL.append(" and a.startTime > '" + startTime + "'");
+            querySQL.append(" and a.startTime >= '" + startTime + "'");
         }
         if (endTime != null && !endTime.isEmpty()) {
-            querySQL.append(" and a.endTime < '" + endTime + "'");
+            querySQL.append(" and a.endTime <= '" + endTime + "'");
         }
 
         List<Map<String, Object>> maps = null;
@@ -195,8 +195,8 @@ public class AssessmentServiceImpl implements AssessmentService {
     }
 
     @Override
-    public long insertAssessmentInformation(AssessmentInformation assessmentInformation) {
-        return assessmentDao.insertAssessmentInformation(assessmentInformation);
+    public long insertAssessmentInformation(AssessmentInformationVO assessmentInformationVO) {
+        return assessmentDao.insertAssessmentInformation(assessmentInformationVO);
     }
 
     @Override

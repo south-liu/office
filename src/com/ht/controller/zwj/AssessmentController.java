@@ -1,9 +1,7 @@
 package com.ht.controller.zwj;
 
-import com.ht.service.llb.IEmpService;
 import com.ht.service.zwj.AssessmentService;
 import com.ht.service.zwj.other.emp.OEmpService;
-import com.ht.service.zwj.other.student.OStudentService;
 import com.ht.service.zwj.other.studentClass.OStudentClassService;
 import com.ht.vo.AssessmentVO;
 import com.ht.vo.StudentClassVO;
@@ -26,13 +24,9 @@ public class AssessmentController {
     @Resource
     private AssessmentService assessmentService;
     @Resource
-    private IEmpService empService;
-    @Resource
     private OEmpService oEmpService;
     @Resource
     private OStudentClassService oStudentClassService;
-    @Resource
-    private OStudentService oStudentService;
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String home(Model model) {
