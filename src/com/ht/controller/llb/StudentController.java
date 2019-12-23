@@ -158,7 +158,7 @@ public class StudentController {
     @ResponseBody
     public String editStu(StudentVO studentVO,String P1,String C1,String A1){
         StudentVO db = studentService.findById(studentVO.getStudId());
-        studentVO.setNaTives(P1+C1+A1);
+        db.setNaTives(P1+C1+A1);
         db.setStuName(studentVO.getStuName());
         db.setCardId(studentVO.getCardId());
         db.setGuarantee(studentVO.getGuarantee());
