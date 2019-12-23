@@ -20,9 +20,6 @@
 </head>
 <body>
 <c:if test="${!errorState}">
-    ${assessment}
-    ${assessmentEmp}
-    ${evaluationStandardList}
     <blockquote class="layui-elem-quote">
         <h1>${assessmentEmp.postName}【${assessmentEmp.empName}】的教师考评：</h1>
         <p style="margin-top: 10px;">考评时间：${assessment.startTime}&ensp;~&ensp;${assessment.endTime}</p>
