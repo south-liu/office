@@ -51,4 +51,14 @@ public class OtherDao extends BaseDao {
     public void updHuorCount(Integer huorId,Integer num){
         executeSQL("update studentHuor set count = count +"+num+" where hourId = "+huorId);
     };
+
+    //按时间查询我的周报
+    public int myWeeklyOfTime(Integer empId,String startTime,String endTime){
+        return totalRowBySql("select count(*) from weekly w where w.empId = "+empId+" and w.workDay BETWEEN '"+startTime+"' and '"+endTime+"'");
+    };
+
+    //按时间查询我的谈心记录
+    public int mychatRecordOfTime(Integer empId,String startTime,String endTime){
+        return totalRowBySql("select count(*) from chatRecord w where w.teacher = "+empId+" and w.chatDate BETWEEN '"+startTime+"' and '"+endTime+"'");
+    };
 }

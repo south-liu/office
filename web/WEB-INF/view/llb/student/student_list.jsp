@@ -158,14 +158,16 @@
             var length = checkStatus.data.length;
             switch(obj.event){
                 case 'addStu':
-                    layer.open({
+                    /*layer.open({
                         title:'添加学生',
                         type:2,
                         content:'${pageContext.request.contextPath}/student/toAdd',
                         area: ['720px', '500px'],
                         resize:false,
                         // maxmin:true
-                    });
+                    });*/
+                    layer.load();
+                    location.href='${pageContext.request.contextPath}/student/toAdd';
                     break;
                 case 'delStus':
                     var ids = [];
@@ -406,14 +408,16 @@
                     });
                 });
             } else if(obj.event === 'edit'){
-                layer.open({
+                layer.load();
+                location.href='${pageContext.request.contextPath}/student/toEdit?studId='+data.studId;
+                /*layer.open({
                     title:'编辑信息',
                     type:2,
                     content:'${pageContext.request.contextPath}/student/toEdit?studId='+data.studId,
                     area: ['720px', '500px'],
                     resize:false,
                     maxmin:true
-                });
+                });*/
             } else if (obj.event === 'tuixue') {
                 if (data.stat == 0) {
                     layer.msg('该学生已退学',{

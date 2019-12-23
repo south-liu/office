@@ -125,7 +125,10 @@ public class BaseDao {
 
     //查询对象(单个对象)
     public Object getObject(Class clazz, Integer id){
-        return getSession().get(clazz, id);
+        Session session = getSession();
+        Object o = session.get(clazz, id);
+        session.close();
+        return o;
     }
 
     //修改
