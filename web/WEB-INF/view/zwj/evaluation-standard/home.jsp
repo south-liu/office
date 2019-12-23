@@ -296,8 +296,7 @@
             , cols: [[
                 {field: 'checkbox', type: 'checkbox', fixed: 'left', width: 40}
                 , {field: 'evaluationId', width: 80, title: 'ID', sort: true}
-                , {field: 'evaluationName', title: '考评名称'}
-                , {field: 'score', title: '考评分值'}
+                , {field: 'evaluationName', title: '考评内容'}
                 , {
                     field: 'evaluationType', title: '考评类型', templet: function (d) {
                         if (d.evaluationType == 1) {
@@ -307,7 +306,8 @@
                         }
                     }
                 }
-                , {field: 'remark', title: '考评说明', minWidth: 150}
+                , {field: 'score', title: '考评分值'}
+                , {field: 'remark', title: '说明', minWidth: 150}
                 , {fixed: 'right', width: 200, title: '操作', align: 'center', toolbar: '#action_toolbar'}
             ]]
         });
