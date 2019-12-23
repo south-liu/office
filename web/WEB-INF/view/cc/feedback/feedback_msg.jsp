@@ -27,6 +27,11 @@
         font-size: smaller;
         color: blue;
     }
+
+    img {
+        height: 300px;
+        border: none;
+    }
 </style>
 <head>
     <title>问题反馈</title>
@@ -34,6 +39,9 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css" media="all">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/template.css" media="all">
 <body layadmin-themealias="default" style="" rlt="1">
+<div class="layui-inline">
+    <button class="layui-btn layui-btn-sm" onclick="javascript:history.back(-1)" style="height: 30px; margin: 10px 0 0 15px"><i class="layui-icon layui-icon-return" style="font-size: 15px; color: #FFF"></i>返回</button>
+</div>
 <form class="layui-form" action="" lay-filter="example">
     <blockquote class="layui-elem-quote layui-quote-nm">
         <label>${feedbackVO.remark}</label></br>
@@ -111,7 +119,7 @@
                     },
                     error: function () {
                         layer.close(lod);
-                        layer.msg("服务器错误", {
+                        layer.msg("请完整输入内容", {
                             icon: 2,
                             time: 1000
                         });

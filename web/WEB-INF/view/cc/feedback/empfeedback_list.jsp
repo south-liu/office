@@ -21,11 +21,6 @@
 <body>
 <table class="layui-hide" id="myTable" lay-filter="fTable">
 </table>
-<script type="text/html" id="toolbarDemo">
-    <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
-    </div>
-</script>
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     <a class="layui-btn layui-btn-xs" lay-event="upd">查看详情</a>
@@ -36,10 +31,9 @@
 
         table.render({
             elem:'#myTable',
-            url:'${pageContext.request.contextPath}/feedback/stufeed_list',
+            url:'${pageContext.request.contextPath}/feedback/allfeed_list',
             page:true,
             cellMinWidth: 80,
-            toolbar:'#toolbarDemo',//头部工具栏
             title:'问题反馈',
             cols:[[
                 {field:'feedbackId', title:'编号', sort: true,align: 'center'},
@@ -84,7 +78,7 @@
                         $.post('${pageContext.request.contextPath}/feedback/deletelist', {feedbackId: obj.data.feedbackId},function (data) {
                             layer.msg('删除成功！');
                             table.reload('myTable', {
-                                url: '${pageContext.request.contextPath}/feedback/feed_list'
+                                url: '${pageContext.request.contextPath}/feedback/allfeed_list'
                             });
                         }, 'json');
                         layer.close(index);
