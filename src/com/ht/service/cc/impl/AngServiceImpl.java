@@ -11,7 +11,7 @@ import java.util.List;
 public class AngServiceImpl extends BaseDao implements AngService {
     @Override
     public List selSpage(int currPage, int pageSize) {
-        return pageListBySql("select w.*,e.empName from weekArrange w left join emp e on w.empId=e.empId ",currPage,pageSize);
+        return pageListBySql("select w.*,e.empName from weekArrange w left join emp e on w.empId=e.empId order by orderId asc",currPage,pageSize);
 
     }
 
