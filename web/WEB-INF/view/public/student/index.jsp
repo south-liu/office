@@ -20,7 +20,7 @@
     <div class="layui-header">
         <div class="layui-logo">office</div>
         <!-- 头部区域（可配合layui已有的水平导航） -->
-        <%--<ul class="layui-nav layui-layout-left">
+        <ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item"><a href="">控制台</a></li>
             <li class="layui-nav-item"><a href="">商品管理</a></li>
             <li class="layui-nav-item"><a href="">用户</a></li>
@@ -32,14 +32,15 @@
                     <dd><a href="">授权管理</a></dd>
                 </dl>
             </li>
-        </ul>--%>
+        </ul>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:;">
                     ${student.stuName}
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="">修改密码</a></dd>
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item"><a id="exit" href="javascript:;">退出</a></li>
@@ -53,13 +54,16 @@
 
                 <li class="layui-nav-item"><a href="javascript:;" id="_welcome"><i class="layui-icon layui-icon-home" style="font-size: 15px; color: #FFF;margin-right: 10px;"></i>首页</a></li>
 
-                <li class="layui-nav-item layui-nav-itemed">
+                <li class="layui-nav-item">
                     <a class="small_menu_title" href="javascript:;"><i class="layui-icon layui-icon-username" style="font-size: 15px; color: #FFF;margin-right: 10px;"></i>个人主页</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;" title="申请请假" src="hstudent/goto_hs_myapply_list"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>申请请假</a></dd>
                         <dd><a href="javascript:;" title="问题反馈" src="feedback/tolist"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>问题反馈</a></dd>
-                        <dd><a href="javascript:;" title="报修申请" src="repair/tolist"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>报修申请</a></dd>
-                        <dd><a href="javascript:;" title="教师考评" src=""><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>教师考评</a></dd>
+                        <dd><a href="javascript:;" title="报修申请" src=""><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>报修申请</a></dd>
+                        <dd><a href="javascript:;" title="教师考评" src="s/assessment/writerAssessment"><i class="layui-icon layui-icon-right" style="font-size:
+                        15px;
+                        color: #FFF;margin: 0
+                        10px;"></i>教师考评</a></dd>
                     </dl>
                 </li>
             </ul>
