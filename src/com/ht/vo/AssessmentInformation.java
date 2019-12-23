@@ -6,7 +6,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "assessmentInformation")
+@Table(name = "assessmentInformation")// 考评内容分值
 public class AssessmentInformation implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -14,9 +14,10 @@ public class AssessmentInformation implements Serializable {
     private Integer studentId;// 学生ID
     @Id
     private Integer assessmentId;// 考评ID
+    @Id
+    private Integer evaluationId;// 考评内容ID
 
-    private Integer grossScore;// 考评总分数
-    private String suggest;// 建议
+    private Integer grossScore;// 分数
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -38,20 +39,20 @@ public class AssessmentInformation implements Serializable {
         this.assessmentId = assessmentId;
     }
 
+    public Integer getEvaluationId() {
+        return evaluationId;
+    }
+
+    public void setEvaluationId(Integer evaluationId) {
+        this.evaluationId = evaluationId;
+    }
+
     public Integer getGrossScore() {
         return grossScore;
     }
 
     public void setGrossScore(Integer grossScore) {
         this.grossScore = grossScore;
-    }
-
-    public String getSuggest() {
-        return suggest;
-    }
-
-    public void setSuggest(String suggest) {
-        this.suggest = suggest;
     }
 
     @Override
@@ -62,13 +63,15 @@ public class AssessmentInformation implements Serializable {
         AssessmentInformation that = (AssessmentInformation) o;
 
         if (!studentId.equals(that.studentId)) return false;
-        return assessmentId.equals(that.assessmentId);
+        if (!assessmentId.equals(that.assessmentId)) return false;
+        return evaluationId.equals(that.evaluationId);
     }
 
     @Override
     public int hashCode() {
         int result = studentId.hashCode();
         result = 31 * result + assessmentId.hashCode();
+        result = 31 * result + evaluationId.hashCode();
         return result;
     }
 
@@ -77,8 +80,8 @@ public class AssessmentInformation implements Serializable {
         return "AssessmentInformation{" +
                 "studentId=" + studentId +
                 ", assessmentId=" + assessmentId +
+                ", evaluationId=" + evaluationId +
                 ", grossScore=" + grossScore +
-                ", suggest='" + suggest + '\'' +
                 '}';
     }
 }

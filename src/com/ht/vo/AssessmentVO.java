@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "assessment")
-public class AssessmentVO {// 教师考评
+public class AssessmentVO {// 教师考评表
     @Id
     @GeneratedValue
     private Integer assessmentId;// 考评ID

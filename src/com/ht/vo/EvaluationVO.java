@@ -3,12 +3,12 @@ package com.ht.vo;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "evaluation")//员工考评标准表
+@Table(name = "evaluation")//员工考评内容表
 public class EvaluationVO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer evaluationId;//主键，标识列，自动生成
-    private String evaluationName;//考评名称
+    private String evaluationName;//考评内容
     private Integer score;//考核分值
     private Integer evaluationType;//1:授课老师2:班主任
     private String remark;//说明
