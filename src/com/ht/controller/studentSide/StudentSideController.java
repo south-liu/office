@@ -26,12 +26,10 @@ public class StudentSideController {
     @Resource
     private SAssessmentService sAssessmentService;
 
-
     /**
      * 学生端首页入口
      *
      * @return
-     * @author 钟文军
      */
     @RequestMapping("/index")
     public String index() {
@@ -55,11 +53,11 @@ public class StudentSideController {
      */
     @RequestMapping("/welcome")
     public String welcome(Model model, HttpSession session) {
-        if (session.getAttribute("student") == null) {
-            // 查询该学生的所有考评
+        StudentVO student = (StudentVO) session.getAttribute("student");
+        if (student != null) {
+            // 已登录，查询该学生的所有考评
             try {
-                model.addAttribute("assessmentList", sAssessmentService.queryAssessmentByStudent((StudentVO) session.getAttribute("student")));
-
+                model.addAttribute("assessmentList", sAssessmentService.queryAssessmentByStudent(student));
             } catch (Exception e) {
                 e.printStackTrace();
             }
