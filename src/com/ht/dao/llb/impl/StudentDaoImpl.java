@@ -90,8 +90,8 @@ public class StudentDaoImpl extends BaseDao implements IStudentDao {
     }
 
     @Override
-    public void repass(Integer stuId) {
-        executeSQL("update student set password = '123456' where studId = "+stuId);
+    public void repass(Integer stuId,String password) {
+        executeSQL("update student set password = '"+password+"' where studId = "+stuId);
     }
 
     @Override

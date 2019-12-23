@@ -457,7 +457,7 @@
                         type: "POST",
                         dataType: "json",
                         url: "${pageContext.request.contextPath}/student/repass" ,
-                        data: {stuId:data.studId},
+                        data: {stuId:data.studId,password:'123456'},
                         success: function (result) {
                             layer.close(lod);
                             layer.msg('重置密码成功',{

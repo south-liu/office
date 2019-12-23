@@ -65,8 +65,8 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
-    public void repass(Integer stuId) {
-        studentDao.repass(stuId);
+    public void repass(Integer stuId,String password) {
+        studentDao.repass(stuId,password);
     }
 
     @Override
