@@ -73,7 +73,7 @@
                 cols: [[
                     {type: 'checkbox', fixed: 'left'},
                     {field: 'classId', title: '序号', fixed: 'left', unresize: true, sort: true, align: 'center', width: 90},
-                    {field: 'classNo', title: '班级编号 ', edit: 'text', align: 'center', width: 100},
+                    {field: 'classNo', title: '班级编号 ', edit: 'text', align: 'center', width: 90},
                     {field: 'className', title: '班级名称', align: 'center', width: 100},
                     {field: 'empName', title: '授课老师', align: 'center', width: 100},
                     {field: 'classTeacher', title: '班主任', align: 'center', width: 100},
@@ -82,7 +82,7 @@
                     {field: 'deptName', title: '系名称', align: 'center', width: 100},
                     {field: 'majorName', title: '专业名称', align: 'center', width: 110},
                     {field: 'remark', title: '说明', edit: 'text', align: 'center', width: 120},
-                    {fixed: 'right', title: '操作', toolbar: '#bar', align: 'center'}
+                    {fixed: 'right', title: '操作', toolbar: '#bar', align: 'center',width:120}
                 ]],
                 page: true
             });
@@ -96,7 +96,7 @@
                         type: 2,
                         content: '${pageContext.request.contextPath}/studentclass/gotostudentclassupd?classId=' + obj.data.classId,
                         btnAlign: 'c',
-                        area: ['480px', '680px']
+                        area: ['780px', '480px']
                     });
 
                 } else if (event === 'del') {

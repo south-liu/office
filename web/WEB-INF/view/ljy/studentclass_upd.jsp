@@ -44,9 +44,7 @@
             <input type="text" name="classNo" lay-verify="required" placeholder="请输入" autocomplete="off"
                    class="layui-input">
         </div>
-    </div>
 
-    <div class="layui-form-item">
         <label class="layui-form-label">班级名称：</label>
         <div class="layui-input-inline">
             <input type="text" name="className" lay-verify="required" placeholder="请输入" autocomplete="off"
@@ -56,7 +54,7 @@
 
     <div class="layui-form-item">
         <label class="layui-form-label">授课老师：</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <select name="teacher" lay-filter="teacher">
                 <option value="">请选择授课老师</option>
                 <c:forEach items="${emplist}" var="emp">
@@ -64,11 +62,9 @@
                 </c:forEach>
             </select>
         </div>
-    </div>
 
-    <div class="layui-form-item">
         <label class="layui-form-label">班主任：</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <select name="classTeacher" lay-filter="classTeacher">
                 <option value="">请选择班主任</option>
                 <c:forEach items="${emplist}" var="emp">
@@ -80,7 +76,7 @@
 
     <div class="layui-form-item">
         <label class="layui-form-label">班级类别：</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <select name="classType" lay-filter="classType">
                 <option value="">请选择班级类别</option>
                 <c:forEach items="${cltylist}" var="clty">
@@ -88,12 +84,9 @@
                 </c:forEach>
             </select>
         </div>
-    </div>
 
-
-    <div class="layui-form-item">
         <label class="layui-form-label">系名称：</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <select name="deptId" lay-filter="deptType">
                 <option value="">请选择所属系名称</option>
                 <c:forEach items="${deptlist}" var="dept">
@@ -106,7 +99,7 @@
 
     <div class="layui-form-item">
         <label class="layui-form-label">专业名称：</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <select name="majorId" lay-filter="deptType">
                 <option value="">请选择专业类别</option>
                 <c:forEach items="${majorlist}" var="major">
@@ -114,11 +107,9 @@
                 </c:forEach>
             </select>
         </div>
-    </div>
 
-    <div class="layui-form-item">
         <label class="layui-form-label">界别年份：</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <select name="falled" lay-filter="deptType">
                 <option value="">请选择年份</option>
                 <c:forEach items="${studfall}" var="sf">
