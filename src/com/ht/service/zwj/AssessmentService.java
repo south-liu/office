@@ -34,4 +34,6 @@ public interface AssessmentService {
     long searchAssessmentTotalityByOptions(Integer empId, String startTime, String endTime);
 
     long insertAssessmentInformation(AssessmentInformation assessmentInformation);
+
+    List<Map<String, Object>> queryStudentByAssessmentId(Integer assessmentId);
 }

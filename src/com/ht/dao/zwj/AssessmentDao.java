@@ -30,4 +30,6 @@ public interface AssessmentDao {
     long queryTotalNumberByOptions(String toString);
 
     long insertAssessmentInformation(AssessmentInformation assessmentInformation);
+
+    List<Map<String, Object>> queryStudentByAssessmentId(Integer assessmentId);
 }

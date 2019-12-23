@@ -207,18 +207,18 @@ public class AssessmentController {
             return null;
         }
 
-        List<Map<String, Object>> studentList = Collections.emptyList();
+        List<Map<String, Object>> studentList;
         try {
             // 通过考评中的学生班级查询班级下面所有的学生
-            studentList = oStudentService.findStudentByClassId(assessment.getStudentClassId());
+            studentList = assessmentService.queryStudentByAssessmentId(assessment.getAssessmentId());
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            studentList = Collections.emptyList();
         }
         model.addAttribute("assessment", assessment);
         model.addAttribute("studentList", studentList);
 
         return "zwj/assessment/assessmentInformation";
-
     }
 
     /**
@@ -241,7 +241,7 @@ public class AssessmentController {
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
             map.put("code", 1);
-            map.put("msg", "服务区错误！");
+            map.put("msg", "服务器错误！");
         }
 
         return map;

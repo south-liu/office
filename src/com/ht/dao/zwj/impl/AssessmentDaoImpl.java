@@ -109,4 +109,9 @@ public class AssessmentDaoImpl extends DaoUtils implements AssessmentDao {
         super.saveEntity(assessmentInformation);
         return assessmentInformation.getAssessmentId();
     }
+
+    @Override
+    public List<Map<String, Object>> queryStudentByAssessmentId(Integer assessmentId) {
+        return super.queryAllBySql("select studId,stuName from student where studId in(select studentId from assessmentInformation where assessmentId = " + assessmentId + ")", Transformers.ALIAS_TO_ENTITY_MAP);
+    }
 }

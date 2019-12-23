@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -196,5 +197,13 @@ public class AssessmentServiceImpl implements AssessmentService {
     @Override
     public long insertAssessmentInformation(AssessmentInformation assessmentInformation) {
         return assessmentDao.insertAssessmentInformation(assessmentInformation);
+    }
+
+    @Override
+    public List<Map<String, Object>> queryStudentByAssessmentId(Integer assessmentId) {
+        if (assessmentId == null || assessmentId <= 0) {
+            return Collections.emptyList();
+        }
+        return assessmentDao.queryStudentByAssessmentId(assessmentId);
     }
 }
