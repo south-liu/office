@@ -1,4 +1,4 @@
-package com.ht.dao;
+package com.ht.dao.zwj;
 
 import com.ht.vo.AssessmentVO;
 
