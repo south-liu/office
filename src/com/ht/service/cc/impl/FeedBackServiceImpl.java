@@ -15,9 +15,20 @@ public class FeedBackServiceImpl extends BaseDao implements FeedBackService {
     public List selSpage(int currPage, int pageSize) {
         return pageListByHql("from FeedbackVO",currPage,pageSize);
     }
+
+    @Override
+    public List stuselSpage(int currPage, int pageSize, String stuId) {
+        return pageListBySql("select * from feedback where empId="+stuId,currPage,pageSize);
+    }
+
     @Override
     public Integer seltotalFeed() {
         return totalRowByHql("select count(*) from FeedbackVO");
+    }
+
+    @Override
+    public Integer seltotalFeedbyId(String stuId) {
+        return totalRowBySql("select count(*) from feedback where empId="+stuId);
     }
 
     @Override

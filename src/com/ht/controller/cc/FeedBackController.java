@@ -28,6 +28,11 @@ public class FeedBackController {
         return "cc/feedback/feedback_list";
     }
 
+    @RequestMapping("/toemplist")
+    public String emplist() {
+        return "cc/feedback/empfeedback_list";
+    }
+
 
     @RequestMapping("/toadd")
     public String toadd(Model model) {
@@ -45,8 +50,8 @@ public class FeedBackController {
 
 
     @ResponseBody
-    @RequestMapping("/feed_list")
-    public Map collegelist(int page, int limit, Model model) {
+    @RequestMapping("/allfeed_list")
+    public Map allfeedbacklist(int page, int limit, Model model) {
 //        List list = cs.selSpage(page,rows);//每页数据
         Integer totalRow = fs.seltotalFeed();//总行数
         Map map = new HashMap();
@@ -54,6 +59,22 @@ public class FeedBackController {
         map.put("msg", 0);
         map.put("count", totalRow);
         map.put("data", fs.selSpage(page, limit));
+        System.out.println("total " + totalRow);
+        return map;
+    }
+
+    @ResponseBody
+    @RequestMapping("/stufeed_list")
+    public Map stufeedbacklist(int page, int limit, Model model,HttpSession session) {
+        StudentVO stu = (StudentVO) session.getAttribute("student");
+        String stuId = stu.getStudId().toString();
+//        List list = cs.selSpage(page,rows);//每页数据
+        Integer totalRow = fs.seltotalFeedbyId(stuId);//总行数
+        Map map = new HashMap();
+        map.put("code", 0);
+        map.put("msg", 0);
+        map.put("count", totalRow);
+        map.put("data", fs.stuselSpage(page, limit,stuId));
         System.out.println("total " + totalRow);
         return map;
     }
