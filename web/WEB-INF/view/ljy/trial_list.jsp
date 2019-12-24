@@ -20,7 +20,7 @@
 
 
 <table class="layui-table"
-       lay-data="{height:550, url:'${pageContext.request.contextPath}/trial/triallist', page:true, id:'myTable',toolbar:'#toolbarDemo'}"
+       lay-data="{url:'${pageContext.request.contextPath}/trial/triallist', page:true, id:'myTable',toolbar:'#toolbarDemo'}"
        lay-filter="fTable">
     <thead>
     <tr>
@@ -78,10 +78,10 @@
 
     function addtrial() {
         layer.open({
-            title: '添加班级',
+            title: '添加试讲日期',
             type: 2,
             content: ['${pageContext.request.contextPath}/trial/gototrialadd', 'no'],
-            area: ['480px', '680px'],
+            area: ['780px', '480px'],
             resize: false
         })
     }

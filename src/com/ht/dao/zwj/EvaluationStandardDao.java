@@ -18,4 +18,6 @@ public interface EvaluationStandardDao {
     void updateEvaluationStandard(EvaluationVO evaluation);
 
     void deleteEvaluationStandard(EvaluationVO evaluation);
+
+    List<EvaluationVO> queryAllDataByType(int evaluationType);
 }

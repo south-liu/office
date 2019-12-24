@@ -9,6 +9,12 @@ import java.util.List;
 @Service
 public class CserviceImpl extends BaseDao implements CollegeService {
 
+
+    @Override
+    public List selSpage() {
+        return findAllBySql("select * from collegeDept ");
+    }
+
     @Override
     public List selSpage(int currPage, int pageSize) {
       //  return pageListBySql("select * from collegeDept",currPage,pageSize);

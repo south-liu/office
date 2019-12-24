@@ -80,7 +80,7 @@
                 {field:'studentQuestion',align:'center', title:'问题学生情况反馈'},
                 {field:'idea',align:'center', title:'意见建议'},
                 {field:'weekNext',align:'center', title:'下周工作计划'},
-                {fixed:'right',align:'center', title:'操作', toolbar: '#barDemo',width:200}
+                {fixed:'right',align:'center', title:'操作', toolbar: '#barDemo'}
             ]],
             page: true
         });

@@ -1,9 +1,7 @@
 package com.ht.controller.zwj;
 
-import com.ht.service.llb.IEmpService;
 import com.ht.service.zwj.AssessmentService;
 import com.ht.service.zwj.other.emp.OEmpService;
-import com.ht.service.zwj.other.student.OStudentService;
 import com.ht.service.zwj.other.studentClass.OStudentClassService;
 import com.ht.vo.AssessmentVO;
 import com.ht.vo.StudentClassVO;
@@ -26,13 +24,9 @@ public class AssessmentController {
     @Resource
     private AssessmentService assessmentService;
     @Resource
-    private IEmpService empService;
-    @Resource
     private OEmpService oEmpService;
     @Resource
     private OStudentClassService oStudentClassService;
-    @Resource
-    private OStudentService oStudentService;
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String home(Model model) {
@@ -207,18 +201,18 @@ public class AssessmentController {
             return null;
         }
 
-        List<Map<String, Object>> studentList = Collections.emptyList();
+        List<Map<String, Object>> studentList;
         try {
             // 通过考评中的学生班级查询班级下面所有的学生
-            studentList = oStudentService.findStudentByClassId(assessment.getStudentClassId());
+            studentList = assessmentService.queryStudentByAssessmentId(assessment.getAssessmentId());
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            studentList = Collections.emptyList();
         }
         model.addAttribute("assessment", assessment);
         model.addAttribute("studentList", studentList);
 
         return "zwj/assessment/assessmentInformation";
-
     }
 
     /**
@@ -241,7 +235,7 @@ public class AssessmentController {
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
             map.put("code", 1);
-            map.put("msg", "服务区错误！");
+            map.put("msg", "服务器错误！");
         }
 
         return map;

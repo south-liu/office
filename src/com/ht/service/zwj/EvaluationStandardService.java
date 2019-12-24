@@ -15,6 +15,8 @@ public interface EvaluationStandardService {
 
     EvaluationVO queryEvaluationStandardByName(String evaluationName);
 
+    List<EvaluationVO> queryAllDataByType(int state);
+
     void updateEvaluationStandard(EvaluationVO evaluation);
 
     void deleteEvaluationStandard(int evaluationId);

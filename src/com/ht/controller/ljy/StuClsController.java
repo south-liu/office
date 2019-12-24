@@ -1,5 +1,6 @@
 package com.ht.controller.ljy;
 
+import com.ht.service.cc.CollegeService;
 import com.ht.service.cc.MajorService;
 import com.ht.service.ljy.classTypeService;
 import com.ht.service.ljy.studentclassService;
@@ -38,7 +39,7 @@ public class StuClsController {
     private StudentFallService studentFallService;
 
     @Resource
-    private IDeptService iDeptService;
+    private CollegeService collegeService;
 
     @Resource
     private MajorService majorService;
@@ -59,7 +60,7 @@ public class StuClsController {
         model.addAttribute("emplist",iEmpService.allEmp());
         model.addAttribute("cltylist",classTypeService.classTypeList());
         model.addAttribute("majorlist",majorService.allMajor());
-        model.addAttribute("deptlist",iDeptService.allDept());
+        model.addAttribute("deptlist",collegeService.selSpage());
         return "ljy/studentclass_add";
     }
 
@@ -102,7 +103,7 @@ public class StuClsController {
         model.addAttribute("emplist",iEmpService.allEmp());
         model.addAttribute("cltylist",classTypeService.classTypeList());
         model.addAttribute("majorlist",majorService.allMajor());
-        model.addAttribute("deptlist",iDeptService.allDept());
+        model.addAttribute("deptlist",collegeService.selSpage());
         model.addAttribute("stucla",studentclassService.studentclassbyid(classId));
         return "ljy/studentclass_upd";
     }

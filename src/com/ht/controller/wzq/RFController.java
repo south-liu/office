@@ -5,6 +5,7 @@ import com.ht.service.wzq.HTService;
 import com.ht.service.wzq.RFSerivce;
 import com.alibaba.fastjson.JSONObject;
 import com.ht.vo.AduitLogVO;
+import com.ht.vo.CheckWorkVO;
 import com.ht.vo.DeptVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +30,8 @@ public class RFController {
 
     @Resource
     HTService hts;
+
+    //----------未打卡说明统计（图型展示）------------------
 
     @RequestMapping("/tocheckwork_rf")
     public String tocheckwork_rf(){
@@ -140,12 +143,81 @@ public class RFController {
 
         JSONObject json = new JSONObject();
         json.put("zong", zong);
-        System.out.println(JSONArray.toJSON(zong).toString());
-        System.out.println(JSONArray.toJSON(xilie).toString());
+//        System.out.println(JSONArray.toJSON(zong).toString());
+//        System.out.println(JSONArray.toJSON(xilie).toString());
         json.put("xilie", xilie);
         return json;
     }
 
+    //------------未打卡说明统计（表格展示）--------------------------
+
+    //去未打卡说明统计表示
+    @RequestMapping("/tocheckwork_list")
+    public String tocheckwork_list(Model model){
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+        String date = sf.format(new Date());
+        String a = date.substring(0, date.length() - 6);
+        String b = date.substring(date.length() - 5, date.length() - 3);
+        date = a + "年" + b + "月";
+        //给查询对应时间的审核用
+        model.addAttribute("date", date);
+        List<CheckWorkVO> list = rfs.selcheckwork();
+        model.addAttribute("noCardTimes", list);
+        List<DeptVO> list2 = hts.seldept();
+        model.addAttribute("emps", list2);
+        return "wzq/checkwork_list";
+    }
+    @RequestMapping("/checkwork_list")
+    @ResponseBody
+    public Map checkwork_list(String date, int page, int limit){
+        List list = rfs.selcheckwork(date, page, limit);
+        Integer count = rfs.selcountcheckwork(date);
+        Map map = new HashMap();
+        map.put("code", 0);
+        map.put("msg", "");
+        map.put("count", count);
+        map.put("data", list);
+        return map;
+    }
+    //搜索框筛选
+    @RequestMapping("/checkwork_list_sousuo")
+    @ResponseBody
+    public Map checkwork_list_sousuo(int page, int limit, String empName, String deptName, String date1){
+        String sql = "select c.*, e.empName eName, m.empName mName, d.deptName from checkwork c left join emp e on c.empId = e.empId left join emp m on c.deptHeadId = m.empId left join dept d on e.deptId = d.deptId where 1 = 1";
+        String sql1 = "select count(*) from checkwork c left join emp e on c.empId = e.empId left join emp m on c.deptHeadId = m.empId left join dept d on e.deptId = d.deptId where 1 = 1";
+        if (!"".equals(date1) && date1 != null){
+            if(date1 == "全部" || "全部".equals(date1)){
+
+            }else {
+                sql += " and date_format(c.noCardTime, '%Y年%m月') ='" + date1 + "'";
+                sql1 += " and date_format(c.noCardTime, '%Y年%m月') ='" + date1 + "'";
+            }
+        }else {
+            SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+            String date = sf.format(new Date());
+            String a = date.substring(0, date.length() - 6);
+            String b = date.substring(date.length() - 5, date.length() - 3);
+            date = a + "年" + b + "月";
+            sql += " and date_format(c.noCardTime, '%Y年%m月') ='" + date + "'";
+            sql1 += " and date_format(c.noCardTime, '%Y年%m月') ='" + date + "'";
+        }
+        if (!"".equals(empName) && empName != null){
+            sql += " and e.empName like '%"+ empName +"%'";
+            sql1 += " and e.empName like '%"+ empName +"%'";
+        }
+        if (!"".equals(deptName) && deptName != null){
+            sql += " and d.deptName = '"+ deptName +"'";
+            sql1 += " and d.deptName = '"+ deptName +"'";
+        }
+        List list = hts.searchaduitlog(sql, page, limit);
+        Integer count = hts.selcountad(sql1);
+        Map map = new HashMap();
+        map.put("code", 0);
+        map.put("msg", "");
+        map.put("count", count);
+        map.put("data", list);
+        return map;
+    }
 
 
 

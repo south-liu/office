@@ -39,6 +39,11 @@ public class EvaluationStandardServiceImpl implements EvaluationStandardService 
     }
 
     @Override
+    public List<EvaluationVO> queryAllDataByType(int state) {
+        return evaluationStandardDao.queryAllDataByType(state);
+    }
+
+    @Override
     public void updateEvaluationStandard(EvaluationVO evaluation) {
         evaluationStandardDao.updateEvaluationStandard(evaluation);
     }
