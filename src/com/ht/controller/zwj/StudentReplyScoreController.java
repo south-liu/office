@@ -46,23 +46,23 @@ public class StudentReplyScoreController {
         return "zwj/student-reply-score/home";
     }
 
-    @RequestMapping(value = "/preview",method = RequestMethod.GET)
+    @RequestMapping(value = "/preview", method = RequestMethod.GET)
     public String preview(@RequestParam Integer stuId, Model model) {
         System.out.println(stuId);
 
         // 查询该学生所有的答辩项目
         List<ProjectVO> projectList = studentReplyScoreService.findGradedProjectByStudentId(stuId);
 
-        model.addAttribute("projectList",projectList);
+        model.addAttribute("projectList", projectList);
 
         return "zwj/student-reply-score/preview";
     }
 
     @ResponseBody
-    @RequestMapping(value = "/findDataToPreview",method = RequestMethod.GET)
-    public Map<String,Object> findDataToPreview(@RequestParam Integer stuId,@RequestParam Integer projectId) {
+    @RequestMapping(value = "/findDataToPreview", method = RequestMethod.GET)
+    public Map<String, Object> findDataToPreview(@RequestParam Integer stuId, @RequestParam Integer projectId) {
         // 查询该学生所有的答辩项目
-        Map<String,Object> map = studentReplyScoreService.findProjectScoreByOptions(stuId,projectId);
+        Map<String, Object> map = studentReplyScoreService.findProjectScoreByOptions(stuId, projectId);
         System.out.println(map);
 
         return map;

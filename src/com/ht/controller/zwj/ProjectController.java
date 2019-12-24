@@ -17,10 +17,9 @@ import java.util.Map;
 @Controller
 @RequestMapping("/project")
 public class ProjectController {
+    private static final String ALREADY_EXIST_MSG = "项目名称已存在！";
     @Resource
     private ProjectService projectService;
-
-    private static final String ALREADY_EXIST_MSG = "项目名称已存在！";
 
     @RequestMapping("/home")
     public String home() {
