@@ -94,7 +94,8 @@ public class StudentFallDaoImpl implements StudentFallDao {
     public StudentFallVO getStudentFallByLevel(String level) {
         Session session = sessionFactory.openSession();
 
-        StudentFallVO studentFallVO = (StudentFallVO) session.createSQLQuery("select * from studentFall where level = " + level).addEntity(StudentFallVO.class).uniqueResult();
+        StudentFallVO studentFallVO =
+                (StudentFallVO) session.createSQLQuery("select * from studentFall where level = '" + level + "'").addEntity(StudentFallVO.class).uniqueResult();
 
         session.close();
         return studentFallVO;
