@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface StudentHuorService {
-    List<Map<String,Object>> allData(Integer page, Integer limit);
+    List<Map<String, Object>> allData(Integer page, Integer limit);
 
     List<StudentHuorVO> allData();
 

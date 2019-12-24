@@ -118,6 +118,7 @@ public class StudentFallDaoImpl implements StudentFallDao {
 
     /**
      * 获取表总数
+     *
      * @return
      */
     @Override

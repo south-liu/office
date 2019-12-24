@@ -190,7 +190,7 @@
         }
 
         // 删除多条
-        function deleteMulti(checkStatus){
+        function deleteMulti(checkStatus) {
             var hintMsg;// 提示信息
             if (checkStatus.data.length <= 0) {
                 layer.msg('请选中至少一行！', {icon: 0, time: 2000});

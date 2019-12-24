@@ -79,8 +79,8 @@
                 }
             });
             </c:forEach>
-             // 初始化所有评分为0
-            for (var i = 0; i < rate.index; ++i){
+            // 初始化所有评分为0
+            for (var i = 0; i < rate.index; ++i) {
                 rateValue[i] = 0;
             }
 

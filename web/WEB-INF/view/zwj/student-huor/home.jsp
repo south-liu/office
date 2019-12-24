@@ -107,7 +107,7 @@
 
                     // 添加表单显示之前，先查询所有楼栋
                     $.get('${pageContext.request.contextPath}/student-huor/allFloorData', {}, function (data) {
-                        if(data.length > 0){
+                        if (data.length > 0) {
                             var _select = $('#actionForm').find('select[name="floorId"]');
                             _select.empty();
                             _select.append('<option value="0">请选择宿舍楼栋</option>');
@@ -167,7 +167,7 @@
         function showEditForm(objData) {
             // 添加表单显示之前，先查询所有楼栋
             $.get('${pageContext.request.contextPath}/student-huor/allFloorData', {}, function (data) {
-                if(data.length > 0){
+                if (data.length > 0) {
                     var _select = $('#actionForm').find('select[name="floorId"]');
                     _select.empty();
                     _select.append('<option value="0">请选择宿舍楼栋</option>');
@@ -190,12 +190,12 @@
                     // 通过id获取数据并填充到表单中
                     $.get('${pageContext.request.contextPath}/student-huor/detail', {hourId: objData.hourId}, function (data) {
                         $('#actionForm').find('input[name="hourId"]').val(data.hourId);
-                        form.val('_form',{
-                            'floorId':data.floorId,
-                            'huorName':data.huorName,
-                            'numberBeds':data.numberBeds,
-                            'huoeIddsc':data.huoeIddsc,
-                            'address':data.address
+                        form.val('_form', {
+                            'floorId': data.floorId,
+                            'huorName': data.huorName,
+                            'numberBeds': data.numberBeds,
+                            'huoeIddsc': data.huoeIddsc,
+                            'address': data.address
                         });
                         form.render();
                     }, 'json');
