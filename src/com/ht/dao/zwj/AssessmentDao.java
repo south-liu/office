@@ -41,4 +41,6 @@ public interface AssessmentDao {
     Float queryAvgScoreByAssessmentId(Integer assessmentId);
 
     Map<String, Object> queryAssessmentSuggest(int assessmentId, int studentId);
+
+    List<Map<String, Object>> queryUnfinishedAssessment();
 }

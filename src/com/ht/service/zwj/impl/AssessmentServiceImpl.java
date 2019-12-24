@@ -245,4 +245,9 @@ public class AssessmentServiceImpl implements AssessmentService {
         }
         return assessmentDao.queryAssessmentSuggest(assessmentId, studentId);
     }
+
+    @Override
+    public List<Map<String, Object>> queryUnfinishedAssessment() {
+        return assessmentDao.queryUnfinishedAssessment();
+    }
 }

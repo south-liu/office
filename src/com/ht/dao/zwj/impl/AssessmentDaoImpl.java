@@ -154,4 +154,9 @@ public class AssessmentDaoImpl extends DaoUtils implements AssessmentDao {
         return (Map<String, Object>) super.queryEntityBySql("select * from empAssessmentSuggest where assessmentId = " + assessmentId + " and studentId = " + studentId,
                 Transformers.ALIAS_TO_ENTITY_MAP);
     }
+
+    @Override
+    public List<Map<String, Object>> queryUnfinishedAssessment() {
+        return super.queryAllBySql("select * from assessment where state = 0 and endTime <= now()", Transformers.ALIAS_TO_ENTITY_MAP);
+    }
 }

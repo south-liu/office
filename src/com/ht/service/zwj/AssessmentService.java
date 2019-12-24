@@ -43,4 +43,6 @@ public interface AssessmentService {
     List<Map<String, Object>> queryAssessmentDetailContent(int assessmentId, int studentId);
 
     Map<String, Object> queryAssessmentSuggest(int assessmentId, int studentId);
+
+    List<Map<String, Object>> queryUnfinishedAssessment();
 }
