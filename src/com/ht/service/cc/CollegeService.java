@@ -5,6 +5,8 @@ import com.ht.vo.CollegeDeptVO;
 import java.util.List;
 
 public interface CollegeService {
+
+    public List selSpage();
     //分页查询
     public List selSpage(int currPage, int pageSize);
     //查询总行数

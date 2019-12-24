@@ -11,8 +11,8 @@
     <title>查询谈心记录</title>
     <jsp:include page="../public/head.jsp"></jsp:include>
 </head>
-<body>
 
+<body>
 <table class="layui-table"
        lay-data="{url:'${pageContext.request.contextPath}/chatRecord/chatRecordlist', page:true, id:'myTable',toolbar:'#toolbarDemo'}"
        lay-filter="fTable">
@@ -31,7 +31,6 @@
 </table>
 
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 

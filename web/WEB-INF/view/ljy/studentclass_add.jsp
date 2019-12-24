@@ -89,7 +89,7 @@
             <select name="deptId" id="deptId" lay-filter="deptType">
                 <option value="">请选择所属系名称</option>
                 <c:forEach items="${deptlist}" var="dept">
-                    <option value="${dept.deptId}">${dept.deptName}</option>
+                    <option value="${dept.collegeDeptId}">${dept.collegeDeptName}</option>
                 </c:forEach>
             </select>
         </div>

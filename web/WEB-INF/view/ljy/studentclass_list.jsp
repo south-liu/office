@@ -79,7 +79,7 @@
                     {field: 'classTeacher', title: '班主任', align: 'center', width: 100},
                     {field: 'classTypeName', title: '班级类别', align: 'center', width: 100},
                     {field: 'level', title: '界别年份', align: 'center', width: 100},
-                    {field: 'deptName', title: '系名称', align: 'center', width: 100},
+                    {field: 'collegeDeptName', title: '系名称', align: 'center', width: 100},
                     {field: 'majorName', title: '专业名称', align: 'center', width: 110},
                     {field: 'remark', title: '说明', edit: 'text', align: 'center', width: 120},
                     {fixed: 'right', title: '操作', toolbar: '#bar', align: 'center',width:120}
