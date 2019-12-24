@@ -27,7 +27,6 @@
     <fieldset class="layui-elem-field">
         <legend>内容</legend>
         <div class="layui-field-box">
-                <%--<input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">--%>
             <form class="layui-form" action="">
                 <c:forEach items="${evaluationStandardList}" var="evaluationStandard" varStatus="i">
                     <div class="layui-form-item">
@@ -56,12 +55,12 @@
             var rate = layui.rate;
             var form = layui.form;
 
-            var rateValue = new Array();// 评分控件的个数
-
+            var rateValue = new Array();// 存储评分选中的值
             // 只读
             <c:forEach items="${evaluationStandardList}" varStatus="i">
             rate.render({
                 elem: '#test${i.index}'
+                , value: 0
                 , text: true
                 , setText: function (value) {
                     var arrs = {
@@ -75,23 +74,24 @@
                         this.span.text(arrs[value] || (value + "星"));
                     }
                 }
-                , choose: function (value) {
+                , choose: function (value) {// 星星更改时，出发赋值
                     rateValue[${i.index}] = value;
                 }
             });
             </c:forEach>
-
+             // 初始化所有评分为0
+            for (var i = 0; i < rate.index; ++i){
+                rateValue[i] = 0;
+            }
 
             form.on('submit(_form)', function (data) {
-                var totalityNum = 0;// 计算总分数
-                $.each(rateValue, function (i, element) {
-                    totalityNum += element;
-                });
+                var loadIndex = layer.load();
                 $.post('${pageContext.request.contextPath}/s/assessment/insertAssessmentInformation', {
                     assessmentId: ${assessment.assessmentId},
-                    grossScore: totalityNum,
+                    allTheScore: rateValue,
                     suggest: $('textarea[name="suggest"]').val()
                 }, function (data) {
+                    layer.close(loadIndex);
                     if (data.code == 0 && data.result > 0) {
                         layer.msg(data.msg, {time: 1000}, function () {
                             location.href = '${pageContext.request.contextPath}/studentSide/welcome';
