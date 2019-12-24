@@ -11,6 +11,6 @@
     <title>$Title$</title>
   </head>
   <body>
-    <jsp:forward page="${pageContext.request.contextPath}/public/index"></jsp:forward>
+    <jsp:forward page="/public/index"></jsp:forward>
   </body>
 </html>
