@@ -30,13 +30,13 @@ public class LoginInterceptor implements HandlerInterceptor {
             out.println("</html>");
             return false;
         } else {
-            if ("/public/index".equals(uri) || "/public/welcome".equals(uri)||"/system/exit".equals(uri)){
+            if ("/office/public/index".equals(uri) || "/office/public/welcome".equals(uri)||"/office/system/exit".equals(uri)){
                 return true;
             }
             List<ModuleVO> allModule = (List<ModuleVO>) httpServletRequest.getSession().getAttribute("moduleList");
             for (ModuleVO moduleVO : allModule) {
                 if (moduleVO.getParentId()!=0) {
-                    if ((uri.split("/")[1]).equals(moduleVO.getUrl().split("/")[0])){
+                    if ((uri.split("/")[2]).equals(moduleVO.getUrl().split("/")[0])){
                         return true;
                     }
                 }
