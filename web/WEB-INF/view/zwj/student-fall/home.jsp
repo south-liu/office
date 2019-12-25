@@ -58,7 +58,7 @@
 </div>
 
 <script type="text/javascript">
-    layui.use('table', function () {
+    layui.use(['table', 'layer', 'form'], function () {
         var table = layui.table;
         var layer = layui.layer;
         var form = layui.form;
@@ -175,16 +175,25 @@
             layer.confirm('确定删除该行吗？', function (index) {
                 // 传输id到后台删除数据
                 $.post('${pageContext.request.contextPath}/student-fall/delete', {fallId: obj.data.fallId}, function (data) {
-                    // 返回删除的id
-                    if (data > 0) {
-                        // 删除成功s
-                        layer.msg('删除成功', {
+                    if (data.code == 0) {// 删除成功！
+                        layer.msg(data.msg, {
                             icon: 1,
                             time: 1000
                         });
-                        obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                        obj.del(); // 删除对应行（tr）的DOM结构，并更新缓存
+                    } else if (data.code == 1) {
+                        layer.msg(data.msg, {
+                            icon: 3,
+                            time: 2000,
+                            area: '300px'
+                        });
+                    } else {
+                        layer.msg(data.msg, {
+                            icon: 2,
+                            time: 1000
+                        });
                     }
-                });
+                }, 'json');
                 layer.close(index);
             });
         }
