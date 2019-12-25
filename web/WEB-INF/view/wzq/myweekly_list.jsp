@@ -166,7 +166,7 @@
                 location.href='${pageContext.request.contextPath}/MY/toupdmyweekly?weeklyId=' + data.weeklyId;
             }
             if(obj.event === 'cha'){
-
+                location.href='${pageContext.request.contextPath}/MY/toweekly_list_table?weeklyId=' + data.weeklyId + "&empId=" + data.empId;
             }
         });
     });

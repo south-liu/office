@@ -47,17 +47,6 @@ public class BaseDao {
         return list;
     }
 
-
-    //普通sql查询
-    public List listBySql3(String sql){
-        Session session = getSession();
-        SQLQuery sqlquery = session.createSQLQuery(sql);
-        sqlquery.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);  //把结果变形为List<Map>（键值对）形式，以列名为键，以列值为值。在页面显示需要使用大写的字段名！
-        List list = sqlquery.list();
-        session.close();
-        return list;
-    }
-
     //HQL分页(适用范围：分页查询一个表的所有字段)
     public List pageByHql(String hql, int currPage, int pageSize){
         Session session = getSession();
@@ -85,6 +74,23 @@ public class BaseDao {
         List list = sqlquery.list();
         session.close();
         return list;  //没变形之前返回的list是一个Object数组。
+    }
+
+    //SQL查询列表(适用范围：连接多个表、筛选列时使用。)
+    public Object listBySql3(String sql){
+        Session session = getSession();
+        Object o = session.createSQLQuery(sql).setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP).uniqueResult();  //把结果变形为List<Map>（键值对）形式，以列名为键，以列值为值。在页面显示需要使用大写的字段名！
+        /**存储方式模拟：（一条数据，就是一个Map。）
+         * Map map = new Map();
+         * map.put("EMPNO", 1001);
+         * map.put("ENAME", "张三");
+         * map.put("JOB", "程序猿");
+         * ...
+         *map.put("DNAME", "开发班")
+         *map.put("LOC", "开发好")
+         */
+        session.close();
+        return o;  //没变形之前返回的list是一个Object数组。
     }
 
     //SQL分页查询(适用范围：一个表或连接多个表、筛选列时使用。)

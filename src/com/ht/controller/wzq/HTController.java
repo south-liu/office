@@ -1,5 +1,6 @@
 package com.ht.controller.wzq;
 
+import com.alibaba.fastjson.JSONArray;
 import com.ht.service.llb.IStudentService;
 import com.ht.service.wzq.HTService;
 import com.ht.vo.*;
@@ -250,6 +251,15 @@ public class HTController {
     public String delweekly(Integer weeklyId){
         hts.delweekly(weeklyId);
         return "wzq/weekly_list";
+    }
+    //查看周报
+    @RequestMapping("/toweekly_list_table")
+    public String toweekly_list_table(Model model, Integer weeklyId, Integer empId){
+        WeeklyVO weekly = hts.selmyupd(weeklyId);
+        model.addAttribute("weekly", weekly);
+        Map dept = hts.selweeklydept(empId);
+        model.addAttribute("depts", dept);
+        return "wzq/weekly_table";
     }
 
 

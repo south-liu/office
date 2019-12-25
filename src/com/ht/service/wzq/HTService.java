@@ -3,6 +3,7 @@ package com.ht.service.wzq;
 import com.ht.vo.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by shkstart on 2019/12/4.
@@ -58,6 +59,8 @@ public interface HTService {
     public void addwee(WeeklyVO weekly);
     //删除周报
     public void delweekly(Integer weeklyId);
+    //根据empId查询对应的部门
+    public Map selweeklydept(Integer empId);
 
 
     //不带分页

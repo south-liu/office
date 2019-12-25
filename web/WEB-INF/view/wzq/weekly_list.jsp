@@ -157,7 +157,7 @@
             var data = obj.data;
             //console.log(obj)
             if(obj.event === 'cha'){
-
+                location.href='${pageContext.request.contextPath}/MY/toweekly_list_table?weeklyId=' + data.weeklyId + "&empId=" + data.empId;
             }
             if (obj.event == 'del'){
                 layer.confirm('您确定要删除该周报吗？', function(index){
