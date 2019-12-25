@@ -231,32 +231,6 @@ public class AssessmentController {
             // 查询该学生的考评建议
             resultMap.put("assessmentSuggest", assessmentService.queryAssessmentSuggest(assessmentId, studentId));// 考评建议
 
-            // 构造Echarts数据
-            if (assessmentInformation != null && assessmentInformation.size() > 0) {
-                Map<String, Object> echartsDataMap = new HashMap<>();
-
-                // legend ->  data
-                List<String> lengendData = new ArrayList<>();
-
-                // echarts series data 数据
-                List<Map<String, Object>> seriesDataList = new ArrayList<>();
-                for (Map<String, Object> informationMap : assessmentInformation) {
-                    Map<String, Object> seriesData = new LinkedHashMap<>();
-
-                    String evaluationName = (String) informationMap.get("evaluationName");
-                    seriesData.put("name", evaluationName);
-                    seriesData.put("value", ((Number) informationMap.get("grossScore")).intValue());
-                    seriesDataList.add(seriesData);
-
-                    lengendData.add(evaluationName);
-                }
-                echartsDataMap.put("seriesDataList", seriesDataList);// series -> data数据：[{name:xxx,value:XXX},...]
-                echartsDataMap.put("lengendData", lengendData);// echarts series data 数据：['xxx','XXX',...]
-
-                resultMap.put("echartsData", echartsDataMap);
-            }
-
-
             map.put("code", 0);
             map.put("result", resultMap);
             map.put("msg", "查询成功！");
@@ -264,6 +238,52 @@ public class AssessmentController {
             e.printStackTrace();
             map.put("code", 1);
             map.put("msg", "服务器错误！");
+        }
+
+        return map;
+    }
+
+    /**
+     * 通过考评ID查询各项考评内容的平均分
+     *
+     * @param assessmentId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/queryAssessmentEvaluationAvgScore", method = RequestMethod.GET)
+    public Map queryAssessmentEvaluationAvgScore(@RequestParam int assessmentId) {
+        Map<String, Object> map = new HashMap<>();
+
+        List<Map<String, Object>> evaluationAvgScoreList = null;
+        try {
+            evaluationAvgScoreList = assessmentService.queryEvaluationAvgScore(assessmentId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // 构造Echarts数据
+        if (evaluationAvgScoreList != null && evaluationAvgScoreList.size() > 0) {
+            Map<String, Object> echartsDataMap = new HashMap<>();
+
+            // legend ->  data
+            List<String> lengendData = new ArrayList<>();
+
+            // echarts series data 数据
+            List<Map<String, Object>> seriesDataList = new ArrayList<>();
+            for (Map<String, Object> informationMap : evaluationAvgScoreList) {
+                Map<String, Object> seriesData = new LinkedHashMap<>();
+
+                String evaluationName = (String) informationMap.get("evaluationName");
+                seriesData.put("name", evaluationName);
+                seriesData.put("value", ((Number) informationMap.get("avg")).intValue());
+                seriesDataList.add(seriesData);
+
+                lengendData.add(evaluationName);
+            }
+            echartsDataMap.put("seriesDataList", seriesDataList);// series -> data数据：[{name:xxx,value:XXX},...]
+            echartsDataMap.put("lengendData", lengendData);// echarts series data 数据：['xxx','XXX',...]
+
+            map.put("echartsData", echartsDataMap);
         }
 
         return map;
@@ -303,7 +323,7 @@ public class AssessmentController {
             map.put("result", assessmentService.changeAssessmentEndTime(assessmentId, time));
             map.put("msg", "修改成功！");
         } catch (Exception e) {
-            System.out.println(e.getLocalizedMessage());
+            e.printStackTrace();
             map.put("code", 1);
             map.put("msg", "服务器错误！");
         }

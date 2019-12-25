@@ -159,4 +159,11 @@ public class AssessmentDaoImpl extends DaoUtils implements AssessmentDao {
     public List<Map<String, Object>> queryUnfinishedAssessment() {
         return super.queryAllBySql("select * from assessment where state = 0 and endTime <= now()", Transformers.ALIAS_TO_ENTITY_MAP);
     }
+
+    @Override
+    public List<Map<String, Object>> queryEvaluationAvgScore(int assessmentId) {
+        return super.queryAllBySql("select assessmentId,ai.evaluationId,e.evaluationName,avg(grossScore) as avg from assessmentInformation as ai left join " +
+                        "evaluation as e on ai.evaluationId = e.evaluationId where assessmentId = " + assessmentId + " group by assessmentId,ai.evaluationId;",
+                Transformers.ALIAS_TO_ENTITY_MAP);
+    }
 }

@@ -25,13 +25,18 @@
         <div style="float: right;width:20%;">
             <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="sidebar" style="width:100%;">
                 <c:forEach items="${studentList}" var="student" varStatus="i">
-                    <li class="layui-nav-item ${i.first ? 'layui-this' : ''}"><a href="javascript:;" sid="${student.studId}">${student.stuName}</a></li>
+                    <li class="layui-nav-item ${i.first ? 'layui-this' : ''}">
+                        <a href="javascript:;" sid="${student.studId}" title="${student.stuName}">${student.stuName}</a>
+                    </li>
                 </c:forEach>
             </ul>
         </div>
         <div style="float: left;width:80%;display:none;" id="contextBox">
             <blockquote class="layui-elem-quote layui-quote-nm" id="scoreText">
-                <span>评分详细：</span>
+                <div style="clear: both;">
+                    <span style="float: left;">评分详细：</span>
+                    <span style="float: right;">总分：<strong id="totalityBox"></strong></span>
+                </div>
                 <table class="layui-table" lay-skin="line" id="informationTable">
                     <thead>
                     <tr>
@@ -64,7 +69,115 @@
             var rate = layui.rate;
             var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
 
-            // 刷新详细信息
+            $.get('${pageContext.request.contextPath}/assessment/queryAssessmentEvaluationAvgScore', {assessmentId: ${assessment.assessmentId}}, function
+                (data) {
+                if (data == null) return;
+                // 渲染Echarts图表
+                var echartsData = data.echartsData;
+                /*myEcharts.setOption({
+                    title: {
+                        text: '各项考评内容的平均分',
+                        x: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a}<br>{b} : {c}分"
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 'left',
+                        data: echartsData.lengendData
+                    },
+                    series: [
+                        {
+                            name: '',
+                            type: 'pie',
+                            radius: '60%',
+                            data: echartsData.seriesDataList,
+                            label: {
+                                normal: {
+                                    formatter: '{b} : {c}分'
+                                }
+                            },
+                            itemStyle: {
+                                emphasis: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }
+                    ]
+                });*/
+                myEcharts.setOption({
+                    title: {
+                        text: '各项考评内容的平均分',
+                        x: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c}分 ({d}%)"
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 'left',
+                        //图例文字样式
+                        textStyle: {
+                            color: '#000',
+                            fontSize: 14,
+                            fontWeight: '700'
+                        },
+                        data: echartsData.lengendData
+                    },
+                    toolbox: {
+                        show: false,
+                    },
+                    calculable: true,
+                    color: ['#FD6035', '#82C730', '#FACE2F', '#36B6DD', '#0084C5'],//自己设置扇形图颜色
+                    series: [
+                        {
+                            name: '图例占比',
+                            type: 'pie',
+                            radius: '60%',
+                            roseType: 'radius',
+                            x: '50%',               // for funnel
+                            sort: 'ascending',     // for funnel
+                            data: echartsData.seriesDataList,
+                            //标线的属性设置，以及显示的文字
+                            itemStyle: {
+                                normal: {
+                                    label: {
+                                        show: true,
+                                        formatter: '{c}分',
+                                        textStyle: {
+                                            color: '#000',
+                                            fontSize: 14,
+                                            fontWeight: '700'
+                                        }
+
+                                    },
+                                    //标线长度，宽度
+                                    labelLine: {
+                                        show: true,
+                                        length: 40,
+                                        lineStyle: {
+                                            width: 2
+                                        }
+                                    }
+                                },
+                                emphasis: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+
+                        }
+                    ]
+                });
+            }, 'json');
+
+            // 刷新学生的考评内容信息
             function reloadDetail(studentId, isFirst) {
                 if (!isFirst) {// 第一次不显示加载层
                     var loadIndex = layer.load();
@@ -94,44 +207,7 @@
                         });
 
                         $('#suggestText').text(data.result.assessmentSuggest.suggest);// 建议
-
-                        // 渲染Echarts图表
-                        var echartsData = data.result.echartsData;
-                        myEcharts.setOption({
-                            title: {
-                                text: '考评分值图标',
-                                x: 'center'
-                            },
-                            tooltip: {
-                                trigger: 'item',
-                                formatter: "{a}<br>{b} : {c}分"
-                            },
-                            legend: {
-                                orient: 'vertical',
-                                left: 'left',
-                                data: echartsData.lengendData
-                            },
-                            series: [
-                                {
-                                    name: '',
-                                    type: 'pie',
-                                    radius: '60%',
-                                    data: echartsData.seriesDataList,
-                                    label: {
-                                        normal: {
-                                            formatter: '{b} : {c}分'
-                                        }
-                                    },
-                                    itemStyle: {
-                                        emphasis: {
-                                            shadowBlur: 10,
-                                            shadowOffsetX: 0,
-                                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                                        }
-                                    }
-                                }
-                            ]
-                        });
+                        $('#totalityBox').text(assessmentInformationList.length * 5);// 建议
                     } else if (data.code == 1) {
                         layer.msg(data.msg, {time: 1000})
                     }

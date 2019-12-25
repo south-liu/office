@@ -43,4 +43,6 @@ public interface AssessmentDao {
     Map<String, Object> queryAssessmentSuggest(int assessmentId, int studentId);
 
     List<Map<String, Object>> queryUnfinishedAssessment();
+
+    List<Map<String, Object>> queryEvaluationAvgScore(int assessmentId);
 }
