@@ -338,7 +338,8 @@
                 success: function (result) {
                     layer.close(lod);
                     layer.msg('修改成功',{
-                        time:1000
+                        time:1000,
+                        icon:1
                     },function () {
                         //window.parent.location.reload();
                         location.href='${pageContext.request.contextPath}/student/toStuList';
@@ -509,8 +510,9 @@
             return pca;
 
         })($);
-
-        pca.init('select[name=P1]', 'select[name=C1]', 'select[name=A1]', '江西', '赣州', '章贡区');
+        var nation = '${student.naTives}';
+        var nations = nation.split('-');
+        pca.init('select[name=P1]', 'select[name=C1]', 'select[name=A1]', nations[0], nations[1], nations[2]);
 
     });
 </script>

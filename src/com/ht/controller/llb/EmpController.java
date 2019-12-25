@@ -83,7 +83,7 @@ public class EmpController {
     @RequestMapping("addEmp")
     @ResponseBody
     public String addEmp(EmpVO empVO,String P1,String C1,String A1){
-        empVO.setNation(P1+C1+A1);
+        empVO.setNation(P1+"-"+C1+"-"+A1);
         empVO.setStatus(1);
         empService.addEmp(empVO);
 
@@ -106,7 +106,7 @@ public class EmpController {
     @RequestMapping("updEmp")
     @ResponseBody
     public String updEmp(EmpVO empVO,String P1,String C1,String A1){
-        empVO.setNation(P1+C1+A1);
+        empVO.setNation(P1+"-"+C1+"-"+A1);
         empService.updEmp(empVO);
         return "success";
     }
