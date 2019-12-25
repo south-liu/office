@@ -126,7 +126,7 @@
                 {field:'studentQuestion',align:'center', title:'问题学生情况反馈'},
                 {field:'idea',align:'center', title:'意见建议'},
                 {field:'weekNext',align:'center', title:'下周工作计划'},
-                {fixed:'right',align:'center', title:'操作', toolbar: '#barDemo'}
+                {fixed:'right',align:'center', title:'操作', toolbar: '#barDemo',width:150}
             ]],
             page: true
         });
@@ -157,6 +157,7 @@
             var data = obj.data;
             //console.log(obj)
             if(obj.event === 'cha'){
+                layer.load();
                 location.href='${pageContext.request.contextPath}/MY/toweekly_list_table?weeklyId=' + data.weeklyId + "&empId=" + data.empId;
             }
             if (obj.event == 'del'){

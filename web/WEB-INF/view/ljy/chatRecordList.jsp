@@ -14,7 +14,7 @@
 
 <body>
 <table class="layui-table"
-       lay-data="{url:'${pageContext.request.contextPath}/chatRecord/chatRecordlist', page:true, id:'myTable',toolbar:'#toolbarDemo'}"
+       lay-data="{url:'${pageContext.request.contextPath}/chatRecord/chatRecordlist', page:true, id:'myTable'}"
        lay-filter="fTable">
     <thead>
     <tr>
@@ -24,8 +24,8 @@
         <th lay-data="{field:'empName', width:135}">员工名称</th>
         <th lay-data="{field:'address', width:135}">地址</th>
         <th lay-data="{field:'sayScon', width:300}">谈心内容</th>
-        <th lay-data="{field:'chatDate', width:135, sort: true}">时间</th>
-        <th lay-data="{fixed: 'right', width:182, align:'center', toolbar: '#barDemo'}"></th>
+        <th lay-data="{field:'chatDate', width:145, sort: true}">时间</th>
+        <th lay-data="{fixed: 'right', width:160, align:'center', toolbar: '#barDemo'}"></th>
     </tr>
     </thead>
 </table>

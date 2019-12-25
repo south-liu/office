@@ -42,7 +42,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">学生姓名：</label>
         <div class="layui-input-inline">
-            <select name="stuName" id="stuName">
+            <select name="stuName" id="stuName" lay-verify="required">
                 <option value="">请选择学生</option>
                 <c:forEach items="${allstu}" var="stu">
                     <option value="${stu.studId}">${stu.stuName}</option>
