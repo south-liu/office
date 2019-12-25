@@ -24,8 +24,8 @@
         <th lay-data="{field:'empName', width:135}">员工名称</th>
         <th lay-data="{field:'address', width:135}">地址</th>
         <th lay-data="{field:'sayScon', width:300}">谈心内容</th>
-        <th lay-data="{field:'chatDate', width:135, sort: true}">时间</th>
-        <th lay-data="{fixed: 'right', width:182, align:'center', toolbar: '#barDemo'}"></th>
+        <th lay-data="{field:'chatDate', width:145, sort: true}">时间</th>
+        <th lay-data="{fixed: 'right', width:160, align:'center', toolbar: '#barDemo'}"></th>
     </tr>
     </thead>
 </table>
@@ -164,7 +164,7 @@
 
     function addchatRecord() {
         layer.open({
-            title: '添加试讲日期',
+            title: '添加谈心记录',
             type: 2,
             content: ['${pageContext.request.contextPath}/chatRecord/gotochatRecord_add', 'no'],
             area: ['480px', '550px'],

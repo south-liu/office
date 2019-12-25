@@ -259,4 +259,13 @@ public class AssessmentServiceImpl implements AssessmentService {
     public List<Map<String, Object>> queryUnfinishedAssessment() {
         return assessmentDao.queryUnfinishedAssessment();
     }
+
+    @Override
+    public List<Map<String, Object>> queryEvaluationAvgScore(int assessmentId) {
+        if (assessmentId <= 0) {
+            return Collections.emptyList();
+        }
+
+        return assessmentDao.queryEvaluationAvgScore(assessmentId);
+    }
 }
