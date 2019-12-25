@@ -49,7 +49,7 @@
         <div class="layui-form-item" style="margin-top: 15px; margin-left: 20px">
             <label class="layui-form-label">考核分数</label>
             <div class="layui-input-block">
-                <input type="text" name="score" style="width: 200px" autocomplete="off" placeholder="请输入考核分数" class="layui-input">
+                <input type="text" name="score" style="width: 200px" lay-verify="required" autocomplete="off" placeholder="请输入考核分数" class="layui-input">
             </div>
         </div>
 
