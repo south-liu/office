@@ -23,6 +23,7 @@ public class EnrollmentVO {  //招生信息表
     private String testTime;  //试学时间
     private String startTime;  //入学时间
     private String signDate;  //录入时间
+    private String luruId;  //录入人
     private Integer empId;  //员工id关联员工表
     private Integer status;  //关联学生状态表
     private String remark;  //备注
@@ -31,7 +32,7 @@ public class EnrollmentVO {  //招生信息表
     private float score;  //入学成绩
     private float enrollMoney;  //发放金额
     private String enrollMoneyTime;  //发放时间
-    private Integer reviewStatus;  //预定报名费审核
+    private String reviewStatus;  //预定报名费审核
     private String negativeName;  //该字段用于招生老师没有账号时使用字段
     private String reviewer;  //审核人
     private String reviewerTime;  //审核时间
@@ -53,6 +54,7 @@ public class EnrollmentVO {  //招生信息表
                 ", testTime='" + testTime + '\'' +
                 ", startTime='" + startTime + '\'' +
                 ", signDate='" + signDate + '\'' +
+                ", luruId='" + luruId + '\'' +
                 ", empId=" + empId +
                 ", status=" + status +
                 ", remark='" + remark + '\'' +
@@ -61,7 +63,7 @@ public class EnrollmentVO {  //招生信息表
                 ", score=" + score +
                 ", enrollMoney=" + enrollMoney +
                 ", enrollMoneyTime='" + enrollMoneyTime + '\'' +
-                ", reviewStatus=" + reviewStatus +
+                ", reviewStatus='" + reviewStatus + '\'' +
                 ", negativeName='" + negativeName + '\'' +
                 ", reviewer='" + reviewer + '\'' +
                 ", reviewerTime='" + reviewerTime + '\'' +
@@ -173,6 +175,14 @@ public class EnrollmentVO {  //招生信息表
         this.signDate = signDate;
     }
 
+    public String getLuruId() {
+        return luruId;
+    }
+
+    public void setLuruId(String luruId) {
+        this.luruId = luruId;
+    }
+
     public Integer getEmpId() {
         return empId;
     }
@@ -237,11 +247,11 @@ public class EnrollmentVO {  //招生信息表
         this.enrollMoneyTime = enrollMoneyTime;
     }
 
-    public Integer getReviewStatus() {
+    public String getReviewStatus() {
         return reviewStatus;
     }
 
-    public void setReviewStatus(Integer reviewStatus) {
+    public void setReviewStatus(String reviewStatus) {
         this.reviewStatus = reviewStatus;
     }
 
