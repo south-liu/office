@@ -64,7 +64,7 @@
                         <option value="4">8</option>
                         <option value="4">9</option>
                         <option value="4">10</option>
-                        <option value="4">11/option>
+                        <option value="4">11</option>
                         <option value="4">12</option>
                         <option value="4">13</option>
                         <option value="4">14</option>
@@ -160,7 +160,9 @@
                     });
                 }else {
                     layer.close(lindex);  //拦截请求，让其不继续提交下去（无此拦截会进入转圈圈模式）
-                    layer.msg('请正确选择时间：开始时间应小于结束时间！')  //layui自定义提示框
+                    layer.msg('请正确选择时间：开始时间应小于结束时间！',{
+                        time:1000
+                    })  //layui自定义提示框
                 }
                 return false;
             });
