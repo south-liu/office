@@ -14,7 +14,7 @@
 <style type="text/css">
     .login-bg{
         /*background: #eeeeee url() 0 0 no-repeat;*/
-        background:url(../../images/bg.png) no-repeat center;
+        background:url(${pageContext.request.contextPath}/images/bg.png) no-repeat center;
         background-size: cover;
         overflow: hidden;
     }
@@ -46,7 +46,7 @@
         font-size: 16px;
     }
     .login #darkbannerwrap {
-        background: url(../../images/aiwrap.png);
+        background: url(${pageContext.request.contextPath}/images/aiwrap.png);
         width: 18px;
         height: 10px;
         margin: 0 0 20px -58px;

@@ -55,7 +55,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void deleteMultiProject(Integer[] projectIds) {
-        if (projectIds==null) {
+        if (projectIds == null) {
             return;
         }
         for (Integer projectId : projectIds) {

@@ -5,6 +5,8 @@ import com.ht.service.wzq.HTService;
 import com.ht.vo.*;
 
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
 
 /**
@@ -50,7 +52,7 @@ public class HTServiceImpl extends BaseDao implements HTService{
 
     @Override
     public List selfloor() {
-        return listBySql3("select * from studentFloor");
+        return listBySql("select * from studentFloor");
     }
 
     @Override
@@ -131,6 +133,11 @@ public class HTServiceImpl extends BaseDao implements HTService{
     @Override
     public void delweekly(Integer weeklyId) {
         executeSQL("delete from weekly where weeklyId =" + weeklyId);
+    }
+
+    @Override
+    public Map selweeklydept(Integer empId) {
+        return (Map) listBySql3("select d.*, e.empName eName from dept d left join emp e on d.deptId = e.deptId where e.empId =" + empId);
     }
 
 

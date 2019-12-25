@@ -28,9 +28,9 @@
                         </c:if>
                     </c:forEach>
                 </optgroup>
-                <optgroup label="任课老师">
+                <optgroup label="授课老师">
                     <c:forEach var="emp" items="${classTeacherEmp}">
-                        <c:if test="${emp.postName == '任课老师'}">
+                        <c:if test="${emp.postName == '授课老师'}">
                             <option value="${emp.empId}">${emp.empName}</option>
                         </c:if>
                     </c:forEach>
@@ -92,9 +92,9 @@
                             </c:if>
                         </c:forEach>
                     </optgroup>
-                    <optgroup label="任课老师">
+                    <optgroup label="授课老师">
                         <c:forEach var="emp" items="${classTeacherEmp}">
-                            <c:if test="${emp.postName == '任课老师'}">
+                            <c:if test="${emp.postName == '授课老师'}">
                                 <option value="${emp.empId}">${emp.empName}</option>
                             </c:if>
                         </c:forEach>
@@ -501,7 +501,7 @@
                         title: '考评详细',
                         resize: false,
                         content: ['${pageContext.request.contextPath}/assessment/lookDetailList?assessmentId=' + objectData.assessmentId],
-                        area: ['600px', '600px'],
+                        area: ['80%', '80%'],
                         success: function (layero, index) {
                             // console.log(1)
                         },

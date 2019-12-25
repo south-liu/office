@@ -22,7 +22,7 @@ public interface StudentReplyScoreDao {
 
     void deleteStudentReplyScore(StudentReplyScoreVO studentReplyScore);
 
-    List<Map<String,Object>> findDataBySql(String sql);
+    List<Map<String, Object>> findDataBySql(String sql);
 
     long findCountByOptions(String sql);
 

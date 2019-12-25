@@ -2,6 +2,8 @@ package com.ht.service.zwj;
 
 import com.ht.vo.AssessmentInformationVO;
 import com.ht.vo.AssessmentVO;
+import com.ht.vo.EmpAssessmentSuggestVO;
+import com.ht.vo.EvaluationVO;
 
 import java.util.List;
 import java.util.Map;
@@ -21,9 +23,9 @@ public interface AssessmentService {
 
     int changeAssessmentState(int assessmentId, int state);
 
-    float queryAvgScoreByAssessment(AssessmentVO assessment);
+    Float queryAvgScoreByAssessment(AssessmentVO assessment);
 
-    Map<String, Object> queryAssessmentInformation(int assessmentId, int studentId);
+    List<Map<String, Object>> queryAssessmentInformation(int assessmentId, int studentId);
 
     long assessmentInformationTotality(int assessmentId);
 
@@ -33,7 +35,17 @@ public interface AssessmentService {
 
     long searchAssessmentTotalityByOptions(Integer empId, String startTime, String endTime);
 
-    long insertAssessmentInformation(AssessmentInformationVO assessmentInformation);
+    long insertAssessmentInformations(AssessmentInformationVO assessmentInformation, int[] allTheScore, List<EvaluationVO> evaluationStandardList);
 
     List<Map<String, Object>> queryStudentByAssessmentId(Integer assessmentId);
+
+    long insertEmpAssessmentSuggest(EmpAssessmentSuggestVO empAssessmentSuggest);
+
+    List<Map<String, Object>> queryAssessmentDetailContent(int assessmentId, int studentId);
+
+    Map<String, Object> queryAssessmentSuggest(int assessmentId, int studentId);
+
+    List<Map<String, Object>> queryUnfinishedAssessment();
+
+    List<Map<String, Object>> queryEvaluationAvgScore(int assessmentId);
 }

@@ -13,10 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/assessment")
@@ -30,7 +27,7 @@ public class AssessmentController {
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String home(Model model) {
-        // 查询所有（班主任、任课老师）
+        // 查询所有（班主任、授课老师）
         List<Map<String, Object>> maps = oEmpService.queryPortionEmp();
         model.addAttribute("classTeacherEmp", maps);
 
@@ -227,15 +224,66 @@ public class AssessmentController {
     public Map<String, Object> queryAssessmentInformation(@RequestParam int assessmentId, @RequestParam int studentId) {
         Map<String, Object> map = new HashMap<>();
         try {
-            Map<String, Object> assessmentInformation = assessmentService.queryAssessmentInformation(assessmentId, studentId);
+            Map<String, Object> resultMap = new HashMap<>();
+            List<Map<String, Object>> assessmentInformation = assessmentService.queryAssessmentDetailContent(assessmentId, studentId);
+            // 查询学生对这次考评的内容与分值信息
+            resultMap.put("assessmentInformation", assessmentInformation);// 该学生对这次考评的考评内容标题与分值
+            // 查询该学生的考评建议
+            resultMap.put("assessmentSuggest", assessmentService.queryAssessmentSuggest(assessmentId, studentId));// 考评建议
 
             map.put("code", 0);
-            map.put("result", assessmentInformation);
+            map.put("result", resultMap);
             map.put("msg", "查询成功！");
         } catch (Exception e) {
-            System.out.println(e.getLocalizedMessage());
+            e.printStackTrace();
             map.put("code", 1);
             map.put("msg", "服务器错误！");
+        }
+
+        return map;
+    }
+
+    /**
+     * 通过考评ID查询各项考评内容的平均分
+     *
+     * @param assessmentId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/queryAssessmentEvaluationAvgScore", method = RequestMethod.GET)
+    public Map queryAssessmentEvaluationAvgScore(@RequestParam int assessmentId) {
+        Map<String, Object> map = new HashMap<>();
+
+        List<Map<String, Object>> evaluationAvgScoreList = null;
+        try {
+            evaluationAvgScoreList = assessmentService.queryEvaluationAvgScore(assessmentId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // 构造Echarts数据
+        if (evaluationAvgScoreList != null && evaluationAvgScoreList.size() > 0) {
+            Map<String, Object> echartsDataMap = new HashMap<>();
+
+            // legend ->  data
+            List<String> lengendData = new ArrayList<>();
+
+            // echarts series data 数据
+            List<Map<String, Object>> seriesDataList = new ArrayList<>();
+            for (Map<String, Object> informationMap : evaluationAvgScoreList) {
+                Map<String, Object> seriesData = new LinkedHashMap<>();
+
+                String evaluationName = (String) informationMap.get("evaluationName");
+                seriesData.put("name", evaluationName);
+                seriesData.put("value", ((Number) informationMap.get("avg")).intValue());
+                seriesDataList.add(seriesData);
+
+                lengendData.add(evaluationName);
+            }
+            echartsDataMap.put("seriesDataList", seriesDataList);// series -> data数据：[{name:xxx,value:XXX},...]
+            echartsDataMap.put("lengendData", lengendData);// echarts series data 数据：['xxx','XXX',...]
+
+            map.put("echartsData", echartsDataMap);
         }
 
         return map;
@@ -275,7 +323,7 @@ public class AssessmentController {
             map.put("result", assessmentService.changeAssessmentEndTime(assessmentId, time));
             map.put("msg", "修改成功！");
         } catch (Exception e) {
-            System.out.println(e.getLocalizedMessage());
+            e.printStackTrace();
             map.put("code", 1);
             map.put("msg", "服务器错误！");
         }

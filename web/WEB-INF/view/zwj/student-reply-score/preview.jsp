@@ -11,8 +11,7 @@
 <head>
     <title>学生成绩预览</title>
     <jsp:include page="/WEB-INF/view/public/head.jsp"></jsp:include>
-    <script type="text/javascript"
-            src="${pageContext.request.contextPath}/js/echarts.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/echarts.min.js"></script>
     <style type="text/css">
         .selectBox {
             position: fixed;
@@ -48,7 +47,6 @@
 
     <script type="text/javascript">
         $(function () {
-
             window.onresize = function () {
                 //重置容器高宽
                 myEcharts.resize();
@@ -81,7 +79,7 @@
                             {
                                 name: data.projectName,
                                 type: 'pie',
-                                radius: '60%',
+                                radius: '50%',
                                 data: [
                                     {value: data.score1, name: '功能完善（50）'},
                                     {value: data.score2, name: '技术难度（10）'},

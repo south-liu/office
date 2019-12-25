@@ -50,7 +50,7 @@ public class StudentFallServiceImpl implements StudentFallService {
 
     @Override
     public void deleteMultiStudentFall(Integer[] fallIds) {
-        if(fallIds == null){
+        if (fallIds == null) {
             return;
         }
         for (Integer fallId : fallIds) {

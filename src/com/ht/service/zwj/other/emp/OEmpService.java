@@ -14,7 +14,7 @@ public class OEmpService extends CommonService {
      * @return
      */
     public List<Map<String, Object>> queryPortionEmp() {
-        List<Map<String, Object>> list = this.findListBySql("select empId,empName,postId,postName from emp where postName in('班主任','任课老师')");
+        List<Map<String, Object>> list = this.findListBySql("select empId,empName,postId,postName from emp where postName in('班主任','授课老师')");
         return list;
     }
 }

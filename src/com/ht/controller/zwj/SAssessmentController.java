@@ -46,8 +46,8 @@ public class SAssessmentController {
             return "zwj/assessment/writerAssessment";
         } else {
             // 登录后是否参加过考评
-            Map<String, Object> assessmentInformationMap = assessmentService.queryAssessmentInformation(assessmentId, student.getStudId());
-            if (assessmentInformationMap != null) {
+            List<Map<String, Object>> assessmentInformationMap = assessmentService.queryAssessmentInformation(assessmentId, student.getStudId());
+            if (assessmentInformationMap != null && assessmentInformationMap.size() > 0) {
                 model.addAttribute("errorState", true);
                 model.addAttribute("msg", "你已经参加过这次考评！");
                 return "zwj/assessment/writerAssessment";
@@ -73,8 +73,9 @@ public class SAssessmentController {
     // 提交考评
     @ResponseBody
     @RequestMapping(value = "/insertAssessmentInformation", method = RequestMethod.POST)
-    public Map<String, Object> insertAssessmentInformation(HttpSession session, @RequestParam int assessmentId,
-                                                           AssessmentInformationVO assessmentInformationVO) {
+    public Map<String, Object> insertAssessmentInformation(HttpSession session, AssessmentInformationVO assessmentInformation,
+                                                           @RequestParam String evaluationType,
+                                                           @RequestParam("allTheScore[]") int[] allTheScore, String suggest) {
         Map<String, Object> map = new HashMap<>();
 
         // 检查是否登录
@@ -86,12 +87,23 @@ public class SAssessmentController {
         }
 
         try {
+            EmpVO emp = empService.findEmpById(assessmentService.queryAssessmentById(assessmentInformation.getAssessmentId()).getEmpId());// 当前考评的教师
+            // 当前考评的类型
+            List<EvaluationVO> evaluationStandardList = evaluationStandardService.queryAllDataByType("授课老师".equals(evaluationType) ? 1 : 2);
+
             // 未参加过考评，则插入本次考评信息
-            assessmentInformationVO.setStudentId(student.getStudId());// 设置当前学生id
-            long result = assessmentService.insertAssessmentInformation(assessmentInformationVO);
+            assessmentInformation.setStudentId(student.getStudId());// 设置当前学生id
+            long result = assessmentService.insertAssessmentInformations(assessmentInformation, allTheScore, evaluationStandardList);// 插入每一项考评内容分值
+
+            // 插入学生对这次考评的建议
+            EmpAssessmentSuggestVO empAssessmentSuggest = new EmpAssessmentSuggestVO();
+            empAssessmentSuggest.setAssessmentId(assessmentInformation.getAssessmentId());
+            empAssessmentSuggest.setStudentId(student.getStudId());
+            empAssessmentSuggest.setSuggest(suggest);
+            long resultSuggest = assessmentService.insertEmpAssessmentSuggest(empAssessmentSuggest);
 
             map.put("code", 0);
-            map.put("result", result);
+            map.put("result", result + resultSuggest);
             map.put("msg", "考评成功！");
         } catch (Exception e) {
             e.printStackTrace();

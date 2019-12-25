@@ -4,6 +4,7 @@ import com.ht.dao.llb.IStudentDao;
 import com.ht.service.llb.IEmpService;
 import com.ht.service.llb.IRoleService;
 import com.ht.service.llb.IStudentService;
+import com.ht.service.llb.ISystemLogService;
 import com.ht.utils.gee.GeeConfig;
 import com.ht.utils.gee.GeeLib;
 import com.ht.vo.*;
@@ -16,10 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.net.Inet4Address;
+import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 @RequestMapping("/system")
@@ -29,6 +30,8 @@ public class LoginController {
     private IEmpService empService;
     @Resource
     private IRoleService roleService;
+    @Resource
+    private ISystemLogService systemLogService;
 
     /**
      * 获取极简验证码
@@ -119,10 +122,22 @@ public class LoginController {
                     }
                     session.setAttribute("allRootModule",allRootModule);
                     session.setAttribute("moduleList",moduleList);
+                    session.setAttribute("emp",dbEmp);
 
+                    //记录日志
+                    SystemLogVO systemLogVO = new SystemLogVO();
+                    systemLogVO.setEmpId(dbEmp.getEmpId());
+                    try {
+                        systemLogVO.setIpAddr(Inet4Address.getLocalHost().getHostAddress());
+                    } catch (UnknownHostException e) {
+                        e.printStackTrace();
+                    }
+                    systemLogVO.setTables("emp");
+                    SimpleDateFormat sim = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    systemLogVO.setOptime(sim.format(new Date()));
+                    systemLogVO.setMsg("emp"+dbEmp.getEmpName()+"登陆系统");
+                    systemLogService.addSystemLog(systemLogVO);
                 }
-
-                session.setAttribute("emp",dbEmp);
             } else {
                 map.put("type","geeError");
                 map.put("msg","验证失败");

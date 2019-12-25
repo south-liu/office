@@ -1,5 +1,6 @@
 package com.ht.controller.wzq;
 
+import com.alibaba.fastjson.JSONArray;
 import com.ht.service.llb.IStudentService;
 import com.ht.service.wzq.HTService;
 import com.ht.vo.*;
@@ -160,9 +161,9 @@ public class HTController {
     //修改我的周报(点击编辑按钮修改)
     @RequestMapping("/updmyweekly")
     public String updmyweekly(WeeklyVO weekly){
-        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+        /*SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
         String date = sf.format(new Date());
-        weekly.setWorkDay(date);
+        weekly.setWorkDay(date);*/
         hts.updmyweekly(weekly);
         return "wzq/myweekly_list";
     }
@@ -250,6 +251,15 @@ public class HTController {
     public String delweekly(Integer weeklyId){
         hts.delweekly(weeklyId);
         return "wzq/weekly_list";
+    }
+    //查看周报
+    @RequestMapping("/toweekly_list_table")
+    public String toweekly_list_table(Model model, Integer weeklyId, Integer empId){
+        WeeklyVO weekly = hts.selmyupd(weeklyId);
+        model.addAttribute("weekly", weekly);
+        Map dept = hts.selweeklydept(empId);
+        model.addAttribute("depts", dept);
+        return "wzq/weekly_table";
     }
 
 

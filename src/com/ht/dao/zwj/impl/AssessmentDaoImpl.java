@@ -4,6 +4,7 @@ import com.ht.dao.zwj.AssessmentDao;
 import com.ht.dao.zwj.DaoUtils;
 import com.ht.vo.AssessmentInformationVO;
 import com.ht.vo.AssessmentVO;
+import com.ht.vo.EmpAssessmentSuggestVO;
 import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Repository;
 
@@ -81,8 +82,8 @@ public class AssessmentDaoImpl extends DaoUtils implements AssessmentDao {
     }
 
     @Override
-    public Map<String, Object> queryAssessmentInformation(int assessmentId, int studentId) {
-        return (Map<String, Object>) super.queryEntityBySql("select * from assessmentInformation where assessmentId = " + assessmentId + " and studentId = " + studentId,
+    public List<Map<String, Object>> queryAssessmentInformation(int assessmentId, int studentId) {
+        return super.queryAllBySql("select * from assessmentInformation where assessmentId = " + assessmentId + " and studentId = " + studentId,
                 Transformers.ALIAS_TO_ENTITY_MAP);
     }
 
@@ -113,5 +114,56 @@ public class AssessmentDaoImpl extends DaoUtils implements AssessmentDao {
     @Override
     public List<Map<String, Object>> queryStudentByAssessmentId(Integer assessmentId) {
         return super.queryAllBySql("select studId,stuName from student where studId in(select studentId from assessmentInformation where assessmentId = " + assessmentId + ")", Transformers.ALIAS_TO_ENTITY_MAP);
+    }
+
+    @Override
+    public long insertEmpAssessmentSuggest(EmpAssessmentSuggestVO empAssessmentSuggest) {
+        return super.saveEntity(empAssessmentSuggest);
+    }
+
+    @Override
+    public List<Map<String, Object>> queryAssessmentDetailContent(int assessmentId, int studentId) {
+        return super.queryAllBySql("select ai.*,e.evaluationName from assessmentInformation as ai left join evaluation as e on ai.evaluationId = e" +
+                ".evaluationId where ai.assessmentId = " + assessmentId + " and ai.studentId = " + studentId, Transformers.ALIAS_TO_ENTITY_MAP);
+    }
+
+    /**
+     * 通过考评ID得到考评的平均分
+     *
+     * @param assessmentId
+     * @return
+     */
+    @Override
+    public Float queryAvgScoreByAssessmentId(Integer assessmentId) {
+        Map<String, Object> o = (Map<String, Object>) super.queryEntityBySql("select avg(score) as avg from (select ai.studentId,sum(ai.grossScore) as score from " +
+                "assessmentInformation as " +
+                "ai " +
+                "group " +
+                "by ai.assessmentId,ai.studentId having assessmentId = " + assessmentId + ") as assessmentGrossScore", Transformers.ALIAS_TO_ENTITY_MAP);
+
+        if (o.get("avg") instanceof BigDecimal) {
+            Number avg = (BigDecimal) o.get("avg");
+            return avg.floatValue();
+        }
+
+        return null;
+    }
+
+    @Override
+    public Map<String, Object> queryAssessmentSuggest(int assessmentId, int studentId) {
+        return (Map<String, Object>) super.queryEntityBySql("select * from empAssessmentSuggest where assessmentId = " + assessmentId + " and studentId = " + studentId,
+                Transformers.ALIAS_TO_ENTITY_MAP);
+    }
+
+    @Override
+    public List<Map<String, Object>> queryUnfinishedAssessment() {
+        return super.queryAllBySql("select * from assessment where state = 0 and endTime <= now()", Transformers.ALIAS_TO_ENTITY_MAP);
+    }
+
+    @Override
+    public List<Map<String, Object>> queryEvaluationAvgScore(int assessmentId) {
+        return super.queryAllBySql("select assessmentId,ai.evaluationId,e.evaluationName,avg(grossScore) as avg from assessmentInformation as ai left join " +
+                        "evaluation as e on ai.evaluationId = e.evaluationId where assessmentId = " + assessmentId + " group by assessmentId,ai.evaluationId;",
+                Transformers.ALIAS_TO_ENTITY_MAP);
     }
 }
