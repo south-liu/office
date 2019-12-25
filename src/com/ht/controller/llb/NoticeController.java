@@ -50,7 +50,7 @@ public class NoticeController {
     public String addNotice(NoticeVO noticeVO, HttpSession session){
         EmpVO empVO = (EmpVO) session.getAttribute("emp");
         noticeVO.setEmpId(empVO.getEmpId());
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         noticeVO.setNoticeIime(simpleDateFormat.format(new Date()));
         noticeService.addNotice(noticeVO);
         return "success";
