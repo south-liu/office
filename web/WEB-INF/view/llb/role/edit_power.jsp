@@ -47,6 +47,9 @@
                     moduleIds.push(checkData[i].children[j].id);
                 }
             };
+            if (moduleIds.length == 0) {
+                moduleIds.push(0);
+            }
             var lod = layer.load();
             $.ajax({
                 type:'post',
