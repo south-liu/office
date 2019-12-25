@@ -172,7 +172,6 @@ public class StudentController {
         db.setIntrodureTech(studentVO.getIntrodureTech());
         db.setResiDence(studentVO.getResiDence());
         db.setNaTion(studentVO.getNaTion());
-        db.setNaTives(studentVO.getNaTives());
         db.setProLevel(studentVO.getProLevel());
         db.setStudyType(studentVO.getStudyType());
         db.setParents(studentVO.getParents());

@@ -1,63 +1,196 @@
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
-  Date: 2019/12/15
-  Time: 19:02
+  Date: 2019/12/24
+  Time: 9:06
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
+<!-- saved from url=(0063)https://www.17sucai.com/preview/776331/2017-12-21/404/demo.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+    <title>404错误页</title>
 
-<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700');
+        @import url('https://fonts.googleapis.com/css?family=Catamaran:400,800');
+        .error-container {
+            text-align: center;
+            font-size: 180px;
+            font-family: 'Catamaran', sans-serif;
+            font-weight: 800;
+            margin: 20px 15px;
+        }
+        .error-container > span {
+            display: inline-block;
+            line-height: 0.7;
+            position: relative;
+            color: #FFB485;
+        }
+        .error-container > span {
+            display: inline-block;
+            position: relative;
+            vertical-align: middle;
+        }
+        .error-container > span:nth-of-type(1) {
+            color: #D1F2A5;
+            animation: colordancing 4s infinite;
+        }
+        .error-container > span:nth-of-type(3) {
+            color: #F56991;
+            animation: colordancing2 4s infinite;
+        }
+        .error-container > span:nth-of-type(2) {
+            width: 120px;
+            height: 120px;
+            border-radius: 999px;
+        }
+        .error-container > span:nth-of-type(2):before,
+        .error-container > span:nth-of-type(2):after {
+            border-radius: 0%;
+            content:"";
+            position: absolute;
+            top: 0; left: 0;
+            width: inherit; height: inherit;
+            border-radius: 999px;
+            box-shadow: inset 30px 0 0 rgba(209, 242, 165, 0.4),
+            inset 0 30px 0 rgba(239, 250, 180, 0.4),
+            inset -30px 0 0 rgba(255, 196, 140, 0.4),
+            inset 0 -30px 0 rgba(245, 105, 145, 0.4);
+            animation: shadowsdancing 4s infinite;
+        }
+        .error-container > span:nth-of-type(2):before {
+            -webkit-transform: rotate(45deg);
+            -moz-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
 
-    <meta charset="UTF-8" http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        .screen-reader-text {
+            position: absolute;
+            top: -9999em;
+            left: -9999em;
+        }
+        @keyframes shadowsdancing {
+            0% {
+                box-shadow: inset 30px 0 0 rgba(209, 242, 165, 0.4),
+                inset 0 30px 0 rgba(239, 250, 180, 0.4),
+                inset -30px 0 0 rgba(255, 196, 140, 0.4),
+                inset 0 -30px 0 rgba(245, 105, 145, 0.4);
+            }
+            25% {
+                box-shadow: inset 30px 0 0 rgba(245, 105, 145, 0.4),
+                inset 0 30px 0 rgba(209, 242, 165, 0.4),
+                inset -30px 0 0 rgba(239, 250, 180, 0.4),
+                inset 0 -30px 0 rgba(255, 196, 140, 0.4);
+            }
+            50% {
+                box-shadow: inset 30px 0 0 rgba(255, 196, 140, 0.4),
+                inset 0 30px 0 rgba(245, 105, 145, 0.4),
+                inset -30px 0 0 rgba(209, 242, 165, 0.4),
+                inset 0 -30px 0 rgba(239, 250, 180, 0.4);
+            }
+            75% {
+                box-shadow: inset 30px 0 0 rgba(239, 250, 180, 0.4),
+                inset 0 30px 0 rgba(255, 196, 140, 0.4),
+                inset -30px 0 0 rgba(245, 105, 145, 0.4),
+                inset 0 -30px 0 rgba(209, 242, 165, 0.4);
+            }
+            100% {
+                box-shadow: inset 30px 0 0 rgba(209, 242, 165, 0.4),
+                inset 0 30px 0 rgba(239, 250, 180, 0.4),
+                inset -30px 0 0 rgba(255, 196, 140, 0.4),
+                inset 0 -30px 0 rgba(245, 105, 145, 0.4);
+            }
+        }
+        @keyframes colordancing {
+            0% {
+                color: #D1F2A5;
+            }
+            25% {
+                color: #F56991;
+            }
+            50% {
+                color: #FFC48C;
+            }
+            75% {
+                color: #EFFAB4;
+            }
+            100% {
+                color: #D1F2A5;
+            }
+        }
+        @keyframes colordancing2 {
+            0% {
+                color: #FFC48C;
+            }
+            25% {
+                color: #EFFAB4;
+            }
+            50% {
+                color: #D1F2A5;
+            }
+            75% {
+                color: #F56991;
+            }
+            100% {
+                color: #FFC48C;
+            }
+        }
 
-    <title>404-对不起！您访问的页面不存在</title>
-
-    <style type="text/css">
-
-        .head404{ width:580px; height:234px; margin:50px auto 0 auto; background:url(https://www.daixiaorui.com/Public/images/head404.png) no-repeat; }
-
-        .txtbg404{ width:499px; height:169px; margin:10px auto 0 auto; background:url(https://www.daixiaorui.com/Public/images/txtbg404.png) no-repeat;}
-
-        .txtbg404 .txtbox{ width:390px; position:relative; top:30px; left:60px;color:#eee; font-size:13px;}
-
-        .txtbg404 .txtbox p {margin:5px 0; line-height:18px;}
-
-        .txtbg404 .txtbox .paddingbox { padding-top:15px;}
-
-        .txtbg404 .txtbox p a { color:#eee; text-decoration:none;}
-
-        .txtbg404 .txtbox p a:hover { color:#FC9D1D; text-decoration:underline;}
-
-    </style>
-
+        /* demo stuff */
+        * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #416475;
+            margin-bottom: 50px;
+        }
+        html, button, input, select, textarea {
+            font-family: 'Montserrat', Helvetica, sans-serif;
+            color: #92a4ad;
+        }
+        h1 {
+            text-align: center;
+            margin: 30px 15px;
+        }
+        .zoom-area {
+            max-width: 490px;
+            margin: 30px auto 30px;
+            font-size: 19px;
+            text-align: center;
+        }
+        .link-container {
+            text-align: center;
+        }
+        a.more-link {
+            text-transform: uppercase;
+            font-size: 13px;
+            background-color: #92a4ad;
+            padding: 10px 15px;
+            border-radius: 0;
+            color: #416475;
+            display: inline-block;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            line-height: 1.5;
+            text-decoration: none;
+            margin-top: 50px;
+            letter-spacing: 1px;
+        }</style>
 </head>
+<body>
+
+<h1>404错误页面</h1>
+<p class="zoom-area">你访问的页面不存在或已被删除。 </p>
+<section class="error-container">
+    <span>4</span>
+    <span><span class="screen-reader-text">0</span></span>
+    <span>4</span>
+</section>
 
 
 
-<body bgcolor="#494949">
-
-<div class="head404"></div>
-
-<div class="txtbg404">
-
-    <div class="txtbox">
-
-        <p>对不起，您请求的页面不存在、或已被删除、或暂时不可用</p>
-
-        <p class="paddingbox">请点击以下链接继续浏览网页</p>
-
-        <p>》<a style="cursor:pointer" href="javascript:history.go(-1);">返回上一页面</a></p>
-
-        <%--<p>》<a href="${pageContext.request.contextPath}/public/index">返回网站首页</a></p>--%>
-
-    </div>
-
-</div>
-
-</body>
-
-</html>
+</body></html>
