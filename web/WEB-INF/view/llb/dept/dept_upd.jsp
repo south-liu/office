@@ -43,7 +43,7 @@
         </div>
     </div>
 
-    <div class="layui-form-item">
+    <%--<div class="layui-form-item">
         <label class="layui-form-label">部门类别：</label>
         <div class="layui-input-block">
             <select name="deptType" lay-filter="deptType">
@@ -52,7 +52,7 @@
                 <option value="财务部">财务部</option>
             </select>
         </div>
-    </div>
+    </div>--%>
 
     <div class="layui-form-item">
         <label class="layui-form-label">上级部门名称：</label>

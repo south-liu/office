@@ -14,7 +14,7 @@
 
 <body>
 <table class="layui-table"
-       lay-data="{url:'${pageContext.request.contextPath}/chatRecord/chatRecordlist', page:true, id:'myTable'}"
+       lay-data="{url:'${pageContext.request.contextPath}/chatRecord/chatRecordlist', page:true, id:'myTable',toolbar:'#toolbarDemo'}"
        lay-filter="fTable">
     <thead>
     <tr>
@@ -164,7 +164,7 @@
 
     function addchatRecord() {
         layer.open({
-            title: '添加试讲日期',
+            title: '添加谈心记录',
             type: 2,
             content: ['${pageContext.request.contextPath}/chatRecord/gotochatRecord_add', 'no'],
             area: ['480px', '550px'],

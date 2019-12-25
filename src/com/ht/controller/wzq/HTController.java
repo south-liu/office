@@ -161,9 +161,9 @@ public class HTController {
     //修改我的周报(点击编辑按钮修改)
     @RequestMapping("/updmyweekly")
     public String updmyweekly(WeeklyVO weekly){
-        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+        /*SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
         String date = sf.format(new Date());
-        weekly.setWorkDay(date);
+        weekly.setWorkDay(date);*/
         hts.updmyweekly(weekly);
         return "wzq/myweekly_list";
     }
