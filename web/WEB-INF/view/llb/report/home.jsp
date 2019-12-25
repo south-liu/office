@@ -27,21 +27,21 @@
             <tr height="120">
                 <td align="center">
                     <a href="${pageContext.request.contextPath}/RF/toempassessment" target="_target">
-                        <img src="../../images/report_normal.gif" border="0">
+                        <img style="width: 135px;border-radius: 20px;" src="${pageContext.request.contextPath}/images/report_normal.jpg" border="0">
                         <br>
                         日常考核统计
                     </a>
                 </td>
                 <td align="center">
                     <a href="${pageContext.request.contextPath}/stuholi/tolist" target="_target">
-                        <img src="../../images/report_normal.gif" border="0">
+                        <img style="width: 135px;border-radius: 20px;" src="${pageContext.request.contextPath}/images/report_normal.jpg" border="0">
                         <br>
                         学生请假统计
                     </a>
                 </td>
                 <td align="center">
                     <a href="${pageContext.request.contextPath}/empholi/tolist" target="_target">
-                        <img src="../../images/report_normal.gif" border="0">
+                        <img style="width: 135px;border-radius: 20px;" src="${pageContext.request.contextPath}/images/report_normal.jpg" border="0">
                         <br>
                         员工请假统计
                     </a>
@@ -50,21 +50,21 @@
             <tr height="120">
                 <td align="center">
                     <a href="${pageContext.request.contextPath}/bedroom/goto_bedroom_list" target="_target">
-                        <img src="../../images/report_normal.gif" border="0">
+                        <img style="width: 135px;border-radius: 20px;" src="${pageContext.request.contextPath}/images/report_normal.jpg" border="0">
                         <br>
                         宿舍统计报表
                     </a>
                 </td>
-                <td align="center">
+                <%--<td align="center">
                     <a href="" target="_target">
-                        <img src="../../images/report_normal.gif" border="0">
+                        <img style="width: 200px;border-radius: 20px;" src="${pageContext.request.contextPath}/images/report_normal.jpg" border="0">
                         <br>
                         历史值班安排表
                     </a>
-                </td>
+                </td>--%>
                 <td align="center">
-                    <a href="${pageContext.request.contextPath}/RF/tocheckwork_rf" target="_target">
-                        <img src="../../images/report_normal.gif" border="0">
+                    <a href="${pageContext.request.contextPath}/RF/tocheckwork_list" target="_target">
+                        <img style="width: 135px;border-radius: 20px;" src="${pageContext.request.contextPath}/images/report_normal.jpg" border="0">
                         <br>
                         未打卡说明统计
                     </a>

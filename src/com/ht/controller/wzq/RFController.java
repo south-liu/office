@@ -316,6 +316,12 @@ public class RFController {
     }
 
 
+    //------------table布局---------------------
+    @RequestMapping("/totablebuju")
+    public String totablebuju(){
+        return "wzq/tablebuju";
+    }
+
 
 
 }

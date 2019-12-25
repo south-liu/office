@@ -337,7 +337,8 @@
                 success: function (result) {
                     layer.close(lod);
                     layer.msg('添加成功',{
-                        time:1000
+                        time:1000,
+                        icon:1
                     },function () {
                         // window.parent.location.reload();
                         location.href='${pageContext.request.contextPath}/student/toStuList';

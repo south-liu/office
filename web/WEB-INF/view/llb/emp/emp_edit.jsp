@@ -43,7 +43,17 @@
         <div class="layui-inline">
             <label class="layui-form-label">职务名称</label>
             <div class="layui-input-inline">
-                <input type="text" name="postName" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+                <select name="postName" lay-verify="required">
+                    <option value="">请选择职务</option>
+                    <option value="总经理">总经理</option>
+                    <option value="校长">校长</option>
+                    <option value="教务主任">教务主任</option>
+                    <option value="教务部副主任">教务部副主任</option>
+                    <option value="会计">会计</option>
+                    <option value="班主任">班主任</option>
+                    <option value="授课老师">授课老师</option>
+                </select>
+                <%--                <input type="text" name="postName" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">--%>
             </div>
         </div>
     </div>
@@ -230,7 +240,6 @@
         //监听提交
         form.on('submit(sub)', function(data){
             var lod = layer.load();
-            layer.msg('修改成功');
             $.ajax({
                 //几个参数需要注意一下
                 type: "POST",//方法类型
@@ -240,9 +249,10 @@
                 success: function (result) {
                     layer.close(lod);
                     layer.msg('修改成功',{
-                        time:1000
+                        time:1000,
+                        icon:1
                     },function () {
-                        window.parent.location.reload();
+                        location.href='${pageContext.request.contextPath}/emp/toEmpList';
                     });
                 },
                 error : function() {
@@ -404,7 +414,10 @@
 
         })($);
 
-        pca.init('select[name=P1]', 'select[name=C1]', 'select[name=A1]', '', '', '');
+        var nation = '${emp.nation}';
+        var nations = nation.split('-');
+        console.log(nations);
+        pca.init('select[name=P1]', 'select[name=C1]', 'select[name=A1]', nations[0], nations[1], nations[2]);
     });
 </script>
 </body>
