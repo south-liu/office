@@ -142,12 +142,8 @@
             reloadDetail($('.layui-this a').attr('sid'), true);
 
             $('ul[lay-filter="sidebar"] li a').click(function (event) {
-                if ($(this).parent()[0].classList.contains('layui-this')) {// 如果已点击的则不重新获取
-                    return;
-                }
-
                 var studentId = $(this).attr('sid');// 获取点击的学生id
-                reloadDetail(studentId, false);
+                reloadDetail(studentId, false);// 不是第一次执行
             });
         });
     });
