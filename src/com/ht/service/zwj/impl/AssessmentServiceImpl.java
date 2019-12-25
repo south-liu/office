@@ -6,6 +6,7 @@ import com.ht.service.zwj.other.student.OStudentService;
 import com.ht.vo.AssessmentInformationVO;
 import com.ht.vo.AssessmentVO;
 import com.ht.vo.EmpAssessmentSuggestVO;
+import com.ht.vo.EvaluationVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -192,13 +193,20 @@ public class AssessmentServiceImpl implements AssessmentService {
     }
 
     @Override
-    public long insertAssessmentInformations(AssessmentInformationVO assessmentInformation, int[] allTheScore) {
+    public long insertAssessmentInformations(AssessmentInformationVO assessmentInformation, int[] allTheScore, List<EvaluationVO> evaluationStandardList) {
         if (allTheScore == null) {
             return 0;
         }
+        // 所有的考评内容
+        if (evaluationStandardList == null || evaluationStandardList.size() <= 0) {
+            return 0;
+        }
+
         int length = 0;
-        for (int i : allTheScore) {
-            assessmentInformation.setGrossScore(i);// 每一个考评内容的分值
+        int allTheScoreLength = allTheScore.length;
+        for (int i = 0; i < allTheScoreLength; ++i) {
+            assessmentInformation.setEvaluationId(evaluationStandardList.get(i).getEvaluationId());// 设置考评内容的ID
+            assessmentInformation.setGrossScore(allTheScore[i]);// 设置考评内容的分值
             try {
                 assessmentDao.insertAssessmentInformation(assessmentInformation);// 记录每一项考评内容的分值
                 ++length;
@@ -206,7 +214,8 @@ public class AssessmentServiceImpl implements AssessmentService {
                 e.printStackTrace();
             }
         }
-        return length;
+
+        return length == allTheScoreLength ? length : 0;
     }
 
     @Override

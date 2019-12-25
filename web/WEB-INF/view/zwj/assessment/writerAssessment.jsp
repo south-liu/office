@@ -89,7 +89,8 @@
                 $.post('${pageContext.request.contextPath}/s/assessment/insertAssessmentInformation', {
                     assessmentId: ${assessment.assessmentId},
                     allTheScore: rateValue,
-                    suggest: $('textarea[name="suggest"]').val()
+                    suggest: $('textarea[name="suggest"]').val(),
+                    evaluationType: '${assessmentEmp.postName}'
                 }, function (data) {
                     layer.close(loadIndex);
                     if (data.code == 0 && data.result > 0) {
@@ -117,7 +118,8 @@
         layui.use(['layer'], function () {
             var layer = layui.layer;
             layer.msg('${msg}', {time: 1000}, function () {
-                window.top.location.href = '${pageContext.request.contextPath}/studentSide/login';
+                history.go(-1);
+                <%--window.top.location.href = '${pageContext.request.contextPath}/studentSide/index';--%>
             });
         });
     </script>

@@ -3,6 +3,7 @@ package com.ht.service.zwj;
 import com.ht.vo.AssessmentInformationVO;
 import com.ht.vo.AssessmentVO;
 import com.ht.vo.EmpAssessmentSuggestVO;
+import com.ht.vo.EvaluationVO;
 
 import java.util.List;
 import java.util.Map;
@@ -34,7 +35,7 @@ public interface AssessmentService {
 
     long searchAssessmentTotalityByOptions(Integer empId, String startTime, String endTime);
 
-    long insertAssessmentInformations(AssessmentInformationVO assessmentInformation, int[] allTheScore);
+    long insertAssessmentInformations(AssessmentInformationVO assessmentInformation, int[] allTheScore, List<EvaluationVO> evaluationStandardList);
 
     List<Map<String, Object>> queryStudentByAssessmentId(Integer assessmentId);
 
