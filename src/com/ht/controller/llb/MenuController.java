@@ -84,12 +84,14 @@ public class MenuController {
         //删除之前的权限
         roleService.delAllCharModule(characterId);
 
-        //保存新的权限
-        for (int moduleId : moduleIds) {
-            CharModuleVO charModuleVO = new CharModuleVO();
-            charModuleVO.setCharacterId(characterId);
-            charModuleVO.setModuleId(moduleId);
-            roleService.saveCharModule(charModuleVO);
+        if (moduleIds[0]!=0){
+            //保存新的权限
+            for (int moduleId : moduleIds) {
+                CharModuleVO charModuleVO = new CharModuleVO();
+                charModuleVO.setCharacterId(characterId);
+                charModuleVO.setModuleId(moduleId);
+                roleService.saveCharModule(charModuleVO);
+            }
         }
 
         return "success";
