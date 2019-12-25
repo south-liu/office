@@ -20,6 +20,7 @@ public interface StudentHuorDao {
 
     /**
      * 通过楼栋id获取对象
+     *
      * @param floorId
      * @return
      */
@@ -31,6 +32,7 @@ public interface StudentHuorDao {
 
     /**
      * 查询所有楼栋信息
+     *
      * @return
      */
     List<StudentFloorVO> allFloorData();

@@ -120,8 +120,8 @@ public class StudentReplyScoreDaoImpl implements StudentReplyScoreDao {
     public Map<String, Object> findProjectScoreByOptions(Integer stuId, Integer projectId) {
         Session session = sessionFactory.openSession();
 
-        Query query = session.createSQLQuery("select srs.*,stu.stuName,p.projectName,(select empName from emp where emp.empId = srs.empId) as gradeEmpName from "+currentTableName+" as srs left join project as p on p.projectId = srs.projectId left join student as stu on stu.studId = srs.studentId where stu.studId = "+stuId+" and srs.projectId = "+projectId).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
-        Map<String,Object> map = (Map<String, Object>) query.uniqueResult();
+        Query query = session.createSQLQuery("select srs.*,stu.stuName,p.projectName,(select empName from emp where emp.empId = srs.empId) as gradeEmpName from " + currentTableName + " as srs left join project as p on p.projectId = srs.projectId left join student as stu on stu.studId = srs.studentId where stu.studId = " + stuId + " and srs.projectId = " + projectId).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+        Map<String, Object> map = (Map<String, Object>) query.uniqueResult();
 
         session.close();
 

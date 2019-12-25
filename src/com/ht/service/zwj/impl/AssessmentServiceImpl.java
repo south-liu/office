@@ -5,6 +5,8 @@ import com.ht.service.zwj.AssessmentService;
 import com.ht.service.zwj.other.student.OStudentService;
 import com.ht.vo.AssessmentInformationVO;
 import com.ht.vo.AssessmentVO;
+import com.ht.vo.EmpAssessmentSuggestVO;
+import com.ht.vo.EvaluationVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -92,32 +94,28 @@ public class AssessmentServiceImpl implements AssessmentService {
     }
 
     /**
-     * 通过班级id计算该次考评平均分
+     * 通过考评ID获取该次考评平均分
      *
      * @param assessment
      * @return
      */
     @Override
-    public float queryAvgScoreByAssessment(AssessmentVO assessment) {
-        // 通过考评的班级id获取该班级所有的学生id
-        List<Map<String, Object>> studentByClassId = oStudentService.findStudentByClassId(assessment.getStudentClassId());
-        if (studentByClassId != null && studentByClassId.size() > 0) {
-            // 有关该考评的所有学生的ID
-            StringBuffer studentIds = new StringBuffer();
-            for (Map<String, Object> student : studentByClassId) {
-                String studId = String.valueOf(student.get("studId"));
-                studentIds.append(studId + ',');
-            }
-            String ids = studentIds.substring(0, studentIds.length() - 1);
-
-            // 通过考评id和学生id字符串查询该条考评的平均分
-            return assessmentDao.queryAvgScore(assessment.getAssessmentId(), ids);
+    public Float queryAvgScoreByAssessment(AssessmentVO assessment) {
+        if (assessment == null || assessment.getAssessmentId() <= 0) {
+            return null;
         }
-        return 0f;
+        return assessmentDao.queryAvgScoreByAssessmentId(assessment.getAssessmentId());
     }
 
+    /**
+     * 通过考评ID和学生ID查询该学生的考评详细信息：assessmentId,studentId,evaluationId,score,
+     *
+     * @param assessmentId
+     * @param studentId
+     * @return
+     */
     @Override
-    public Map<String, Object> queryAssessmentInformation(int assessmentId, int studentId) {
+    public List<Map<String, Object>> queryAssessmentInformation(int assessmentId, int studentId) {
         return assessmentDao.queryAssessmentInformation(assessmentId, studentId);
     }
 
@@ -195,8 +193,29 @@ public class AssessmentServiceImpl implements AssessmentService {
     }
 
     @Override
-    public long insertAssessmentInformation(AssessmentInformationVO assessmentInformationVO) {
-        return assessmentDao.insertAssessmentInformation(assessmentInformationVO);
+    public long insertAssessmentInformations(AssessmentInformationVO assessmentInformation, int[] allTheScore, List<EvaluationVO> evaluationStandardList) {
+        if (allTheScore == null) {
+            return 0;
+        }
+        // 所有的考评内容
+        if (evaluationStandardList == null || evaluationStandardList.size() <= 0) {
+            return 0;
+        }
+
+        int length = 0;
+        int allTheScoreLength = allTheScore.length;
+        for (int i = 0; i < allTheScoreLength; ++i) {
+            assessmentInformation.setEvaluationId(evaluationStandardList.get(i).getEvaluationId());// 设置考评内容的ID
+            assessmentInformation.setGrossScore(allTheScore[i]);// 设置考评内容的分值
+            try {
+                assessmentDao.insertAssessmentInformation(assessmentInformation);// 记录每一项考评内容的分值
+                ++length;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return length == allTheScoreLength ? length : 0;
     }
 
     @Override
@@ -205,5 +224,39 @@ public class AssessmentServiceImpl implements AssessmentService {
             return Collections.emptyList();
         }
         return assessmentDao.queryStudentByAssessmentId(assessmentId);
+    }
+
+    /**
+     * 插入学生对这次考评的建议
+     *
+     * @return
+     */
+    @Override
+    public long insertEmpAssessmentSuggest(EmpAssessmentSuggestVO empAssessmentSuggest) {
+        if (empAssessmentSuggest.getAssessmentId() <= 0 || empAssessmentSuggest.getStudentId() <= 0) {
+            return 0;
+        }
+        return assessmentDao.insertEmpAssessmentSuggest(empAssessmentSuggest);
+    }
+
+    @Override
+    public List<Map<String, Object>> queryAssessmentDetailContent(int assessmentId, int studentId) {
+        if (assessmentId <= 0 || studentId <= 0) {
+            return Collections.emptyList();
+        }
+        return assessmentDao.queryAssessmentDetailContent(assessmentId, studentId);
+    }
+
+    @Override
+    public Map<String, Object> queryAssessmentSuggest(int assessmentId, int studentId) {
+        if (assessmentId <= 0 || studentId <= 0) {
+            return Collections.emptyMap();
+        }
+        return assessmentDao.queryAssessmentSuggest(assessmentId, studentId);
+    }
+
+    @Override
+    public List<Map<String, Object>> queryUnfinishedAssessment() {
+        return assessmentDao.queryUnfinishedAssessment();
     }
 }

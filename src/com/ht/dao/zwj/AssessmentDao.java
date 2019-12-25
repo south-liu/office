@@ -2,6 +2,7 @@ package com.ht.dao.zwj;
 
 import com.ht.vo.AssessmentInformationVO;
 import com.ht.vo.AssessmentVO;
+import com.ht.vo.EmpAssessmentSuggestVO;
 
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,7 @@ public interface AssessmentDao {
 
     float queryAvgScore(int assessmentId, String ids);
 
-    Map<String, Object> queryAssessmentInformation(int assessmentId, int studentId);
+    List<Map<String, Object>> queryAssessmentInformation(int assessmentId, int studentId);
 
     long assessmentInformationTotality(int assessmentId);
 
@@ -32,4 +33,14 @@ public interface AssessmentDao {
     long insertAssessmentInformation(AssessmentInformationVO assessmentInformationVO);
 
     List<Map<String, Object>> queryStudentByAssessmentId(Integer assessmentId);
+
+    long insertEmpAssessmentSuggest(EmpAssessmentSuggestVO empAssessmentSuggest);
+
+    List<Map<String, Object>> queryAssessmentDetailContent(int assessmentId, int studentId);
+
+    Float queryAvgScoreByAssessmentId(Integer assessmentId);
+
+    Map<String, Object> queryAssessmentSuggest(int assessmentId, int studentId);
+
+    List<Map<String, Object>> queryUnfinishedAssessment();
 }

@@ -118,7 +118,6 @@ public class DaoUtils {
         session.flush();
         closeSession(session);
 
-        System.out.println("save：" + serializable);
         // 如果是数值型主键则转换为long
         if (serializable instanceof Number) {
             return ((Number) serializable).longValue();

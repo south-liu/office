@@ -72,10 +72,12 @@
         var formArea = ['500px', '400px'];// 编辑和添加表单的宽高
 
         /*var addFormTitle = '添加考评';
-        var addFormURL = '${pageContext.request.contextPath}/evaluation-standard/add';
+        var addFormURL = '
+        ${pageContext.request.contextPath}/evaluation-standard/add';
 
         var editFormTitle = '编辑考评';
-        var editFormURL = '${pageContext.request.contextPath}/evaluation-standard/add';*/
+        var editFormURL = '
+        ${pageContext.request.contextPath}/evaluation-standard/add';*/
 
         var addOptions = {
             title: '添加考评内容',
