@@ -162,22 +162,35 @@
             var data = obj.data //得得到所在行的的对应列的值
                 //,value = obj.value //得到修改后的值
             //,field = obj.field; //得到字段
-            $.ajax({
-                type:"post",
-                url:"${pageContext.request.contextPath}/MY/delterm",
-                async:true,
-                dataType:"text",
-                data:{termId:data.termId,termName:data.termName, remark:data.remark},
-                success:function(data){
+            if(data.termName != "" && data.remark){
+                $.ajax({
+                    type:"post",
+                    url:"${pageContext.request.contextPath}/MY/delterm",
+                    async:true,
+                    dataType:"text",
+                    data:{
+                        termId:data.termId,
+                        termName:data.termName,
+                        remark:data.remark
+                    },
+                    success:function(data){
 
-                    layer.close(lindex);
-                    layer.msg('修改成功');
-                },
-                error:function () {
-                    layer.close(lindex);
-                    layer.msg("服务器错误");
-                }
-            });
+                        layer.close(lindex);
+                        layer.msg('修改成功');
+                    },
+                    error:function () {
+                        layer.close(lindex);
+                        layer.msg("服务器错误");
+                    }
+                });
+            }else {
+                layer.close(lindex);
+                layer.msg("不能为空！", {
+                    time:1000
+                },function () {
+                    location.reload();  //刷新页面
+                });
+            }
         });
     });
 </script>

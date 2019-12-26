@@ -100,9 +100,18 @@ public class HTController {
     }
     //删除楼栋
     @RequestMapping("/updfloor")
-    public String updfloor(Integer floorId){
-        hts.updfloor(floorId);
-        return "wzq/floor_list";
+    @ResponseBody
+    public Map updfloor(Integer floorId){
+        //删除楼栋前查询此楼栋是否有宿舍
+        Integer counts = hts.selhour(floorId);
+        Map map = new HashMap();
+        if (counts > 0){
+            map.put("shuliang", 1);
+        }else {
+            hts.updfloor(floorId);
+            map.put("shuliang", 0);
+        }
+        return map;
     }
     //修改楼栋
     @RequestMapping("/delfloor")

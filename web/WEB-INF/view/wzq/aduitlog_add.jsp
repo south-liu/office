@@ -49,7 +49,7 @@
         <div class="layui-form-item" style="margin-top: 15px; margin-left: 20px">
             <label class="layui-form-label">考核分数</label>
             <div class="layui-input-block">
-                <input type="text" name="score" style="width: 200px" autocomplete="off" placeholder="请输入考核分数" class="layui-input">
+                <input type="text" name="score" style="width: 200px" lay-verify="required" autocomplete="off" placeholder="请输入考核分数" class="layui-input">
             </div>
         </div>
 
@@ -132,33 +132,42 @@
             form.on('submit(demo1)', function(obj){
                 var data = obj.field;
                 var lindex = layer.load();
-                $.ajax({
-                    url: "${pageContext.request.contextPath}/MY/addaduitlog",
-                    type: "post",
-                    async:true,
-                    dataType: "json",
-                    data:{
-                        aduitModelId:data.aduitModelId,
-                        auditDate:data.auditDate,
-                        empId:data.empId,
-                        score:data.score,
-                        auditPerson:data.auditPerson,
-                        image:data.image,
-                        remark:data.remark
-                    },
-                    success: function (data) {
-                        layer.close(lindex);
-                        layer.msg('添加成功',{
-                            time:1000
-                        },function () {
-                            window.parent.location.reload();  //添加成功之后关闭本页面且刷新原页面（直接重新访问原页面）
-                        });
-                    },
-                    error:function () {
-                        layer.close(lindex);
-                        layer.msg('服务器错误');
-                    }
-                });
+                var shijian = new Date();  //获取系统时间
+                var shurushijian = new Date(data.auditDate);  //获取输入时间
+               if (shurushijian <= shijian){  //在页面上：yyyy-MM-dd格式时间需要更改成中国国际标准时间格式比较，yyyy-MM-dd HH:mm:ss格式则可以直接比较。
+                   $.ajax({
+                       url: "${pageContext.request.contextPath}/MY/addaduitlog",
+                       type: "post",
+                       async:true,
+                       dataType: "json",
+                       data:{
+                           aduitModelId:data.aduitModelId,
+                           auditDate:data.auditDate,
+                           empId:data.empId,
+                           score:data.score,
+                           auditPerson:data.auditPerson,
+                           image:data.image,
+                           remark:data.remark
+                       },
+                       success: function (data) {
+                           layer.close(lindex);
+                           layer.msg('添加成功',{
+                               time:1000
+                           },function () {
+                               window.parent.location.reload();  //添加成功之后关闭本页面且刷新原页面（直接重新访问原页面）
+                           });
+                       },
+                       error:function () {
+                           layer.close(lindex);
+                           layer.msg('服务器错误');
+                       }
+                   });
+               }else {
+                   layer.close(lindex);
+                   layer.msg('考核时间不大于当前时间！', {
+                       time:1000
+                   })
+               }
                 return false;
             });
         });
