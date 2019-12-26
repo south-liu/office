@@ -14,7 +14,7 @@
     <jsp:include page="../head.jsp"></jsp:include>
 </head>
 <body>
-<%--<div class="layui-carousel" id="test1">
+<div class="layui-carousel" id="test1">
     <div carousel-item>
         <div>条目1</div>
         <div>条目2</div>
@@ -22,16 +22,15 @@
         <div>条目4</div>
         <div>条目5</div>
     </div>
-</div>--%>
+</div>
 
 <div style="padding: 20px; background-color: #F2F2F2;">
     <div class="layui-card" style="width:300px">
         <div class="layui-card-header">我的通知</div>
         <div class="layui-card-body">
             <c:forEach items="${assessmentList}" var="assessment">
-            <p>你有一条教师考评可以进入：<a href="s/assessment/writerAssessment?assessmentId=${assessment.assessmentId}">进入</a></p>
+                <p>你有一条教师考评可以进入：<a href="s/assessment/writerAssessment?assessmentId=${assessment.assessmentId}">进入</a></p>
             </c:forEach>
-            <p>你有一条教师考评可以进入：<a href="javascript:;">click</a></p>
         </div>
     </div>
 </div>
@@ -47,7 +46,7 @@
             //,anim: 'updown' //切换动画方式
         });
 
-        layer.open({
+        /*layer.open({
             type: 1,
             title: '你收到一条教师考评',
             closeBtn: 1, //不显示关闭按钮
@@ -57,7 +56,7 @@
             // time: 2000, //2秒后自动关闭
             anim: 2,
             content: '<a>1234</a>'
-        });
+        });*/
     });
 </script>
 </body>
