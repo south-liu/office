@@ -171,8 +171,21 @@ public class StudentHuorController {// 学生宿舍管理
     // 删除多个
     @ResponseBody
     @RequestMapping(value = "/deleteMulti", method = RequestMethod.POST)
-    public int deleteMulti(@RequestParam(name = "hourId[]") Integer[] ids) {
-        studentHuorService.deleteMultiStudentHuor(ids);
-        return ids.length;
+    public Map<String, Object> deleteMulti(@RequestParam(name = "hourId[]") Integer[] ids) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            if (ids != null && ids.length > 0) {
+                studentHuorService.deleteMultiStudentHuor(ids);
+            }
+
+            map.put("code", 0);
+            map.put("msg", "删除成功！");
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("code", -1);
+            map.put("msg", "服务器错误！");
+        }
+
+        return map;
     }
 }

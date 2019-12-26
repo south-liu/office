@@ -291,18 +291,21 @@
                     ids.push(element.hourId);
                 });
                 // 传输id到后台删除数据
-                $.post('${pageContext.request.contextPath}/student-huor/deleteMulti', {hourId: ids}, function
-                    (data) {
+                $.post('${pageContext.request.contextPath}/student-huor/deleteMulti', {hourId: ids}, function (data) {
                     // 返回删除数组的长度
-                    if (data > 0) {
-                        // 删除成功
-                        layer.msg('删除成功', {
+                    if (data.code == 0) {
+                        layer.msg(data.msg, {
                             icon: 1,
                             time: 1000
                         });
                         table.reload('dataTable', {curr: 1});// 重载表格
+                    } else {
+                        layer.msg(data.msg, {
+                            icon: 2,
+                            time: 1000
+                        });
                     }
-                });
+                }, 'json');
                 layer.close(index);
             });
         }
@@ -325,8 +328,8 @@
                 , {field: 'huoeIddsc', title: '序号', sort: true}
                 , {field: 'huorName', title: '宿舍房号', sort: true}
                 , {field: 'floorName', title: '宿舍楼栋'}
-                , {field: 'numberBeds', title: '床位数', sort: true}
                 , {field: 'address', title: '宿舍地址'}
+                , {field: 'numberBeds', title: '床位数', sort: true}
                 , {field: 'count', title: '宿舍人数', sort: true}
                 , {fixed: 'right', width: 200, title: '操作', align: 'center', toolbar: '#action_toolbar'}
             ]]
