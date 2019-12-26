@@ -21,7 +21,7 @@ public class Studclsimpl extends ljyDao implements studentclassService {
     @Override
     public List studentclass_list(int page, int limit) {
 //        return pagelistbysql("select * from studentClass", page, limit);
-        return pagelistbysql("select stcls.*,e.empName,e.postName,clst.classTypeName,stufal.`level`, mjr.majorName,dept.collegeDeptName  from studentClass stcls left join emp e on stcls.teacher=e.empId left join classType clst on stcls.classType=clst.classTypeId left join studentFall stufal on stcls.falled=stufal.fallId left join major mjr on stcls.majorId=mjr.majorId left join collegeDept  dept on stcls.deptId=dept.collegeDeptId", page, limit);
+        return pagelistbysql("select stcls.*,(select empName from emp where empId=stcls.classTeacher) claTeacher,e.empName,e.postName,clst.classTypeName,stufal.`level`, mjr.majorName,dept.collegeDeptName  from studentClass stcls left join emp e on stcls.teacher=e.empId left join classType clst on stcls.classType=clst.classTypeId left join studentFall stufal on stcls.falled=stufal.fallId left join major mjr on stcls.majorId=mjr.majorId left join collegeDept  dept on stcls.deptId=dept.collegeDeptId", page, limit);
     }
 
     @Override
@@ -58,5 +58,15 @@ public class Studclsimpl extends ljyDao implements studentclassService {
     @Override
     public List studentclass_choose(int falled,int page,int limit) {
         return pagelistbysql("select stcls.*,e.empName,e.postName,clst.classTypeName,stufal.`level`, mjr.majorName,dept.deptName  from studentClass stcls left join emp e on stcls.teacher=e.empId left join classType clst on stcls.classType=clst.classTypeId left join studentFall stufal on stcls.falled=stufal.fallId left join major mjr on stcls.majorId=mjr.majorId left join dept dept on stcls.deptId=dept.deptId  where falled="+falled,page,limit);
+    }
+
+    @Override
+    public StudentClassVO studentclass_byClassNo(String  ClassNo) {
+        return (StudentClassVO) selectOneByHql("from StudentClassVO where classNo="+ClassNo);
+    }
+
+    @Override
+    public StudentClassVO studentclass_byClassName(String className) {
+        return (StudentClassVO) selectOneByHql("from StudentClassVO where className="+className);
     }
 }

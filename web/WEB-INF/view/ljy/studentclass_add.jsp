@@ -41,7 +41,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">班级编号：</label>
         <div class="layui-input-inline">
-            <input type="text" name="classNo" lay-verify="required" placeholder="请输入" autocomplete="off"
+            <input type="text" name="classNo" lay-verify="required|number" placeholder="请输入" autocomplete="off"
                    class="layui-input">
         </div>
 
@@ -156,7 +156,7 @@
                     icon: 2,
                     time: 1000
                 });
-            }else{
+            } else {
                 var lod = layer.load();
                 //班级管理数据
                 $.ajax({
@@ -176,14 +176,29 @@
                         remark: fd.remark
                     },
                     success: function (data) {
-                        layer.close(lod);
-                        layer.msg('添加成功', {
-                            time: 1000
-                        }, function () {
-                            //var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                            //parent.layer.close(index); //再执行关闭
+                        if (data.code == 0) {
+//                            添加成功
+                            layer.msg(data.msg, {
+                                icon: 1,
+                                time: 1000
+                            });
+                            layer.close(lod);
                             window.parent.location.reload();
-                        });
+                        } else if (data.code == 2) {
+//                            相同班级编号
+                            layer.msg(data.msg, {
+                                icon: 2,
+                                time: 1000
+                            });
+                            layer.close(lod);
+                        } else if (data.code == 3) {
+//                            相同班级名称
+                            layer.msg(data.msg, {
+                                icon: 2,
+                                time: 1000
+                            });
+                            layer.close(lod);
+                        }
                     },
                     error: function () {
                         layer.close(lod);
@@ -191,8 +206,6 @@
                     }
                 });
             }
-
-
             return false;
         });
     });

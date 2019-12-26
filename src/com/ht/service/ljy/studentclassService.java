@@ -28,4 +28,10 @@ public interface studentclassService {
 
     public List studentclass_choose(int falled, int page, int limit);
 
+
+
+    public StudentClassVO studentclass_byClassNo(String ClassNo);
+
+    public StudentClassVO studentclass_byClassName(String className);
+
 }

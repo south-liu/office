@@ -89,10 +89,27 @@ public class StuClsController {
 
     @ResponseBody
     @RequestMapping("/studentclassadd")
-    public String  studentclassadd(StudentClassVO studentClassVO){
-        studentclassService.studentclass_add(studentClassVO);
-        System.out.println("添加成功！！！");
-        return "success";
+    public Map  studentclassadd(StudentClassVO studentClassVO){
+        Map map = new HashMap();
+//通过班级ID查询
+        StudentClassVO classVObyno = studentclassService.studentclass_byClassNo(studentClassVO.getClassNo());
+        if (classVObyno != null) {
+            map.put("code", 2);
+            map.put("msg", "已存在相同班级编号！");
+            return map;
+        } else {
+            StudentClassVO classVObyname = studentclassService.studentclass_byClassName(studentClassVO.getClassName());
+            if (classVObyname != null) {
+                map.put("code", 3);
+                map.put("msg", "已存在相同班级名称");
+                return map;
+            } else {
+                map.put("code", 0);
+                map.put("msg", "添加成功！");
+                studentclassService.studentclass_add(studentClassVO);
+            }
+        }
+        return map;
     }
 
 
