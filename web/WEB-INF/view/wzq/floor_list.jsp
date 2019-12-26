@@ -149,22 +149,35 @@
             var data = obj.data //得得到所在行的的对应列的值
                 ,value = obj.value //得到修改后的值
                 ,field = obj.field; //得到字段
-            $.ajax({
-                type:"post",
-                url:"${pageContext.request.contextPath}/MY/delfloor",
-                async:true,
-                dataType:"text",
-                data:{floorId:data.floorId,floorName:data.floorName},
-                success:function(data){
+            if (data.floorName != ""){
+                $.ajax({
+                    type:"post",
+                    url:"${pageContext.request.contextPath}/MY/delfloor",
+                    async:true,
+                    dataType:"text",
+                    data:{
+                        floorId:data.floorId,
+                        floorName:data.floorName
+                    },
+                    success:function(data){
 
-                    layer.close(lindex);
-                    layer.msg('修改成功');
-                },
-                error:function () {
-                    layer.close(lindex);
-                    layer.msg("服务器错误");
-                }
-            });
+                        layer.close(lindex);
+                        layer.msg('修改成功');
+                    },
+                    error:function () {
+                        layer.close(lindex);
+                        layer.msg("服务器错误");
+                    }
+                });
+            }else {
+                layer.close(lindex);
+                layer.msg('不能为空！', {
+                    time:1000
+                },function () {
+                    location.reload();
+                })
+            }
+
         });
     });
 </script>
