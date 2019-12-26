@@ -28,4 +28,6 @@ public interface StudentHuorService {
     void deleteMultiStudentHuor(Integer[] hourId);
 
     void delete(int hourId);
+
+    List<StudentHuorVO> queryStudentHuorNotHuorid(StudentHuorVO studentHuor);
 }

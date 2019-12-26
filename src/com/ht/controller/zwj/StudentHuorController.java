@@ -1,7 +1,6 @@
 package com.ht.controller.zwj;
 
 import com.ht.service.zwj.StudentHuorService;
-import com.ht.vo.StudentFloorVO;
 import com.ht.vo.StudentHuorVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -71,28 +70,56 @@ public class StudentHuorController {// 学生宿舍管理
         return hashMap;
     }
 
-    // 查询所有楼栋
-    @ResponseBody
-    @RequestMapping(value = "/allFloorData", method = RequestMethod.GET)
-    public List<StudentFloorVO> allFloorData() {
-        List<StudentFloorVO> list = studentHuorService.allFloorData();
-        return list;
-    }
-
 
     // 获取详细信息
     @ResponseBody
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
-    public StudentHuorVO detail(@RequestParam int hourId) {
-        StudentHuorVO studentHuor = studentHuorService.getStudentHuorById(hourId);
-        return studentHuor;
+    public Map<String, Object> detail(@RequestParam int hourId) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            map.put("floorList", studentHuorService.allFloorData());// 所有的楼栋，用于下拉显示
+            map.put("studentHuor", studentHuorService.getStudentHuorById(hourId));// 通过ID查询宿舍详细信息
+            map.put("code", 0);
+            map.put("msg", "查询成功！");
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("code", -1);
+            map.put("msg", "服务器错误！");
+        }
+
+        return map;
     }
 
+    // 修改
     @ResponseBody
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public Integer update(StudentHuorVO studentHuor) {
-        studentHuorService.updateStudentHuor(studentHuor);
-        return studentHuor.getHourId();
+    public Map<String, Object> update(StudentHuorVO studentHuor) {
+        Map<String, Object> map = new HashMap<>();
+
+        /*
+        修改之前，判断是否已存在相同的宿舍房号
+        1.通过宿舍房号ID查询：除去该ID以外的所有宿舍，宿舍房号与接收的宿舍房号相同的
+        2.通过上方查询，查询出了数据，则证明存在相同宿舍房号
+         */
+        List<StudentHuorVO> studentHuors = studentHuorService.queryStudentHuorNotHuorid(studentHuor);
+        if (studentHuors != null && !studentHuors.isEmpty()) {
+            map.put("code", 1);
+            map.put("msg", "宿舍房号已存在！");
+            return map;
+        }
+
+        try {
+            studentHuorService.updateStudentHuor(studentHuor);
+
+            map.put("code", 0);
+            map.put("msg", "修改成功！");
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("code", -1);
+            map.put("msg", "服务器错误！");
+        }
+
+        return map;
     }
 
     // 删除

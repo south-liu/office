@@ -6,6 +6,7 @@ import com.ht.vo.StudentHuorVO;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -49,6 +50,17 @@ public class StudentHuorDaoImpl implements StudentHuorDao {
         SQLQuery sqlQuery = session.createSQLQuery("select h.* from " + currentTableName + " as h left join " + floorTableName + " as f on h.floorId = f.floorId where f.floorId = " + floorId + " order by " + getCurrentTableId + " asc");
         sqlQuery.addEntity(StudentHuorVO.class);
         List<StudentHuorVO> list = sqlQuery.list();// 执行查询
+
+        session.close();
+        return list;
+    }
+
+    @Override
+    public List<StudentHuorVO> queryStudentHuorNotHuorid(Integer hourId, String huorName) {
+        Session session = sessionFactory.openSession();
+
+        List<StudentHuorVO> list =
+                session.createSQLQuery("select * from " + currentTableName + " where hourId != " + hourId + " and huorName = '" + huorName + "'").setResultTransformer(Transformers.aliasToBean(StudentHuorVO.class)).list();
 
         session.close();
         return list;

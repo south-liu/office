@@ -38,7 +38,11 @@ public class StuJefServiceImpl extends BaseDao implements StujefService{
         executeSQL("delete from studentEdu where eduId ="+id);
     }
 
+    @Override
+    public StudentEduVO allstuedubyId(Integer eduId) {
+        return (StudentEduVO) selectOneByHql("from StudentEduVO where eduId ="+eduId);
 
+    }
 
 
     //家庭背景

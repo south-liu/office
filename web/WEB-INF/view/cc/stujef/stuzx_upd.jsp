@@ -36,7 +36,7 @@
 <body style="padding: 30px;">
 <form class="layui-form" action="" lay-filter="example">
     <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">在校记录：</label>
+        <label class="layui-form-label">情况记录：</label>
         <div class="layui-input-block">
             <textarea name="happening" lay-verify="required" class="layui-textarea"></textarea>
         </div>
@@ -68,20 +68,24 @@
             console.log(data.field);
             var fd = data.field;
             var lod = layer.load();
-            //部门数据
-            $.ajax({
-                type:"post",
-                url:"${pageContext.request.contextPath}/stujef/updzx",
-                async:true,
-                dataType:"text",
-                data:{
-                    happening:fd.happening,
-                    happenId:${studentHappeningVO.happenId},
-                    happenId:${studentHappeningVO.happenId},
-                    stuId:${studentHappeningVO.stuId},
-                    empId:${studentHappeningVO.empId},
-                    opTime:${studentHappeningVO.opTime}
-                },
+
+
+            var re = /^[0-9]+.?[0-9]*$/;
+            var nubmer =fd.happening;
+            if (re.test(nubmer)) {
+                layer.msg('请认真填写该学生的在校情况');
+            }else {
+                $.ajax({
+                    type:"post",
+                    url:"${pageContext.request.contextPath}/stujef/updzx",
+                    async:true,
+                    dataType:"text",
+                    data:{
+                        happening:fd.happening,
+                        happenId:${studentHappeningVO.happenId},
+                        stuId:${studentHappeningVO.stuId},
+                        empId:${studentHappeningVO.empId},
+                    },
                     success: function (data) {
                         layer.close(lod);
                         layer.msg('修改成功',{
@@ -92,14 +96,15 @@
                             window.parent.location.reload();
                         });
                     },
-                error:function () {
-                    layer.close(index);
-                    layer.msg("服务器错误", {
-                        icon: 1,
-                        time: 1000
-                    });
-                }
-            });
+                    error:function () {
+                        layer.close(index);
+                        layer.msg("服务器错误", {
+                            icon: 1,
+                            time: 1000
+                        });
+                    }
+                });
+            }
             return false;
     });
 

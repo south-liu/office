@@ -12,7 +12,7 @@ public interface RepairService {
     //添加方法
     public void AddRepair(EquipmentRepairVO equipmentRepairVO);
     //修改方法
-    public void UpdRepair(int equid,int status,String data);
+    public void UpdRepair(int equid, int status, String data);
     //删除方法
     public void delRepair(String id);
 }

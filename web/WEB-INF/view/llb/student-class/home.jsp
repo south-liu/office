@@ -42,14 +42,14 @@
                             <div class="layui-inline layui-show-xs-block">
                                 <input type="text" id="phone" name="phone"  placeholder="手机号码" autocomplete="off" class="layui-input">
                             </div>
-                            <div class="layui-inline layui-show-xs-block">
+                            <%--<div class="layui-inline layui-show-xs-block">
                                 <select id="clazz" name="classType">
                                     <option value="">班级类别</option>
                                     <c:forEach items="${classTypes}" var="classType">
                                         <option value="${classType.classTypeId}">${classType.classTypeName}</option>
                                     </c:forEach>
                                 </select>
-                            </div>
+                            </div>--%>
                             <div class="layui-inline layui-show-xs-block">
                                 <button class="layui-btn" id="seacch" ><i class="layui-icon">&#xe615;</i></button>
                                 <button class="layui-btn layui-btn-sm layui-btn-normal" id="updStuClass">分班</button>
@@ -95,7 +95,7 @@
                 {field:'', title:'班级',align: 'center',templet:function (res) {
                         return '未分配';
                     }},
-                {field:'introdureTech', title:'招生老师',align: 'center'},
+                {field:'introdureTech', title:'招生老师',align: 'center'}
             ]],
         });
 
@@ -146,13 +146,11 @@
         $('#seacch').click(function () {
             var stuName = $('#stuName').val();
             var phone = $('#phone').val().trim();
-            var classType = $('#classType').val();
             table.reload('sTab',{
-                url:'${pageContext.request.contextPath}/student/pageListWhere',
+                url:'${pageContext.request.contextPath}/student-class/pageListWhere',
                 where:{
                     stuName:stuName,
-                    phone:phone,
-                    clazz:clazz,
+                    phone:phone
                 }
             });
         });

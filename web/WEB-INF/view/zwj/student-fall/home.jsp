@@ -38,7 +38,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">届别名称：</label>
             <div class="layui-input-inline">
-                <input type="text" name="level" lay-verify="required" lay-reqtext="届别名称是必填项，岂能为空？" placeholder="请输入届别名称"
+                <input type="text" name="level" lay-verify="required|number" lay-reqtext="届别名称是必填项，岂能为空？" placeholder="请输入届别名称"
                        autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -58,7 +58,7 @@
 </div>
 
 <script type="text/javascript">
-    layui.use('table', function () {
+    layui.use(['table', 'layer', 'form'], function () {
         var table = layui.table;
         var layer = layui.layer;
         var form = layui.form;
@@ -95,7 +95,7 @@
                             layer.msg(data.msg, {
                                 icon: 1,
                                 time: 1000
-                            })
+                            });
                             layer.close(windowIndex);// 关闭表单窗口
                             table.reload('dataTable', {});// 重载表格
                         } else if (data.code == 1) {// 失败
@@ -175,16 +175,26 @@
             layer.confirm('确定删除该行吗？', function (index) {
                 // 传输id到后台删除数据
                 $.post('${pageContext.request.contextPath}/student-fall/delete', {fallId: obj.data.fallId}, function (data) {
-                    // 返回删除的id
-                    if (data > 0) {
-                        // 删除成功s
-                        layer.msg('删除成功', {
+                    if (data.code == 0) {// 删除成功！
+                        layer.msg(data.msg, {
                             icon: 1,
                             time: 1000
                         });
-                        obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                        obj.del(); // 删除对应行（tr）的DOM结构，并更新缓存
+                        table.reload('dataTable', {curr: 1});// 重载表格
+                    } else if (data.code == 1) {
+                        layer.msg(data.msg, {
+                            icon: 3,
+                            time: 2000,
+                            area: '300px'
+                        });
+                    } else {
+                        layer.msg(data.msg, {
+                            icon: 2,
+                            time: 1000
+                        });
                     }
-                });
+                }, 'json');
                 layer.close(index);
             });
         }
@@ -215,7 +225,7 @@
                             icon: 1,
                             time: 1000
                         });
-                        table.reload('dataTable', {});// 重载表格
+                        table.reload('dataTable', {curr: 1});// 重载表格
                     }
                 });
                 layer.close(index);

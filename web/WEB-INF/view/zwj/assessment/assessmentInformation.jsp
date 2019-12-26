@@ -17,11 +17,11 @@
 <body>
 <div style="clear: both;">
     <%--图表展示--%>
-    <div style="float: left;width: 60%;">
+    <div style="float: left;width: 60%;min-width: 500px;">
         <div id="echarts" style="min-height:500px;height:100%;"></div>
     </div>
     <%--数据显示--%>
-    <div style="float: right;width: 40%;min-width: 400px;">
+    <div style="float: left;width: 40%;min-width: 420px;">
         <div style="float: right;width:20%;">
             <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="sidebar" style="width:100%;">
                 <c:forEach items="${studentList}" var="student" varStatus="i">
@@ -31,7 +31,7 @@
                 </c:forEach>
             </ul>
         </div>
-        <div style="float: left;width:80%;display:none;" id="contextBox">
+        <div style="float: right;width:80%;display:none;" id="contextBox">
             <blockquote class="layui-elem-quote layui-quote-nm" id="scoreText">
                 <div style="clear: both;">
                     <span style="float: left;">评分详细：</span>
@@ -52,7 +52,7 @@
                 <div class="layui-field-box" id="suggestText"></div>
             </fieldset>
         </div>
-        <div style="clear: both;"></div>
+        <span style="clear: both;"></span>
     </div>
 </div>
 

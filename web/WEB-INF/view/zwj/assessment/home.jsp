@@ -501,7 +501,7 @@
                         title: '考评详细',
                         resize: false,
                         content: ['${pageContext.request.contextPath}/assessment/lookDetailList?assessmentId=' + objectData.assessmentId],
-                        area: ['80%', '80%'],
+                        area: ['100%', '100%'],
                         success: function (layero, index) {
                             // console.log(1)
                         },

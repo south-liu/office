@@ -59,33 +59,40 @@
         form.on('submit(sub)', function(data){
             console.log(data.field);
             var fd = data.field;
-            var lod = layer.load();
-            //部门数据
-            $.ajax({
-                url: "${pageContext.request.contextPath}/stujef/addzx",
-                type: "post",
-                async:true,
-                dataType: "json",
-                data:{
-                    stuId:fd.stuId,
-                    happening:fd.happening,
-                    empId:fd.empId,
-                },
-                success: function (data) {
-                    layer.close(lod);
-                    layer.msg('添加成功',{
-                        time:1000
-                    },function () {
-                        //var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                        //parent.layer.close(index); //再执行关闭
-                        window.parent.location.reload();
-                    });
-                },
-                error:function () {
-                    layer.close(lod);
-                    layer.msg('服务器错误');
-                }
-            });
+
+
+            var re = /^[0-9]+.?[0-9]*$/;
+            var nubmer =fd.happening;
+            if (re.test(nubmer)) {
+                layer.msg('请认真填写该学生的在校情况');
+            }else {
+                var lod = layer.load();
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/stujef/addzx",
+                    type: "post",
+                    async:true,
+                    dataType: "json",
+                    data:{
+                        stuId:fd.stuId,
+                        happening:fd.happening,
+                        empId:fd.empId,
+                    },
+                    success: function (data) {
+                        layer.close(lod);
+                        layer.msg('添加成功',{
+                            time:1000
+                        },function () {
+                            //var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            //parent.layer.close(index); //再执行关闭
+                            window.parent.location.reload();
+                        });
+                    },
+                    error:function () {
+                        layer.close(lod);
+                        layer.msg('服务器错误');
+                    }
+                });
+            }
             return false;
         });
 

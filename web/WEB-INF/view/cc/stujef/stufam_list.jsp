@@ -86,34 +86,59 @@
                 var value = obj.value //得到修改后的值
                     ,data = obj.data //得到所在行所有键值
                     ,field = obj.field; //得到字段
-                layer.msg(field + '修改成功');
-                $.ajax({
-                    type:"post",
-                    url:"${pageContext.request.contextPath}/stujef/updfam",
-                    async:true,
-                    dataType:"text",
-                    data:{familyId:data.familyId,stuId:$('#stuId').val(),familyName:data.familyName,relaTion:data.relaTion,familyPhone:data.familyPhone},
-                    success:function(data){
-                        layer.close(lindex);
-                        layer.msg('修改成功!', {
-                            icon: 1,
-                            time: 1000
-                        },function () {
-                            layer.close(index);
-                            // location.reload();
-                            table.reload('myTable', {
-                                url: '${pageContext.request.contextPath}/stujef/famlist'
+
+                if (data.familyName=="") {
+                    layer.msg('内容不能为空', {
+                        icon: 0,
+                        time: 1000
+                    },function () {
+                        location.reload();
+                    });
+                }else if (data.relaTion=="") {
+                    layer.msg('内容不能为空', {
+                        icon: 0,
+                        time: 1000
+                    },function () {
+                        location.reload();
+                    });
+                }else if (data.familyPhone=="") {
+                    layer.msg('内容不能为空', {
+                        icon: 0,
+                        time: 1000
+                    },function () {
+                        location.reload();
+                    });
+                }else {
+                    layer.msg('修改成功');
+                    $.ajax({
+                        type:"post",
+                        url:"${pageContext.request.contextPath}/stujef/updfam",
+                        async:true,
+                        dataType:"text",
+                        data:{familyId:data.familyId,stuId:$('#stuId').val(),familyName:data.familyName,relaTion:data.relaTion,familyPhone:data.familyPhone},
+                        success:function(data){
+                            layer.close(lindex);
+                            layer.msg('修改成功!', {
+                                icon: 1,
+                                time: 1000
+                            },function () {
+                                layer.close(index);
+                                // location.reload();
+                                table.reload('myTable', {
+                                    url: '${pageContext.request.contextPath}/stujef/famlist'
+                                });
                             });
-                        });
-                    },
-                    error:function () {
-                        layer.close(lindex);
-                        layer.msg("服务器错误", {
-                            icon: 1,
-                            time: 1000
-                        });
-                    }
-                });
+                        },
+                        error:function () {
+                            layer.close(lindex);
+                            layer.msg("服务器错误", {
+                                icon: 1,
+                                time: 1000
+                            });
+                        }
+                    });
+                }
+
             });
         });
     </script>

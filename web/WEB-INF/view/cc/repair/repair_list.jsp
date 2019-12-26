@@ -12,6 +12,14 @@
     <title>设备维修管理</title>
     <jsp:include page="../../public/head.jsp"/>
 </head>
+<style>
+    .llayui-btn-disabled {
+        border: 1px solid #e6e6e6;
+        background-color: #FBFBFB;
+        color: #C9C9C9;
+        opacity: 1;
+    }
+</style>
 <body>
 <table class="layui-hide" id="myTable" lay-filter="fTable"></table>
 <script type="text/html" id="toolbarDemo">
@@ -44,10 +52,9 @@
                 {field:'endTime', title:'结束时间',align: 'center'},
                 {field:'status', title:'维修状态',align: 'center',templet: function(res){
                         if (res.status ==0) {
-                            return '<span onclick="zt(this,'+res.equipmentId+');" class="layui-btn-zt layui-btn-zty layui-btn-normal layui-btn-mini layui-btn-disabled">未完成</span>'
+                            return '<span onclick="zt(this,'+res.equipmentId+');" class="layui-btn-zt layui-btn-zty layui-btn-normal layui-btn-mini llayui-btn-disabled">未完成</span>'
                         } else {
                             return '<button type="button" class="layui-btn layui-btn-xs">已经完成</button>';
-
                         }
                     }},
                 {field:'remark', title:'备注',align: 'center'},

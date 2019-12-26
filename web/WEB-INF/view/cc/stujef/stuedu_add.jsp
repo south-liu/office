@@ -78,7 +78,6 @@
         var laydate = layui.laydate;
         var form = layui.form
             ,layer = layui.layer;
-
         laydate.render({
             elem: '#data' //指定元素
         });
@@ -86,38 +85,49 @@
             elem:'#datas'
         });
 
+
         //监听提交
         form.on('submit(sub)', function(data){
             console.log(data.field);
             var fd = data.field;
-            var lod = layer.load();
-            //部门数据
-            $.ajax({
-                url: "${pageContext.request.contextPath}/stujef/addedu",
-                type: "post",
-                async:true,
-                dataType: "json",
-                data:{
-                    stuId:fd.stuId,
-                    school:fd.school,
-                    beginDate:fd.beginDate,
-                    endDate:fd.endDate,
-                },
-                success: function (data) {
-                    layer.close(lod);
-                    layer.msg('添加成功',{
-                        time:1000
-                    },function () {
-                        //var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                        //parent.layer.close(index); //再执行关闭
-                        window.parent.location.reload();
-                    });
-                },
-                error:function () {
-                    layer.close(lod);
-                    layer.msg('服务器错误');
-                }
-            });
+
+            var re = /^[0-9]+.?[0-9]*$/;
+            var nubmer =fd.school;
+
+            if (data.startTime > data.endDate) {
+                layer.msg('请正确填写时间');
+            }else if (re.test(nubmer)) {
+                layer.msg('请正确填写学校');
+            }else {
+                var lod = layer.load();
+                //部门数据
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/stujef/addedu",
+                    type: "post",
+                    async:true,
+                    dataType: "json",
+                    data:{
+                        stuId:fd.stuId,
+                        school:fd.school,
+                        beginDate:fd.beginDate,
+                        endDate:fd.endDate,
+                    },
+                    success: function (data) {
+                        layer.close(lod);
+                        layer.msg('添加成功',{
+                            time:1000
+                        },function () {
+                            //var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            //parent.layer.close(index); //再执行关闭
+                            window.parent.location.reload();
+                        });
+                    },
+                    error:function () {
+                        layer.close(lod);
+                        layer.msg('服务器错误');
+                    }
+                });
+            }
             return false;
         });
 

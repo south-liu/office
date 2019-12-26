@@ -1,6 +1,8 @@
 package com.ht.controller.zwj;
 
 import com.ht.service.zwj.StudentFallService;
+import com.ht.service.zwj.other.studentClass.OStudentClassService;
+import com.ht.vo.StudentClassVO;
 import com.ht.vo.StudentFallVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,8 @@ import java.util.Map;
 public class StudentFallController {
     @Resource
     private StudentFallService studentFallService;
+    @Resource
+    private OStudentClassService oStudentClassService;
 
     @RequestMapping("/home")
     public String home() {
@@ -44,9 +48,30 @@ public class StudentFallController {
     // 删除
     @ResponseBody
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public Integer delete(@RequestParam int fallId) {
-        studentFallService.delete(fallId);
-        return fallId;
+    public Map<String, Object> delete(@RequestParam int fallId) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            /*
+             查询该届别下面的所有班级，有班级则不能删除
+             */
+            List<StudentClassVO> studentClassVOS = oStudentClassService.queryStudentClassByFallId(fallId);
+            if (studentClassVOS != null && studentClassVOS.size() > 0) {
+                map.put("code", 1);
+                map.put("msg", "届别内存在班级，不得删除此届别！");
+                return map;
+            }
+
+            // 删除届别
+            studentFallService.delete(fallId);
+            map.put("code", 0);
+            map.put("msg", "删除成功！");
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("code", -1);
+            map.put("msg", "服务器错误！");
+            return map;
+        }
+        return map;
     }
 
     // 添加

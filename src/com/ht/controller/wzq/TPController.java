@@ -245,6 +245,8 @@ public class TPController {
 
         //处理人
         String assignee = chairman;
+        //是否顶级(0不是 1是)
+        int isTop = 0;
 
         //如果申请人是部门负责人
         if (chairman.equals(empVO.getEmpName())){
@@ -258,6 +260,10 @@ public class TPController {
                         assignee = deptVO.getChairman();
                     }
                 }
+            } else if (nextDeptId == -1) {
+                isTop = 1;
+                holiday.setStatus(2);
+                tps.updholiday(holiday);
             } else {
                 assignee = deptService.selById(nextDeptId).getChairman();
             }
@@ -268,6 +274,7 @@ public class TPController {
         map.put("empId", empVO.getEmpName());  //申请人
         map.put("day",holiday.getHolidayDay());
         map.put("assignee",assignee);
+        map.put("isTop",isTop);
         map.put("holidayId",holiday.getHolidayId());
 
 
@@ -341,6 +348,8 @@ public class TPController {
         HolidayVO holiday = tps.selholiday(holidayId);
 
         String assignee = "";
+        //是否顶级(0不是 1是)
+        int isTop = 0;
         //上级部门Id
         int nextDeptId = deptService.selById(empVO.getDeptId()).getParentId();
 
@@ -355,11 +364,7 @@ public class TPController {
                 }
             }
         } else if (nextDeptId == -1) {
-            for (DeptVO deptVO : all) {
-                if (deptVO.getParentId() == -1) {//查询出总部门的负责人
-                    assignee = deptVO.getChairman();
-                }
-            }
+            isTop = 1;
         } else {
             assignee = deptService.selById(nextDeptId).getChairman();
         }
@@ -370,6 +375,7 @@ public class TPController {
         variable.put("flow", flow);
         //设置办理人
         variable.put("assignee", assignee);
+        variable.put("isTop", isTop);
 
         //完成当前任务
         taskService.complete(taskId, variable);
