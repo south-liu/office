@@ -9,8 +9,9 @@ public interface IStudentDao {
     public StudentVO findByPhone(String phone);
 
     public List<StudentVO> allStu();
-    public List<StudentVO> pageList(int page, int limit);
-    public List<StudentVO> pageListWhere(int page, int limit,String stuName,String phone,Integer clazz,Integer huor);
+    public List<StudentVO> pageList(int page, int limit,Integer empId,String postName);
+    public List<StudentVO> pageListWhere(int page, int limit,Integer empId,String postName,String stuName,String phone,Integer clazz,Integer huor);
+    public List pageListWhere(int page, int limit,String stuName,String phone);
 
     public int countStudent();
     public int countStuWhere(String stuName,String phone,Integer clazz,Integer huor);

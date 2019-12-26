@@ -30,13 +30,18 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
-    public List<StudentVO> pageList(int page, int limit) {
-        return studentDao.pageList(page,limit);
+    public List<StudentVO> pageList(int page, int limit,Integer empId,String postName) {
+        return studentDao.pageList(page,limit,empId,postName);
     }
 
     @Override
-    public List<StudentVO> pageListWhere(int page, int limit, String stuName, String phone, Integer clazz, Integer huor) {
-        return studentDao.pageListWhere(page,limit,stuName,phone,clazz,huor);
+    public List<StudentVO> pageListWhere(int page, int limit,Integer empId,String postName, String stuName, String phone, Integer clazz, Integer huor) {
+        return studentDao.pageListWhere(page,limit,empId,postName,stuName,phone,clazz,huor);
+    }
+
+    @Override
+    public List pageListWhere(int page, int limit, String stuName, String phone) {
+        return studentDao.pageListWhere(page,limit,stuName,phone);
     }
 
     @Override

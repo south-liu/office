@@ -76,13 +76,31 @@ public class StudentClassController {
         List<StudentVO> studentVOList = new ArrayList<>();
         List<StudentVO> all = studentService.allStu();
         for (StudentVO studentVO : all) {
-            if (studentVO.getClazz() == null) {
+            if (studentVO.getClazz() == null||studentVO.getClazz() == 0) {
                 studentVOList.add(studentVO);
             }
         }
         map.put("code",0);
         map.put("msg","");
         map.put("count",studentVOList.size());
+        map.put("data",studentVOList);
+        return map;
+    }
+
+    @RequestMapping("/pageListWhere")
+    @ResponseBody
+    public Map pageListWhere(int page, int limit,String stuName, String phone){
+        List<StudentVO> list = studentService.pageListWhere(page,limit,stuName,phone);
+        List<StudentVO> studentVOList = new ArrayList<>();
+        for (StudentVO studentVO : list) {
+            if (studentVO.getClazz() == null||studentVO.getClazz() == 0) {
+                studentVOList.add(studentVO);
+            }
+        }
+        Map map = new HashMap();
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count", studentVOList.size());
         map.put("data",studentVOList);
         return map;
     }

@@ -127,6 +127,17 @@
                 <option></option>
             </select>
         </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">班级</label>
+            <div class="layui-input-inline">
+                <select name="clazz" lay-verify="required">
+                    <option value="">请选择班级</option>
+                    <c:forEach items="${clazzs}" var="clazz">
+                        <option value="${clazz.classId}">${clazz.className}</option>
+                    </c:forEach>
+                </select>
+            </div>
+        </div>
     </div>
 
     <div class="layui-form-item">

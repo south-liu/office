@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -116,25 +117,31 @@ public class StudentController {
 
     @RequestMapping("/pageList")
     @ResponseBody
-    public Map pageList(int page, int limit){
+    public Map pageList(int page, int limit, HttpSession session){
+        EmpVO empVO = (EmpVO) session.getAttribute("emp");
+        String postName = empVO.getPostName();
+        List list = studentService.pageList(page,limit,empVO.getEmpId(),postName);
         Map map = new HashMap();
-        Integer count = studentService.countStudent();
+        //Integer count = studentService.countStudent();
         map.put("code",0);
         map.put("msg","");
-        map.put("count",count);
-        map.put("data",studentService.pageList(page,limit));
+        map.put("count",list.size());
+        map.put("data",list);
         return map;
     }
 
     @RequestMapping("/pageListWhere")
     @ResponseBody
-    public Map pageListWhere(int page, int limit,String stuName, String phone, Integer clazz, Integer huor){
+    public Map pageListWhere(int page, int limit,String stuName, String phone, Integer clazz, Integer huor,HttpSession session){
+        EmpVO empVO = (EmpVO) session.getAttribute("emp");
+        String postName = empVO.getPostName();
+        List list = studentService.pageListWhere(page,limit,empVO.getEmpId(),postName,stuName,phone,clazz,huor);
         Map map = new HashMap();
         Integer count = studentService.countStuWhere(stuName,phone,clazz,huor);
         map.put("code",0);
         map.put("msg","");
-        map.put("count",count);
-        map.put("data",studentService.pageListWhere(page,limit,stuName,phone,clazz,huor));
+        map.put("count", list.size());
+        map.put("data",list);
         return map;
     }
 
@@ -151,6 +158,8 @@ public class StudentController {
         studentVO.setNaTives(P1+"-"+C1+"-"+A1);
         studentVO.setStat(1);
         studentVO.setPassWord("123456");
+        //班级人数+1
+        otherService.updClassCount(studentVO.getClazz(),1);
         studentService.addStu(studentVO);
         return "success";
     }
