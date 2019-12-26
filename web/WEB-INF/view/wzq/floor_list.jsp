@@ -117,28 +117,25 @@
             //console.log(obj)
             if(obj.event === 'del'){
                 layer.confirm('您确定要删除该楼栋吗？', function(index){
-                    //发异步删除数据
+
                     var lindex = layer.load();
-                    $.ajax({
-                        type:"post",
-                        url:"${pageContext.request.contextPath}/MY/updfloor",
-                        async:true,
-                        dataType:"text",
-                        data:{floorId:data.floorId},
-                        success:function(data){
+
+                    $.post("${pageContext.request.contextPath}/MY/updfloor", {floorId:data.floorId}, function (data) {
+                        if (data.shuliang > 0){
+                            layer.close(lindex);
+                            layer.msg("此楼栋还有宿舍！", {
+                                time:1000
+                            })
+                        }else {
                             layer.close(lindex);
                             obj.del();
-                            layer.close(index);
-                            layer.msg('已删除!', {
-                                icon: 1,
-                                time: 1000
-                            });
-                        },
-                        error:function () {
-                            layer.close(lindex);
-                            layer.msg("服务器错误");
+                            layer.msg("已删除！",{
+                                icon:1,
+                                time:1000
+                            })
+                            // table.reload("test", {});  //表格重载
                         }
-                    });
+                    },'json')
                 });
             }
         });
