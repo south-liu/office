@@ -17,6 +17,12 @@ public interface StudentHuorService {
 
     int add(StudentHuorVO studentHuorVO);
 
+    /**
+     * 通过宿舍房号查询对象
+     *
+     * @param huorName
+     * @return
+     */
     StudentHuorVO getStudentHuorByHuorName(String huorName);
 
     List<StudentFloorVO> allFloorData();
@@ -27,6 +33,11 @@ public interface StudentHuorService {
 
     void deleteMultiStudentHuor(Integer[] hourId);
 
+    /**
+     * 删除宿舍房号，将移除所有在内的学生
+     *
+     * @param hourId
+     */
     void delete(int hourId);
 
     List<StudentHuorVO> queryStudentHuorNotHuorid(StudentHuorVO studentHuor);

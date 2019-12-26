@@ -96,6 +96,9 @@
 
         // 表单的添加
         function showAddForm() {
+            var _select = $('#actionForm').find('select[name="floorId"]');// 楼栋的下拉框
+
+            var loadIndex = layer.load();
             var windowIndex = layer.open({
                 type: 1,
                 title: '添加',
@@ -103,23 +106,29 @@
                 area: ['380px', '400px'],
                 content: $('#actionBox'),
                 success: function (layero, index) {// 弹出层弹出后回调函数
+                    layero.hide();
                     $('#actionForm').attr('action', '${pageContext.request.contextPath}/student-huor/add');
 
                     // 添加表单显示之前，先查询所有楼栋
-                    $.get('${pageContext.request.contextPath}/student-huor/allFloorData', {}, function (data) {
-                        if (data.length > 0) {
-                            var _select = $('#actionForm').find('select[name="floorId"]');
+                    $.get('${pageContext.request.contextPath}/student-huor/addTheRequiredData', {}, function (data) {
+                        if (data.code == 0) {
                             _select.empty();
                             _select.append('<option value="">请选择宿舍楼栋</option>');
-                            $.each(data, function (i, element) {
+                            $.each(data.requiredData.allFloor, function (i, element) {
                                 _select.append('<option value="' + element.floorId + '">' + element.floorName + '</option>');
                             });
                             form.render('select');
+
+                            layer.close(loadIndex);
+                            layero.show();
+                        } else {
+                            layer.msg(data.msg, {icon: 2, time: 1000});
                         }
                     }, 'json');
                 },
                 end: function () {// 层销毁或关闭后触发的回调
-                    // 清空表单
+                    // 清空表单数据
+                    _select.empty();
                     $('#actionBox').children('form')[0].reset();
                 }
             });
@@ -135,28 +144,24 @@
                     success: function (data, textStatus) {
                         layer.close(loadIndex);
 
-                        if (data.code == 0 && data.result > 0) {// 添加成功
+                        if (data.code == 0) {// 添加成功
                             layer.msg(data.msg, {
                                 icon: 1,
                                 time: 1000
                             });
                             layer.close(windowIndex);// 关闭表单窗口
                             table.reload('dataTable', {});// 重载表格
-                        } else if (data.code == 1) {// 失败
+                        } else if (data.code == 1) {// 宿舍房号已存在
+                            layer.msg(data.msg, {
+                                icon: 3,
+                                time: 2000
+                            })
+                        } else {
                             layer.msg(data.msg, {
                                 icon: 2,
                                 time: 1000
                             })
-                        } else if (data.code == 2) {// 届别名称已存在
-                            layer.msg(data.msg, {
-                                icon: 3,
-                                time: 1000
-                            })
                         }
-                    },
-                    error: function () {
-                        layer.msg('服务器错误！', {time: 1000});
-                        layer.close(loadIndex);
                     }
                 });
                 return false;
@@ -249,21 +254,23 @@
 
         // 删除数据
         function deleteData(obj) {
-            layer.confirm('确定删除该行吗？', function (index) {
-                // 传输id到后台删除数据
-                $.post('${pageContext.request.contextPath}/student-huor/delete', {hourId: obj.data.hourId}, function
-                    (data) {
-                    // 返回删除的id
-                    if (data > 0) {
-                        // 删除成功s
-                        layer.msg('删除成功', {
+            layer.confirm('删除该房号将移除在内的所有学生，确定要删除吗？', function (index) {
+                $.post('${pageContext.request.contextPath}/student-huor/delete', {hourId: obj.data.hourId}, function (data) {
+                    layer.close(index);
+
+                    if (data.code == 0) {
+                        layer.msg(data.msg, {
                             icon: 1,
                             time: 1000
                         });
                         table.reload('dataTable', {curr: 1});// 重载表格
+                    } else {
+                        layer.msg(data.msg, {
+                            icon: 2,
+                            time: 1000
+                        });
                     }
-                });
-                layer.close(index);
+                }, 'json');
             });
         }
 
@@ -315,12 +322,12 @@
             , cols: [[
                 {field: 'checkbox', type: 'checkbox', fixed: 'left', width: 40}
                 , {field: 'hourId', width: 80, title: 'ID', sort: true}
-                , {field: 'huoeIddsc', title: '序号'}
-                , {field: 'huorName', title: '宿舍房号'}
+                , {field: 'huoeIddsc', title: '序号', sort: true}
+                , {field: 'huorName', title: '宿舍房号', sort: true}
                 , {field: 'floorName', title: '宿舍楼栋'}
-                , {field: 'numberBeds', title: '床位数'}
+                , {field: 'numberBeds', title: '床位数', sort: true}
                 , {field: 'address', title: '宿舍地址'}
-                , {field: 'count', title: '宿舍人数'}
+                , {field: 'count', title: '宿舍人数', sort: true}
                 , {fixed: 'right', width: 200, title: '操作', align: 'center', toolbar: '#action_toolbar'}
             ]]
         });

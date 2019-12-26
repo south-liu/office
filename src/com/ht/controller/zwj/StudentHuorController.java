@@ -1,6 +1,7 @@
 package com.ht.controller.zwj;
 
 import com.ht.service.zwj.StudentHuorService;
+import com.ht.vo.StudentFloorVO;
 import com.ht.vo.StudentHuorVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,32 +45,54 @@ public class StudentHuorController {// 学生宿舍管理
         return hashMap;
     }
 
+    /*
+     添加所需要显示的数据：
+        1.allFloor：所有的楼栋
+     */
+    @ResponseBody
+    @RequestMapping(value = "/addTheRequiredData", method = RequestMethod.GET)
+    public Map<String, Object> addTheRequiredData() {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            Map<String, Object> requiredData = new HashMap<>();
+            List<StudentFloorVO> studentFloorVOS = studentHuorService.allFloorData();// 查询所有的楼栋
+            requiredData.put("allFloor", studentFloorVOS);
+
+            map.put("requiredData", requiredData);
+            map.put("code", 0);
+            map.put("msg", "查询成功！");
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("code", -1);
+            map.put("msg", "服务器错误！");
+        }
+        return map;
+    }
+
     // 添加
     @ResponseBody
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Map<String, Object> add(StudentHuorVO studentHuorVO) {
-        Map<String, Object> hashMap = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
 
-        if (studentHuorVO == null || studentHuorVO.getHuorName() == null) {
-            hashMap.put("code", 1);
-            hashMap.put("msg", "添加失败！");
-
-            return hashMap;
+        try {
+            // 通过宿舍房号查询是否已存在相同房号
+            StudentHuorVO studentHuor = studentHuorService.getStudentHuorByHuorName(studentHuorVO.getHuorName());
+            if (studentHuor != null) {
+                map.put("code", 1);
+                map.put("msg", "宿舍房号已存在！");
+            } else {
+                studentHuorService.add(studentHuorVO);
+                map.put("code", 0);
+                map.put("msg", "添加成功！");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("code", -1);
+            map.put("msg", "服务器错误！");
         }
-
-        // 通过届别名称查询
-        StudentHuorVO studentHuor = studentHuorService.getStudentHuorByHuorName(studentHuorVO.getHuorName());
-        if (studentHuor != null) {// 数据库已存在对象
-            hashMap.put("code", 2);
-            hashMap.put("msg", "宿舍房号已存在！");
-        } else {// 不存在则添加
-            hashMap.put("code", 0);
-            hashMap.put("msg", "添加成功！");
-            hashMap.put("result", studentHuorService.add(studentHuorVO));
-        }
-        return hashMap;
+        return map;
     }
-
 
     // 获取详细信息
     @ResponseBody
@@ -125,9 +148,24 @@ public class StudentHuorController {// 学生宿舍管理
     // 删除
     @ResponseBody
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public Integer delete(@RequestParam int hourId) {
-        studentHuorService.delete(hourId);
-        return hourId;
+    public Map<String, Object> delete(@RequestParam int hourId) {
+        Map<String, Object> map = new HashMap<>();
+
+        /*
+        删除宿舍房号，将移除该宿舍内的所有学生
+         */
+        try {
+            studentHuorService.delete(hourId);
+
+            map.put("code", 0);
+            map.put("msg", "删除成功！");
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("code", -1);
+            map.put("msg", "服务器错误！");
+        }
+
+        return map;
     }
 
     // 删除多个

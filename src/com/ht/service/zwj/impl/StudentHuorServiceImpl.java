@@ -94,8 +94,19 @@ public class StudentHuorServiceImpl implements StudentHuorService {
 
     @Override
     public void delete(int hourId) {
-        StudentHuorVO studentHuorById = getStudentHuorById(hourId);
-        studentHuorDao.delete(studentHuorById);
+        if (hourId <= 0) {
+            return;
+        }
+
+        try {
+            // 将该宿舍房号内的所有学生，移除，设置为0
+            int i = studentHuorDao.updateStudentHuorIdByHuorId(0, hourId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // 删除宿舍
+        studentHuorDao.delete(getStudentHuorById(hourId));
     }
 
     // 通过宿舍房号ID查询除去该ID以外，和该名字相同的宿舍房号

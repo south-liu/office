@@ -54,7 +54,7 @@ public class AssessmentDaoImpl extends DaoUtils implements AssessmentDao {
                 try {
                     super.updateBySql("delete from assessmentInformation where assessmentId = " + assessment.getAssessmentId() + " and studentId = " + studId);
                 } catch (Exception e) {
-                    System.out.println(e.getMessage());
+                    e.printStackTrace();
                 }
             }
         }
