@@ -1,8 +1,10 @@
 package com.ht.service.ljy.impl;
+
 import com.ht.dao.ljy.ljyDao;
 import com.ht.service.ljy.studentclassService;
 import com.ht.vo.StudentClassVO;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 /**
@@ -52,21 +54,31 @@ public class Studclsimpl extends ljyDao implements studentclassService {
 
     @Override
     public int studentclasschoose_count(int falled) {
-        return selTotalRow("select count(*)  from studentClass stcls left join emp e on stcls.teacher=e.empId left join classType clst on stcls.classType=clst.classTypeId left join studentFall stufal on stcls.falled=stufal.fallId left join major mjr on stcls.majorId=mjr.majorId left join dept dept on stcls.deptId=dept.deptId  where falled="+falled);
+        return selTotalRow("select count(*)  from studentClass stcls left join emp e on stcls.teacher=e.empId left join classType clst on stcls.classType=clst.classTypeId left join studentFall stufal on stcls.falled=stufal.fallId left join major mjr on stcls.majorId=mjr.majorId left join dept dept on stcls.deptId=dept.deptId  where falled=" + falled);
     }
 
     @Override
-    public List studentclass_choose(int falled,int page,int limit) {
-        return pagelistbysql("select stcls.*,e.empName,e.postName,clst.classTypeName,stufal.`level`, mjr.majorName,dept.deptName  from studentClass stcls left join emp e on stcls.teacher=e.empId left join classType clst on stcls.classType=clst.classTypeId left join studentFall stufal on stcls.falled=stufal.fallId left join major mjr on stcls.majorId=mjr.majorId left join dept dept on stcls.deptId=dept.deptId  where falled="+falled,page,limit);
+    public List studentclass_choose(int falled, int page, int limit) {
+        return pagelistbysql("select stcls.*,e.empName,e.postName,clst.classTypeName,stufal.`level`, mjr.majorName,dept.deptName  from studentClass stcls left join emp e on stcls.teacher=e.empId left join classType clst on stcls.classType=clst.classTypeId left join studentFall stufal on stcls.falled=stufal.fallId left join major mjr on stcls.majorId=mjr.majorId left join dept dept on stcls.deptId=dept.deptId  where falled=" + falled, page, limit);
     }
 
     @Override
-    public StudentClassVO studentclass_byClassNo(String  ClassNo) {
-        return (StudentClassVO) selectOneByHql("from StudentClassVO where classNo="+ClassNo);
+    public StudentClassVO studentclass_byClassNo(String ClassNo) {
+        return (StudentClassVO) selectOneByHql("from StudentClassVO where classNo=" + ClassNo);
     }
 
     @Override
     public StudentClassVO studentclass_byClassName(String className) {
-        return (StudentClassVO) selectOneByHql("from StudentClassVO where className="+className);
+        return (StudentClassVO) selectOneByHql("from StudentClassVO where className=" + className);
+    }
+
+    @Override
+    public StudentClassVO studentclass_upd_byClassNo(String ClassNo, Integer classId) {
+        return (StudentClassVO) selectOneByHql("from StudentClassVO where classNo=" + ClassNo + " and classId!=" + classId);
+    }
+
+    @Override
+    public StudentClassVO studentclass_upd_byClassName(String className, Integer classId) {
+        return (StudentClassVO) selectOneByHql("from StudentClassVO where className=" + className + " and classId!=" + classId);
     }
 }

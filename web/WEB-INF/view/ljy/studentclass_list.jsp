@@ -96,6 +96,7 @@
                         type: 2,
                         content: '${pageContext.request.contextPath}/studentclass/gotostudentclassupd?classId=' + obj.data.classId,
                         btnAlign: 'c',
+                        maxmin:true,
                         area: ['780px', '480px']
                     });
 

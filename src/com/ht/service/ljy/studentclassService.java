@@ -34,4 +34,9 @@ public interface studentclassService {
 
     public StudentClassVO studentclass_byClassName(String className);
 
+
+    public StudentClassVO studentclass_upd_byClassNo(String ClassNo,Integer classId);
+
+    public StudentClassVO studentclass_upd_byClassName(String className,Integer classId);
+
 }

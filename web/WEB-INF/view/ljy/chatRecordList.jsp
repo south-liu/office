@@ -18,7 +18,6 @@
        lay-filter="fTable">
     <thead>
     <tr>
-        <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
         <th lay-data="{field:'chatId', width:80, sort: true, fixed: true,align:'center'}">ID</th>
         <th lay-data="{field:'stuName', width:135}">学生名称</th>
         <th lay-data="{field:'empName', width:135}">员工名称</th>

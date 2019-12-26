@@ -90,7 +90,7 @@
             <select name="deptId" id="deptId" lay-filter="deptType">
                 <option value="">请选择所属系名称</option>
                 <c:forEach items="${deptlist}" var="dept">
-                    <option value="${dept.deptId}">${dept.deptName}</option>
+                    <option value="${dept.collegeDeptId}">${dept.collegeDeptName}</option>
                 </c:forEach>
             </select>
         </div>
@@ -179,14 +179,29 @@
                         remark: fd.remark
                     },
                     success: function (data) {
-                        layer.close(lod);
-                        layer.msg('修改成功', {
-                            time: 1000
-                        }, function () {
-                            //var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                            //parent.layer.close(index); //再执行关闭
+                        if (data.code == 0) {
+//                            添加成功
+                            layer.msg(data.msg, {
+                                icon: 1,
+                                time: 1000
+                            });
+                            layer.close(lod);
                             window.parent.location.reload();
-                        });
+                        } else if (data.code == 2) {
+//                            相同班级编号
+                            layer.msg(data.msg, {
+                                icon: 2,
+                                time: 1000
+                            });
+                            layer.close(lod);
+                        } else if (data.code == 3) {
+//                            相同班级名称
+                            layer.msg(data.msg, {
+                                icon: 2,
+                                time: 1000
+                            });
+                            layer.close(lod);
+                        }
                     },
                     error: function () {
                         layer.close(lod);
