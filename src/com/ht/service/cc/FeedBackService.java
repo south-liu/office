@@ -11,7 +11,7 @@ public interface FeedBackService {
     //分页查询
     public List selSpage(int currPage, int pageSize);
     //学生界面
-    public List stuselSpage(int currPage, int pageSize,String stuId);
+    public List stuselSpage(int currPage, int pageSize, String stuId);
     //查询总行数
     public Integer seltotalFeed();
 

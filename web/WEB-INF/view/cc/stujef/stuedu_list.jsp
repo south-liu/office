@@ -34,8 +34,8 @@
         <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
         <th lay-data="{field:'eduId', sort: true, fixed: true}">ID</th>
         <th lay-data="{field:'school',edit:'text'}" >就读学校</th>
-        <th lay-data="{field:'beginDate',edit:'text'}">开始时间</th>
-        <th lay-data="{field:'endDate',edit:'text'}">结束时间</th>
+        <th lay-data="{field:'beginDate',edit:'date'}">开始时间</th>
+        <th lay-data="{field:'endDate',edit:'date'}">结束时间</th>
         <th lay-data="{fixed:'right', align:'center', toolbar: '#barDemo'}"></th>
     </tr>
     </thead>
@@ -73,7 +73,7 @@
                             type:2,
                             content:'${pageContext.request.contextPath}/stujef/toaddedu?stuId='+$('#stuId').val(),
                             btnAlign: 'c',
-                            area: ['460px', '420px'],
+                            area: ['500px', '550px'],
                             resize:false
                         });
                         break;
@@ -86,34 +86,73 @@
                 var value = obj.value //得到修改后的值
                     ,data = obj.data //得到所在行所有键值
                     ,field = obj.field; //得到字段
-                layer.msg(field + '修改成功');
-                $.ajax({
-                    type:"post",
-                    url:"${pageContext.request.contextPath}/stujef/updedu",
-                    async:true,
-                    dataType:"text",
-                    data:{eduId:data.eduId,stuId:$('#stuId').val(),school:data.school,beginDate:data.beginDate,endDate:data.endDate},
-                    success:function(data){
-                        layer.close(lindex);
-                        layer.msg('修改成功!', {
-                            icon: 1,
-                            time: 1000
-                        },function () {
-                            layer.close(index);
-                            // location.reload();
-                            table.reload('myTable', {
-                                url: '${pageContext.request.contextPath}/stujef/edulist'
+
+                if (data.school=="") {
+                    layer.msg('内容不能为空', {
+                        icon: 0,
+                        time: 1000
+                    },function () {
+                        location.reload();
+                    });
+                }else if (new Date(data.beginDate).getDate()!=data.beginDate.substring(data.beginDate.length-2)) {
+                    layer.msg('请输入正确的时间', {
+                        icon: 0,
+                        time: 1000
+                    },function () {
+                        location.reload();
+                    });
+                }else if (data.beginDate=="") {
+                    layer.msg('请输入正确的时间', {
+                        icon: 0,
+                        time: 1000
+                    },function () {
+                        location.reload();
+                    });
+                }else if (new Date(data.endDate).getDate()!=data.endDate.substring(data.endDate.length-2)) {
+                    layer.msg('请输入正确的时间', {
+                        icon: 0,
+                        time: 1000
+                    },function () {
+                        location.reload();
+                    });
+                }else if (data.endDate=="") {
+                    layer.msg('请输入正确的时间', {
+                        icon: 0,
+                        time: 1000
+                    },function () {
+                        location.reload();
+                    });
+                }else{
+                    layer.msg('修改成功');
+                    $.ajax({
+                        type:"post",
+                        url:"${pageContext.request.contextPath}/stujef/updedu",
+                        async:true,
+                        dataType:"text",
+                        data:{eduId:data.eduId,stuId:$('#stuId').val(),school:data.school,beginDate:data.beginDate,endDate:data.endDate},
+                        success:function(data){
+                            layer.close(lindex);
+                            layer.msg('修改成功!', {
+                                icon: 1,
+                                time: 1000
+                            },function () {
+                                layer.close(index);
+                                // location.reload();
+                                table.reload('myTable', {
+                                    url: '${pageContext.request.contextPath}/stujef/edulist'
+                                });
                             });
-                        });
-                    },
-                    error:function () {
-                        layer.close(lindex);
-                        layer.msg("服务器错误", {
-                            icon: 1,
-                            time: 1000
-                        });
-                    }
-                });
+                        },
+                        error:function () {
+                            layer.close(lindex);
+                            layer.msg("服务器错误", {
+                                icon: 1,
+                                time: 1000
+                            });
+                        }
+                    });
+                }
+
             });
         });
     </script>

@@ -23,6 +23,8 @@ public interface StujefService {
     //删除方法
     public void delEdu(String id);
 
+    public StudentEduVO allstuedubyId(Integer eduId);
+
 
     //分页查询
     public List selFamSpage(int currPage, int pageSize, int stuId);

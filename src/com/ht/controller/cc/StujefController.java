@@ -3,6 +3,7 @@ package com.ht.controller.cc;
 import com.ht.service.cc.EmpJefService;
 import com.ht.service.cc.StujefService;
 import com.ht.vo.*;
+import javafx.scene.input.DataFormat;
 import org.hibernate.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -73,7 +74,11 @@ public class StujefController {
 
     @RequestMapping("updedu")
     @ResponseBody
-    public String upd(StudentEduVO studentEduVO){
+    public String upd(StudentEduVO studentEduVO,Integer eduId){
+        StudentEduVO stuedu = stus.allstuedubyId(eduId);
+
+        studentEduVO.setBeginDate(stuedu.getBeginDate());
+        studentEduVO.setEndDate(stuedu.getEndDate());
         stus.UpdEdu(studentEduVO);
         return "success";
     }
@@ -187,6 +192,8 @@ public class StujefController {
     @RequestMapping("updzx")
     @ResponseBody
     public String updzx(StudentHappeningVO studentHappeningVO){
+        String data = DateFormat.getDateInstance().format(new Date());
+        studentHappeningVO.setOpTime(data);
         stus.UpdZx(studentHappeningVO);
         return "success";
     }

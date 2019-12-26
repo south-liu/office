@@ -14,7 +14,7 @@ public interface ErlmentService {
     //查询所有专业
     public List<MajorVO> seltAllmajor();
 
-    public EnrollmentVO seltAllenrollment( int enrollmentId);
+    public EnrollmentVO seltAllenrollment(int enrollmentId);
     //查询所有班级类别
     public List<ClassTypeVO> seltAllclass();
 
@@ -25,17 +25,17 @@ public interface ErlmentService {
     //删除方法
     public void delErlment(String id);
     //修改学生状态
-    public void updErlmStats(Integer id,Integer stats);
+    public void updErlmStats(Integer id, Integer stats);
 
     //修改学生状态
-    public void updErlmdate(Integer id,String date);
+    public void updErlmdate(Integer id, String date);
 
     public void AddStudent(StudentVO studentVO);
 
-    public void updErlmamount(Integer id,float amount);
+    public void updErlmamount(Integer id, float amount);
 
-    public void updErlreviewer(Integer id,String reviewer,String data);
+    public void updErlreviewer(Integer id, String reviewer, String data);
 
-    public void updErlenrollMoney(Integer id,float enrollMoney);
+    public void updErlenrollMoney(Integer id, float enrollMoney);
 
 }

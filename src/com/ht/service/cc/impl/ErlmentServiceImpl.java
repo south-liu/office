@@ -34,7 +34,6 @@ public class ErlmentServiceImpl extends BaseDao implements ErlmentService {
 
     @Override
     public EnrollmentVO seltAllenrollment(int enrollmentId) {
-        System.out.println("jinglail");
         return (EnrollmentVO) selectOneByHql("from EnrollmentVO where enrollmentId ="+enrollmentId);
     }
 
