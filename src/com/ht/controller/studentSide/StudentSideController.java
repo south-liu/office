@@ -1,5 +1,6 @@
 package com.ht.controller.studentSide;
 
+import com.ht.service.llb.INoticeService;
 import com.ht.service.llb.IStudentService;
 import com.ht.service.zwj.SAssessmentService;
 import com.ht.utils.gee.GeeConfig;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 // 公共控制器
@@ -25,6 +28,8 @@ public class StudentSideController {
     private IStudentService studentService;
     @Resource
     private SAssessmentService sAssessmentService;
+    @Resource
+    private INoticeService noticeService;
 
     /**
      * 学生端首页入口
@@ -54,6 +59,23 @@ public class StudentSideController {
     @RequestMapping("/welcome")
     public String welcome(Model model, HttpSession session) {
         StudentVO student = (StudentVO) session.getAttribute("student");
+
+        //所有学生公告
+        List<Map> allNotice = noticeService.allNoticeBySql();
+
+        List<Map> myNotice = new ArrayList<>();
+        for (Map notice : allNotice) {
+            Integer noticeType = (Integer) (notice.get("noticeType"));
+            if (noticeType!=2) {
+                Map map = new HashMap();
+                map.put("noticeId",notice.get("noticeId"));
+                map.put("title",notice.get("title"));
+                map.put("noticeIime",notice.get("noticeIime"));
+                map.put("empName",notice.get("empName"));
+                myNotice.add(map);
+            }
+        }
+        model.addAttribute("myNotice",myNotice);
         if (student != null) {
             // 已登录，查询该学生的所有考评
             try {
@@ -63,6 +85,34 @@ public class StudentSideController {
             }
         }
         return "public/student/welcome";
+    }
+
+
+    @RequestMapping("/toNoticeList")
+    public String toFileList(){
+        return "public/student/my-notice/home";
+    }
+
+    @RequestMapping("/pageList")
+    @ResponseBody
+    public Map pageList(int page, int limit){
+        Map map = new HashMap();
+        Integer count = noticeService.countNotice(3);
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",count);
+        map.put("data",noticeService.pageList(3,page,limit));
+        return map;
+    }
+
+
+    @RequestMapping("/viewNotice")
+    public String viewNotice(Integer noticeId, Model model){
+        /*NoticeVO noticeVO = noticeService.selNoticeById(noticeId);
+        model.addAttribute("notice",noticeVO);*/
+        Map map = noticeService.selNoticeByIdToMap(noticeId);
+        model.addAttribute("notice",map);
+        return "public/student/my-notice/notice_view";
     }
 
 
