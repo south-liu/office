@@ -46,4 +46,6 @@ public interface StudentHuorDao {
     List<StudentHuorVO> allData();
 
     List<StudentHuorVO> allDataByFloorId(Integer floorId);
+
+    List<StudentHuorVO> queryStudentHuorNotHuorid(Integer hourId, String huorName);
 }

@@ -38,7 +38,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">届别名称：</label>
             <div class="layui-input-inline">
-                <input type="text" name="level" lay-verify="required" lay-reqtext="届别名称是必填项，岂能为空？" placeholder="请输入届别名称"
+                <input type="text" name="level" lay-verify="required|number" lay-reqtext="届别名称是必填项，岂能为空？" placeholder="请输入届别名称"
                        autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -95,7 +95,7 @@
                             layer.msg(data.msg, {
                                 icon: 1,
                                 time: 1000
-                            })
+                            });
                             layer.close(windowIndex);// 关闭表单窗口
                             table.reload('dataTable', {});// 重载表格
                         } else if (data.code == 1) {// 失败
@@ -181,6 +181,7 @@
                             time: 1000
                         });
                         obj.del(); // 删除对应行（tr）的DOM结构，并更新缓存
+                        table.reload('dataTable', {curr: 1});// 重载表格
                     } else if (data.code == 1) {
                         layer.msg(data.msg, {
                             icon: 3,
@@ -224,7 +225,7 @@
                             icon: 1,
                             time: 1000
                         });
-                        table.reload('dataTable', {});// 重载表格
+                        table.reload('dataTable', {curr: 1});// 重载表格
                     }
                 });
                 layer.close(index);

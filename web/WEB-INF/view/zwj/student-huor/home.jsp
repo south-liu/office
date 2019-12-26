@@ -38,8 +38,8 @@
             <div class="layui-inline">
                 <label class="layui-form-label">宿舍楼栋：</label>
                 <div class="layui-input-inline">
-                    <select name="floorId">
-                        <option value="0">请选择宿舍楼栋</option>
+                    <select name="floorId" lay-verify="required">
+                        <option value="">请选择宿舍楼栋</option>
                     </select>
                 </div>
             </div>
@@ -47,7 +47,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">宿舍房号：</label>
             <div class="layui-input-inline">
-                <input type="text" name="huorName" lay-verify="required" lay-reqtext="宿舍房号是必填项，岂能为空？"
+                <input type="text" name="huorName" lay-verify="required|number" lay-reqtext="宿舍房号是必填项，岂能为空？"
                        placeholder="请输入宿舍房号" autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -110,7 +110,7 @@
                         if (data.length > 0) {
                             var _select = $('#actionForm').find('select[name="floorId"]');
                             _select.empty();
-                            _select.append('<option value="0">请选择宿舍楼栋</option>');
+                            _select.append('<option value="">请选择宿舍楼栋</option>');
                             $.each(data, function (i, element) {
                                 _select.append('<option value="' + element.floorId + '">' + element.floorName + '</option>');
                             });
@@ -139,7 +139,7 @@
                             layer.msg(data.msg, {
                                 icon: 1,
                                 time: 1000
-                            })
+                            });
                             layer.close(windowIndex);// 关闭表单窗口
                             table.reload('dataTable', {});// 重载表格
                         } else if (data.code == 1) {// 失败
@@ -165,19 +165,7 @@
 
         // 表单的编辑
         function showEditForm(objData) {
-            // 添加表单显示之前，先查询所有楼栋
-            $.get('${pageContext.request.contextPath}/student-huor/allFloorData', {}, function (data) {
-                if (data.length > 0) {
-                    var _select = $('#actionForm').find('select[name="floorId"]');
-                    _select.empty();
-                    _select.append('<option value="0">请选择宿舍楼栋</option>');
-                    $.each(data, function (i, element) {
-                        _select.append('<option value="' + element.floorId + '">' + element.floorName + '</option>');
-                    });
-                    form.render('select');
-                }
-            }, 'json');
-
+            var loadIndex = layer.load();
             var windowIndex = layer.open({
                 type: 1,
                 title: '编辑',
@@ -185,19 +173,40 @@
                 area: ['380px', '400px'],
                 content: $('#actionBox'),
                 success: function (layero, index) {// 弹出层弹出后回调函数
+                    layero.hide();
                     $('#actionForm').attr('action', '${pageContext.request.contextPath}/student-huor/update');
 
                     // 通过id获取数据并填充到表单中
                     $.get('${pageContext.request.contextPath}/student-huor/detail', {hourId: objData.hourId}, function (data) {
-                        $('#actionForm').find('input[name="hourId"]').val(data.hourId);
-                        form.val('_form', {
-                            'floorId': data.floorId,
-                            'huorName': data.huorName,
-                            'numberBeds': data.numberBeds,
-                            'huoeIddsc': data.huoeIddsc,
-                            'address': data.address
-                        });
-                        form.render();
+                        if (data.code == 0) {
+                            var studentHuor = data.studentHuor;// 宿舍信息
+                            var floorList = data.floorList;// 所有楼栋
+
+                            if (floorList.length > 0) {
+                                var _select = $('#actionForm').find('select[name="floorId"]');
+                                _select.empty();
+                                _select.append('<option value="">请选择宿舍楼栋</option>');
+                                $.each(floorList, function (i, element) {
+                                    _select.append('<option value="' + element.floorId + '">' + element.floorName + '</option>');
+                                });
+                            }
+
+                            // 表单控件赋值
+                            form.val('_form', {
+                                'hourId': studentHuor.hourId,
+                                'floorId': studentHuor.floorId,
+                                'huorName': studentHuor.huorName,
+                                'numberBeds': studentHuor.numberBeds,
+                                'huoeIddsc': studentHuor.huoeIddsc,
+                                'address': studentHuor.address
+                            });
+                            form.render();// 刷新所有表单控件
+
+                            layer.close(loadIndex);
+                            layero.show();
+                        } else {
+                            layer.msg(data.msg, {icon: 2, time: 2000});
+                        }
                     }, 'json');
                 },
                 end: function () {// 层销毁或关闭后触发的回调
@@ -218,9 +227,15 @@
                     success: function (data, textStatus) {
                         layer.close(loadIndex);
 
-                        if (data > 0) {
+                        if (data.code == 0) {
+                            layer.msg(data.msg, {icon: 1, time: 1000});
+
                             layer.close(windowIndex);// 关闭表单窗口
                             table.reload('dataTable', {});// 重载表格
+                        } else if (data.code == 1) {
+                            layer.msg(data.msg, {icon: 3, time: 2000});
+                        } else {
+                            layer.msg(data.msg, {icon: 2, time: 1000});
                         }
                     },
                     error: function () {
@@ -245,7 +260,7 @@
                             icon: 1,
                             time: 1000
                         });
-                        obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                        table.reload('dataTable', {curr: 1});// 重载表格
                     }
                 });
                 layer.close(index);
@@ -278,7 +293,7 @@
                             icon: 1,
                             time: 1000
                         });
-                        table.reload('dataTable', {});// 重载表格
+                        table.reload('dataTable', {curr: 1});// 重载表格
                     }
                 });
                 layer.close(index);

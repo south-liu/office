@@ -9,10 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.beans.IntrospectionException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class StudentHuorServiceImpl implements StudentHuorService {
@@ -99,5 +96,14 @@ public class StudentHuorServiceImpl implements StudentHuorService {
     public void delete(int hourId) {
         StudentHuorVO studentHuorById = getStudentHuorById(hourId);
         studentHuorDao.delete(studentHuorById);
+    }
+
+    // 通过宿舍房号ID查询除去该ID以外，和该名字相同的宿舍房号
+    @Override
+    public List<StudentHuorVO> queryStudentHuorNotHuorid(StudentHuorVO studentHuor) {
+        if (studentHuor.getHourId() == null || studentHuor.getHourId() <= 0 || studentHuor.getHuorName() == null) {
+            return Collections.emptyList();
+        }
+        return studentHuorDao.queryStudentHuorNotHuorid(studentHuor.getHourId(), studentHuor.getHuorName());
     }
 }
