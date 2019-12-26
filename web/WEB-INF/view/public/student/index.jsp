@@ -59,10 +59,10 @@
                         <dd><a href="javascript:;" title="申请请假" src="/hstudent/goto_hs_myapply_list"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>申请请假</a></dd>
                         <dd><a href="javascript:;" title="问题反馈" src="/feedback/tolist"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>问题反馈</a></dd>
                         <dd><a href="javascript:;" title="报修申请" src="/repair/tolist"><i class="layui-icon layui-icon-right" style="font-size: 15px; color: #FFF;margin: 0 10px;"></i>报修申请</a></dd>
-                        <dd><a href="javascript:;" title="教师考评" src="/assessment/writerAssessment"><i class="layui-icon layui-icon-right" style="font-size:
-                        15px;
-                        color: #FFF;margin: 0
-                        10px;"></i>教师考评</a></dd>
+<%--                        <dd><a href="javascript:;" title="教师考评" src="/s/assessment/writerAssessment"><i class="layui-icon layui-icon-right" style="font-size:--%>
+<%--                        15px;--%>
+<%--                        color: #FFF;margin: 0--%>
+<%--                        10px;"></i>教师考评</a></dd>--%>
                     </dl>
                 </li>
             </ul>
