@@ -7,6 +7,7 @@ import com.ht.service.llb.IStudentService;
 import com.ht.service.llb.ISystemLogService;
 import com.ht.utils.gee.GeeConfig;
 import com.ht.utils.gee.GeeLib;
+import com.ht.utils.ip.GetIp;
 import com.ht.vo.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.net.Inet4Address;
@@ -55,7 +57,7 @@ public class LoginController {
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     @ResponseBody
-    public Map loginCheck(EmpVO empVO,HttpSession session,
+    public Map loginCheck(EmpVO empVO, HttpSession session, HttpServletRequest request,
                          String challenge, String validate, String seccode){
         GeeLib geeLib = new GeeLib(GeeConfig.getGee_id(),GeeConfig.getGee_key(),GeeConfig.isnewfailback());
         //从session中获取gt-server状态
@@ -127,15 +129,16 @@ public class LoginController {
                     //记录日志
                     SystemLogVO systemLogVO = new SystemLogVO();
                     systemLogVO.setEmpId(dbEmp.getEmpId());
-                    try {
+                    /*try {
                         systemLogVO.setIpAddr(Inet4Address.getLocalHost().getHostAddress());
                     } catch (UnknownHostException e) {
                         e.printStackTrace();
-                    }
+                    }*/
+                    systemLogVO.setIpAddr(GetIp.getIpAddress(request));
                     systemLogVO.setTables("emp");
                     SimpleDateFormat sim = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     systemLogVO.setOptime(sim.format(new Date()));
-                    systemLogVO.setMsg("emp"+dbEmp.getEmpName()+"登陆系统");
+                    systemLogVO.setMsg("员工 [ "+dbEmp.getEmpName()+" ] 登陆系统");
                     systemLogService.addSystemLog(systemLogVO);
                 }
             } else {
