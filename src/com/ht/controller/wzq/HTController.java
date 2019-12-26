@@ -100,9 +100,18 @@ public class HTController {
     }
     //删除楼栋
     @RequestMapping("/updfloor")
-    public String updfloor(Integer floorId){
-        hts.updfloor(floorId);
-        return "wzq/floor_list";
+    @ResponseBody
+    public Map updfloor(Integer floorId){
+        //删除楼栋前查询此楼栋是否有宿舍
+        Integer counts = hts.selhour(floorId);
+        Map map = new HashMap();
+        if (counts > 0){
+            map.put("shuliang", 1);
+        }else {
+            hts.updfloor(floorId);
+            map.put("shuliang", 0);
+        }
+        return map;
     }
     //修改楼栋
     @RequestMapping("/delfloor")
@@ -586,7 +595,7 @@ public class HTController {
         String strDate = sdf.format(new Date());
 
         //上传文件存放在项目下的路径
-        String dirName = "\\WEB-INF\\static\\upload\\" + strDate + "\\";
+        String dirName = File.separator+"WEB-INF"+File.separator+"static"+File.separator+"upload"+File.separator + strDate + File.separator;
 
         //总路径
         File dirFile = new File(path + dirName);
@@ -604,7 +613,7 @@ public class HTController {
         file.transferTo(newFile);
 
         //赋值给数据库对应的列
-        String a = "\\upload\\" + strDate + "\\" + newName;
+        String a = File.separator+"upload"+File.separator + strDate + File.separator + newName;
 
         Map res = new HashMap();
         res.put("date", a);

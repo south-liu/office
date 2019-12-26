@@ -91,7 +91,8 @@
 
         //日期
         laydate.render({
-            elem: '#date'
+            elem: '#date',
+            max:0
         });
 
 

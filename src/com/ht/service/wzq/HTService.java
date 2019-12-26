@@ -31,6 +31,8 @@ public interface HTService {
     public Integer selcountfloor();
     //添加楼栋
     public void addfloor(StudentFloorVO studentFloor);
+    //删除楼栋前查询是否有宿舍
+    public Integer selhour(Integer floorId);
     //删除楼栋
     public void updfloor(Integer floorId);
     //修改楼栋

@@ -59,7 +59,7 @@ public class FileUploadController {
     public String addFile(DataDocVO dataDocVO, MultipartFile file, HttpServletRequest request){
         Map map = new HashMap();
         String realPath =  request.getRealPath("");
-        String dirPath = realPath+"WEB-INF\\static\\upload\\";
+        String dirPath = realPath+"WEB-INF"+File.separator+"static"+File.separator+"upload"+File.separator;
         //上传文件
         String fileName = FileUpload.uploadAndRename(dirPath,file);
 

@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -93,8 +94,8 @@ public class FeedBackController {
         //图片上传
         String filename = file.getOriginalFilename();
         String realPath = session.getServletContext().getRealPath("");
-        String dirPath = realPath + "WEB-INF\\static\\feedBackImg\\";
-        feedbackVO.setImage("feedBackImg\\" + filename);
+        String dirPath = realPath + "WEB-INF"+ File.separator+"static"+ File.separator+"feedBackImg"+ File.separator;
+        feedbackVO.setImage("feedBackImg"+File.separator + filename);
 
         fs.AddFeed(feedbackVO);
         //上传文件

@@ -71,6 +71,11 @@ public class HTServiceImpl extends BaseDao implements HTService{
     }
 
     @Override
+    public Integer selhour(Integer floorId) {
+        return selTotalRow("select count(*) from studentHuor where floorId =" + floorId);
+    }
+
+    @Override
     public void updfloor(Integer floorId) {
         executeSQL("delete from studentFloor where floorId in(" + floorId + ")");
     }
