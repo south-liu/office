@@ -19,10 +19,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// 学生答辩成绩Controller
 @Controller
 @RequestMapping("/student-reply-score")
-public class StudentReplyScoreController {
+public class StudentReplyScoreController {// 学生答辩成绩
     @Resource
     private StudentReplyScoreService studentReplyScoreService;
     @Resource
@@ -48,8 +47,6 @@ public class StudentReplyScoreController {
 
     @RequestMapping(value = "/preview", method = RequestMethod.GET)
     public String preview(@RequestParam Integer stuId, Model model) {
-        System.out.println(stuId);
-
         // 查询该学生所有的答辩项目
         List<ProjectVO> projectList = studentReplyScoreService.findGradedProjectByStudentId(stuId);
 
@@ -144,6 +141,7 @@ public class StudentReplyScoreController {
     @ResponseBody
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public Map<String, Object> deleteStudent(Integer replyId) {
+        studentReplyScoreService.deleteReplyScoreByStudentId(studentReplyScoreService.getStudentReplyScoreById(replyId).getStudentId());
         Map<String, Object> map = new HashMap<>();
         try {
             studentReplyScoreService.deleteStudentReplyScore(replyId);
@@ -151,7 +149,7 @@ public class StudentReplyScoreController {
             map.put("code", 0);
             map.put("msg", "删除成功！");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
             map.put("code", 2);
             map.put("msg", "服务器错误！");
         }
@@ -219,11 +217,13 @@ public class StudentReplyScoreController {
     @ResponseBody
     @RequestMapping(value = "/editTheNeed", method = RequestMethod.GET)
     public Map<String, Object> editTheNeed(@RequestParam Integer replyId) {
-        List<StudentVO> studentVOS = studentService.allStu();
-        List<ProjectVO> projectVOS = projectService.allData();
-        List<EmpVO> empVOS = empService.allEmp();
-        List studentClassList = studentclassService.studentclass_list();
-        StudentReplyScoreVO studentReplyScore = studentReplyScoreService.getStudentReplyScoreById(replyId);
+        List<StudentVO> studentVOS = studentService.allStu();// 所有学生
+        List<ProjectVO> projectVOS = projectService.allData();// 所有答辩项目
+        List<EmpVO> empVOS = empService.allEmp();// 所有教师
+        List studentClassList = studentclassService.studentclass_list();// 所有班级
+
+        StudentReplyScoreVO studentReplyScore = studentReplyScoreService.getStudentReplyScoreById(replyId);// 考评信息[分值]
+
         StudentClassVO currentStudentClass = studentclassService.studentclassbyid(studentService.findById(studentReplyScore.getStudentId()).getClazz());
 
         Map<String, Object> map = new HashMap<>();

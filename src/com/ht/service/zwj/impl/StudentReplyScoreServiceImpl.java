@@ -117,4 +117,18 @@ public class StudentReplyScoreServiceImpl implements StudentReplyScoreService {
     public Map<String, Object> findProjectScoreByOptions(Integer stuId, Integer projectId) {
         return studentReplyScoreDao.findProjectScoreByOptions(stuId, projectId);
     }
+
+    @Override
+    public int deleteReplyScoreByStudentId(int studentId) {
+        int i = 0;
+        if (studentId > 0) {
+            try {
+                studentReplyScoreDao.deleteReplyScoreByStudentId(studentId);
+                ++i;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return i;
+    }
 }

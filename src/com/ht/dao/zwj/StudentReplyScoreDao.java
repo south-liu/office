@@ -29,4 +29,11 @@ public interface StudentReplyScoreDao {
     List<ProjectVO> findGradedProjectByStudentId(Integer stuId);
 
     Map<String, Object> findProjectScoreByOptions(Integer stuId, Integer projectId);
+
+    /**
+     * 通过学生ID删除与他有关的所有答辩成绩
+     *
+     * @param studentId
+     */
+    void deleteReplyScoreByStudentId(int studentId);
 }
