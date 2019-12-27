@@ -67,4 +67,9 @@ public class StudentFallServiceImpl implements StudentFallService {
     public List<StudentFallVO> allData() {
         return studentFallDao.allData();
     }
+
+    @Override
+    public List<StudentFallVO> queryStudentFallByLevelNotFallid(StudentFallVO studentFall) {
+        return studentFallDao.queryStudentFallByLevelNotFallid(studentFall.getFallId(), studentFall.getLevel());
+    }
 }
