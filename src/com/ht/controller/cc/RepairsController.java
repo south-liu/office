@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -59,8 +60,8 @@ public class RepairsController {
     @RequestMapping("/updlist")
     @ResponseBody
     public String upd(int  equipmentId,int status){
-        String data = DateFormat.getDateInstance().format(new Date());
-        rs.UpdRepair(equipmentId,status,data);
+        SimpleDateFormat sim = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        rs.UpdRepair(equipmentId,status,sim.format(new Date()));
         return "success";
     }
 
@@ -68,9 +69,10 @@ public class RepairsController {
     @RequestMapping("/emprepairadd")
     @ResponseBody
     public String add(EquipmentRepairVO equipmentRepairVO, HttpSession session){
+        SimpleDateFormat sim = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         EmpVO emp =  (EmpVO)session.getAttribute("emp");
         equipmentRepairVO.setEmpId(emp.getEmpId());
-        equipmentRepairVO.setStartTime(DateFormat.getDateInstance().format(new Date()));
+        equipmentRepairVO.setStartTime(sim.format(new Date()));
         equipmentRepairVO.setUserType(2);//设置申请人的类型  员工为 2
         equipmentRepairVO.setStatus(0);//设置设备的默认状态  0 未完成||1 已完成
         rs.AddRepair(equipmentRepairVO);

@@ -46,7 +46,7 @@
                 {field:'empname', title:'姓名',align: 'center'},
                 {field:'feedbackTime', title:'反馈时间',align: 'center'},
                 {field:'remark', title:'建议',align: 'center'},
-                {field:'image',width:80, title:'图片',align: 'center',templet:'<div><img  src="${pageContext.request.contextPath}/{{d.image}}"></img></div>'},
+                {field:'image',width:80, title:'图片',align: 'center',templet:'<div><img  style="width: 80px;height: 80px" src="${pageContext.request.contextPath}/{{d.image}}"></img></div>'},
                 {field:'status', title:'是否处理',align: 'center',templet: function(res){
                         if (res.status ==1) {
                             return '未处理'

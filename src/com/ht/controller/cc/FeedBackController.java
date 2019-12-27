@@ -85,11 +85,11 @@ public class FeedBackController {
     @ResponseBody
     public String add(FeedbackVO feedbackVO, HttpSession session, MultipartFile file) {
         StudentVO stu = (StudentVO) session.getAttribute("student");
-        String data = DateFormat.getDateInstance().format(new Date());
+        SimpleDateFormat sim = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         feedbackVO.setEmpId(stu.getStudId().toString());
         feedbackVO.setEmpname(stu.getStuName());
         feedbackVO.setStatus(1);//1为未处理
-        feedbackVO.setFeedbackTime(data);//提交时间
+        feedbackVO.setFeedbackTime(sim.format(new Date()));//提交时间
 
         //图片上传
         String filename = file.getOriginalFilename();
