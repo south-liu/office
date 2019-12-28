@@ -63,12 +63,32 @@
         var layedit = layui.layedit;
 
         var myEdit = layedit.build('myEdit',{
+            tool:['strong' //加粗
+                ,'italic' //斜体
+                ,'underline' //下划线
+                ,'del' //删除线
 
+                ,'|' //分割线
+
+                ,'left' //左对齐
+                ,'center' //居中对齐
+                ,'right' //右对齐
+                ,'link' //超链接
+                ,'unlink' //清除链接
+                ,'face']
         });
 
         form.on('submit(sub)',function (data) {
             //同步编辑器内容到textarea
             layedit.sync(myEdit);
+
+            if (layedit.getText(myEdit).trim() == ''){
+                layer.msg('请输入内容',{
+                    icon:0,
+                    time:2000
+                });
+                return false;
+            }
 
             var lod = layer.load();
             $.ajax({
