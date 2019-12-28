@@ -91,15 +91,19 @@ public class FeedBackController {
         feedbackVO.setStatus(1);//1为未处理
         feedbackVO.setFeedbackTime(sim.format(new Date()));//提交时间
 
-        //图片上传
-        String filename = file.getOriginalFilename();
         String realPath = session.getServletContext().getRealPath("");
-        String dirPath = realPath + "WEB-INF"+ File.separator+"static"+ File.separator+"feedBackImg"+ File.separator;
-        feedbackVO.setImage("feedBackImg"+File.separator + filename);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        String strDate = sdf.format(new Date());
+
+        String dirPath = realPath+"WEB-INF"+File.separator+"static"+File.separator+"upload"+File.separator + strDate + File.separator;
+//        String dirPath = realPath + "WEB-INF"+ File.separator+"static"+ File.separator+"feedBackImg"+ File.separator;
+        //图片上传
+        String filename = FileUpload.uploadAndRename(dirPath, file);
+
+        feedbackVO.setImage("upload"+File.separator + strDate +File.separator+filename);
 
         fs.AddFeed(feedbackVO);
-        //上传文件
-        FileUpload.upload(dirPath, file);
         return "success";
     }
 
