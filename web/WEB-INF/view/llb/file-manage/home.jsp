@@ -202,7 +202,10 @@
                     });
                 });
             } else if(obj.event === 'getFile'){
-                location.href='${pageContext.request.contextPath}/file/download.do?docId='+data.docId;
+                var i = layer.confirm('确认下载文件吗',function () {
+                    location.href='${pageContext.request.contextPath}/file/download.do?docId='+data.docId;
+                    layer.close(i);
+                });
             }
         });
     })

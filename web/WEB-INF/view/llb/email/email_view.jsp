@@ -32,7 +32,7 @@
         <fieldset class="layui-elem-field">
             <legend>附件下载</legend>
             <div class="layui-field-box">
-                <a href="${pageContext.request.contextPath}/email/download.do?emailId=${email.emailId}">${email.fileName}</a>
+                <a id="getFile" href="javascript:;">${email.fileName}</a>
             </div>
         </fieldset>
     </c:if>
@@ -50,6 +50,12 @@
 
         });
 
+        $('#getFile').click(function () {
+            var i = layer.confirm('确认下载附件吗',function () {
+                location.href='${pageContext.request.contextPath}/email/download.do?emailId=${email.emailId}';
+                layer.close(i);
+            });
+        });
     });
 </script>
 </body>
