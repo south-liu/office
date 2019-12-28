@@ -10,6 +10,7 @@ public interface IEmailService {
     void addEmailReceiver(EmailReceiverVO emailReceiverVO);
 
     List allReceiveEmail(Integer receiver, int page, int limit);
+    List<EmailReceiverVO> allReceiveEmail(Integer receiver);
     List allMySendEmail(Integer empId,int page, int limit);
 
     EmailVO selEmailById(Integer emailId);

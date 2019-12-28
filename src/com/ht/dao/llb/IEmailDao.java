@@ -10,6 +10,7 @@ import java.util.Map;
 public interface IEmailDao {
 
     List allReceiveEmail(Integer receiver,int page, int limit);
+    List<EmailReceiverVO> allReceiveEmail(Integer receiver);
     List allMySendEmail(Integer empId,int page, int limit);
 
     void addEmail(EmailVO emailVO);

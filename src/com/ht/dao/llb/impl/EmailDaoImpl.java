@@ -14,12 +14,17 @@ public class EmailDaoImpl extends BaseDao implements IEmailDao {
     @Override
     public List allReceiveEmail(Integer receiver, int page, int limit) {
         return pageListBySql("select emailReceiver.emailReceiverId,emailReceiver.receiver,emailReceiver.isRead,email.*,emp.empName from emailReceiver left join email on emailReceiver.emailId = email.emailId left join emp on email.empId = emp.empId \n" +
-                "where emailReceiver.receiver =  "+receiver,page,limit);
+                "where emailReceiver.receiver =  "+receiver+" order by emailReceiver.emailReceiverId desc",page,limit);
+    }
+
+    @Override
+    public List<EmailReceiverVO> allReceiveEmail(Integer receiver) {
+        return findAllByHql("from EmailReceiverVO where receiver = "+receiver);
     }
 
     @Override
     public List allMySendEmail(Integer empId, int page, int limit) {
-        return pageListBySql("select emailReceiver.emailReceiverId,emailReceiver.receiver,emailReceiver.isRead,email.*,emp.empName from emailReceiver LEFT JOIN email on emailReceiver.emailId = email.emailId left join emp on emp.empId = emailReceiver.receiver where email.empId = "+empId,page,limit);
+        return pageListBySql("select emailReceiver.emailReceiverId,emailReceiver.receiver,emailReceiver.isRead,email.*,emp.empName from emailReceiver LEFT JOIN email on emailReceiver.emailId = email.emailId left join emp on emp.empId = emailReceiver.receiver where email.empId = "+empId+" order by emailReceiver.emailReceiverId desc",page,limit);
     }
 
     @Override

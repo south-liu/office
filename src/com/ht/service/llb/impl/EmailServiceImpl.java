@@ -30,6 +30,11 @@ public class EmailServiceImpl implements IEmailService {
     }
 
     @Override
+    public List<EmailReceiverVO> allReceiveEmail(Integer receiver) {
+        return emailDao.allReceiveEmail(receiver);
+    }
+
+    @Override
     public List allMySendEmail(Integer empId, int page, int limit) {
         return emailDao.allMySendEmail(empId,page,limit);
     }

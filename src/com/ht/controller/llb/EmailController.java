@@ -23,10 +23,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("email")
@@ -121,6 +118,25 @@ public class EmailController {
             emailService.addEmailReceiver(emailReceiverVO);
         }
         return "success";
+    }
+
+    @RequestMapping("/getNoRead")
+    @ResponseBody
+    public Map getNoRead(HttpSession session){
+        EmpVO empVO = (EmpVO) session.getAttribute("emp");
+
+        //所有未读邮件
+        List<EmailReceiverVO> allNoRead = new ArrayList<>();
+
+        List<EmailReceiverVO> allReceiveEmail = emailService.allReceiveEmail(empVO.getEmpId());
+        for (EmailReceiverVO emailReceiverVO : allReceiveEmail) {
+            if (emailReceiverVO.getIsRead() == 0) {
+                allNoRead.add(emailReceiverVO);
+            }
+        }
+        Map map = new HashMap();
+        map.put("allNoRead",allNoRead);
+        return map;
     }
 
     @RequestMapping("/pageListReceiveEmail")
