@@ -44,8 +44,8 @@
                     layer.open({
                         title:'修改部门',
                         type:2,
-                        content:['${pageContext.request.contextPath}/dept/toUpd?deptId='+obj.data.id,'no'],
-                        area: ['480px', '500px'],
+                        content:'${pageContext.request.contextPath}/dept/toUpd?deptId='+obj.data.id,
+                        area: ['480px', '480px'],
                         resize:false
                     });
                 }
@@ -134,8 +134,8 @@
         layer.open({
             title:'添加部门',
             type:2,
-            content:['${pageContext.request.contextPath}/dept/toAdd','no'],
-            area: ['480px', '500px'],
+            content:'${pageContext.request.contextPath}/dept/toAdd',
+            area: ['480px', '480px'],
             resize:false
         });
     };
