@@ -17,7 +17,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/assessment")
-public class AssessmentController {
+public class AssessmentController {// 教师考评
     @Resource
     private AssessmentService assessmentService;
     @Resource
@@ -101,15 +101,13 @@ public class AssessmentController {
         Map<String, Object> map = new HashMap<>();
         try {
             assessmentService.deleteAssessment(assessmentId);
+            map.put("code", 0);
+            map.put("msg", "删除成功！");
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            map.put("code", 1);
+            map.put("code", -1);
             map.put("msg", "服务器错误！");
-            return map;
         }
-        map.put("code", 0);
-        map.put("msg", "删除成功！");
-        map.put("result", assessmentId);
         return map;
     }
 

@@ -21,7 +21,7 @@ public class StudentHuorDaoImpl implements StudentHuorDao {
     public List<StudentHuorVO> allData(Integer page, Integer limit) {
         Session session = sessionFactory.openSession();
 
-        SQLQuery sqlQuery = session.createSQLQuery("select * from " + currentTableName + " order by " + getCurrentTableId + " asc limit ?,?");
+        SQLQuery sqlQuery = session.createSQLQuery("select * from " + currentTableName + " order by huoeIddsc asc," + getCurrentTableId + " desc limit ?,?");
         sqlQuery.setInteger(0, (page - 1) * limit);
         sqlQuery.setInteger(1, limit);
         sqlQuery.addEntity(StudentHuorVO.class);
@@ -64,6 +64,16 @@ public class StudentHuorDaoImpl implements StudentHuorDao {
 
         session.close();
         return list;
+    }
+
+    @Override
+    public int updateStudentHuorIdByHuorId(int afterHourid, int beforeHourid) {
+        Session session = sessionFactory.openSession();
+
+        int i = session.createSQLQuery("update student set huor = " + afterHourid + " where huor = " + beforeHourid).executeUpdate();
+
+        session.close();
+        return i;
     }
 
     @Override

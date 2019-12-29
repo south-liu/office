@@ -595,7 +595,7 @@ public class HTController {
         String strDate = sdf.format(new Date());
 
         //上传文件存放在项目下的路径
-        String dirName = "\\WEB-INF\\static\\upload\\" + strDate + "\\";
+        String dirName = File.separator+"WEB-INF"+File.separator+"static"+File.separator+"upload"+File.separator + strDate + File.separator;
 
         //总路径
         File dirFile = new File(path + dirName);
@@ -613,7 +613,7 @@ public class HTController {
         file.transferTo(newFile);
 
         //赋值给数据库对应的列
-        String a = "\\upload\\" + strDate + "\\" + newName;
+        String a = File.separator+"upload"+File.separator + strDate + File.separator + newName;
 
         Map res = new HashMap();
         res.put("date", a);

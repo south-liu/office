@@ -24,14 +24,14 @@
        lay-filter="fTable">
     <thead>
     <tr>
-        <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
-        <th lay-data="{field:'trialId', sort: true}">序号</th>
-        <th lay-data="{field:'date',  sort: true}">日期</th>
-        <th lay-data="{field:'time',  sort: true}">试讲时间</th>
-        <th lay-data="{field:'courseName', sort: true}">课程/章节</th>
-        <th lay-data="{field:'courseTypeName',sort: true}">授课类型</th>
-        <th lay-data="{field:'empName',sort: true}">授课老师</th>
-        <th lay-data="{field:'remark',sort: true}">备注</th>
+        <th lay-data="{type:'checkbox', fixed: 'left',align:'center'}"></th>
+        <th lay-data="{field:'trialId', sort: true,align:'center'}">序号</th>
+        <th lay-data="{field:'date',  sort: true,align:'center'}">日期</th>
+        <th lay-data="{field:'time',align:'center'}">试讲时间</th>
+        <th lay-data="{field:'courseName',align:'center'}">课程/章节</th>
+        <th lay-data="{field:'courseTypeName',align:'center'}">授课类型</th>
+        <th lay-data="{field:'empName',align:'center'}">授课老师</th>
+        <th lay-data="{field:'remark',align:'center'}">备注</th>
         <th lay-data="{fixed: 'right',align:'center', toolbar: '#barDemo'}"></th>
     </tr>
     </thead>

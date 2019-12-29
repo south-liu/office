@@ -17,7 +17,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/student-fall")
-public class StudentFallController {
+public class StudentFallController {// 学生届别
     @Resource
     private StudentFallService studentFallService;
     @Resource
@@ -78,49 +78,93 @@ public class StudentFallController {
     @ResponseBody
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Map<String, Object> add(StudentFallVO studentFallVO) {
-        Map<String, Object> hashMap = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
 
-        if (studentFallVO == null || studentFallVO.getLevel() == null) {
-            hashMap.put("code", 1);
-            hashMap.put("msg", "添加失败！");
-
-            return hashMap;
+        try {
+            // 通过届别名称查询，是否有存在相同界别
+            StudentFallVO studentFall = studentFallService.getStudentFallByLevel(studentFallVO.getLevel());
+            if (studentFall != null) {
+                map.put("code", 1);
+                map.put("msg", "届别名称已存在！");
+            } else {// 不存在则添加
+                studentFallService.add(studentFallVO);
+                map.put("code", 0);
+                map.put("msg", "添加成功！");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("code", -1);
+            map.put("msg", "服务器错误！");
         }
 
-        // 通过届别名称查询
-        StudentFallVO studentFall = studentFallService.getStudentFallByLevel(studentFallVO.getLevel());
-        if (studentFall != null) {// 数据库已存在对象
-            hashMap.put("code", 2);
-            hashMap.put("msg", "届别名称已存在！");
-        } else {// 不存在则添加
-            hashMap.put("code", 0);
-            hashMap.put("msg", "添加成功！");
-            hashMap.put("result", studentFallService.add(studentFallVO));
-        }
-        return hashMap;
+        return map;
     }
 
     // 获取详细信息
     @ResponseBody
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
-    public StudentFallVO detail(@RequestParam int fallId) {
-        StudentFallVO studentFall = studentFallService.getStudentFallById(fallId);
-        return studentFall;
+    public Map<String, Object> detail(@RequestParam int fallId) {
+        Map<String, Object> map = new HashMap<>();
+
+        try {
+            map.put("studentFall", studentFallService.getStudentFallById(fallId));
+            map.put("code", 0);
+            map.put("msg", "查询成功！");
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("code", -1);
+            map.put("msg", "服务器错误！");
+        }
+
+        return map;
     }
 
-    // 获取详细信息
+    // 修改
     @ResponseBody
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public Integer update(StudentFallVO studentFall) {
-        studentFallService.updateStudentFall(studentFall);
-        return studentFall.getFallId();
+    public Map<String, Object> update(StudentFallVO studentFall) {
+        Map<String, Object> map = new HashMap<>();
+
+        try {
+            List<StudentFallVO> studentFallByLevelNotFallid = studentFallService.queryStudentFallByLevelNotFallid(studentFall);
+            if (studentFallByLevelNotFallid != null && !studentFallByLevelNotFallid.isEmpty()) {
+                map.put("code", 1);
+                map.put("msg", "界别名称已存在！");
+                return map;
+            }
+            studentFallService.updateStudentFall(studentFall);
+            map.put("code", 0);
+            map.put("msg", "修改成功！");
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("code", -1);
+            map.put("msg", "服务器错误！");
+        }
+
+        return map;
     }
 
     // 删除多个
     @ResponseBody
     @RequestMapping(value = "/deleteMulti", method = RequestMethod.POST)
-    public int deleteMulti(@RequestParam(name = "fallIds[]") Integer[] fallIds) {
-        studentFallService.deleteMultiStudentFall(fallIds);
-        return fallIds.length;
+    public Map<String, Object> deleteMulti(@RequestParam(name = "fallIds[]") Integer[] fallIds) {
+        Map<String, Object> map = new HashMap<>();
+
+        int i = 0;
+        try {
+            studentFallService.deleteMultiStudentFall(fallIds);
+            ++i;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (i > 0) {
+            map.put("code", 0);
+            map.put("msg", "删除成功！");
+        } else {
+            map.put("code", -1);
+            map.put("msg", "服务器错误！");
+        }
+        return map;
     }
 }

@@ -63,6 +63,10 @@
             <mvc:mapping path="/menu/**"/>
             <mvc:mapping path="/notice/**"/>
             <mvc:mapping path="/report/**"/>
+            <mvc:mapping path="/student-class/**"/>
+            <mvc:mapping path="/systemLog/**"/>
+            <mvc:mapping path="/email/**"/>
+
 
             <mvc:mapping path="/Chengcollege/**"/>
             <!--<mvc:mapping path="/CJEF/**"/>-->
@@ -71,6 +75,7 @@
             <!--<mvc:mapping path="/stujef/**"/>-->
             <mvc:mapping path="/weekang/**"/>
             <!--<mvc:mapping path="/feedback/**"/>-->
+            <mvc:mapping path="/erlment/**"/>
 
             <mvc:mapping path="/classtype/**"/>
             <mvc:mapping path="/chatRecord/**"/>
@@ -78,6 +83,7 @@
             <!--<mvc:mapping path="/education/**"/>-->
             <mvc:mapping path="/studentclass/**"/>
             <mvc:mapping path="/trial/**"/>
+            <mvc:mapping path="/mychat/**"/>
 
             <mvc:mapping path="/MY/**"/>
             <mvc:mapping path="/TP/**"/>
@@ -87,6 +93,7 @@
             <mvc:mapping path="/student-huor/**"/>
             <mvc:mapping path="/student-reply-score/**"/>
             <mvc:mapping path="/evaluation-standard/**"/>
+<!--            <mvc:mapping path="/assessment/**"/>-->
 
             <!--<mvc:exclude-mapping path="/system/geeCheck"/>
 

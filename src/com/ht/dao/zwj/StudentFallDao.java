@@ -21,4 +21,6 @@ public interface StudentFallDao {
     long getTotality();
 
     List<StudentFallVO> allData();
+
+    List<StudentFallVO> queryStudentFallByLevelNotFallid(Integer fallId, String level);
 }

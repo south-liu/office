@@ -26,7 +26,7 @@ public class StudentFallDaoImpl implements StudentFallDao {
     public List<StudentFallVO> allData(Integer page, Integer limit) {
         Session session = sessionFactory.openSession();
 
-        SQLQuery sqlQuery = session.createSQLQuery("select * from studentFall order by fallId asc limit ?,?");
+        SQLQuery sqlQuery = session.createSQLQuery("select * from studentFall order by fallId desc limit ?,?");
         sqlQuery.setInteger(0, (page - 1) * limit);
         sqlQuery.setInteger(1, limit);
         sqlQuery.addEntity(StudentFallVO.class);
@@ -94,8 +94,7 @@ public class StudentFallDaoImpl implements StudentFallDao {
     public StudentFallVO getStudentFallByLevel(String level) {
         Session session = sessionFactory.openSession();
 
-        StudentFallVO studentFallVO =
-                (StudentFallVO) session.createSQLQuery("select * from studentFall where level = '" + level + "'").addEntity(StudentFallVO.class).uniqueResult();
+        StudentFallVO studentFallVO = (StudentFallVO) session.createSQLQuery("select * from studentFall where level = '" + level + "'").addEntity(StudentFallVO.class).uniqueResult();
 
         session.close();
         return studentFallVO;
@@ -138,6 +137,17 @@ public class StudentFallDaoImpl implements StudentFallDao {
         SQLQuery sqlQuery = session.createSQLQuery("select * from studentFall order by fallId asc");
         sqlQuery.addEntity(StudentFallVO.class);
         List<StudentFallVO> list = sqlQuery.list();// 执行查询
+
+        session.close();
+        return list;
+    }
+
+    @Override
+    public List<StudentFallVO> queryStudentFallByLevelNotFallid(Integer fallId, String level) {
+        Session session = sessionFactory.openSession();
+
+        List<StudentFallVO> list =
+                session.createSQLQuery("select * from studentFall where fallId != " + fallId + " and level = '" + level + "'").addEntity(StudentFallVO.class).list();
 
         session.close();
         return list;

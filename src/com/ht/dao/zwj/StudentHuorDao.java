@@ -48,4 +48,13 @@ public interface StudentHuorDao {
     List<StudentHuorVO> allDataByFloorId(Integer floorId);
 
     List<StudentHuorVO> queryStudentHuorNotHuorid(Integer hourId, String huorName);
+
+    /**
+     * 将宿舍房号【beforeHourid】内的所有学生，设置新宿舍房号【afterHourid】
+     *
+     * @param afterHourid
+     * @param beforeHourid
+     * @return 受影响的行数
+     */
+    int updateStudentHuorIdByHuorId(int afterHourid, int beforeHourid);
 }

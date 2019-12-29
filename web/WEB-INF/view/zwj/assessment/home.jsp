@@ -139,36 +139,35 @@
         var laydate = layui.laydate;
 
         var laydateOptions = {
-            type: 'datetime'
+            type: 'datetime',
+            trigger: 'click'
         };
         //执行一个laydate实例
         laydate.render({
             elem: '#searchStartTime', //指定元素,
-            type: laydateOptions.type
+            type: laydateOptions.type,
+            trigger: laydateOptions.trigger
         });
         laydate.render({
             elem: '#searchEndTime', //指定元素
-            type: laydateOptions.type
+            type: laydateOptions.type,
+            trigger: laydateOptions.trigger
         });
         laydate.render({
             elem: '#startTime', //指定元素
             type: laydateOptions.type,
+            trigger: laydateOptions.trigger,
             value: new Date(),
             min: '0'
         });
         laydate.render({
             elem: '#endTime', //指定元素
             type: laydateOptions.type,
-            min: 0
+            trigger: laydateOptions.trigger,
+            min: '0'
         });
 
         var formArea = ['580px', '580px'];// 编辑和添加表单的宽高
-
-        <%--var addFormTitle = '添加考评';--%>
-        <%--var addFormURL = '${pageContext.request.contextPath}/evaluation-standard/add';--%>
-
-        <%--var editFormTitle = '编辑考评';--%>
-        <%--var editFormURL = '${pageContext.request.contextPath}/evaluation-standard/add';--%>
 
         var addOptions = {
             title: '开启考评',
@@ -224,11 +223,6 @@
         // 监听表格搜索
         form.on('submit(searchForm)', function (data) {
             table.reload('dataTable', {url: '${pageContext.request.contextPath}/assessment/searchByOptions', where: data.field});
-            <%--var loadIndex = layer.load();--%>
-            <%--$.get('${pageContext.request.contextPath}/assessment/searchByOptions', data.field, function (data) {--%>
-            <%--    layer.close(loadIndex);--%>
-            <%--    console.log(data);--%>
-            <%--}, 'json');--%>
             return false;
         });
 
@@ -406,17 +400,16 @@
             layer.confirm('确定删除该条考评吗？', function (index) {
                 var loadIndex = layer.load();
                 // 传输id到后台删除数据
-                $.post(deleteOptions.url, {evaluationId: obj.data.assessmentId}, function (data) {
+                $.post(deleteOptions.url, {assessmentId: obj.data.assessmentId}, function (data) {
                     layer.close(loadIndex);
                     layer.close(index);
 
-                    if (data.code == 0 && data.result > 0) {// result：返回删除的id
+                    if (data.code == 0) {// result：返回删除的id
                         layer.msg(data.msg, {
                             icon: 1,
                             time: 1000
                         });
-                        obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-                        table.reload('dataTable', {});// 重载表格
+                        table.reload('dataTable', {curr: 1});// 重载表格
                     } else if (data.code == 1) {// 失败
                         layer.msg(data.msg, {
                             icon: 2,

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,14 +30,14 @@ public class StujefController {
     private StujefService stus;
 
     @RequestMapping("/toedu")
-    public  String tolist(Model model){
-        model.addAttribute("stuId",2);
+    public  String tolist(Model model,Integer stuId){
+        model.addAttribute("stuId",stuId);
         return "cc/stujef/stuedu_list";
     }
 
     @RequestMapping("/toaddedu")
-    public  String toaddjob(Model model){
-        model.addAttribute("stuId",2);
+    public  String toaddjob(Model model,Integer stuId){
+        model.addAttribute("stuId",stuId);
         return "cc/stujef/stuedu_add";
     }
 
@@ -85,14 +86,14 @@ public class StujefController {
 
     //家庭背景
     @RequestMapping("/tofam")
-    public  String tofamlist(Model model){
-        model.addAttribute("stuId",2);
+    public  String tofamlist(Model model,Integer stuId){
+        model.addAttribute("stuId",stuId);
         return "cc/stujef/stufam_list";
     }
 
     @RequestMapping("/toaddfam")
-    public  String toaddfam(Model model){
-        model.addAttribute("stuId",2);
+    public  String toaddfam(Model model,Integer stuId){
+        model.addAttribute("stuId",stuId);
         return "cc/stujef/stufam_add";
     }
 
@@ -176,7 +177,8 @@ public class StujefController {
     @RequestMapping("/addzx")
     @ResponseBody
     public  String addzx(StudentHappeningVO studentHappeningVO){
-        studentHappeningVO.setOpTime(DateFormat.getDateInstance().format(new Date()));
+        SimpleDateFormat sim = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        studentHappeningVO.setOpTime(sim.format(new Date()));
         stus.AddZx(studentHappeningVO);
         return " ";
     }
@@ -192,8 +194,8 @@ public class StujefController {
     @RequestMapping("updzx")
     @ResponseBody
     public String updzx(StudentHappeningVO studentHappeningVO){
-        String data = DateFormat.getDateInstance().format(new Date());
-        studentHappeningVO.setOpTime(data);
+        SimpleDateFormat sim = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        studentHappeningVO.setOpTime(sim.format(new Date()));
         stus.UpdZx(studentHappeningVO);
         return "success";
     }

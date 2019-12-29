@@ -113,6 +113,29 @@
             $('#titSpan').text(data.from);
             $('#conSpan').text(data.hitokoto);
         },'json');
+
+        //获取邮件
+        $.get('${pageContext.request.contextPath}/email/getNoRead',{},function (data) {
+            var email = data.allNoRead;
+           console.log(email);
+           if (email.length>0) {
+               layer.open({
+                   type: 1,
+                   title: '你有新的邮件',
+                   btn: ['点击查看', '下次再看'],
+                   btnAlign: 'c',
+                   shade: false,
+                   offset: 'rb', //右下角弹出
+                   anim: 2,
+                   content: '',
+                   yes: function(index, layero){
+                       layer.load();
+                       location.href='${pageContext.request.contextPath}/email/home';
+                   }
+               });
+           }
+
+        },'json');
     })
     
     layui.use(['element', 'layer'], function(){
