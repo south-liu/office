@@ -153,7 +153,7 @@ public class HTServiceImpl extends BaseDao implements HTService{
 
     @Override
     public List selscore(int page, int limit) {
-        return pageBySql("select s.*, t.stuName, c.courseName, m.empName from studentScore s left join student t on s.stuId = t.studId left join course c on s.courseId = c.courseId left join term e on s.termId = e.termId left join emp m on s.empId = m.empId", page, limit);
+        return pageBySql("select s.*, t.stuName, c.courseName, m.empName, e.termName from studentScore s left join student t on s.stuId = t.studId left join course c on s.courseId = c.courseId left join term e on s.termId = e.termId left join emp m on s.empId = m.empId", page, limit);
     }
 
     @Override

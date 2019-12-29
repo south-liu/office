@@ -301,7 +301,7 @@ public class HTController {
     @RequestMapping("/selscorelist")
     @ResponseBody
     public Map selscorelist(String term, String sclass, Integer leibie, String course, int page, int limit){
-        String sql = "select s.*, t.termName, c.courseName from studentScore s left join term t on s.termId = t.termId left join course c on s.courseId = c.courseId where 1 = 1";
+        String sql = "select s.*, t.termName, c.courseName, e.stuName, m.empName from studentScore s left join term t on s.termId = t.termId left join course c on s.courseId = c.courseId left join student e on s.stuId = e.studId left join emp m on s.empId = m.empId where 1 = 1";
         String sql1 = "select count(*) from studentScore where 1 = 1";
         if(term != null && !"".equals(term)){
             sql += " and s.termId in (select termId from term where termName = '" + term +"')";
