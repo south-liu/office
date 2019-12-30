@@ -92,34 +92,86 @@
                     ,data = obj.data //得到所在行所有键值
                     ,field = obj.field; //得到字段
                 //layer.msg(field + '修改成功');
-                var lindex = layer.load();
-                $.ajax({
-                    type:"post",
-                    url:"${pageContext.request.contextPath}/CJEF/updjob",
-                    async:true,
-                    dataType:"text",
-                    data:{jobId:data.jobId,empId:$('#empid').val(),companyName:data.companyName,degree:data.degree,startDate:data.startDate,endDate:data.endDate,reason:data.reason,remark:data.remark},
-                    success:function(data){
-                        layer.close(lindex);
-                        layer.msg('修改成功!', {
-                            icon: 1,
-                            time: 1000
-                        }/*,function () {
+
+                if (new Date(data.endDate).getDate()!=data.endDate.substring(data.endDate.length-2)) {
+                    layer.msg('请输入正确的时间', {
+                        icon: 0,
+                        time: 1000
+                    },function () {
+                        location.reload();
+                    });
+                }else if (new Date(data.startDate).getDate()!=data.startDate.substring(data.startDate.length-2)) {
+                    layer.msg('请输入正确的时间', {
+                        icon: 0,
+                        time: 1000
+                    },function () {
+                        location.reload();
+                    });
+                }else if (data.reason==""){
+                    layer.msg('内容不能为空', {
+                        icon: 0,
+                        time: 1000
+                    },function () {
+                        location.reload();
+                    });
+                } else if (data.endDate==""){
+                    layer.msg('内容不能为空', {
+                        icon: 0,
+                        time: 1000
+                    },function () {
+                        location.reload();
+                    });
+                } else if (data.startDate==""){
+                    layer.msg('内容不能为空', {
+                        icon: 0,
+                        time: 1000
+                    },function () {
+                        location.reload();
+                    });
+                } else if (data.degree==""){
+                    layer.msg('内容不能为空', {
+                        icon: 0,
+                        time: 1000
+                    },function () {
+                        location.reload();
+                    });
+                } else if (data.companyName==""){
+                    layer.msg('内容不能为空', {
+                        icon: 0,
+                        time: 1000
+                    },function () {
+                        location.reload();
+                    });
+                } else {
+                    var lindex = layer.load();
+                    $.ajax({
+                        type:"post",
+                        url:"${pageContext.request.contextPath}/CJEF/updjob",
+                        async:true,
+                        dataType:"text",
+                        data:{jobId:data.jobId,empId:$('#empid').val(),companyName:data.companyName,degree:data.degree,startDate:data.startDate,endDate:data.endDate,reason:data.reason,remark:data.remark},
+                        success:function(data){
+                            layer.close(lindex);
+                            layer.msg('修改成功!', {
+                                icon: 1,
+                                time: 1000
+                            }/*,function () {
                             layer.close(index);
                             // location.reload();
                             table.reload('myTable', {
                                 url: '${pageContext.request.contextPath}/CJEF/joblist'
                             });
                         }*/);
-                    },
-                    error:function () {
-                        layer.close(lindex);
-                        layer.msg("服务器错误", {
-                            icon: 1,
-                            time: 1000
-                        });
-                    }
-                });
+                        },
+                        error:function () {
+                            layer.close(lindex);
+                            layer.msg("服务器错误", {
+                                icon: 1,
+                                time: 1000
+                            });
+                        }
+                    });
+                }
             });
         });
     </script>

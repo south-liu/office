@@ -77,7 +77,7 @@
     {{#  } }}
 </script>
 <%--操作表单--%>
-<div id="actionBox" style="display: none;margin-top:20px;padding: 80px;">
+<div id="actionBox" style="display: none;margin-top: 30px;padding: 15px;">
     <form class="layui-form" method="post" id="actionForm" lay-filter="_form">
         <input type="hidden" name="assessmentId">
         <div class="layui-form-item">
@@ -113,13 +113,13 @@
         <div class="layui-form-item">
             <label class="layui-form-label">开始时间：</label>
             <div class="layui-inline"> <!-- 注意：这一层元素并不是必须的 -->
-                <input type="text" class="layui-input" name="startTime" id="startTime" style="width:190px;">
+                <input type="text" class="layui-input" name="startTime" id="startTime" lay-verify="required" style="width:190px;">
             </div>
         </div>
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">结束时间：</label>
             <div class="layui-inline">
-                <input type="text" class="layui-input" name="endTime" id="endTime" style="width:190px;">
+                <input type="text" class="layui-input" name="endTime" id="endTime" lay-verify="required" style="width:190px;">
             </div>
         </div>
         <div class="layui-form-item">
@@ -137,6 +137,18 @@
         var layer = layui.layer;
         var form = layui.form;
         var laydate = layui.laydate;
+
+        function assessmentTimeVerify(startTime, endTime) {
+            if (startTime.length > 0 && endTime.length > 0) {
+                // 考评开始时间大于或等于结束时间时，提示
+                if (startTime >= endTime) {
+                    layer.msg('考评的开始时间应小于考评的结束时间！', {icon: 3, time: 1500});
+                    return false;
+                }
+                return true;
+            }
+            return;
+        }
 
         var laydateOptions = {
             type: 'datetime',
@@ -158,16 +170,22 @@
             type: laydateOptions.type,
             trigger: laydateOptions.trigger,
             value: new Date(),
-            min: '0'
+            min: '0',
+            done: function (value) {// 开始时间
+                assessmentTimeVerify(value, $('#endTime').val());
+            }
         });
         laydate.render({
             elem: '#endTime', //指定元素
             type: laydateOptions.type,
             trigger: laydateOptions.trigger,
-            min: '0'
+            min: '0',
+            done: function (value) {
+                assessmentTimeVerify($('#startTime').val(), value);
+            }
         });
 
-        var formArea = ['580px', '580px'];// 编辑和添加表单的宽高
+        var formArea = ['400px', '400px'];// 编辑和添加表单的宽高
 
         var addOptions = {
             title: '开启考评',
@@ -254,6 +272,17 @@
 
         // 监听操作表单中的教师下拉框改变可选班级
         form.on('select(empSelect)', function (data) {
+            // 清空下拉框内的值
+            var studentClassSelect = $('select[name="studentClassId"]');
+            studentClassSelect.empty();
+
+            if (0 === data.value.length) {// 选择空值，不发送请求
+                studentClassSelect.empty('<option value="">请选择</option>');
+                form.render('select');
+                return;
+            }
+
+            // 开始请求
             var loadIndex = layer.load();
 
             var empId = data.value;
@@ -262,11 +291,14 @@
             }, function (data) {
                 layer.close(loadIndex);
 
-                var studentClassSelect = $('select[name="studentClassId"]');
-                studentClassSelect.empty();
-                $.each(data, function (i, element) {
-                    studentClassSelect.append('<option value="' + element.classId + '">' + element.className + '</option>');
-                });
+                if (data.length > 0) {
+                    $.each(data, function (i, element) {
+                        studentClassSelect.append('<option value="' + element.classId + '">' + element.className + '</option>');
+                    });
+                } else {
+                    layer.msg('该老师还没有可以进入考评的班级！');
+                    studentClassSelect.append('<option value="">请选择</option>');
+                }
                 form.render('select');
             }, 'json');
         });
@@ -289,6 +321,10 @@
             });
             // 通过提交按钮的lay-filter="submitForm"属性，触发表单中提交时的回调函数
             form.on('submit(submitForm)', function (data) {
+                // 考评开始时间大于或等于结束时间
+                if (!assessmentTimeVerify(data.field.startTime, data.field.endTime)) return false;
+
+                // 开始请求
                 var loadIndex = layer.load();
                 var dataForm = data.form;
                 $.ajax({

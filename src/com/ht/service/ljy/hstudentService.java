@@ -33,6 +33,9 @@ public interface hstudentService {
     //根据ID查询请假表和学生名字的内容
     public List hs_byid_lists(int holidayId);
 
+    //根据ID查询个数
+    public int hs_byid_lists_count(int holidayId);
+
 //    根据ID查询请假表内容
     public HolidayStudent hs_byid_list(Integer holidayId);
 

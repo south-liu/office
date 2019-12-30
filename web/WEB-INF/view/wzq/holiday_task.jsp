@@ -35,29 +35,29 @@
         <th><font size="2" color="#666">操作</font></th>
     </tr>
     <c:forEach items="${holidayList}" var="list">
-        <tr bgcolor="#FFF" style="height: 38px;text-align: center">
-            <td><font size="2" color="#666">${list.holidayId}</font></td>
-            <td><font size="2" color="#666">${list.empName}</font></td>
-            <td><font size="2" color="#666">${list.dayStr}</font></td>
-            <td><font size="2" color="#666">${list.startTime}</font></td>
-            <td><font size="2" color="#666">${list.endTime}</font></td>
-            <td><font size="2" color="#666">${list.type}</font></td>
-            <td>
-                <font size="2" color="#666">
-                    <c:if test="${list.status == 1}">审批中</c:if>
-                    <c:if test="${list.status == 2}">已完成</c:if>
-                    <c:if test="${list.status == 3}">不批准</c:if>
+    <tr bgcolor="#FFF" style="height: 38px;text-align: center">
+        <td><font size="2" color="#666">${list.holidayId}</font></td>
+        <td><font size="2" color="#666">${list.empName}</font></td>
+        <td><font size="2" color="#666">${list.dayStr}</font></td>
+        <td><font size="2" color="#666">${list.startTime}</font></td>
+        <td><font size="2" color="#666">${list.endTime}</font></td>
+        <td><font size="2" color="#666">${list.type}</font></td>
+        <td>
+            <font size="2" color="#666">
+                <c:if test="${list.status == 1}">审批中</c:if>
+                <c:if test="${list.status == 2}">已完成</c:if>
+                <c:if test="${list.status == 3}">不批准</c:if>
 
-                </font>
-            </td>
-            <td><font size="2" color="#666">${list.remark}</font></td>
-            <td>
-                <a class="layui-btn layui-btn-xs" onclick="agree(${list.holidayId},${list.taskId});">同意</a>
-                <a class="layui-btn layui-btn-danger layui-btn-xs" onclick="refuse(${list.holidayId},${list.taskId});">拒绝</a>
-                <a class="layui-btn layui-btn-xs" onclick="seeComm(${list.holidayId});">查看批注</a>
-            </td>
-        </tr>
-    </c:forEach>
+            </font>
+        </td>
+        <td><font size="2" color="#666">${list.remark}</font></td>
+        <td>
+            <a class="layui-btn layui-btn-xs" onclick="agree(${list.holidayId},${list.taskId});">同意</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" onclick="refuse(${list.holidayId},${list.taskId});">拒绝</a>
+            <a class="layui-btn layui-btn-xs" onclick="seeComm(${list.holidayId});">查看批注</a>
+        </td>
+    </tr>
+</c:forEach>
 </table>
 
 

@@ -56,7 +56,10 @@ public class EmailController {
 
     @RequestMapping("/allEmp")
     @ResponseBody
-    public JSONArray allEmp() {
+    public JSONArray allEmp(HttpSession session) {
+
+        EmpVO emp = (EmpVO) session.getAttribute("emp");
+
         Map map = new HashMap();
         List<DeptVO> addDept = deptService.allDept();
         List<EmpVO> allEmp = empService.allEmp();
@@ -71,6 +74,9 @@ public class EmailController {
                     Map empMap = new HashMap();
                     empMap.put("value", empVO.getEmpId());
                     empMap.put("name", empVO.getEmpName());
+                    if (empVO.getEmpId().equals(emp.getEmpId())) {
+                        empMap.put("disabled",true);
+                    }
                     empArr.add(empMap);
                 }
             }

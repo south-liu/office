@@ -136,6 +136,14 @@
                 var value = obj.value //得到修改后的值
                     ,data = obj.data //得到所在行所有键值
                     ,field = obj.field; //得到字段
+            if (data.collegeDeptName=="" || data.remark==""){
+                layer.msg('不能为空!',{
+                    icon: 2,
+                    time: 1000
+                },function () {
+                    location.reload();
+                });
+            } else {
                 $.ajax({
                     type:"post",
                     url:"${pageContext.request.contextPath}/Chengcollege/updlist",
@@ -143,7 +151,6 @@
                     dataType:"text",
                     data:{collegeDeptId:data.collegeDeptId,collegeDeptName:data.collegeDeptName,remark:data.remark},
                     success:function(data){
-                        layer.close(lindex);
                         layer.msg('修改成功!', {
                             icon: 1,
                             time: 1000
@@ -161,8 +168,9 @@
                             icon: 1,
                             time: 1000
                         });
-                }
-            });
+                    }
+                });
+            }
             });
 
     });

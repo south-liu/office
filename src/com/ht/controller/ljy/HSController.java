@@ -1,6 +1,7 @@
 package com.ht.controller.ljy;
 
 import com.ht.service.ljy.hstudentService;
+import com.ht.utils.date.DatesUtil;
 import com.ht.vo.EmpVO;
 import com.ht.vo.HolidayStudent;
 import com.ht.vo.HolidayVO;
@@ -29,10 +30,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
@@ -358,7 +358,7 @@ public class HSController {
         //获取流程实例id （查询历史批注），adult中审批时存入了一些数据在表中act_hi_comment
         List<Comment> commentList = taskService.getProcessInstanceComments(hvi.getProcessInstanceId());
 //        为了显示申请人的名字
-        List list=new ArrayList();
+        List list = new ArrayList();
         for (int i = 0; i < commentList.size(); i++) {
             Map map = new HashMap();
             map.put("id", commentList.get(i).getId());
@@ -369,7 +369,7 @@ public class HSController {
 //            取到ID
             System.out.println("员工姓名：" + hstudentService.hs_assigneeName(commentList.get(i).getUserId()));
         }
-        model.addAttribute("commentList",list);
+        model.addAttribute("commentList", list);
         return "ljy/holiday_stu/hs_myapply_comment";
     }
 
@@ -386,11 +386,13 @@ public class HSController {
 //      根据名字去查询任务列表(act_ru_task:proc_inst_id,proc_def_id,执行人)
         List<Task> taskList = taskService.createTaskQuery().taskAssignee(empVO.getEmpId().toString()).list();
 
-        List list=new ArrayList();
+        List list = new ArrayList();
         for (int i = 0; i < taskList.size(); i++) {
             Map map = new HashMap();
             map.put("id", taskList.get(i).getId());
             map.put("processInstanceId", taskList.get(i).getProcessInstanceId());
+
+
             map.put("processDefinitionId", taskList.get(i).getProcessDefinitionId());
             map.put("name", taskList.get(i).getName());
             map.put("createTime", taskList.get(i).getCreateTime());
@@ -407,16 +409,35 @@ public class HSController {
     }
 
 
-    //    我的任务中审核意见
+    //查看详情改为我的任务
+    @ResponseBody
+    @RequestMapping("/xiangqing")
+    public Map xiangqing(HttpSession session, String taskId) {
+        EmpVO empVO = (EmpVO) session.getAttribute("emp");
+        List<Task> taskList = taskService.createTaskQuery().taskAssignee(empVO.getEmpId().toString()).list();
+
+
+        int holidayId = Integer.parseInt(taskService.getVariable(taskId, "holidayId").toString());
+        Map map = new HashMap();
+        map.put("msg", 0);
+        map.put("code", 0);
+        map.put("count", hstudentService.hs_byid_lists_count(holidayId));
+        map.put("data", hstudentService.hs_byid_list(holidayId));
+        return map;
+    }
+
+    //    我的任务中查看详情审核意见
     @RequestMapping("/hs_mytask_taskaudit")
     public String taskDetail(String taskId, String instId, Model model) {
         //根据流程实例ID查询流程实例
         ProcessInstance pi = runtimeService.createProcessInstanceQuery().processInstanceId(instId).singleResult();
         //根据从页面中传来的任务ID（Act_ru_task中查出的） 查询任务实例（act_hi_taskinst）
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+
+
         //获取历史审批信息(act_hi_comment)
         List<Comment> commentList = taskService.getProcessInstanceComments(instId);
-        List list=new ArrayList();
+        List list = new ArrayList();
         for (int i = 0; i < commentList.size(); i++) {
             Map map = new HashMap();
             map.put("id", commentList.get(i).getId());
@@ -427,8 +448,6 @@ public class HSController {
 //            取到ID
             System.out.println("员工姓名：" + hstudentService.hs_assigneeName(commentList.get(i).getUserId()));
         }
-
-
         //获取流程定义id
         String processDefineId = task.getProcessDefinitionId();
         //查询流程定义实体对象
@@ -450,23 +469,41 @@ public class HSController {
                 map.put("id", pvm.getId());
                 map.put("name", pvm.getProperty("name"));
             }
-
             plist.add(map);
         }
+
+
         //获取jobID，
         int holidayId = Integer.parseInt(taskService.getVariable(taskId, "holidayId").toString());
         //根据单据ID查询对象，为了输出里面的信息
         Map holidayStudent = (Map) hstudentService.hs_byid_lists(holidayId).get(0);
+
+
+        String startTime = (String) holidayStudent.get("startTime");
+        String endTime = (String) holidayStudent.get("endTime");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("dd 天 HH 小时");
+        try {
+            Date date = new Date();
+            date.setTime(DatesUtil.dateDiff(simpleDateFormat.parse(startTime), simpleDateFormat.parse(endTime))-(3600*8000));
+            String format = simpleDateFormat2.format(date);
+            System.out.println("sadasdas:"+format);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         System.out.println("holidayStudent:" + holidayStudent.toString());
+
+
 //        JobsVo job = services.seljobbyid(jobId);
 
         model.addAttribute("taskId", taskId);
         model.addAttribute("commentList", list);
         model.addAttribute("plist", plist);
         model.addAttribute("holidayStudent", holidayStudent);
+        System.out.println("holidayStudent:" + holidayStudent.toString());
         return "ljy/holiday_stu/hs_mytask_audit";
     }
-
 
     //    提交审批
     @RequestMapping("/hs_mytask_complete")

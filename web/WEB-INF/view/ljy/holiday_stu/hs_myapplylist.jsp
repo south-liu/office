@@ -141,7 +141,7 @@
             title: '申请请假',
             type: 2,
             content: ['${pageContext.request.contextPath}/hstudent/goto_hs_apply', 'no'],
-            area: ['600px', '450px'],
+            area: ['600px', '500px'],
             resize: false
         })
     }

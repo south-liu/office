@@ -10,6 +10,7 @@ import com.ht.vo.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.persistence.Id;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +27,30 @@ public class RepairServiceimpl extends BaseDao implements RepairService {
     private IDeptService deptService;
 
     @Override
-    public List selSpage(int currPage, int pageSize) {
+    public List selSpage(int currPage, int pageSize,String id) {
+        List<Map<String, Object>> list = pageListBySql("select * from equipmentRepair where empId="+id, currPage, pageSize);
+        for (Map<String, Object> map : list) {
+            int type = (int) map.get("userType");
+            if (type == 1) {// 为学生
+                int studentId = (int) map.get("student");
+                StudentVO student = studentService.findById(studentId);
+                System.out.println(student);
+                StudentClassVO studentClass = studentclassService.studentclassbyid(student.getClazz());
+                map.put("classOrDept", studentClass.getClassName());// 设置申请人所在类别 学生显示班级 老师显示部门
+                map.put("proposer", student.getStuName());// 设置申请人名称
+            } else if (type == 2) {// 为员工
+                int empId = (int) map.get("empId");
+                EmpVO emp = empService.findEmpById(empId);
+                DeptVO dept = deptService.selById(emp.getDeptId());
+                map.put("classOrDept", dept.getDeptName());
+                map.put("proposer", emp.getEmpName());// 设置申请人名称
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public List empselSpage(int currPage, int pageSize) {
         List<Map<String, Object>> list = pageListBySql("select * from equipmentRepair", currPage, pageSize);
         for (Map<String, Object> map : list) {
             int type = (int) map.get("userType");
@@ -49,10 +73,14 @@ public class RepairServiceimpl extends BaseDao implements RepairService {
     }
 
     @Override
-    public Integer seltotalRepair() {
-        return totalRowByHql("select count(*) from EquipmentRepairVO");
+    public Integer seltotalRepair(String id) {
+        return totalRowBySql("select count(*) from equipmentRepair where empId="+id);
     }
 
+    @Override
+    public Integer seltotalRepairemp() {
+        return totalRowBySql("select count(*) from equipmentRepair");
+    }
     @Override
     public void AddRepair(EquipmentRepairVO equipmentRepairVO) {
         saveObject(equipmentRepairVO);

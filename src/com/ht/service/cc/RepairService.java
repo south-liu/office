@@ -6,9 +6,13 @@ import java.util.List;
 
 public interface RepairService {
     //分页查询
-    public List selSpage(int currPage, int pageSize);
+    public List selSpage(int currPage, int pageSize,String id);
+
+    public List empselSpage(int currPage, int pageSize);
     //查询总行数
-    public Integer seltotalRepair();
+    public Integer seltotalRepair(String id);
+
+    public Integer seltotalRepairemp();
     //添加方法
     public void AddRepair(EquipmentRepairVO equipmentRepairVO);
     //修改方法

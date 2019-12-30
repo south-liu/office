@@ -10,6 +10,7 @@ public class HolidayStudent {
     private Integer holidayId;//主键，标识列，自动生成
     private Integer studentId;//关联学生表主键(请假人)
     private String holidayDay;//假期天数
+    private String holidayHour;//假期小时
     private String startTime;//开始时间
     private String endTime;//结束时间
     private String title;//标题
@@ -22,12 +23,21 @@ public class HolidayStudent {
                 "holidayId=" + holidayId +
                 ", studentId=" + studentId +
                 ", holidayDay='" + holidayDay + '\'' +
+                ", holidayHour='" + holidayHour + '\'' +
                 ", startTime='" + startTime + '\'' +
                 ", endTime='" + endTime + '\'' +
                 ", title='" + title + '\'' +
                 ", remark='" + remark + '\'' +
                 ", status='" + status + '\'' +
                 '}';
+    }
+
+    public String getHolidayHour() {
+        return holidayHour;
+    }
+
+    public void setHolidayHour(String holidayHour) {
+        this.holidayHour = holidayHour;
     }
 
     public Integer getHolidayId() {
