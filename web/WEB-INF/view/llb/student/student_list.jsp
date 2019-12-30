@@ -220,6 +220,11 @@
                                 icon:0,
                                 time:1000
                             });
+                        } else if (checkStatus.data[0].stat == 2) {
+                            layer.msg('该学生已毕业',{
+                                icon:0,
+                                time:1000
+                            });
                         } else {
                             layer.open({
                                 title:'调整宿舍',
@@ -241,7 +246,12 @@
                                 icon:0,
                                 time:1000
                             });
-                        } else {
+                        } else if (checkStatus.data[0].stat == 2) {
+                            layer.msg('该学生已毕业',{
+                                icon:0,
+                                time:1000
+                            });
+                        }  else {
                             var hour = checkStatus.data[0].huorName;
                             console.log(hour);
                             if (hour==undefined) {
@@ -285,6 +295,11 @@
                     if (length == 1) {
                         if (checkStatus.data[0].stat ==0) {
                             layer.msg('该学生已退学',{
+                                icon:0,
+                                time:1000
+                            });
+                        } else if (checkStatus.data[0].stat == 2) {
+                            layer.msg('该学生已毕业',{
                                 icon:0,
                                 time:1000
                             });
