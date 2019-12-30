@@ -35,13 +35,14 @@
             elem: '#test',
             url:'${pageContext.request.contextPath}/RF/empassessment_aduitlog_list?empId=${empId}&date=${date}',
             // toolbar: '#toolbarDemo', //开启头部工具栏，并为其绑定左侧模板(一般放置按钮、搜索框)
+            totalRow: true,
             defaultToolbar: ['filter', 'exports', 'print'],
             title: '员工考核表',
             cols: [[
-                {field:'aduitLogId',align:'center', title:'编号', fixed: 'left', unresize: true, sort: true},
+                {field:'aduitLogId',align:'center', title:'编号', fixed: 'left', unresize: true, sort: true, totalRowText: '合计'},
                 {field:'aduitName',align:'center', title:'考核内容'},
                 {field:'empName',align:'center', title:'员工姓名'},
-                {field:'score',align:'center', title:'考核分数'},
+                {field:'score',align:'center', title:'考核分数', totalRow: true},
                 {field:'auditDate',align:'center', title:'考核时间'},
                 {field:'auditPerson',align:'center', title:'录入人'},
                 {field:'remark',align:'center', title:'说明'},
