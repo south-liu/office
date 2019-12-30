@@ -30,10 +30,10 @@
         </div>
 
         <div class="layui-form-item" style="margin-left: 20px">
-            <label class="layui-form-label">考核指标</label>
+            <label class="layui-form-label">考核部门</label>
             <div class="layui-input-block" style="width: 200px">
                 <select name="deptId" lay-filter="aihao" lay-verify="required">
-                    <option value="">请选择考核指标</option>
+                    <option value="">请选择考核部门</option>
                     <c:forEach items="${dept}" var="list">
                         <option value="${list.deptId}">${list.deptName}</option>
                     </c:forEach>
