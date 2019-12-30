@@ -445,7 +445,8 @@
         });
 
         laydate.render({
-            elem:'#date2'
+            elem:'#date2',
+            max:year+'-'+month+'-'+date
         });
 
         //监听提交
