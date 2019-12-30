@@ -70,6 +70,8 @@
         <a class="layui-btn layui-btn-radius layui-btn-normal layui-btn-xs" lay-event="zxInfo">在校情况</a>
         <a class="layui-btn layui-btn-radius layui-btn-normal layui-btn-xs" lay-event="dabian">答辩成绩</a>
         <a class="layui-btn layui-btn-radius layui-btn-normal layui-btn-xs" lay-event="test">考试成绩</a>
+
+        <a class="layui-btn layui-btn-radius layui-btn-xs" lay-event="finish">设置毕业</a>
     </div>
 </script>
 
@@ -126,8 +128,10 @@
                 {field:'stat', title:'学生状态',align: 'center',width:100,templet: function(res){
                         if (res.stat == 0) {
                             return '退学'
-                        } else {
+                        } else if(res.stat == 1) {
                             return '正常';
+                        } else if(res.stat == 2) {
+                            return '已毕业';
                         }
                     }},
                 {fixed: 'right', title:'操作', toolbar: '#bar',align: 'center',width:250},
@@ -365,6 +369,38 @@
                     if (length == 1) {
                         <%--window.open('${pageContext.request.contextPath}/MY/tostudentscore_list?studId='+checkStatus.data[0].studId,'target');--%>
                         window.location.href='${pageContext.request.contextPath}/MY/tostudentscore_list?studId='+checkStatus.data[0].studId;
+                    } else {
+                        layer.msg('请选择一个学生',{
+                            icon:0
+                        });
+                    }
+                    break;
+                case 'finish':
+                    if (length == 1) {
+                        layer.confirm('确实将该学生毕业吗',function () {
+                            var lod = layer.load();
+                            $.ajax({
+                                type: "POST",
+                                dataType: "json",
+                                url: "${pageContext.request.contextPath}/student/updStatus" ,
+                                data: {stuId:checkStatus.data[0].studId,stat:2},
+                                success: function (result) {
+                                    layer.close(lod);
+                                    layer.msg('毕业成功',{
+                                        icon:1,
+                                        time:1000
+                                    },function () {
+                                        window.location.reload();
+                                    });
+                                },
+                                error : function() {
+                                    layer.close(lod);
+                                    layer.msg('服务器错误',{
+                                        icon:2
+                                    });
+                                }
+                            });
+                        })
                     } else {
                         layer.msg('请选择一个学生',{
                             icon:0
