@@ -18,98 +18,70 @@
 
     <%--请假表的Id--%>
     <input type="hidden" name="holidayId" value="${holidayStudent.holidayId}">
-        <%--任务Id--%>
-        <input type="hidden" name="taskId" value="${taskId}">
+    <%--任务Id--%>
+    <input type="hidden" name="taskId" value="${taskId}">
 
-        <%--请假人的ID--%>
-        <input type="hidden" value="${holidayStudent.studentId}" name="studentId" >
+    <%--请假人的ID--%>
+    <input type="hidden" value="${holidayStudent.studentId}" name="studentId">
 
-<table class="layui-table" lay-even="" lay-skin="row" lay-size="sm" >
-    <colgroup>
-        <col width="150">
-        <col width="150">
-        <col width="200">
-        <col>
-    </colgroup>
-    <thead>
-    <tr>
-        <th colspan="6" style="text-align: center"><h2>审核请假申请</h2></th>
-    </tr>
+    <table width="100%" cellpadding="2" bgcolor="#e6e6e6" id="test"
+           style="border-collapse: inherit; border-spacing: 1px">
+        <tr>
+            <th colspan="8" style="text-align: center;font-size: 20px">学生申请</th>
+        </tr>
+        <tr bgcolor="#F2F2F2" style="height: 38px">
+            <th><font size="2" color="#666">请假人</font></th>
+            <th><font size="2" color="#666">请假时长</font></th>
+            <th><font size="2" color="#666">开始时间</font></th>
+            <th><font size="2" color="#666">结束时间</font></th>
+            <th><font size="2" color="#666">请假原因</font></th>
+            <th><font size="2" color="#666">批注内容</font></th>
+            <th><font size="2" color="#666">意见</font></th>
+            <th><font size="2" color="#666">操作</font></th>
+        </tr>
 
-    </thead>
-    <tbody>
-    <tr>
-        <td align="center">请假人ID：</td>
-        <td>${holidayStudent.studentId}</td>
-    </tr>
-    <tr>
-        <td align="center">请假人：</td>
-        <td>${holidayStudent.stuName}</td>
-    </tr>
-    <tr>
-        <td align="center">请假时长：</td>
-        <td>${holidayStudent.holidayDay} 天 ${holidayStudent.holidayHour} 小时</td>
-    </tr>
-    <tr>
-        <td align="center">请假事由：</td>
-        <td>${holidayStudent.remark}</td>
-    </tr>
-    <tr>
-        <td align="center">意见：</td>
-        <td>
-            <select name="flow" style="width: 50px" >
-                <option value="同意">同意</option>
-                <option value="拒绝">拒绝</option>
-            </select>
-        </td>
-    </tr>
-
-    <tr>
-        <td align="center">备注:</td>
-        <td><textarea style="width:1200px" name="comment" class="layui-textarea"></textarea></td>
-    </tr>
-    <tr>
-        <td colspan="2" style="text-align: center"><button type="submit" class="layui-btn" style="text-align: center">审批</button></td>
-    </tr>
-    </tbody>
-</table>
+        <tr bgcolor="#FFF" style="height: 38px;text-align: center">
+            <td><font size="2" color="#666">${holidayStudent.stuName}</font></td>
+            <td><font size="2" color="#666">${holidayStudent.holidayDay} 天 ${holidayStudent.holidayHour} 小时</font></td>
+            <td><font size="2" color="#666">${holidayStudent.startTime}</font></td>
+            <td><font size="2" color="#666">${holidayStudent.endTime}</font></td>
+            <td><font size="2" color="#666">${holidayStudent.remark}</font></td>
+            <td><input name="comment" class="layui-input"></td>
+            <td>
+                <select name="flow" style="width: 50px">
+                    <option value="同意">同意</option>
+                    <option value="拒绝">拒绝</option>
+                </select>
+            </td>
+            <td colspan="2" style="text-align: center"><button type="submit" class="layui-btn" style="text-align: center">提交</button></td>
+        </tr>
+    </table>
 </form>
-<table class="layui-table" lay-even="" lay-skin="row" lay-size="sm">
-    <colgroup>
-        <col width="150">
-        <col width="150">
-        <col width="200">
-        <col>
-    </colgroup>
-    <thead>
-    <tr>
-        <th colspan="6" style="text-align: center"><h2>历史审批信息</h2></th>
-    </tr>
-    <tr>
-        <th>ID</th>
-        <th>审批时间</th>
-        <th>审批人</th>
-        <th>批注内容</th>
-    </tr>
-    </thead>
-<tbody>
-<c:forEach items="${commentList}" var="t">
-    <tr bgcolor="white">
-        <td>${t.id }</td>
-        <td>${t.time} </td>
-        <td>${t.userId }</td>
-        <td>${t.fullMessage }</td>
-    </tr>
-</c:forEach>
 
-</tbody>
+<table  width="100%" cellpadding="2" bgcolor="#e6e6e6" style="border-collapse: inherit; border-spacing: 1px;margin-top: 50px">
+    <tr>
+        <th colspan="8" style="text-align: center;font-size: 20px">历史审批</th>
+    </tr>
+    <tr bgcolor="#F2F2F2" style="height: 38px">
+        <th><font size="2" color="#666">编号</font></th>
+        <th><font size="2" color="#666">审批时间</font></th>
+        <th><font size="2" color="#666">审批人</font></th>
+        <th><font size="2" color="#666">批注内容</font></th>
+    </tr>
 
+    <c:forEach items="${commentList}" var="t">
+        <tr bgcolor="#FFF" style="height: 38px;text-align: center">
+            <td><font size="2" color="#666">${t.id}</font></td>
+            <td><font size="2" color="#666">${t.time}</font></td>
+            <td><font size="2" color="#666">${t.userId}</font></td>
+            <td><font size="2" color="#666">${t.fullMessage}</font></td>
+        </tr>
+    </c:forEach>
 </table>
-
 
 <script>
-    layui.use('form',function () {
-        var form=layui.form
+    layui.use('form', function () {
+        var form = layui.form
     })
 
 </script>

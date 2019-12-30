@@ -138,10 +138,7 @@
             table.on('toolbar(fTab)', function (obj) {
                 var event = obj.event;
                 console.log(event)
-
             })
-
-
         }
     );
 
@@ -156,7 +153,6 @@
             resize: false
         })
     }
-
 
 </script>
 </body>

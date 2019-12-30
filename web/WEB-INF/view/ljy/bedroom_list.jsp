@@ -90,7 +90,7 @@
                 {field: 'className', title: '班级名称', sort: true, align: 'center', totalRowText: '合计'},
                 {field: 'floorName', title: '楼栋名称 ', align: 'center'},
                 {field: 'huorName', title: '宿舍房号', sort: true, align: 'center'},
-                {field: 'huor', title: '宿舍id', sort: true,hide:true, align: 'center'},
+                {field: 'huor', title: '宿舍id', sort: true, hide: true, align: 'center'},
                 {field: 'address', title: '宿舍地址', align: 'center'},
                 {field: 'count', title: '宿舍人数', align: 'center', totalRow: true},
                 {field: 'numberBeds', title: '宿舍床位', align: 'center', totalRow: true},
@@ -100,7 +100,11 @@
                     align: 'center',
                     totalRow: true,
                     templet: function (res) {
-                        return res.numberBeds - res.count;
+                        if (res.numberBeds == null ) {
+                            return 0;
+                        }else{
+                            return res.numberBeds - res.count;
+                        }
                     }
                 },
                 {fixed: 'right', title: '操作', toolbar: '#bar', align: 'center'}
@@ -128,8 +132,8 @@
                 layer.open({
                     title: '学生详情',
                     type: 2,
-                    content: '${pageContext.request.contextPath}/bedroom/goto_huor_studName?huor='+data.huor,
-                    area: ['600px','300px'],
+                    content: '${pageContext.request.contextPath}/bedroom/goto_huor_studName?huor=' + data.huor,
+                    area: ['600px', '300px'],
                     resize: false,
                     maxmin: true
                 });

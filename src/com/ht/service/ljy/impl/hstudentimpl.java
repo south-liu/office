@@ -72,4 +72,9 @@ public class hstudentimpl extends ljyDao implements hstudentService {
     public List hs_byid_lists(int holidayId) {
         return listbysql("select hs.*,stu.stuName from holidayStudent hs left join student stu on hs.studentId=stu.studId where hs.holidayId=" + holidayId);
     }
+
+    @Override
+    public int hs_byid_lists_count(int holidayId) {
+        return 0;
+    }
 }
