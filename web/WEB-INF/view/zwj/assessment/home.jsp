@@ -138,6 +138,18 @@
         var form = layui.form;
         var laydate = layui.laydate;
 
+        function assessmentTimeVerify(startTime, endTime) {
+            if (startTime.length > 0 && endTime.length > 0) {
+                // 考评开始时间大于或等于结束时间时，提示
+                if (startTime >= endTime) {
+                    layer.msg('考评的开始时间应小于考评的结束时间！', {icon: 3, time: 1500});
+                    return false;
+                }
+                return true;
+            }
+            return;
+        }
+
         var laydateOptions = {
             type: 'datetime',
             trigger: 'click'
@@ -158,13 +170,19 @@
             type: laydateOptions.type,
             trigger: laydateOptions.trigger,
             value: new Date(),
-            min: '0'
+            min: '0',
+            done: function (value) {// 开始时间
+                assessmentTimeVerify(value, $('#endTime').val());
+            }
         });
         laydate.render({
             elem: '#endTime', //指定元素
             type: laydateOptions.type,
             trigger: laydateOptions.trigger,
-            min: '0'
+            min: '0',
+            done: function (value) {
+                assessmentTimeVerify($('#startTime').val(), value);
+            }
         });
 
         var formArea = ['400px', '400px'];// 编辑和添加表单的宽高
@@ -303,6 +321,10 @@
             });
             // 通过提交按钮的lay-filter="submitForm"属性，触发表单中提交时的回调函数
             form.on('submit(submitForm)', function (data) {
+                // 考评开始时间大于或等于结束时间
+                if (!assessmentTimeVerify(data.field.startTime, data.field.endTime)) return false;
+
+                // 开始请求
                 var loadIndex = layer.load();
                 var dataForm = data.form;
                 $.ajax({
