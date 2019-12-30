@@ -28,7 +28,7 @@ public class RepairServiceimpl extends BaseDao implements RepairService {
 
     @Override
     public List selSpage(int currPage, int pageSize,String id) {
-        List<Map<String, Object>> list = pageListBySql("select * from equipmentRepair where empId="+id, currPage, pageSize);
+        List<Map<String, Object>> list = pageListBySql("select * from equipmentRepair where student="+id, currPage, pageSize);
         for (Map<String, Object> map : list) {
             int type = (int) map.get("userType");
             if (type == 1) {// 为学生
