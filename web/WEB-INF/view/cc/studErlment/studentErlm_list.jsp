@@ -57,7 +57,7 @@
 <script type="text/html" id="toolbar">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm" lay-event="addStu">添加学生</button>
-        <button class="layui-btn layui-btn-sm" lay-event="delStus">删除选中</button>
+<%--        <button class="layui-btn layui-btn-sm" lay-event="delStus">删除选中</button>--%>
         <button class="layui-btn layui-btn-xs layui-btn-radius layui-btn-warm" lay-event="updHuor">预定报名费</button>
         <button class="layui-btn layui-btn-xs layui-btn-radius layui-btn-warm" lay-event="updyuding">预定报名审核</button>
         <button class="layui-btn layui-btn-xs layui-btn-radius layui-btn-warm" lay-event="updClass">试学</button>
