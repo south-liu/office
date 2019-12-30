@@ -166,32 +166,36 @@
                 })
             } else {
                 if (checkTreeData.length==1 && checkTreeData[0].children.length==1){
-                    var stuIds = [];
-                    for (var i in checkTableData) {
-                        stuIds.push(checkTableData[i].studId);
-                    }
-                    var lod = layer.load();
-                    $.ajax({
-                        type: "POST",
-                        dataType: "json",
-                        url: "${pageContext.request.contextPath}/student-class/updClass" ,
-                        data: {stuIds:stuIds,classId:checkTreeData[0].children[0].id},
-                        success: function (result) {
-                            layer.close(lod);
-                            layer.msg('调整成功',{
-                                time:1000,
-                                icon:1
-                            },function () {
-                                window.location.reload();
-                            });
-                        },
-                        error : function() {
-                            layer.close(lod);
-                            layer.msg('服务器错误',{
-                                icon:2,
-                                time:1000
-                            });
+                    var fall = checkTreeData[0].title;
+                    var clazz =  checkTreeData[0].children[0].title;
+                    layer.confirm('确定将这些学生分配到 '+fall+ '届 '+clazz+'班 吗',function () {
+                        var stuIds = [];
+                        for (var i in checkTableData) {
+                            stuIds.push(checkTableData[i].studId);
                         }
+                        var lod = layer.load();
+                        $.ajax({
+                            type: "POST",
+                            dataType: "json",
+                            url: "${pageContext.request.contextPath}/student-class/updClass" ,
+                            data: {stuIds:stuIds,classId:checkTreeData[0].children[0].id},
+                            success: function (result) {
+                                layer.close(lod);
+                                layer.msg('调整成功',{
+                                    time:1000,
+                                    icon:1
+                                },function () {
+                                    window.location.reload();
+                                });
+                            },
+                            error : function() {
+                                layer.close(lod);
+                                layer.msg('服务器错误',{
+                                    icon:2,
+                                    time:1000
+                                });
+                            }
+                        });
                     });
                 } else {
                     layer.msg('请选择一个班级',{

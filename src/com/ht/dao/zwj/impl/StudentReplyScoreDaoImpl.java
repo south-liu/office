@@ -23,8 +23,9 @@ public class StudentReplyScoreDaoImpl implements StudentReplyScoreDao {
     public List<Map<String, Object>> allData(Integer page, Integer limit) {
         Session session = sessionFactory.openSession();
 
-        Query query = session.createSQLQuery("select srs.*,cla.className,pro.projectName,stu.stuName,emp.empName,(select e.empName from emp as e where e.empId=srs.gradeEmpId) as 'gradeEmpName' from " + currentTableName + " as srs left join student as stu on stu.studId = srs.studentId left join studentClass as cla on stu.clazz = cla.classId left join project as pro on pro.projectId = srs.projectId left join emp on emp.empId = srs.empId order by " + currentTableId + " asc limit ?,?");
-        System.out.println(query);
+        Query query = session.createSQLQuery("select srs.*,cla.className,pro.projectName,stu.stuName,emp.empName,(select e.empName from emp as e where e" +
+                ".empId=srs.gradeEmpId) as 'gradeEmpName' from " + currentTableName + " as srs left join student as stu on stu.studId = srs.studentId left " +
+                "join studentClass as cla on stu.clazz = cla.classId left join project as pro on pro.projectId = srs.projectId left join emp on emp.empId = srs.empId order by " + currentTableId + " desc limit ?,?");
         query.setInteger(0, (page - 1) * limit);
         query.setInteger(1, limit);
         query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);// 将结果集以Map集合返回
@@ -126,5 +127,14 @@ public class StudentReplyScoreDaoImpl implements StudentReplyScoreDao {
         session.close();
 
         return map;
+    }
+
+    @Override
+    public void deleteReplyScoreByStudentId(int studentId) {
+        Session session = sessionFactory.openSession();
+
+        session.createSQLQuery("delete from studentReplyScore where studentId = " + studentId).executeUpdate();
+
+        session.close();
     }
 }

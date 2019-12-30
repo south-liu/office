@@ -20,7 +20,7 @@
 <%--顶部按钮--%>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="fan"><i class="layui-icon layui-icon-return" style="font-size: 15px; color: #FFF;"></i>返回</button>
+        <button class="layui-btn layui-btn-sm" onclick="javascript:history.go(-1);"><i class="layui-icon layui-icon-return" style="font-size: 15px; color: #FFF;"></i>返回</button>
         <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-add-circle" style="font-size: 15px; color: #FFF;"></i>添加成绩</button>
     </div>
 </script>

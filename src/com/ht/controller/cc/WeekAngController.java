@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -63,7 +64,8 @@ public class WeekAngController {
     @RequestMapping("/addlist")
     @ResponseBody
     public  String add(WeekArrangeVO weekArrangeVO){
-        weekArrangeVO.setStartTime(DateFormat.getDateInstance().format(new Date()));
+        SimpleDateFormat sim = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        weekArrangeVO.setStartTime(sim.format(new Date()));
         as.AddAng(weekArrangeVO);
         return " ";
     }

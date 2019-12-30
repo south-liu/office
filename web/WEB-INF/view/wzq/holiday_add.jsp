@@ -33,14 +33,14 @@
         <div class="layui-inline" style="margin-left: 20px">
             <label class="layui-form-label">开始时间</label>
             <div class="layui-input-inline">
-                <input placeholder="yyyy-MM-dd HH:mm:ss" type="text" lay-verify="required" class="layui-input" style="width: 200px" name="startTime" id="start">
+                <input type="text" lay-verify="required" class="layui-input" style="width: 200px" name="startTime" id="start">
             </div>
         </div>
 
         <div class="layui-inline" style="margin-top: 15px; margin-left: 20px">
             <label class="layui-form-label">结束时间</label>
             <div class="layui-input-inline">
-                <input placeholder="yyyy-MM-dd HH:mm:ss" type="text" lay-verify="required" class="layui-input" style="width: 200px" name="endTime" id="end">
+                <input type="text" lay-verify="required" class="layui-input" style="width: 200px" name="endTime" id="end">
             </div>
         </div>
 
@@ -48,35 +48,34 @@
             <div class="layui-inline">
                 <label class="layui-form-label">请假时长</label>
                 <div class="layui-input-inline" style="width: 65px;">
-                    <input placeholder="0" type="text" name="day" id="day" style="width: 65px" lay-verify="required" autocomplete="off" class="layui-input">
+                    <input type="text" name="day" id="day" style="width: 65px" lay-verify="required|number" autocomplete="off" class="layui-input">
                 </div>
                 <div class="layui-form-mid">天</div>
                 <div class="layui-input-inline" style="width: 65px;">
                     <select name="hour" lay-verify="required" lay-search="">
-                        <option value="0">0</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
                         <option value="4">4</option>
-                        <option value="4">5</option>
-                        <option value="4">6</option>
-                        <option value="4">7</option>
-                        <option value="4">8</option>
-                        <option value="4">9</option>
-                        <option value="4">10</option>
-                        <option value="4">11</option>
-                        <option value="4">12</option>
-                        <option value="4">13</option>
-                        <option value="4">14</option>
-                        <option value="4">15</option>
-                        <option value="4">16</option>
-                        <option value="4">17</option>
-                        <option value="4">18</option>
-                        <option value="4">19</option>
-                        <option value="4">20</option>
-                        <option value="4">21</option>
-                        <option value="4">22</option>
-                        <option value="4">23</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
                     </select>
                 </div>
                 <div class="layui-form-mid">小时</div>
@@ -127,11 +126,25 @@
             form.on('submit(demo1)', function(obj){
                 var data = obj.field;
 
-                var dayStr = data.day + "天" + data.hour + "小时";
+                if (data.day<0) {
+                    layer.msg('请假天数不能小于0天',{
+                        icon:0,
+                        time:1000
+                    })
+                    return false;
+                }
 
-                var lindex = layer.load();
+                if (data.hour<1) {
+                    layer.msg('不能小于1小时',{
+                        icon:0,
+                        time:1000
+                    })
+                    return false;
+                }
 
                 if (data.startTime < data.endTime){
+                    var dayStr = data.day + "天" + data.hour + "小时";
+                    var lindex = layer.load();
                     $.ajax({
                         url: "${pageContext.request.contextPath}/TP/addholiday",
                         type: "post",
@@ -161,7 +174,8 @@
                 }else {
                     layer.close(lindex);  //拦截请求，让其不继续提交下去（无此拦截会进入转圈圈模式）
                     layer.msg('请正确选择时间：开始时间应小于结束时间！',{
-                        time:1000
+                        time:2000,
+                        icon:0
                     })  //layui自定义提示框
                 }
                 return false;

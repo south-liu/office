@@ -149,6 +149,13 @@ public class StudentController {
     @ResponseBody
     public String delStu(String idstr){
         studentService.delStu(idstr);
+        String[] ids = idstr.split(",");
+
+        //删除学生答辩成绩
+        for (int i = 0; i < ids.length; i++) {
+            studentReplyScoreService.deleteReplyScoreByStudentId(Integer.parseInt(ids[i]));
+        }
+
         return "success";
     }
 

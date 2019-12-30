@@ -20,20 +20,20 @@
 <body>
 
 <table class="layui-table"
-       lay-data="{width: 450, height:300, url:'${pageContext.request.contextPath}/classtype/classtypelist', page:true, id:'myTable',toolbar:'#toolbarDemo'}"
+       lay-data="{url:'${pageContext.request.contextPath}/classtype/classtypelist', page:true, id:'myTable',toolbar:'#toolbarDemo'}"
        lay-filter="fTable">
     <thead>
     <tr>
-        <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
-        <th lay-data="{field:'classTypeId', width:80, sort: true, fixed: true}">ID</th>
-        <th lay-data="{field:'classTypeName', width:135, sort: true}">班级类别名称</th>
-        <th lay-data="{fixed: 'right', width:182, align:'center', toolbar: '#barDemo'}"></th>
+<%--        <th lay-data="{type:'checkbox', fixed: 'left'}"></th>--%>
+        <th lay-data="{field:'classTypeId', sort: true,  align:'center'}">ID</th>
+        <th lay-data="{field:'classTypeName', align:'center'}">班级类别名称</th>
+        <th lay-data="{fixed: 'right', align:'center', toolbar: '#barDemo'}"></th>
     </tr>
     </thead>
 </table>
 
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+<%--    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>--%>
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>

@@ -22,4 +22,12 @@ public interface StudentFallService {
     long getTotality();
 
     List<StudentFallVO> allData();
+
+    /**
+     * 除去界别ID通过界别名称查询
+     *
+     * @param studentFall
+     * @return
+     */
+    List<StudentFallVO> queryStudentFallByLevelNotFallid(StudentFallVO studentFall);
 }

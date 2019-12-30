@@ -91,21 +91,21 @@
                     success: function (data, textStatus) {
                         layer.close(loadIndex);
 
-                        if (data.code == 0 && data.result > 0) {// 添加成功
+                        if (data.code == 0) {// 添加成功
                             layer.msg(data.msg, {
                                 icon: 1,
                                 time: 1000
                             });
                             layer.close(windowIndex);// 关闭表单窗口
                             table.reload('dataTable', {});// 重载表格
-                        } else if (data.code == 1) {// 失败
-                            layer.msg(data.msg, {
-                                icon: 2,
-                                time: 1000
-                            })
-                        } else if (data.code == 2) {// 届别名称已存在
+                        } else if (data.code == 1) {// 届别名称已存在
                             layer.msg(data.msg, {
                                 icon: 3,
+                                time: 2000
+                            })
+                        } else {
+                            layer.msg(data.msg, {
+                                icon: 2,
                                 time: 1000
                             })
                         }
@@ -121,6 +121,7 @@
 
         // 表单的编辑
         function showEditForm(id) {
+            var loadIndex = layer.load();
             var windowIndex = layer.open({
                 type: 1,
                 title: '编辑届别',
@@ -128,15 +129,23 @@
                 area: ['500px', '300px'],
                 content: $('#actionBox'),
                 success: function (layero, index) {// 弹出层弹出后回调函数
+                    layero.hide();
                     $('#actionForm').attr('action', '${pageContext.request.contextPath}/student-fall/update');
 
                     // 通过id获取数据并填充到表单中
                     $.get('${pageContext.request.contextPath}/student-fall/detail', {fallId: id}, function (data) {
-                        $('#actionForm').find('input[name="fallId"]').val(data.fallId);
-                        $('#actionForm').find('input[name="level"]').val(data.level);
-                        $('#actionForm').find('textarea[name="remark"]').val(data.remark);
-                    }, 'json');
+                        if (data.code == 0) {
+                            $('#actionForm').find('input[name="fallId"]').val(data.studentFall.fallId);
+                            $('#actionForm').find('input[name="level"]').val(data.studentFall.level);
+                            $('#actionForm').find('textarea[name="remark"]').val(data.studentFall.remark);
 
+                            layer.close(loadIndex);
+                            layero.show();
+                        } else {
+                            layer.msg(data.msg, {icon: 2, time: 1000});
+                            layer.close(loadIndex);
+                        }
+                    }, 'json');
                 },
                 end: function () {// 层销毁或关闭后触发的回调
                     $('#actionForm').find('input[name="fallId"]').removeAttr('value');
@@ -156,14 +165,15 @@
                     success: function (data, textStatus) {
                         layer.close(loadIndex);
 
-                        if (data > 0) {
+                        if (data.code == 0) {
+                            layer.msg(data.msg, {icon: 1, time: 1000});
                             layer.close(windowIndex);// 关闭表单窗口
                             table.reload('dataTable', {});// 重载表格
+                        } else if (data.code == 1) {
+                            layer.msg(data.msg, {icon: 3, time: 2000});
+                        } else {
+                            layer.msg(data.msg, {icon: 2, time: 1000});
                         }
-                    },
-                    error: function () {
-                        layer.msg('服务器错误！', {time: 1000});
-                        layer.close(loadIndex);
                     }
                 });
                 return false;
@@ -216,16 +226,12 @@
                     ids.push(element.fallId);
                 });
                 // 传输id到后台删除数据
-                $.post('${pageContext.request.contextPath}/student-fall/deleteMulti', {fallIds: ids}, function
-                    (data) {
-                    // 返回删除数组的长度
-                    if (data > 0) {
-                        // 删除成功
-                        layer.msg('删除成功', {
-                            icon: 1,
-                            time: 1000
-                        });
+                $.post('${pageContext.request.contextPath}/student-fall/deleteMulti', {fallIds: ids}, function (data) {
+                    if (data == 0) {
+                        layer.msg(data.msg, {icon: 1, time: 1000});
                         table.reload('dataTable', {curr: 1});// 重载表格
+                    } else {
+                        layer.msg(data.msg, {icon: 2, time: 1000});
                     }
                 });
                 layer.close(index);

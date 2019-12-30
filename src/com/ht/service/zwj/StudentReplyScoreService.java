@@ -28,4 +28,12 @@ public interface StudentReplyScoreService {
     List<ProjectVO> findGradedProjectByStudentId(Integer stuId);
 
     Map<String, Object> findProjectScoreByOptions(Integer stuId, Integer projectId);
+
+    /**
+     * 通过学生ID删除与该学生有关的所有答辩项目成绩
+     *
+     * @param studentId
+     * @return
+     */
+    int deleteReplyScoreByStudentId(int studentId);
 }

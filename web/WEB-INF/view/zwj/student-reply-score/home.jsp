@@ -280,6 +280,7 @@
                 success: function (layero, index) {// 弹出层弹出后回调函数
                     var loadIndex = layer.load();
                     layero.hide();
+
                     $('#actionForm').attr('action', addFormAction);
                     $('#tips').text('(选择两位或两位以上成员时为多人项目，则为每一位成员添加相同成绩)');
 

@@ -76,6 +76,17 @@
 
 
         table.on('edit(fTab)', function(obj){ //注：edit是固定事件名，test是table原始容器的属性 lay-filter="对应的值"
+            if (obj.value.trim() == '') {
+                layer.msg('角色名称不能为空',{
+                    time:1000,
+                    icon:0
+                },function () {
+                    table.reload('myTab',{
+                        url:'${pageContext.request.contextPath}/menu/pageList'
+                    });
+                });
+                return false;
+            }
             var lod = layer.load();
             $.ajax({
                 type: "POST",

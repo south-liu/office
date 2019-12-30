@@ -71,6 +71,7 @@
         table.on('tool(fTable)', function(obj){
             switch(obj.event){
                 case 'upd':
+                    layer.load();
                     window.location.href = '${pageContext.request.contextPath}/feedback/toMsg?feedbackId='+obj.data.feedbackId;
                     break;
                 case 'del':

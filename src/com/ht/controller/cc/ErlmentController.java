@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -66,9 +67,9 @@ public class ErlmentController {
     @ResponseBody
     public  String add(EnrollmentVO enrollmentVO, HttpSession session){
         EmpVO emp = (EmpVO) session.getAttribute("emp");
-        String data = DateFormat.getDateInstance().format(new Date());
+        SimpleDateFormat sim = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         enrollmentVO.setStatus(1);
-        enrollmentVO.setSignDate(data);
+        enrollmentVO.setSignDate(sim.format(new Date()));
         enrollmentVO.setLuruId(emp.getEmpName());
         es.AddErlment(enrollmentVO);
         return "success";
@@ -105,8 +106,8 @@ public class ErlmentController {
     @ResponseBody
     public String addstu(StudentVO studentVO,Integer enrollmentId){
         Integer stats = 4;
-        String data = DateFormat.getDateInstance().format(new Date());
-        es.updErlmdate(enrollmentId,data);
+        SimpleDateFormat sim = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        es.updErlmdate(enrollmentId,sim.format(new Date()));
         es.updErlmStats(enrollmentId,stats);
         es.AddStudent(studentVO);
         return "success";
@@ -138,8 +139,8 @@ public class ErlmentController {
     @RequestMapping("/addreviewer")
     @ResponseBody
     public String addreviewer(Integer enrollmentId,String reviewer){
-        String data = DateFormat.getDateInstance().format(new Date());
-        es.updErlreviewer(enrollmentId,reviewer,data);
+        SimpleDateFormat sim = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        es.updErlreviewer(enrollmentId,reviewer,sim.format(new Date()));
         return "success";
     }
 

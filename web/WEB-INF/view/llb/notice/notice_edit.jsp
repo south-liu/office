@@ -84,6 +84,15 @@
         });
 
         form.on('submit(sub)',function (data) {
+
+            if (layedit.getText(myEdit).trim() == ''){
+                layer.msg('请输入内容',{
+                    icon:0,
+                    time:2000
+                });
+                return false;
+            }
+
             //同步编辑器内容到textarea
             layedit.sync(myEdit);
 
