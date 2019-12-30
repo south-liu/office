@@ -109,6 +109,7 @@ public class ErlmentController {
         SimpleDateFormat sim = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         es.updErlmdate(enrollmentId,sim.format(new Date()));
         es.updErlmStats(enrollmentId,stats);
+        studentVO.setStat(1);
         es.AddStudent(studentVO);
         return "success";
     }

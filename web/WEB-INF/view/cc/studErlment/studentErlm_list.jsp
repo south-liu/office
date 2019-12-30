@@ -13,6 +13,15 @@
     <jsp:include page="../../public/head.jsp"></jsp:include>
 </head>
 <style type="text/css">
+    .layui-form-labelcc {
+        /* float: left; */
+        /* display: block; */
+        padding: 9px 15px;
+        width: 80px;
+        font-weight: 400;
+        line-height: 20px;
+        text-align: right;
+    }
     .layui-btn-llb{
         height: 22px;
         padding: 6px 5px;
@@ -22,6 +31,10 @@
         color: #fff;
         border-radius: 2px;
         cursor: pointer;
+    }
+
+    element.style {
+        padding: 30px 63px 30px 34px;
     }
 </style>
 <body>
@@ -300,12 +313,12 @@
                         var index = layer.open({
                             title:'提成金额',
                             type:1,
-                            content:'<div style="padding: 30px 63px 30px 34px;" class="layui-inline" >\n' +
-                                '        <label class="layui-form-label">设置提成金额</label>\n' +
-                                '        <div class="layui-input-inline">\n' +
-                                '            <input type="text" id="enrollMoney" lay-verify="required" autocomplete="off" class="layui-input">\n' +
-                                '        </div><div style="height: 30px"></div>' +
-                                '    </div>',
+                            content:'<div style="" class="layui-inline">\n' +
+                                    '<label class="layui-form-labelcc">设置提成金额</label>\n' +
+                                        '<div class="layui-input-inline">\n' +
+                                            '<input type="text" id="enrollMoney" lay-verify="required" autocomplete="off" class="layui-input">\n' +
+                                        '</div>\n' +
+                                    '</div>',
                             btn: ['确定', '取消'],
                             yes: function(index, layero){
                                 var enrollMoney = $('#enrollMoney').val().trim();
@@ -353,12 +366,12 @@
                         var index = layer.open({
                             title:'预定报名费',
                             type:1,
-                            content:'<div style="padding: 30px 63px 30px 34px;" class="layui-inline" >\n' +
-                                '        <label class="layui-form-label">预定报名费</label>\n' +
-                                '        <div class="layui-input-inline">\n' +
-                                '            <input type="text" id="amount" lay-verify="required" autocomplete="off" class="layui-input">\n' +
-                                '        </div><div style="height: 30px"></div>' +
-                                '    </div>',
+                            content: '<div style="" class="layui-inline">\n' +
+                                    '<label class="layui-form-labelcc">预定报名费</label>\n' +
+                                        '<div class="layui-input-inline">\n' +
+                                            '<input type="text" id="amount" lay-verify="required" autocomplete="off" class="layui-input">\n' +
+                                        '</div>\n' +
+                                    '</div>',
                             btn: ['确定', '取消'],
                             yes: function(index, layero){
                                 var amount = $('#amount').val().trim();
@@ -406,12 +419,13 @@
                         var index = layer.open({
                             title:'预定报名审核',
                             type:1,
-                            content:'<div style="padding: 30px 63px 30px 34px;" class="layui-inline" >\n' +
-                                '        <label class="layui-form-label">请输入名称</label>\n' +
-                                '        <div class="layui-input-inline">\n' +
-                                '            <input type="text" id="reviewer" lay-verify="required" autocomplete="off" class="layui-input">\n' +
-                                '        </div><div style="height: 30px"></div>' +
-                                '    </div>',
+                            content: '<div style="" class="layui-inline">\n' +
+                                    '<label class="layui-form-labelcc">请输入名称</label>\n' +
+                                '<div class="layui-input-inline">\n' +
+                                '<input type="text" id="reviewer" lay-verify="required" autocomplete="off" class="layui-input">\n' +
+                                '</div>\n' +
+                                '</div>',
+
                             btn: ['确定', '取消'],
                             yes: function(index, layero){
                                 var reviewer = $('#reviewer').val().trim();

@@ -291,7 +291,7 @@ public class StudentController {
     @ResponseBody
     public String updStatus(Integer stuId,Integer stat){
         StudentVO studentVO = studentService.findById(stuId);
-        if (stat == 0) {//如果是退学
+        if (stat == 0 || stat == 2) {//如果是退学或毕业
             //原宿舍人数-1
             otherService.updHuorCount(studentVO.getHuor(),-1);
             otherService.updStudentHour(stuId,0);

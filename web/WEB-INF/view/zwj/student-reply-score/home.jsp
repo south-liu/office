@@ -182,7 +182,7 @@
         var layer = layui.layer;
         var form = layui.form;
 
-        var _area = ['800px', '600px'];// 添加与修改的公共宽高
+        var _area = ['800px', '100%'];// 添加与修改的公共宽高
 
         var addTitle = '添加答辩成绩';
         var addFormAction = '${pageContext.request.contextPath}/student-reply-score/add';
