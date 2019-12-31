@@ -115,9 +115,6 @@
 //赋值给时间选择器
                 $('#holidayDay').val(parseInt(hours / 24));
                 $('#holidayHour').val((hours % 24));
-            } else {
-                layer.msg('请填写开始时间与结束时间！', {icon: 3, time: 1500});
-                return;
             }
         }
 

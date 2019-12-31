@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>审核请假</title>
@@ -72,7 +73,7 @@
     <c:forEach items="${commentList}" var="t">
         <tr bgcolor="#FFF" style="height: 38px;text-align: center">
             <td><font size="2" color="#666">${t.id}</font></td>
-            <td><font size="2" color="#666">${t.time}</font></td>
+            <td><font size="2" color="#666"><fmt:formatDate value="${t.time}" pattern="yyyy-MM-dd HH:mm:ss"/></font></td>
             <td><font size="2" color="#666">${t.userId}</font></td>
             <td><font size="2" color="#666">${t.fullMessage}</font></td>
         </tr>
