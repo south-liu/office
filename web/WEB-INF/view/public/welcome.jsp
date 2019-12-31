@@ -51,7 +51,7 @@
                     </a><br>
                     <a href="javascript:layer.load();
                     location.href='${pageContext.request.contextPath}/hstudent/hs_myTask_list';">
-                        <i class="layui-icon layui-icon-tips"></i> 学生请假待审批(0)
+                        <i class="layui-icon layui-icon-tips"></i> 学生请假待审批(${myStuHolidayTask})
                     </a><br>
                     <a href="javascript:layer.load();
                     location.href='${pageContext.request.contextPath}/checkwork/gotomycheck';">

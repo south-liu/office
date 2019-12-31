@@ -60,6 +60,9 @@ public class PublicController {
         //我的员工请假审批
         List<Task> taskList = taskService.createTaskQuery().taskAssignee(empVO.getEmpName()).list();
 
+        //我的学生请假审批
+        List<Task> shtaskList = taskService.createTaskQuery().taskAssignee(empVO.getEmpId().toString()).list();
+
         //我的未打卡审批
         int countCheckWork = checkworkService.checkwork_mycheckcountNo(empVO.getEmpId());
 
@@ -104,6 +107,7 @@ public class PublicController {
         }
         model.addAttribute("myNotice",myNotice);
         model.addAttribute("myEmpHolidayTask",taskList.size());
+        model.addAttribute("myStuHolidayTask",shtaskList.size());
         model.addAttribute("countCheckWork",countCheckWork);
         model.addAttribute("myweekly",myweekly);
         model.addAttribute("mychat",mychat);
