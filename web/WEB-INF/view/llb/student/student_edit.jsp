@@ -484,7 +484,7 @@
             "naTives": "${student.naTives}",
             "resiDence": "${student.resiDence}",
             "studyType": "${student.studyType}",
-            "parents": "${student.parentsPhone}",
+            "parents": "${student.parents}",
             "parentsPhone": "${student.parentsPhone}",
             "intrPhone": "${student.intrPhone}",
             "audiTion": "${student.audiTion}",
