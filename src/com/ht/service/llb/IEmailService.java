@@ -9,7 +9,10 @@ public interface IEmailService {
     void addEmail(EmailVO emailVO);
     void addEmailReceiver(EmailReceiverVO emailReceiverVO);
 
-    List allReceiveEmail(Integer receiver, int page, int limit);
+    int countReceiveEmail(Integer receiver);
+    int countMySendEmail(Integer empId);
+
+   List allReceiveEmail(Integer receiver, int page, int limit);
     List<EmailReceiverVO> allReceiveEmail(Integer receiver);
     List allMySendEmail(Integer empId,int page, int limit);
 

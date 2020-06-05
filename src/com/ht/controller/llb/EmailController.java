@@ -149,11 +149,12 @@ public class EmailController {
     @ResponseBody
     public Map pageListReceiveEmail(int page, int limit, HttpSession session){
         EmpVO empVO = (EmpVO) session.getAttribute("emp");
+        int count = emailService.countReceiveEmail(empVO.getEmpId());
         List<Map> list = emailService.allReceiveEmail(empVO.getEmpId(),page,limit);
         Map map = new HashMap();
         map.put("code",0);
         map.put("msg","");
-        map.put("count",list.size());
+        map.put("count",count);
         map.put("data",list);
         return map;
     }
@@ -162,11 +163,12 @@ public class EmailController {
     @ResponseBody
     public Map pageListMySendEmail(int page, int limit, HttpSession session){
         EmpVO empVO = (EmpVO) session.getAttribute("emp");
+        int count = emailService.countMySendEmail(empVO.getEmpId());
         List<Map> list = emailService.allMySendEmail(empVO.getEmpId(),page,limit);
         Map map = new HashMap();
         map.put("code",0);
         map.put("msg","");
-        map.put("count",list.size());
+        map.put("count",count);
         map.put("data",list);
         return map;
     }

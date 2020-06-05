@@ -16,6 +16,16 @@ public class SystemLogServiceImpl implements ISystemLogService {
     private ISystemLogDao systemLogDao;
 
     @Override
+    public int count() {
+        return systemLogDao.count();
+    }
+
+    @Override
+    public int countWhere(String startTime, String endTime) {
+        return systemLogDao.countWhere(startTime,endTime);
+    }
+
+    @Override
     public List pageList(int page, int limit) {
         return systemLogDao.pageList(page,limit);
     }

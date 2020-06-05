@@ -27,10 +27,11 @@ public class SystemLogController {
     @ResponseBody
     public Map pageList(int page,int limit){
         Map map = new HashMap();
+        int count = systemLogService.count();
         List<Map> list = systemLogService.pageList(page,limit);
         map.put("code",0);
         map.put("msg","");
-        map.put("count",list.size());
+        map.put("count",count);
         map.put("data",list);
         return map;
     }
@@ -39,10 +40,11 @@ public class SystemLogController {
     @ResponseBody
     public Map pageListWhere(int page, int limit, String startTime, String endTime){
         Map map = new HashMap();
+        int count = systemLogService.countWhere(startTime,endTime);
         List<Map> list = systemLogService.pageListWhere(page,limit,startTime,endTime);
         map.put("code",0);
         map.put("msg","");
-        map.put("count",list.size());
+        map.put("count",count);
         map.put("data",list);
         return map;
     }

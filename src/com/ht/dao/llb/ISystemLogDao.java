@@ -7,6 +7,9 @@ import java.util.Map;
 
 public interface ISystemLogDao {
 
+    int count();
+    int countWhere(String startTime,String endTime);
+
     List pageList(int page, int limit);
     List pageListWhere(int page, int limit,String startTime,String endTime);
 

@@ -11,6 +11,23 @@ import java.util.Map;
 @Repository
 public class SystemLogDaoImpl extends BaseDao implements ISystemLogDao {
     @Override
+    public int count() {
+        return totalRowByHql("select count(*) from SystemLogVO");
+    }
+
+    @Override
+    public int countWhere(String startTime, String endTime) {
+        String sql = "select count(*) from systemLog s where 1=1 ";
+        if (startTime!=null && !"".equals(startTime)){
+            sql+=" and s.optime >'"+startTime+"'";
+        }
+        if (endTime!=null && !"".equals(endTime)){
+            sql+=" and s.optime < '"+endTime+"'";
+        }
+        return totalRowBySql(sql);
+    }
+
+    @Override
     public List pageList(int page, int limit) {
         return pageListBySql("select s.*,e.empName from systemLog s left join emp e on s.empId = e.empId order by s.logId desc",page,limit);
     }

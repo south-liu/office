@@ -121,13 +121,13 @@
         <hr class="hr15">
         <input name="password" lay-verify="required" placeholder="密码"  type="password" class="layui-input">
         <hr class="hr15">
-        <div style="margin-bottom: 20px;">
-            <%--<label>完成验证：</label>--%>
+        <%--<div style="margin-bottom: 20px;">
+            &lt;%&ndash;<label>完成验证：</label>&ndash;%&gt;
             <div id="captcha" style="font-size: 10px;">
                 <p id="wait" >正在加载验证码......</p>
             </div>
         </div>
-        <hr class="hr15">
+        <hr class="hr15">--%>
         <input value="登录" lay-submit lay-filter="login" style="width:100%;" type="submit">
         <hr class="hr20" >
     </form>
@@ -137,7 +137,7 @@
 <script>
     $(function  () {
         //获取极简验证码
-        getGee();
+        //getGee();
 
         layui.use('form', function(){
             var form = layui.form;
@@ -147,11 +147,12 @@
                 var validate = data.field.geetest_validate;
                 var seccode = data.field.geetest_seccode;
                 console.log(challenge);
-                if (challenge==''||validate==''||seccode==''){
+                /*if (challenge==''||validate==''||seccode==''){
                     layer.msg('请先完成验证！',{
                         icon:0
                     });
-                } else {
+                } */
+                //else {
                     var index = layer.load();
                     $.ajax({
                         type:"post",
@@ -173,13 +174,15 @@
                                 layer.msg(data.msg,{
                                     icon:2
                                 });
-                            } else if (data.type == 'geeError') {
+                            }
+                            /*else if (data.type == 'geeError') {
                                 layer.msg(data.msg,{
                                     icon:2
                                 });
                                 $("#captcha").html('');
                                 getGee();
-                            } else {
+                            }*/
+                            else {
                                 layer.msg(data.msg,{
                                     icon:1,
                                     time:1000
@@ -195,12 +198,12 @@
                             });
                         }
                     });
-                }
+                //}
                 return false;
             });
         });
 
-        //获取极简验证码
+        /*//获取极简验证码
         function getGee() {
             $.ajax({
                 url: "${pageContext.request.contextPath}/system/geeCheck?t=" + (new Date()).getTime(), // 加随机数防止缓存
@@ -230,7 +233,7 @@
             captchaObj.onReady(function () {
                 $("#wait").hide();
             });
-        };
+        };*/
     });
 
 </script>

@@ -19,20 +19,69 @@
     <!--2、引入参数文件-->
     <context:property-placeholder location="classpath:config/jdbc.properties"/>
 
-    <!--3、创建一个带连接池的数据源-->
-    <bean id="dSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-        <!--数据源-->
-        <property name="driverClass" value="${jdbc.driver}"/>
-        <property name="jdbcUrl" value="${jdbc.url}"/>
-        <property name="user" value="${jdbc.username}"/>
+    <bean id="dSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
         <property name="password" value="${jdbc.password}"/>
 
-        <!--连接池-->
-        <property name="maxPoolSize" value="100"/>      <!--最大连接数-->
-        <property name="minPoolSize" value="20"/>       <!--最小连接数-->
-        <property name="initialPoolSize" value="5"/>      <!--初始化连接池内的数据库连接-->
-        <property name="maxIdleTime" value="20"/>  <!--最大空闲时间-->
+        <!--==============DRUID连接池相关配置==================-->
+
+        <!--初始化时建立物理连接的个数-->
+        <property name="initialSize" value="5"/>
+        <!--最小连接池数量-->
+        <property name="minIdle" value="10"/>
+        <!--最大连接池数量-->
+        <property name="maxActive" value="100"/>
+        <!--连接时最大等待时间,单位毫秒-->
+        <property name="maxWait" value="60000"/>
+        <!--配置间隔多久才进行一次检测,检测需要关闭的空闲连接,单位是毫秒-->
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+        <!--配置一个连接在池中最小生存的时间,单位是毫秒-->
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+        <!--用来检测连接是否有效的SQL,要求是一个查询语句-->
+        <property name="validationQuery" value="SELECT 1 FROM DUAL"/>
+        <!--申请连接时执行 validationQuery 检测连接是否有效,做了这个配置会降低性能-->
+        <property name="testOnBorrow" value="true"/>
+        <!--归还连接时执行 validationQuery 检测连接是否有效,做了这个配置会降低性能-->
+        <property name="testOnReturn" value="true"/>
+        <!--建议配置为true,不影响性能,并且保证安全性;申请连接的时候检测,如果空闲时间大于
+            timeBetweenEvictionRunsMillis,执行 validationQuery 检测连接是否有效-->
+        <property name="testWhileIdle" value="true"/>
+        <!--是否缓存preparedStatement,也就是 PSCache-->
+        <property name="poolPreparedStatements" value="true"/>
+        <!--指定每个连接上 PSCache 的大小-->
+        <property name="maxOpenPreparedStatements" value="20"/>
+        <!-- 打开清除废弃连接功能 -->
+        <property name = "removeAbandoned" value = "true"/>
+        <!--清除废弃连接的超时时间-->
+        <property name="removeAbandonedTimeout" value="1800"/>
+        <!-- 关闭 清除 连接时输出错误日志 -->
+        <property name = "logAbandoned" value = "true"/>
+        <!--配置监控统计拦截的filters,属性类型是字符串,通过别名的方式配置扩展插件,
+        	常用的插件有:监控统计用的STAT;日志用的log4j;防御SQL注入的wall-->
+        <property name="filters" value="stat,wall,log4j"/>
+        <!--通过 connectProperties 属性来打开mergeSql功能；慢SQL记录-->
+        <property name="connectionProperties" value="druid.stat.merggSql=ture;druid.stat.slowSqlMillis=5000"/>
+        <!--合并多个DruidDataSource的监控数据-->
+        <property name="useGlobalDataSourceStat" value="true"/>
     </bean>
+
+<!--    &lt;!&ndash;3、创建一个带连接池的数据源&ndash;&gt;-->
+<!--    <bean id="dSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">-->
+<!--        &lt;!&ndash;数据源&ndash;&gt;-->
+<!--        <property name="driverClass" value="${jdbc.driver}"/>-->
+<!--        <property name="jdbcUrl" value="${jdbc.url}"/>-->
+<!--        <property name="user" value="${jdbc.username}"/>-->
+<!--        <property name="password" value="${jdbc.password}"/>-->
+
+<!--        &lt;!&ndash;连接池&ndash;&gt;-->
+<!--        <property name="acquireIncrement" value="5"/>  &lt;!&ndash; 如果池中数据连接不够时一次增长多少个 &ndash;&gt;-->
+<!--        <property name="maxPoolSize" value="100"/>      &lt;!&ndash;最大连接数&ndash;&gt;-->
+<!--        <property name="minPoolSize" value="20"/>       &lt;!&ndash;最小连接数&ndash;&gt;-->
+<!--        <property name="initialPoolSize" value="5"/>      &lt;!&ndash;初始化连接池内的数据库连接&ndash;&gt;-->
+<!--        <property name="maxIdleTime" value="20"/>  &lt;!&ndash;	连接的最大空闲时间，如果超过这个时间，某个数据库连接还没有被使用，则会断开掉这个连接&ndash;&gt;-->
+<!--    </bean>-->
 
     <!--4、注入sessionfactory-->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">

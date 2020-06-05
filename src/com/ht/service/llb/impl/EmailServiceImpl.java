@@ -25,6 +25,16 @@ public class EmailServiceImpl implements IEmailService {
     }
 
     @Override
+    public int countReceiveEmail(Integer receiver) {
+        return emailDao.countReceiveEmail(receiver);
+    }
+
+    @Override
+    public int countMySendEmail(Integer empId) {
+        return emailDao.countMySendEmail(empId);
+    }
+
+    @Override
     public List allReceiveEmail(Integer receiver, int page, int limit) {
         return emailDao.allReceiveEmail(receiver,page,limit);
     }

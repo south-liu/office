@@ -45,13 +45,13 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
-    public int countStudent() {
-        return studentDao.countStudent();
+    public int countStudent(Integer empId,String postName) {
+        return studentDao.countStudent(empId,postName);
     }
 
     @Override
-    public int countStuWhere(String stuName, String phone, Integer clazz, Integer huor) {
-        return studentDao.countStuWhere(stuName,phone,clazz,huor);
+    public int countStuWhere(Integer empId,String postName,String stuName, String phone, Integer clazz, Integer huor) {
+        return studentDao.countStuWhere(empId,postName,stuName,phone,clazz,huor);
     }
 
     @Override

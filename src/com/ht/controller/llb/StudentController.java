@@ -122,10 +122,10 @@ public class StudentController {
         String postName = empVO.getPostName();
         List list = studentService.pageList(page,limit,empVO.getEmpId(),postName);
         Map map = new HashMap();
-        //Integer count = studentService.countStudent();
+        Integer count = studentService.countStudent(empVO.getEmpId(),postName);
         map.put("code",0);
         map.put("msg","");
-        map.put("count",list.size());
+        map.put("count",count);
         map.put("data",list);
         return map;
     }
@@ -137,10 +137,10 @@ public class StudentController {
         String postName = empVO.getPostName();
         List list = studentService.pageListWhere(page,limit,empVO.getEmpId(),postName,stuName,phone,clazz,huor);
         Map map = new HashMap();
-        Integer count = studentService.countStuWhere(stuName,phone,clazz,huor);
+        Integer count = studentService.countStuWhere(empVO.getEmpId(),postName,stuName,phone,clazz,huor);
         map.put("code",0);
         map.put("msg","");
-        map.put("count", list.size());
+        map.put("count", count);
         map.put("data",list);
         return map;
     }

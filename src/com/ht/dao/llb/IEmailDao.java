@@ -9,6 +9,9 @@ import java.util.Map;
 
 public interface IEmailDao {
 
+    int countReceiveEmail(Integer receiver);
+    int countMySendEmail(Integer empId);
+
     List allReceiveEmail(Integer receiver,int page, int limit);
     List<EmailReceiverVO> allReceiveEmail(Integer receiver);
     List allMySendEmail(Integer empId,int page, int limit);

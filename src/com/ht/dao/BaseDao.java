@@ -17,7 +17,7 @@ public class BaseDao {
     }
 
     /**
-     * hal单个查询
+     * hql单个查询
      * @param hql
      * @return
      */

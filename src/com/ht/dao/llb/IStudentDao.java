@@ -13,8 +13,8 @@ public interface IStudentDao {
     public List<StudentVO> pageListWhere(int page, int limit,Integer empId,String postName,String stuName,String phone,Integer clazz,Integer huor);
     public List pageListWhere(int page, int limit,String stuName,String phone);
 
-    public int countStudent();
-    public int countStuWhere(String stuName,String phone,Integer clazz,Integer huor);
+    public int countStudent(Integer empId,String postName);
+    public int countStuWhere(Integer empId,String postName,String stuName,String phone,Integer clazz,Integer huor);
 
     public void addStu(StudentVO studentVO);
     public void delStu(String ids);

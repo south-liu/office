@@ -59,7 +59,7 @@ public class LoginController {
     @ResponseBody
     public Map loginCheck(EmpVO empVO, HttpSession session, HttpServletRequest request,
                          String challenge, String validate, String seccode){
-        GeeLib geeLib = new GeeLib(GeeConfig.getGee_id(),GeeConfig.getGee_key(),GeeConfig.isnewfailback());
+        /*GeeLib geeLib = new GeeLib(GeeConfig.getGee_id(),GeeConfig.getGee_key(),GeeConfig.isnewfailback());
         //从session中获取gt-server状态
         int gt_server_status_code = (Integer) session.getAttribute(geeLib.gtServerStatusSessionKey);
         HashMap<String, String> param = new HashMap<String, String>();
@@ -79,7 +79,7 @@ public class LoginController {
 //            System.out.println("failback:use your own server captcha validate");
             gtResult = geeLib.failbackValidateRequest(challenge, validate, seccode);
 //            System.out.println(gtResult);
-        }
+        }*/
 
         Map map = new HashMap();
 
@@ -94,7 +94,7 @@ public class LoginController {
             map.put("type","error");
             map.put("msg","该账户已被停用");
         } else {
-            if (gtResult == 1) {
+            //if (gtResult == 1) {
                 //验证成功
 
                 //查询出该员工的角色
@@ -141,10 +141,11 @@ public class LoginController {
                     systemLogVO.setMsg("员工 [ "+dbEmp.getEmpName()+" ] 登陆系统");
                     systemLogService.addSystemLog(systemLogVO);
                 }
-            } else {
+            //}
+            /*else {
                 map.put("type","geeError");
                 map.put("msg","验证失败");
-            }
+            }*/
         }
         return map;
     }

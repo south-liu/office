@@ -57,9 +57,9 @@ public class StudentDaoImpl extends BaseDao implements IStudentDao {
             sql+=" and s.huor = "+huor;
         }
         if ("班主任".equals(postName)) {
-            sql+="and sc.classTeacher = "+empId;
+            sql+=" and sc.classTeacher = "+empId;
         } else if("授课老师".equals(postName)){
-            sql+="and sc.teacher = "+empId;
+            sql+=" and sc.teacher = "+empId;
         } else {
             sql+="";
         }
@@ -85,13 +85,21 @@ public class StudentDaoImpl extends BaseDao implements IStudentDao {
     }
 
     @Override
-    public int countStudent() {
-        return totalRowByHql("select count(*) from StudentVO");
+    public int countStudent(Integer empId,String postName) {
+        String sql = "select count(*) from student s left join studentClass sc on s.clazz = sc.classId  where 1=1 ";
+        if ("班主任".equals(postName)) {
+            sql+=" and sc.classTeacher = "+empId;
+        } else if("授课老师".equals(postName)){
+            sql+=" and sc.teacher = "+empId;
+        } else {
+            sql+="";
+        }
+        return totalRowBySql(sql);
     }
 
     @Override
-    public int countStuWhere(String stuName, String phone, Integer clazz, Integer huor) {
-        String sql = "select count(*) from student s where 1=1";
+    public int countStuWhere(Integer empId,String postName,String stuName, String phone, Integer clazz, Integer huor) {
+        String sql = "select count(*) from student s left join studentClass sc on s.clazz = sc.classId  where 1=1 ";
         if (stuName!=null && !"".equals(stuName)){
             sql+=" and s.stuName like '%"+stuName+"%'";
         }
@@ -103,6 +111,13 @@ public class StudentDaoImpl extends BaseDao implements IStudentDao {
         }
         if (huor!=null && !"".equals(huor)){
             sql+=" and s.huor = "+huor;
+        }
+        if ("班主任".equals(postName)) {
+            sql+=" and sc.classTeacher = "+empId;
+        } else if("授课老师".equals(postName)){
+            sql+=" and sc.teacher = "+empId;
+        } else {
+            sql+="";
         }
         return totalRowBySql(sql);
     }

@@ -12,6 +12,16 @@ import java.util.List;
 public class EmailDaoImpl extends BaseDao implements IEmailDao {
 
     @Override
+    public int countReceiveEmail(Integer receiver) {
+        return totalRowBySql("select count(*) from emailReceiver where receiver = "+receiver);
+    }
+
+    @Override
+    public int countMySendEmail(Integer empId) {
+        return totalRowBySql("select count(*) from emailReceiver left join email on emailReceiver.emailId = email.emailId where email.empId= "+empId);
+    }
+
+    @Override
     public List allReceiveEmail(Integer receiver, int page, int limit) {
         return pageListBySql("select emailReceiver.emailReceiverId,emailReceiver.receiver,emailReceiver.isRead,email.*,emp.empName from emailReceiver left join email on emailReceiver.emailId = email.emailId left join emp on email.empId = emp.empId \n" +
                 "where emailReceiver.receiver =  "+receiver+" order by emailReceiver.emailReceiverId desc",page,limit);
